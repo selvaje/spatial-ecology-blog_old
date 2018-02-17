@@ -1,0 +1,209 @@
+http://html-color-codes.info/webfarben_hexcodes/
+----------------------------------------------------
+
+change button colour:
+
+.red-btn {
+	background: #e96656;
+
+changed to
+.red-btn {
+	background: #610B38;
+
+
+---------------------------
+
+.red-btn:hover {
+	color: #FFF;
+	background: #cb4332;
+
+changed to
+.red-btn:hover {
+	color: #FFF;
+	background: #610B21;
+
+--------------------------------------
+-----------------------------------
+change background colour
+
+**   Section: Our focus             -----
+-----------------------------------------*/
+.focus-box .service-icon .pixeden  {
+	border-radius: 50%;
+}
+.focus {
+	padding-bottom: 100px;
+	overflow: hidden;
+	background: #FFFFFF;
+
+
+
+change to
+**   Section: Our focus             -----
+-----------------------------------------*/
+.focus-box .service-icon .pixeden  {
+	border-radius: 50%;
+}
+.focus {
+	padding-bottom: 100px;
+	overflow: hidden;
+	background: #E1DFE0; =====> now #EAE7E7;
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
+}
+.navbar {
+	background: #FFF;
+	border: 0;
+	border-radius: 0 !important;
+	text-align: left;
+C2
+}
+.navbar {
+	background: #E1DFE0;
+	border: 0;
+	border-radius: 0 !important;
+	text-align: left;
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+change colour testimonial background:
+
+/*----------------------------------------
+ **   Testimonial           -----
+-----------------------------------------*/
+.testimonial {
+	background: #8c7620;
+	padding-bottom: 90px;
+
+changed to:
+
+/*----------------------------------------
+ **   Testimonial           -----
+-----------------------------------------*/
+.testimonial {
+	background: #610B21
+	padding-bottom: 90px;
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+/*--------------------------------------------------------------
+3.0 Buttons
+--------------------------------------------------------------*/
+Change red button to hollow:
+
+.buttons {
+	text-align: center;
+	margin-top: 45px;
+}
+.button {
+	display: inline-block !important;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 10px 35px 10px 35px;
+	border-radius: 4px;
+	margin: 10px;
+}
+.custom-button {
+	display: inline-block !important;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 13px 35px 13px 35px;
+	border-radius: 4px;
+	margin: 10px;
+	border: none;
+}
+.red-btn {
+	background: #e96656;
+}
+
+CHANGE TO:
+
+/*--------------------------------------------------------------
+3.0 Buttons
+--------------------------------------------------------------*/
+.buttons {
+	text-align: center;
+	margin-top: 45px;
+}
+.button {
+	display: inline-block !important;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 10px 35px 10px 35px;
+	border-radius: 4px;
+	margin: 10px;
+}
+.custom-button {
+	display: inline-block !important;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 13px 35px 13px 35px;
+	border-radius: 4px;
+	margin: 10px;
+	border: none;
+}
+.red-btn {
+	border-radius: 1px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #ea4747;
+	position: relative;
+	background: rgba(234,71,71,0.4);
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+Latest news section main page - How much text after image: Functions.php - change the return number. So if you didn't want to show any of the post at all, you can just put 0 to show the picture and the title.
+----------------------*/
+
+add_action( 'wp_enqueue_scripts', 'one_pirate_custom_script_fix' );
+
+function custom_excerpt_length( $length ) {
+return 20;
+}
+add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+CHANGE RIBBON SECTION RIGHT BOTTOM RIBBON
+
+
+CHANGE TO
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+CHANGE RIBBON SECTION RIGHT BOTTOM RIBBON
+
+
+CHANGE TO
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+CHANGE RIBBON SECTION RIGHT BOTTOM RIBBON
+
+
+CHANGE TO
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+CHANGE RIBBON SECTION RIGHT BOTTOM RIBBON
+
+
+CHANGE TO
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+CHANGE RIBBON SECTION RIGHT BOTTOM RIBBON
+
+
+CHANGE TO
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+CHANGE RIBBON SECTION RIGHT BOTTOM RIBBON
+
+
+CHANGE TO
+
+

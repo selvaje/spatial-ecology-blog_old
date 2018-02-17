@@ -1,0 +1,9 @@
+Create Child Theme
+
+Create folder including 2 files:
+/home/victoria/Desktop/Wordpress/HowToLookUp/zerif-lite-child 
+
+Filezilla upload to website :
+host: www.spatial-ecology.net
+
+/try/wp-content/themes/zerif-lite-child

@@ -1,0 +1,17 @@
+ls -l /var/www/wordpress
+
+750 
+drwxr-x--- 5 root root  4096 Apr 18  2015 wp-content
+
+change to 
+755
+-rwxr-xr-x (I will try drwxr-xr-x)
+
+
+sudo chmod -rwxr-xr-x /var/www/wordpress/wp-content
+
+http://www.fabiblog.de/wordpress-child-theme-erstellen/
+
+http://stackoverflow.com/questions/13999689/wordpress-child-theme-not-working
+
+http://www.moreofless.co.uk/linux-difference-soft-symbolic-link-and-hard-link/

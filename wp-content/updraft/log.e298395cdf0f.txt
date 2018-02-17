@@ -1,0 +1,614 @@
+0000.001 (0) Opened log file at time: Thu, 16 Mar 2017 18:07:08 +0000 on http://www.spatial-ecology.net/try
+0000.003 (0) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.35 WP: 4.7.3 PHP: 5.3.29 (cgi-fcgi, Linux walcustweb0404.int.bizland.net 3.14.77 #1 SMP Thu Oct 20 18:26:58 EDT 2016 x86_64) MySQL: 5.6.32 WPLANG: en_GB Server: Apache/2 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 78.7M | 79.5M) multisite: N openssl: OpenSSL 1.0.1 14 Mar 2012 mcrypt: Y LANG:  ZipArchive::addFile: Y
+0000.005 (0) Free space on disk containing Updraft's temporary directory: 20059735 MB
+0000.010 (0) Tasks: Backup files: 1 (schedule: manual) Backup DB: 1 (schedule: manual)
+0000.016 (0) Requesting semaphore lock (fd) (apparently not via scheduler)
+0000.019 (0) Set semaphore last lock (fd) time to 2017-03-16 18:07:08
+0000.020 (0) Semaphore lock (fd) complete
+0000.025 (0) Backup run: resumption=0, nonce=e298395cdf0f, begun at=1489687628 (0s ago), job type=backup
+0000.028 (0) Scheduling a resumption (1) after 300 seconds (1489687928) in case this run gets aborted
+0000.042 (0) Checking if we have a zip executable available
+0000.044 (0) Testing: /usr/bin/zip
+0000.059 (0) Output: zip warning: binziptest/test.zip not found or empty
+0000.062 (0) Output: adding: binziptest/subdir1/	(in=0) (out=0) (stored 0%)
+0000.064 (0) Output: adding: binziptest/subdir1/subdir2/	(in=0) (out=0) (stored 0%)
+0000.065 (0) Output: adding: binziptest/subdir1/subdir2/test.html	(in=131) (out=107) (deflated 18%)
+0000.066 (0) Output: total bytes=131, compressed=107 -> 18% savings
+0000.083 (0) Output: adding: binziptest/subdir1/subdir2/test2.html	(in=138) (out=113) (deflated 18%)
+0000.085 (0) Output: total bytes=269, compressed=220 -> 18% savings
+0000.101 (0) Working binary zip found: /usr/bin/zip
+0000.104 (0) Zip engine: found/will use a binary zip: /usr/bin/zip
+0000.105 (0) Creation of backups of directories: beginning
+0000.111 (0) Beginning creation of dump of plugins (split every: 400 MB)
+0008.795 (0) Total entities for the zip file: 1486 directories, 10267 files (0 skipped as non-modified), 150.3 MB
+0008.800 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 2.0 seconds have passed since the last write (0 MB, 1 (1) files added so far); re-opening (prior size: 0 KB)
+0009.025 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: size is now: 0.30 MB
+0009.075 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 100 files added (on-disk size: 339.5 KB)
+0009.123 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 200 files added (on-disk size: 339.5 KB)
+0009.173 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 300 files added (on-disk size: 339.5 KB)
+0009.219 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 400 files added (on-disk size: 339.5 KB)
+0009.271 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 500 files added (on-disk size: 339.5 KB)
+0009.274 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (8.7 MB, 10267 files batched, 501 (502) added so far); re-opening (prior size: 339.5 KB)
+0010.167 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: size is now: 4.10 MB
+0010.236 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 600 files added (on-disk size: 4171.1 KB)
+0010.293 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 700 files added (on-disk size: 4171.1 KB)
+0010.365 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 800 files added (on-disk size: 4171.1 KB)
+0010.425 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 900 files added (on-disk size: 4171.1 KB)
+0010.502 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 1000 files added (on-disk size: 4171.1 KB)
+0010.505 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (3 MB, 10267 files batched, 501 (1003) added so far); re-opening (prior size: 4171.1 KB)
+0011.063 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: size is now: 5.20 MB
+0011.121 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 1100 files added (on-disk size: 5367.7 KB)
+0011.173 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 1200 files added (on-disk size: 5367.7 KB)
+0011.225 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 1300 files added (on-disk size: 5367.7 KB)
+0011.276 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 1400 files added (on-disk size: 5367.7 KB)
+0011.326 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 1500 files added (on-disk size: 5367.7 KB)
+0011.329 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (5.7 MB, 10267 files batched, 501 (1504) added so far); re-opening (prior size: 5367.7 KB)
+0012.256 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: size is now: 7.70 MB
+0012.328 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 1600 files added (on-disk size: 7908.9 KB)
+0012.380 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 1700 files added (on-disk size: 7908.9 KB)
+0012.432 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 1800 files added (on-disk size: 7908.9 KB)
+0012.485 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 1900 files added (on-disk size: 7908.9 KB)
+0012.540 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 2000 files added (on-disk size: 7908.9 KB)
+0012.544 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (5.3 MB, 10267 files batched, 501 (2005) added so far); re-opening (prior size: 7908.9 KB)
+0013.728 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: size is now: 10.10 MB
+0013.797 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 2100 files added (on-disk size: 10317.7 KB)
+0013.869 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 2200 files added (on-disk size: 10317.7 KB)
+0013.947 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 2300 files added (on-disk size: 10317.7 KB)
+0014.011 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 2400 files added (on-disk size: 10317.7 KB)
+0014.089 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 2500 files added (on-disk size: 10317.7 KB)
+0014.095 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (10.4 MB, 10267 files batched, 501 (2506) added so far); re-opening (prior size: 10317.7 KB)
+0016.301 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: size is now: 13.50 MB
+0016.376 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 2600 files added (on-disk size: 13807.5 KB)
+0016.461 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 2700 files added (on-disk size: 13807.5 KB)
+0016.543 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 2800 files added (on-disk size: 13807.5 KB)
+0016.631 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 2900 files added (on-disk size: 13807.5 KB)
+0016.715 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 3000 files added (on-disk size: 13807.5 KB)
+0016.723 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (3.8 MB, 10267 files batched, 501 (3007) added so far); re-opening (prior size: 13807.5 KB)
+0017.986 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 3100 files added (on-disk size: 15091.8 KB)
+0018.079 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 3200 files added (on-disk size: 15091.8 KB)
+0018.194 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 3300 files added (on-disk size: 15091.8 KB)
+0018.289 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 3400 files added (on-disk size: 15091.8 KB)
+0018.396 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 3500 files added (on-disk size: 15091.8 KB)
+0018.405 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (7.2 MB, 10267 files batched, 501 (3508) added so far); re-opening (prior size: 15091.8 KB)
+0019.945 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 3600 files added (on-disk size: 17662.7 KB)
+0020.034 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 3700 files added (on-disk size: 17662.7 KB)
+0020.123 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 3800 files added (on-disk size: 17662.7 KB)
+0020.205 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 3900 files added (on-disk size: 17662.7 KB)
+0020.282 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 4000 files added (on-disk size: 17662.7 KB)
+0020.290 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (1 MB, 10267 files batched, 501 (4009) added so far); re-opening (prior size: 17662.7 KB)
+0021.239 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 4100 files added (on-disk size: 18115.2 KB)
+0021.331 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 4200 files added (on-disk size: 18115.2 KB)
+0021.409 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 4300 files added (on-disk size: 18115.2 KB)
+0021.507 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 4400 files added (on-disk size: 18115.2 KB)
+0021.589 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 4500 files added (on-disk size: 18115.2 KB)
+0021.599 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (3 MB, 10267 files batched, 501 (4510) added so far); re-opening (prior size: 18115.2 KB)
+0022.800 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 4600 files added (on-disk size: 19050.2 KB)
+0022.879 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 4700 files added (on-disk size: 19050.2 KB)
+0022.932 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 4800 files added (on-disk size: 19050.2 KB)
+0022.991 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 4900 files added (on-disk size: 19050.2 KB)
+0023.049 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 5000 files added (on-disk size: 19050.2 KB)
+0023.058 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (4.1 MB, 10267 files batched, 501 (5011) added so far); re-opening (prior size: 19050.2 KB)
+0024.252 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 5100 files added (on-disk size: 20457.4 KB)
+0024.327 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 5200 files added (on-disk size: 20457.4 KB)
+0024.426 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 5300 files added (on-disk size: 20457.4 KB)
+0024.522 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 5400 files added (on-disk size: 20457.4 KB)
+0024.623 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 5500 files added (on-disk size: 20457.4 KB)
+0024.635 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (3.9 MB, 10267 files batched, 501 (5512) added so far); re-opening (prior size: 20457.4 KB)
+0026.111 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 5600 files added (on-disk size: 21903.9 KB)
+0026.190 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 5700 files added (on-disk size: 21903.9 KB)
+0026.266 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 5800 files added (on-disk size: 21903.9 KB)
+0026.339 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 5900 files added (on-disk size: 21903.9 KB)
+0026.415 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 6000 files added (on-disk size: 21903.9 KB)
+0026.425 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (15.4 MB, 10267 files batched, 501 (6013) added so far); re-opening (prior size: 21903.9 KB)
+0028.541 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 6100 files added (on-disk size: 25624.5 KB)
+0028.644 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 6200 files added (on-disk size: 25624.5 KB)
+0028.722 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 6300 files added (on-disk size: 25624.5 KB)
+0028.831 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 6400 files added (on-disk size: 25624.5 KB)
+0028.944 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 6500 files added (on-disk size: 25624.5 KB)
+0028.958 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (11 MB, 10267 files batched, 501 (6514) added so far); re-opening (prior size: 25624.5 KB)
+0031.314 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 6600 files added (on-disk size: 28518.2 KB)
+0031.404 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 6700 files added (on-disk size: 28518.2 KB)
+0031.495 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 6800 files added (on-disk size: 28518.2 KB)
+0031.571 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 6900 files added (on-disk size: 28518.2 KB)
+0031.649 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 7000 files added (on-disk size: 28518.2 KB)
+0031.661 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (7.1 MB, 10267 files batched, 501 (7015) added so far); re-opening (prior size: 28518.2 KB)
+0034.208 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 7100 files added (on-disk size: 30623.8 KB)
+0034.337 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 7200 files added (on-disk size: 30623.8 KB)
+0034.439 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 7300 files added (on-disk size: 30623.8 KB)
+0034.532 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 7400 files added (on-disk size: 30623.8 KB)
+0034.643 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 7500 files added (on-disk size: 30623.8 KB)
+0034.659 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (8.9 MB, 10267 files batched, 501 (7516) added so far); re-opening (prior size: 30623.8 KB)
+0036.394 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 7600 files added (on-disk size: 33095.6 KB)
+0036.488 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 7700 files added (on-disk size: 33095.6 KB)
+0036.576 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 7800 files added (on-disk size: 33095.6 KB)
+0036.668 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 7900 files added (on-disk size: 33095.6 KB)
+0036.759 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 8000 files added (on-disk size: 33095.6 KB)
+0036.780 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (11.9 MB, 10267 files batched, 501 (8017) added so far); re-opening (prior size: 33095.6 KB)
+0039.080 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 8100 files added (on-disk size: 39421.2 KB)
+0039.180 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 8200 files added (on-disk size: 39421.2 KB)
+0039.255 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 8300 files added (on-disk size: 39421.2 KB)
+0039.357 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 8400 files added (on-disk size: 39421.2 KB)
+0039.454 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 8500 files added (on-disk size: 39421.2 KB)
+0039.475 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (8.7 MB, 10267 files batched, 501 (8518) added so far); re-opening (prior size: 39421.2 KB)
+0042.473 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 8600 files added (on-disk size: 42902.1 KB)
+0042.560 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 8700 files added (on-disk size: 42902.1 KB)
+0042.659 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 8800 files added (on-disk size: 42902.1 KB)
+0042.747 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 8900 files added (on-disk size: 42902.1 KB)
+0042.882 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 9000 files added (on-disk size: 42902.1 KB)
+0042.901 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (8 MB, 10267 files batched, 501 (9019) added so far); re-opening (prior size: 42902.1 KB)
+0045.036 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 9100 files added (on-disk size: 47757.9 KB)
+0045.102 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 9200 files added (on-disk size: 47757.9 KB)
+0045.193 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 9300 files added (on-disk size: 47757.9 KB)
+0045.270 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 9400 files added (on-disk size: 47757.9 KB)
+0045.371 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 9500 files added (on-disk size: 47757.9 KB)
+0045.400 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (19.7 MB, 10267 files batched, 501 (9520) added so far); re-opening (prior size: 47757.9 KB)
+0048.563 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 9600 files added (on-disk size: 53817.3 KB)
+0048.661 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 9700 files added (on-disk size: 53817.3 KB)
+0048.743 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 9800 files added (on-disk size: 53817.3 KB)
+0048.818 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 9900 files added (on-disk size: 53817.3 KB)
+0048.897 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 10000 files added (on-disk size: 53817.3 KB)
+0048.914 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (2.1 MB, 10267 files batched, 501 (10021) added so far); re-opening (prior size: 53817.3 KB)
+0050.753 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 10100 files added (on-disk size: 54538.6 KB)
+0050.837 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip.tmp: 10200 files added (on-disk size: 54538.6 KB)
+0053.224 (0) Created plugins zip (0) - 55036.9 KB in 53.1 s (1036.3 KB/s) (SHA1 checksum: d5027458a627170281551021d7bb3e99e20b63fa)
+0053.233 (0) Beginning creation of dump of themes (split every: 400 MB)
+0053.848 (0) Total entities for the zip file: 113 directories, 775 files (0 skipped as non-modified), 16.7 MB
+0053.904 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip.tmp: 100 files added (on-disk size: 0 KB)
+0053.957 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip.tmp: 200 files added (on-disk size: 0 KB)
+0054.010 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip.tmp: 300 files added (on-disk size: 0 KB)
+0054.060 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip.tmp: 400 files added (on-disk size: 0 KB)
+0054.113 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip.tmp: 500 files added (on-disk size: 0 KB)
+0054.115 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (10.1 MB, 775 files batched, 501 (501) added so far); re-opening (prior size: 0 KB)
+0054.986 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip.tmp: size is now: 7.10 MB
+0055.065 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip.tmp: 600 files added (on-disk size: 7268.9 KB)
+0055.164 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip.tmp: 700 files added (on-disk size: 7268.9 KB)
+0056.463 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip.tmp: size is now: 12.30 MB
+0056.610 (0) Created themes zip (0) - 12588.6 KB in 3.4 s (3735.4 KB/s) (SHA1 checksum: d889ea3d2a602f957f5ae4e3329efc2572bda9e6)
+0056.618 (0) Exclusion option setting (uploads): backup*,*backups,backwpup*,wp-clone,snapshots
+0056.619 (0) Looking for candidates to back up in: /hermes/walnaweb10a/b2037/moo.speco/try/wp-content/uploads
+0056.621 (0) finding files: 2015: adding to list (1)
+0056.622 (0) finding files: 2016: adding to list (2)
+0056.623 (0) finding files: 2017: adding to list (3)
+0056.625 (0) finding files: bws_captcha_images: adding to list (4)
+0056.628 (0) finding files: bws-custom-code: adding to list (5)
+0056.630 (0) Beginning creation of dump of uploads (split every: 400 MB)
+0057.412 (0) Total entities for the zip file: 35 directories, 961 files (0 skipped as non-modified), 82.3 MB
+0057.466 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: 100 files added (on-disk size: 0 KB)
+0057.519 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: 200 files added (on-disk size: 0 KB)
+0057.577 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: 300 files added (on-disk size: 0 KB)
+0057.625 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 25 MB added on this batch (25 MB, 961 files batched, 383 (383) added so far); re-opening (prior size: 0 KB)
+0058.751 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: size is now: 23.20 MB
+0058.757 (0) A useful amount of data was added after this amount of zip processing: 2.9 s (normalised: 2.9 s, rate: 8848.2 KB/s)
+0058.760 (0) Performance is good - will increase the amount of data we attempt to batch (time=2.8941049575806, normalised_time=2.8932413248685, max_time=-1, data points known=0, old_max_bytes=26214400, new_max_bytes=54363387)
+0058.774 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: 400 files added (on-disk size: 23741.6 KB)
+0058.842 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: 500 files added (on-disk size: 23741.6 KB)
+0058.929 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: 600 files added (on-disk size: 23741.6 KB)
+0058.992 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: 700 files added (on-disk size: 23741.6 KB)
+0059.033 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 51.8 MB added on this batch (52 MB, 961 files batched, 383 (766) added so far); re-opening (prior size: 23741.6 KB)
+0060.964 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: size is now: 75.30 MB
+0060.969 (0) A useful amount of data was added after this amount of zip processing: 3.1 s (normalised: 3.1 s, rate: 17155.9 KB/s)
+0060.971 (0) Performance is good - will increase the amount of data we attempt to batch (time=3.1059889793396, normalised_time=3.0945153950853, max_time=-1, data points known=0, old_max_bytes=54363387, new_max_bytes=105405945)
+0060.992 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: 800 files added (on-disk size: 77102.4 KB)
+0061.059 (0) Zip: backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip.tmp: 900 files added (on-disk size: 77102.4 KB)
+0064.172 (0) Created uploads zip (0) - 82500.3 KB in 7.5 s (10956.5 KB/s) (SHA1 checksum: 834e851405cea27a1bc0ac85973d5c3af4a6e904)
+0064.181 (0) Beginning backup of other directories found in the content directory (index: 0)
+0064.182 (0) Exclusion option setting (others): upgrade,cache,updraft,backup*,*backups,mysql.sql,debug.log
+0064.183 (0) Looking for candidates to back up in: /hermes/walnaweb10a/b2037/moo.speco/try/wp-content
+0064.185 (0) finding files: cache: skipping: excluded by options
+0064.186 (0) finding files: languages: adding to list (1)
+0064.187 (0) finding files: plugins: skipping: this is the plugins directory
+0064.188 (0) finding files: themes: skipping: this is the themes directory
+0064.189 (0) finding files: upgrade: skipping: excluded by options
+0064.190 (0) finding files: uploads: skipping: this is the uploads directory
+0064.192 (0) finding files: w3tc-config: adding to list (2)
+0064.193 (0) finding files: wflogs: adding to list (3)
+0064.195 (0) finding files: index.php: adding to list (4)
+0064.196 (0) finding files: install.php: adding to list (5)
+0064.197 (0) finding files: wfcache: adding to list (6)
+0064.198 (0) finding files: advanced-cache.php: adding to list (7)
+0064.199 (0) finding files: updraft: skipping: this is the updraft directory
+0064.243 (0) Total entities for the zip file: 6 directories, 49 files (0 skipped as non-modified), 2.7 MB
+0064.520 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip.tmp: size is now: 0.70 MB
+0064.536 (0) Created others zip (0) - 746.1 KB in 0.3 s (2255 KB/s) (SHA1 checksum: 318ebbb33f6a5219ab1c2b88a8307cd5a34217d5)
+0064.547 (0) Saving backup status to database (elements: 8)
+0064.551 (0) Beginning creation of database dump (WordPress DB)
+0064.555 (0) Testing: /usr/bin/mysqldump
+0064.576 (0) Output: /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\n/*!40103 SET TIME_ZONE='+00:00' */;\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\n/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\n/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\n/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\nDROP TABLE IF EXISTS `wp_evie_options`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!40101 SET character_set_client = utf8 */ (truncated - 1223 bytes total)
+0064.579 (0) Working binary mysqldump found: /usr/bin/mysqldump
+0064.599 (0) Table wp_evie_options: Total expected rows (approximate): 525
+0064.686 (0) Table wp_evie_options: Total rows added: 521 in 0.09 seconds
+0064.691 (0) Table wp_evie_options: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_options.table.gz - 246 KB)
+0064.699 (0) Table wp_evie_users: Total expected rows (approximate): 1
+0064.703 (0) Table wp_evie_users: Total rows added: 1 in 0.00 seconds
+0064.705 (0) Table wp_evie_users: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_users.table.gz - 0.6 KB)
+0064.711 (0) Table wp_evie_usermeta: Total expected rows (approximate): 32
+0064.715 (0) Table wp_evie_usermeta: Total rows added: 32 in 0.00 seconds
+0064.717 (0) Table wp_evie_usermeta: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_usermeta.table.gz - 1.8 KB)
+0064.728 (0) Table wp_evie_commentmeta: Total expected rows (approximate): 100
+0064.739 (0) Table wp_evie_commentmeta: Total rows added: 100 in 0.01 seconds
+0064.742 (0) Table wp_evie_commentmeta: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_commentmeta.table.gz - 9 KB)
+0064.750 (0) Table wp_evie_comments: Total expected rows (approximate): 16
+0064.756 (0) Table wp_evie_comments: Total rows added: 16 in 0.01 seconds
+0064.759 (0) Table wp_evie_comments: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_comments.table.gz - 8.1 KB)
+0064.770 (0) Table wp_evie_links: Total expected rows (approximate): 0
+0064.780 (0) Table wp_evie_links: Total rows added: 0 in 0.01 seconds
+0064.787 (0) Table wp_evie_links: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_links.table.gz - 0.4 KB)
+0064.798 (0) Table wp_evie_postmeta: Total expected rows (approximate): 591
+0064.828 (0) Table wp_evie_postmeta: Total rows added: 591 in 0.03 seconds
+0064.831 (0) Table wp_evie_postmeta: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_postmeta.table.gz - 17.2 KB)
+0064.838 (0) Table wp_evie_posts: Total expected rows (approximate): 727
+0065.080 (0) Table wp_evie_posts: Total rows added: 727 in 0.24 seconds
+0065.085 (0) Table wp_evie_posts: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_posts.table.gz - 244 KB)
+0065.093 (0) Table wp_evie_term_relationships: Total expected rows (approximate): 48
+0065.097 (0) Table wp_evie_term_relationships: Total rows added: 48 in 0.00 seconds
+0065.098 (0) Table wp_evie_term_relationships: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_term_relationships.table.gz - 0.5 KB)
+0065.106 (0) Table wp_evie_term_taxonomy: Total expected rows (approximate): 21
+0065.109 (0) Table wp_evie_term_taxonomy: Total rows added: 21 in 0.00 seconds
+0065.111 (0) Table wp_evie_term_taxonomy: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_term_taxonomy.table.gz - 0.6 KB)
+0065.118 (0) Table wp_evie_termmeta: Total expected rows (approximate): 0
+0065.121 (0) Table wp_evie_termmeta: Total rows added: 0 in 0.00 seconds
+0065.123 (0) Table wp_evie_termmeta: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_termmeta.table.gz - 0.4 KB)
+0065.146 (0) Table wp_evie_terms: Total expected rows (approximate): 21
+0065.150 (0) Table wp_evie_terms: Total rows added: 21 in 0.00 seconds
+0065.152 (0) Table wp_evie_terms: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_terms.table.gz - 0.6 KB)
+0065.161 (0) Table wp_evie_cptch_images: Total expected rows (approximate): 112
+0065.167 (0) Table wp_evie_cptch_images: Total rows added: 112 in 0.00 seconds
+0065.170 (0) Table wp_evie_cptch_images: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_cptch_images.table.gz - 0.9 KB)
+0065.177 (0) Table wp_evie_cptch_packages: Total expected rows (approximate): 12
+0065.182 (0) Table wp_evie_cptch_packages: Total rows added: 12 in 0.00 seconds
+0065.184 (0) Table wp_evie_cptch_packages: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_cptch_packages.table.gz - 0.5 KB)
+0065.193 (0) Table wp_evie_cptch_whitelist: Total expected rows (approximate): 0
+0065.197 (0) Table wp_evie_cptch_whitelist: Total rows added: 0 in 0.00 seconds
+0065.199 (0) Table wp_evie_cptch_whitelist: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_cptch_whitelist.table.gz - 0.3 KB)
+0065.221 (0) Table wp_evie_mail_bank: Total expected rows (approximate): 1
+0065.225 (0) Table wp_evie_mail_bank: Total rows added: 1 in 0.00 seconds
+0065.232 (0) Table wp_evie_mail_bank: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_mail_bank.table.gz - 0.5 KB)
+0065.240 (0) Table wp_evie_statistics_exclusions: Total expected rows (approximate): 0
+0065.243 (0) Table wp_evie_statistics_exclusions: Total rows added: 0 in 0.00 seconds
+0065.245 (0) Table wp_evie_statistics_exclusions: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_exclusions.table.gz - 0.3 KB)
+0065.252 (0) Table wp_evie_statistics_historical: Total expected rows (approximate): 0
+0065.256 (0) Table wp_evie_statistics_historical: Total rows added: 0 in 0.00 seconds
+0065.257 (0) Table wp_evie_statistics_historical: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_historical.table.gz - 0.3 KB)
+0065.265 (0) Table wp_evie_statistics_pages: Total expected rows (approximate): 2577
+0065.375 (0) Table wp_evie_statistics_pages: Total rows added: 4443 in 0.11 seconds
+0065.378 (0) Table wp_evie_statistics_pages: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_pages.table.gz - 21.6 KB)
+0065.388 (0) Table wp_evie_statistics_search: Total expected rows (approximate): 1211
+0065.460 (0) Table wp_evie_statistics_search: Total rows added: 1967 in 0.07 seconds
+0065.463 (0) Table wp_evie_statistics_search: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_search.table.gz - 17.4 KB)
+0065.471 (0) Table wp_evie_statistics_useronline: Total expected rows (approximate): 1
+0065.474 (0) Table wp_evie_statistics_useronline: Total rows added: 0 in 0.00 seconds
+0065.475 (0) Table wp_evie_statistics_useronline: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_useronline.table.gz - 0.4 KB)
+0065.488 (0) Table wp_evie_statistics_visit: Total expected rows (approximate): 137
+0065.498 (0) Table wp_evie_statistics_visit: Total rows added: 239 in 0.01 seconds
+0065.500 (0) Table wp_evie_statistics_visit: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_visit.table.gz - 3.4 KB)
+0065.507 (0) Table wp_evie_statistics_visitor: Total expected rows (approximate): 22372
+0065.765 (0) Table wp_evie_statistics_visitor: binary mysqldump finished (writes: 45) in 0.26 seconds
+0065.769 (0) Table wp_evie_statistics_visitor: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_visitor.table.gz - 534.4 KB)
+0065.777 (0) Table wp_evie_testimonial_slider: Total expected rows (approximate): 6
+0065.780 (0) Table wp_evie_testimonial_slider: Total rows added: 6 in 0.00 seconds
+0065.782 (0) Table wp_evie_testimonial_slider: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_testimonial_slider.table.gz - 0.4 KB)
+0065.790 (0) Table wp_evie_testimonial_slider_meta: Total expected rows (approximate): 2
+0065.793 (0) Table wp_evie_testimonial_slider_meta: Total rows added: 2 in 0.00 seconds
+0065.796 (0) Table wp_evie_testimonial_slider_meta: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_testimonial_slider_meta.table.gz - 0.4 KB)
+0065.806 (0) Table wp_evie_testimonial_slider_postmeta: Total expected rows (approximate): 0
+0065.809 (0) Table wp_evie_testimonial_slider_postmeta: Total rows added: 0 in 0.00 seconds
+0065.816 (0) Table wp_evie_testimonial_slider_postmeta: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_testimonial_slider_postmeta.table.gz - 0.3 KB)
+0065.834 (0) Table wp_evie_wfBadLeechers: Total expected rows (approximate): 0
+0065.837 (0) Table wp_evie_wfBadLeechers: Total rows added: 0 in 0.00 seconds
+0065.840 (0) Table wp_evie_wfBadLeechers: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfBadLeechers.table.gz - 0.3 KB)
+0065.847 (0) Table wp_evie_wfBlockedIPLog: Total expected rows (approximate): 388
+0065.861 (0) Table wp_evie_wfBlockedIPLog: Total rows added: 374 in 0.01 seconds
+0065.863 (0) Table wp_evie_wfBlockedIPLog: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfBlockedIPLog.table.gz - 3.2 KB)
+0065.871 (0) Table wp_evie_wfBlocks: Total expected rows (approximate): 0
+0065.874 (0) Table wp_evie_wfBlocks: Total rows added: 0 in 0.00 seconds
+0065.876 (0) Table wp_evie_wfBlocks: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfBlocks.table.gz - 0.4 KB)
+0065.883 (0) Table wp_evie_wfBlocksAdv: Total expected rows (approximate): 0
+0065.886 (0) Table wp_evie_wfBlocksAdv: Total rows added: 0 in 0.00 seconds
+0065.888 (0) Table wp_evie_wfBlocksAdv: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfBlocksAdv.table.gz - 0.3 KB)
+0065.895 (0) Table wp_evie_wfConfig: Total expected rows (approximate): 140
+0065.905 (0) Table wp_evie_wfConfig: Total rows added: 171 in 0.01 seconds
+0065.908 (0) Table wp_evie_wfConfig: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfConfig.table.gz - 8.1 KB)
+0065.917 (0) Table wp_evie_wfCrawlers: Total expected rows (approximate): 28
+0065.922 (0) Table wp_evie_wfCrawlers: Total rows added: 29 in 0.00 seconds
+0065.924 (0) Table wp_evie_wfCrawlers: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfCrawlers.table.gz - 0.8 KB)
+0065.935 (0) Table wp_evie_wfFileMods: Total expected rows (approximate): 8616
+0066.062 (0) Table wp_evie_wfFileMods: binary mysqldump finished (writes: 32) in 0.13 seconds
+0066.067 (0) Table wp_evie_wfFileMods: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfFileMods.table.gz - 475.9 KB)
+0066.075 (0) Table wp_evie_wfHits: Total expected rows (approximate): 1636
+0066.253 (0) Table wp_evie_wfHits: Total rows added: 2160 in 0.18 seconds
+0066.257 (0) Table wp_evie_wfHits: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfHits.table.gz - 48.5 KB)
+0066.267 (0) Table wp_evie_wfHoover: Total expected rows (approximate): 0
+0066.271 (0) Table wp_evie_wfHoover: Total rows added: 0 in 0.00 seconds
+0066.273 (0) Table wp_evie_wfHoover: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfHoover.table.gz - 0.3 KB)
+0066.283 (0) Table wp_evie_wfIssues: Total expected rows (approximate): 0
+0066.286 (0) Table wp_evie_wfIssues: Total rows added: 0 in 0.00 seconds
+0066.288 (0) Table wp_evie_wfIssues: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfIssues.table.gz - 0.4 KB)
+0066.311 (0) Table wp_evie_wfKnownFileList: Total expected rows (approximate): 11306
+0066.388 (0) Table wp_evie_wfKnownFileList: binary mysqldump finished (writes: 28) in 0.08 seconds
+0066.393 (0) Table wp_evie_wfKnownFileList: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfKnownFileList.table.gz - 98.7 KB)
+0066.403 (0) Table wp_evie_wfLeechers: Total expected rows (approximate): 581
+0066.423 (0) Table wp_evie_wfLeechers: Total rows added: 750 in 0.02 seconds
+0066.425 (0) Table wp_evie_wfLeechers: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfLeechers.table.gz - 6 KB)
+0066.433 (0) Table wp_evie_wfLockedOut: Total expected rows (approximate): 0
+0066.436 (0) Table wp_evie_wfLockedOut: Total rows added: 0 in 0.00 seconds
+0066.438 (0) Table wp_evie_wfLockedOut: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfLockedOut.table.gz - 0.3 KB)
+0066.447 (0) Table wp_evie_wfLocs: Total expected rows (approximate): 0
+0066.451 (0) Table wp_evie_wfLocs: Total rows added: 1 in 0.00 seconds
+0066.452 (0) Table wp_evie_wfLocs: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfLocs.table.gz - 0.5 KB)
+0066.461 (0) Table wp_evie_wfLogins: Total expected rows (approximate): 806
+0066.515 (0) Table wp_evie_wfLogins: Total rows added: 892 in 0.05 seconds
+0066.517 (0) Table wp_evie_wfLogins: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfLogins.table.gz - 15.6 KB)
+0066.528 (0) Table wp_evie_wfNet404s: Total expected rows (approximate): 0
+0066.532 (0) Table wp_evie_wfNet404s: Total rows added: 1 in 0.00 seconds
+0066.534 (0) Table wp_evie_wfNet404s: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfNet404s.table.gz - 0.4 KB)
+0066.547 (0) Table wp_evie_wfNotifications: Total expected rows (approximate): 3
+0066.552 (0) Table wp_evie_wfNotifications: Total rows added: 15 in 0.00 seconds
+0066.554 (0) Table wp_evie_wfNotifications: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfNotifications.table.gz - 2.2 KB)
+0066.563 (0) Table wp_evie_wfReverseCache: Total expected rows (approximate): 4
+0066.567 (0) Table wp_evie_wfReverseCache: Total rows added: 6 in 0.00 seconds
+0066.569 (0) Table wp_evie_wfReverseCache: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfReverseCache.table.gz - 0.5 KB)
+0066.579 (0) Table wp_evie_wfSNIPCache: Total expected rows (approximate): 0
+0066.585 (0) Table wp_evie_wfSNIPCache: Total rows added: 0 in 0.00 seconds
+0066.588 (0) Table wp_evie_wfSNIPCache: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfSNIPCache.table.gz - 0.4 KB)
+0066.601 (0) Table wp_evie_wfScanners: Total expected rows (approximate): 146
+0066.616 (0) Table wp_evie_wfScanners: Total rows added: 203 in 0.01 seconds
+0066.618 (0) Table wp_evie_wfScanners: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfScanners.table.gz - 2.1 KB)
+0066.628 (0) Table wp_evie_wfStatus: Total expected rows (approximate): 938
+0066.667 (0) Table wp_evie_wfStatus: Total rows added: 939 in 0.04 seconds
+0066.671 (0) Table wp_evie_wfStatus: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfStatus.table.gz - 14.7 KB)
+0066.680 (0) Table wp_evie_wfThrottleLog: Total expected rows (approximate): 0
+0066.686 (0) Table wp_evie_wfThrottleLog: Total rows added: 0 in 0.00 seconds
+0066.688 (0) Table wp_evie_wfThrottleLog: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfThrottleLog.table.gz - 0.3 KB)
+0066.697 (0) Table wp_evie_wfVulnScanners: Total expected rows (approximate): 0
+0066.700 (0) Table wp_evie_wfVulnScanners: Total rows added: 0 in 0.00 seconds
+0066.703 (0) Table wp_evie_wfVulnScanners: finishing file (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfVulnScanners.table.gz - 0.3 KB)
+0066.709 (0) Skipping table (lacks our prefix (wp_evie_)): wptg_tables
+0066.716 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_options.table.gz (1/50): adding to final database dump
+0066.782 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_users.table.gz (2/50): adding to final database dump
+0066.786 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_usermeta.table.gz (3/50): adding to final database dump
+0066.790 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_commentmeta.table.gz (4/50): adding to final database dump
+0066.796 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_comments.table.gz (5/50): adding to final database dump
+0066.803 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_links.table.gz (6/50): adding to final database dump
+0066.807 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_postmeta.table.gz (7/50): adding to final database dump
+0066.821 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_posts.table.gz (8/50): adding to final database dump
+0066.934 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_term_relationships.table.gz (9/50): adding to final database dump
+0066.938 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_term_taxonomy.table.gz (10/50): adding to final database dump
+0066.941 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_termmeta.table.gz (11/50): adding to final database dump
+0066.944 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_terms.table.gz (12/50): adding to final database dump
+0066.947 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_cptch_images.table.gz (13/50): adding to final database dump
+0066.950 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_cptch_packages.table.gz (14/50): adding to final database dump
+0066.953 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_cptch_whitelist.table.gz (15/50): adding to final database dump
+0066.956 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_mail_bank.table.gz (16/50): adding to final database dump
+0066.959 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_exclusions.table.gz (17/50): adding to final database dump
+0066.961 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_historical.table.gz (18/50): adding to final database dump
+0066.966 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_pages.table.gz (19/50): adding to final database dump
+0067.013 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_search.table.gz (20/50): adding to final database dump
+0067.044 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_useronline.table.gz (21/50): adding to final database dump
+0067.048 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_visit.table.gz (22/50): adding to final database dump
+0067.054 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_statistics_visitor.table.gz (23/50): adding to final database dump
+0067.226 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_testimonial_slider.table.gz (24/50): adding to final database dump
+0067.232 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_testimonial_slider_meta.table.gz (25/50): adding to final database dump
+0067.245 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_testimonial_slider_postmeta.table.gz (26/50): adding to final database dump
+0067.248 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfBadLeechers.table.gz (27/50): adding to final database dump
+0067.251 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfBlockedIPLog.table.gz (28/50): adding to final database dump
+0067.258 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfBlocks.table.gz (29/50): adding to final database dump
+0067.261 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfBlocksAdv.table.gz (30/50): adding to final database dump
+0067.263 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfConfig.table.gz (31/50): adding to final database dump
+0067.269 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfCrawlers.table.gz (32/50): adding to final database dump
+0067.272 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfFileMods.table.gz (33/50): adding to final database dump
+0067.354 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfHits.table.gz (34/50): adding to final database dump
+0067.402 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfHoover.table.gz (35/50): adding to final database dump
+0067.406 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfIssues.table.gz (36/50): adding to final database dump
+0067.409 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfKnownFileList.table.gz (37/50): adding to final database dump
+0067.447 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfLeechers.table.gz (38/50): adding to final database dump
+0067.458 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfLockedOut.table.gz (39/50): adding to final database dump
+0067.462 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfLocs.table.gz (40/50): adding to final database dump
+0067.465 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfLogins.table.gz (41/50): adding to final database dump
+0067.485 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfNet404s.table.gz (42/50): adding to final database dump
+0067.899 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfNotifications.table.gz (43/50): adding to final database dump
+0067.903 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfReverseCache.table.gz (44/50): adding to final database dump
+0067.906 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfSNIPCache.table.gz (45/50): adding to final database dump
+0067.909 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfScanners.table.gz (46/50): adding to final database dump
+0067.914 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfStatus.table.gz (47/50): adding to final database dump
+0067.931 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfThrottleLog.table.gz (48/50): adding to final database dump
+0067.935 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db-table-wp_evie_wfVulnScanners.table.gz (49/50): adding to final database dump
+0067.954 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: finished writing out complete database file (1760 KB)
+0067.998 (0) Total database tables backed up: 49 (backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz, size: 1827982, checksum (SHA1): 6b4efd0dfb3ed12c59b35eca34c36036afd610b7)
+0068.009 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+0068.010 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+0068.013 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+0068.014 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip: others: This file has not yet been successfully uploaded: will queue
+0068.015 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: db: This file has not yet been successfully uploaded: will queue
+0068.017 (0) Saving backup history. Total backup size: 149.1 MB
+0068.020 (0) Requesting upload of the files that have not yet been successfully uploaded (5)
+0068.024 (0) Cloud backup selection (1/1): email (last)
+0068.026 (0) Beginning dispatch of backup to remote (email)
+0068.029 (0) [Warning] backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: This backup archive is 53.7 MB in size - the attempt to send this via email is likely to fail (few email servers allow attachments of this size). If so, you should switch to using a different remote storage method.
+0068.030 (0) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: email to: victo...
+0305.461 (1) Opened log file at time: Thu, 16 Mar 2017 18:12:13 +0000 on http://www.spatial-ecology.net/try
+0305.463 (1) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.35 WP: 4.7.3 PHP: 5.3.29 (cgi-fcgi, Linux walcustweb0404.int.bizland.net 3.14.77 #1 SMP Thu Oct 20 18:26:58 EDT 2016 x86_64) MySQL: 5.6.32 WPLANG: en_GB Server: Apache/2 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 63.2M | 63.8M) multisite: N openssl: OpenSSL 1.0.1 14 Mar 2012 mcrypt: Y LANG:  ZipArchive::addFile: Y
+0305.465 (1) Free space on disk containing Updraft's temporary directory: 20059618.1 MB
+0305.468 (1) Backup run: resumption=1, nonce=e298395cdf0f, begun at=1489687628 (305s ago), job type=backup, previous check-in=66.7s
+0305.470 (1) Scheduling a resumption (2) after 300 seconds (1489688233) in case this run gets aborted
+0305.485 (1) Checking if we have a zip executable available
+0305.486 (1) Zip engine: found/will use a binary zip: /usr/bin/zip
+0305.488 (1) Creation of backups of directories: already finished
+0305.491 (1) Saving backup status to database (elements: 8)
+0305.495 (1) Database dump (WordPress DB): Creation was completed already
+0305.502 (1) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+0305.504 (1) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+0305.505 (1) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+0305.506 (1) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip: others: This file has not yet been successfully uploaded: will queue
+0305.507 (1) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: db: This file has not yet been successfully uploaded: will queue
+0305.508 (1) Saving backup history. Total backup size: 149.1 MB
+0305.512 (1) Requesting upload of the files that have not yet been successfully uploaded (5)
+0305.513 (1) Cloud backup selection (1/1): email (last)
+0305.516 (1) Beginning dispatch of backup to remote (email)
+0305.517 (1) [Warning] backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: This backup archive is 53.7 MB in size - the attempt to send this via email is likely to fail (few email servers allow attachments of this size). If so, you should switch to using a different remote storage method.
+0305.519 (1) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: email to: victo...
+0608.913 (2) Opened log file at time: Thu, 16 Mar 2017 18:17:17 +0000 on http://www.spatial-ecology.net/try
+0608.914 (2) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.35 WP: 4.7.3 PHP: 5.3.29 (cgi-fcgi, Linux walcustweb0404.int.bizland.net 3.14.77 #1 SMP Thu Oct 20 18:26:58 EDT 2016 x86_64) MySQL: 5.6.32 WPLANG: en_GB Server: Apache/2 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 63.2M | 63.8M) multisite: N openssl: OpenSSL 1.0.1 14 Mar 2012 mcrypt: Y LANG:  ZipArchive::addFile: Y
+0608.916 (2) Free space on disk containing Updraft's temporary directory: 20059587.5 MB
+0608.918 (2) Backup run: resumption=2, nonce=e298395cdf0f, begun at=1489687628 (609s ago), job type=backup
+0608.921 (2) Scheduling a resumption (3) after 300 seconds (1489688537) in case this run gets aborted
+0608.947 (2) Checking if we have a zip executable available
+0608.951 (2) Zip engine: found/will use a binary zip: /usr/bin/zip
+0608.957 (2) Creation of backups of directories: already finished
+0608.962 (2) Saving backup status to database (elements: 8)
+0608.966 (2) Database dump (WordPress DB): Creation was completed already
+0608.976 (2) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+0608.978 (2) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+0608.979 (2) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+0608.981 (2) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip: others: This file has not yet been successfully uploaded: will queue
+0608.982 (2) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: db: This file has not yet been successfully uploaded: will queue
+0609.001 (2) Saving backup history. Total backup size: 149.1 MB
+0609.012 (2) Requesting upload of the files that have not yet been successfully uploaded (5)
+0609.014 (2) Cloud backup selection (1/1): email (last)
+0609.019 (2) Beginning dispatch of backup to remote (email)
+0609.021 (2) [Warning] backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: This backup archive is 53.7 MB in size - the attempt to send this via email is likely to fail (few email servers allow attachments of this size). If so, you should switch to using a different remote storage method.
+0609.022 (2) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: email to: victo...
+0971.730 (3) Opened log file at time: Thu, 16 Mar 2017 18:23:19 +0000 on http://www.spatial-ecology.net/try
+0971.731 (3) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.35 WP: 4.7.3 PHP: 5.3.29 (cgi-fcgi, Linux walcustweb0404.int.bizland.net 3.14.77 #1 SMP Thu Oct 20 18:26:58 EDT 2016 x86_64) MySQL: 5.6.32 WPLANG: en_GB Server: Apache/2 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 63.2M | 63.8M) multisite: N openssl: OpenSSL 1.0.1 14 Mar 2012 mcrypt: Y LANG:  ZipArchive::addFile: Y
+0971.734 (3) Free space on disk containing Updraft's temporary directory: 20059576.4 MB
+0971.742 (3) Backup run: resumption=3, nonce=e298395cdf0f, begun at=1489687628 (971s ago), job type=backup
+0971.745 (3) Scheduling a resumption (4) after 300 seconds (1489688899) in case this run gets aborted
+0971.761 (3) Checking if we have a zip executable available
+0971.763 (3) Zip engine: found/will use a binary zip: /usr/bin/zip
+0971.764 (3) Creation of backups of directories: already finished
+0971.766 (3) Saving backup status to database (elements: 8)
+0971.770 (3) Database dump (WordPress DB): Creation was completed already
+0971.779 (3) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+0971.780 (3) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+0971.781 (3) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+0971.782 (3) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip: others: This file has not yet been successfully uploaded: will queue
+0971.783 (3) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: db: This file has not yet been successfully uploaded: will queue
+0971.784 (3) Saving backup history. Total backup size: 149.1 MB
+0971.788 (3) Requesting upload of the files that have not yet been successfully uploaded (5)
+0971.790 (3) Cloud backup selection (1/1): email (last)
+0971.792 (3) Beginning dispatch of backup to remote (email)
+0971.794 (3) [Warning] backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: This backup archive is 53.7 MB in size - the attempt to send this via email is likely to fail (few email servers allow attachments of this size). If so, you should switch to using a different remote storage method.
+0971.795 (3) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: email to: victo...
+1354.070 (4) Opened log file at time: Thu, 16 Mar 2017 18:29:42 +0000 on http://www.spatial-ecology.net/try
+1354.072 (4) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.35 WP: 4.7.3 PHP: 5.3.29 (cgi-fcgi, Linux walcustweb0404.int.bizland.net 3.14.77 #1 SMP Thu Oct 20 18:26:58 EDT 2016 x86_64) MySQL: 5.6.32 WPLANG: en_GB Server: Apache/2 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 63.2M | 63.8M) multisite: N openssl: OpenSSL 1.0.1 14 Mar 2012 mcrypt: Y LANG:  ZipArchive::addFile: Y
+1354.075 (4) Free space on disk containing Updraft's temporary directory: 20059678.6 MB
+1354.078 (4) Backup run: resumption=4, nonce=e298395cdf0f, begun at=1489687628 (1354s ago), job type=backup
+1354.082 (4) Scheduling a resumption (5) after 300 seconds (1489689282) in case this run gets aborted
+1354.098 (4) Checking if we have a zip executable available
+1354.099 (4) Zip engine: found/will use a binary zip: /usr/bin/zip
+1354.100 (4) Creation of backups of directories: already finished
+1354.104 (4) Saving backup status to database (elements: 8)
+1354.108 (4) Database dump (WordPress DB): Creation was completed already
+1354.117 (4) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+1354.119 (4) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+1354.120 (4) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+1354.122 (4) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip: others: This file has not yet been successfully uploaded: will queue
+1354.123 (4) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: db: This file has not yet been successfully uploaded: will queue
+1354.124 (4) Saving backup history. Total backup size: 149.1 MB
+1354.129 (4) Requesting upload of the files that have not yet been successfully uploaded (5)
+1354.130 (4) Cloud backup selection (1/1): email (last)
+1354.133 (4) Beginning dispatch of backup to remote (email)
+1354.135 (4) [Warning] backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: This backup archive is 53.7 MB in size - the attempt to send this via email is likely to fail (few email servers allow attachments of this size). If so, you should switch to using a different remote storage method.
+1354.136 (4) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: email to: victo...
+1696.402 (5) Opened log file at time: Thu, 16 Mar 2017 18:35:24 +0000 on http://www.spatial-ecology.net/try
+1696.405 (5) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.35 WP: 4.7.3 PHP: 5.3.29 (cgi-fcgi, Linux walcustweb0404.int.bizland.net 3.14.77 #1 SMP Thu Oct 20 18:26:58 EDT 2016 x86_64) MySQL: 5.6.32 WPLANG: en_GB Server: Apache/2 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 63.2M | 63.8M) multisite: N openssl: OpenSSL 1.0.1 14 Mar 2012 mcrypt: Y LANG:  ZipArchive::addFile: Y
+1696.406 (5) Free space on disk containing Updraft's temporary directory: 20059692.2 MB
+1696.409 (5) Backup run: resumption=5, nonce=e298395cdf0f, begun at=1489687628 (1696s ago), job type=backup
+1696.412 (5) Scheduling a resumption (6) after 300 seconds (1489689624) in case this run gets aborted
+1696.428 (5) Checking if we have a zip executable available
+1696.430 (5) Zip engine: found/will use a binary zip: /usr/bin/zip
+1696.431 (5) Creation of backups of directories: already finished
+1696.447 (5) Saving backup status to database (elements: 8)
+1696.451 (5) Database dump (WordPress DB): Creation was completed already
+1696.459 (5) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+1696.461 (5) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+1696.462 (5) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+1696.464 (5) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip: others: This file has not yet been successfully uploaded: will queue
+1696.465 (5) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: db: This file has not yet been successfully uploaded: will queue
+1696.467 (5) Saving backup history. Total backup size: 149.1 MB
+1696.471 (5) Requesting upload of the files that have not yet been successfully uploaded (5)
+1696.473 (5) Cloud backup selection (1/1): email (last)
+1696.475 (5) Beginning dispatch of backup to remote (email)
+1696.477 (5) [Warning] backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: This backup archive is 53.7 MB in size - the attempt to send this via email is likely to fail (few email servers allow attachments of this size). If so, you should switch to using a different remote storage method.
+1696.485 (5) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: email to: victo...
+2062.158 (6) Opened log file at time: Thu, 16 Mar 2017 18:41:30 +0000 on http://www.spatial-ecology.net/try
+2062.160 (6) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.35 WP: 4.7.3 PHP: 5.3.29 (cgi-fcgi, Linux walcustweb0404.int.bizland.net 3.14.77 #1 SMP Thu Oct 20 18:26:58 EDT 2016 x86_64) MySQL: 5.6.32 WPLANG: en_GB Server: Apache/2 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 63.2M | 63.8M) multisite: N openssl: OpenSSL 1.0.1 14 Mar 2012 mcrypt: Y LANG:  ZipArchive::addFile: Y
+2062.161 (6) Free space on disk containing Updraft's temporary directory: 20058850.2 MB
+2062.164 (6) Backup run: resumption=6, nonce=e298395cdf0f, begun at=1489687628 (2062s ago), job type=backup
+2062.167 (6) Scheduling a resumption (7) after 300 seconds (1489689990) in case this run gets aborted
+2062.181 (6) Checking if we have a zip executable available
+2062.182 (6) Zip engine: found/will use a binary zip: /usr/bin/zip
+2062.183 (6) Creation of backups of directories: already finished
+2062.186 (6) Saving backup status to database (elements: 8)
+2062.190 (6) Database dump (WordPress DB): Creation was completed already
+2062.197 (6) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+2062.198 (6) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+2062.199 (6) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+2062.201 (6) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip: others: This file has not yet been successfully uploaded: will queue
+2062.202 (6) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: db: This file has not yet been successfully uploaded: will queue
+2062.204 (6) Saving backup history. Total backup size: 149.1 MB
+2062.208 (6) Requesting upload of the files that have not yet been successfully uploaded (5)
+2062.209 (6) Cloud backup selection (1/1): email (last)
+2062.212 (6) Beginning dispatch of backup to remote (email)
+2062.213 (6) [Warning] backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: This backup archive is 53.7 MB in size - the attempt to send this via email is likely to fail (few email servers allow attachments of this size). If so, you should switch to using a different remote storage method.
+2062.214 (6) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: email to: victo...
+2618.088 (7) Opened log file at time: Thu, 16 Mar 2017 18:50:46 +0000 on http://www.spatial-ecology.net/try
+2618.090 (7) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.35 WP: 4.7.3 PHP: 5.3.29 (cgi-fcgi, Linux walcustweb0404.int.bizland.net 3.14.77 #1 SMP Thu Oct 20 18:26:58 EDT 2016 x86_64) MySQL: 5.6.32 WPLANG: en_GB Server: Apache/2 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 63.2M | 63.8M) multisite: N openssl: OpenSSL 1.0.1 14 Mar 2012 mcrypt: Y LANG:  ZipArchive::addFile: Y
+2618.092 (7) Free space on disk containing Updraft's temporary directory: 20058810.1 MB
+2618.095 (7) Backup run: resumption=7, nonce=e298395cdf0f, begun at=1489687628 (2618s ago), job type=backup
+2618.097 (7) Scheduling a resumption (8) after 300 seconds (1489690546) in case this run gets aborted
+2618.112 (7) Checking if we have a zip executable available
+2618.113 (7) Zip engine: found/will use a binary zip: /usr/bin/zip
+2618.114 (7) Creation of backups of directories: already finished
+2618.116 (7) Saving backup status to database (elements: 8)
+2618.120 (7) Database dump (WordPress DB): Creation was completed already
+2618.128 (7) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+2618.129 (7) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+2618.130 (7) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+2618.131 (7) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip: others: This file has not yet been successfully uploaded: will queue
+2618.132 (7) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: db: This file has not yet been successfully uploaded: will queue
+2618.133 (7) Saving backup history. Total backup size: 149.1 MB
+2618.137 (7) Requesting upload of the files that have not yet been successfully uploaded (5)
+2618.138 (7) Cloud backup selection (1/1): email (last)
+2618.141 (7) Beginning dispatch of backup to remote (email)
+2618.143 (7) [Warning] backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: This backup archive is 53.7 MB in size - the attempt to send this via email is likely to fail (few email servers allow attachments of this size). If so, you should switch to using a different remote storage method.
+2618.144 (7) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: email to: victo...
+3439.167 (8) Opened log file at time: Thu, 16 Mar 2017 19:04:27 +0000 on http://www.spatial-ecology.net/try
+3439.169 (8) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.35 WP: 4.7.3 PHP: 5.3.29 (cgi-fcgi, Linux walcustweb0405.int.bizland.net 3.14.77 #1 SMP Thu Oct 20 18:26:58 EDT 2016 x86_64) MySQL: 5.6.32 WPLANG: en_GB Server: Apache/2 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 63.2M | 63.8M) multisite: N openssl: OpenSSL 1.0.1 14 Mar 2012 mcrypt: Y LANG:  ZipArchive::addFile: Y
+3439.171 (8) Free space on disk containing Updraft's temporary directory: 20058330.5 MB
+3439.174 (8) Backup run: resumption=8, nonce=e298395cdf0f, begun at=1489687628 (3439s ago), job type=backup
+3439.177 (8) Scheduling a resumption (9) after 300 seconds (1489691367) in case this run gets aborted
+3439.215 (8) Checking if we have a zip executable available
+3439.217 (8) Zip engine: found/will use a binary zip: /usr/bin/zip
+3439.218 (8) Creation of backups of directories: already finished
+3439.223 (8) Saving backup status to database (elements: 8)
+3439.227 (8) Database dump (WordPress DB): Creation was completed already
+3439.243 (8) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+3439.253 (8) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+3439.254 (8) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+3439.256 (8) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip: others: This file has not yet been successfully uploaded: will queue
+3439.261 (8) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: db: This file has not yet been successfully uploaded: will queue
+3439.263 (8) Saving backup history. Total backup size: 149.1 MB
+3439.268 (8) Requesting upload of the files that have not yet been successfully uploaded (5)
+3439.270 (8) Cloud backup selection (1/1): email (last)
+3439.280 (8) Beginning dispatch of backup to remote (email)
+3439.282 (8) [Warning] backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: This backup archive is 53.7 MB in size - the attempt to send this via email is likely to fail (few email servers allow attachments of this size). If so, you should switch to using a different remote storage method.
+3439.283 (8) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: email to: victo...
+3783.340 (9) Opened log file at time: Thu, 16 Mar 2017 19:10:11 +0000 on http://www.spatial-ecology.net/try
+3783.342 (9) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.12.35 WP: 4.7.3 PHP: 5.3.29 (cgi-fcgi, Linux walcustweb0405.int.bizland.net 3.14.77 #1 SMP Thu Oct 20 18:26:58 EDT 2016 x86_64) MySQL: 5.6.32 WPLANG: en_GB Server: Apache/2 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 63.2M | 63.8M) multisite: N openssl: OpenSSL 1.0.1 14 Mar 2012 mcrypt: Y LANG:  ZipArchive::addFile: Y
+3783.344 (9) Free space on disk containing Updraft's temporary directory: 20058248.8 MB
+3783.347 (9) Backup run: resumption=9, nonce=e298395cdf0f, begun at=1489687628 (3783s ago), job type=backup
+3783.350 (9) The current run is resumption number 9, and there was nothing useful done on the last run (last useful run: 0) - will not schedule a further attempt until we see something useful happening this time
+3783.363 (9) Creation of backups of directories: already finished
+3783.365 (9) Saving backup status to database (elements: 8)
+3783.369 (9) Database dump (WordPress DB): Creation was completed already
+3783.382 (9) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+3783.383 (9) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+3783.384 (9) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+3783.386 (9) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-others.zip: others: This file has not yet been successfully uploaded: will queue
+3783.387 (9) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-db.gz: db: This file has not yet been successfully uploaded: will queue
+3783.388 (9) Saving backup history. Total backup size: 149.1 MB
+3783.392 (9) Requesting upload of the files that have not yet been successfully uploaded (5)
+3783.393 (9) Cloud backup selection (1/1): email (last)
+3783.395 (9) Beginning dispatch of backup to remote (email)
+3783.397 (9) [Warning] backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: This backup archive is 53.7 MB in size - the attempt to send this via email is likely to fail (few email servers allow attachments of this size). If so, you should switch to using a different remote storage method.
+3783.398 (9) backup_2017-03-16-1807_Spatial_Ecology_e298395cdf0f-plugins.zip: email to: victo...

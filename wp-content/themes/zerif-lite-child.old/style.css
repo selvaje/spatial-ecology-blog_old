@@ -1,0 +1,90 @@
+/*
+Theme Name: Zerif Lite Child
+Theme URI: http://www.spatial-ecology.net/try/themes/zerif-lite-child/
+Description: Zerif-lite Child Theme
+Author: Victoria O'BRIEN
+Template: zerif-lite
+Text Domain: zerif-lite-child
+*/
+
+
+
+.red-btn {
+	border-radius: 1px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #ea4747;
+	position: relative;
+	background: rgba(234,71,71,0.4);
+}
+.red-btn:hover {
+	color: #FFF;
+	background: #610B21;
+}
+
+
+.green-btn {
+	border-radius: 1px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #ea4747;
+	position: relative;
+	background: rgba(255,226,0,0.2);
+}
+.green-btn:hover {
+	color: #FFF;
+	background: #0B0B61;
+}
+
+
+
+
+
+.g-recaptcha {
+    display: inline !important;
+}
+
+
+/*
+-----------------------
+Change transparency of form to background: ....., 0.75 From  0.95
+----------------------*/
+.pirate_forms input {
+	text-align: left;
+	text-transform: none;
+	padding: 9px;
+	min-height: 46px;
+	padding-left: 15px !important;
+	display: inline-block;
+	border-radius: 4px;
+	background: rgba(255,255,255, 0.75);
+}
+.pirate_forms textarea {
+	width: 100% !important;
+	text-align: left;
+	text-transform: none;
+	padding: 9px;
+	min-height: 250px;
+	padding-left: 15px;
+	display: inline-block;
+	border-radius: 4px;
+	background: rgba(255,255,255, 0.75);
+}
+
+
+/*
+-----------------------
+Change Our Team hover box from 190px to whatever
+----------------------*/
+.team-member .details {
+height: 195px;
+}
+
+/*
+-----------------------
+Change size of social media icons
+----------------------*/
+
+.social li a {    font-size: 42px; }
+
+

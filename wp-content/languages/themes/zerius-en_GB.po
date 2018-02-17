@@ -1,0 +1,51 @@
+# Translation of Themes - Zerius in English (UK)
+# This file is distributed under the same license as the Themes - Zerius package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2017-07-17 16:34:36+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/2.4.0-alpha\n"
+"Language: en_GB\n"
+"Project-Id-Version: Themes - Zerius\n"
+
+#. Description of the plugin/theme
+msgid "Zerius is a clean, modern, and animated free one-page parallax WordPress theme."
+msgstr "Zerius is a clean, modern, and animated free one-page parallax WordPress theme."
+
+#. Theme Name of the plugin/theme
+msgid "Zerius"
+msgstr "Zerius"
+
+#: functions.php:76
+msgid "Notification"
+msgstr "Notification"
+
+#: functions.php:65 functions.php:93
+msgid "This child theme is not maintained anymore, consider using the parent theme %1$s or check-out our latest free one-page theme: %2$s."
+msgstr "This child theme is not maintained anymore - please consider using the parent theme %1$s, or check out our latest free one-page theme: %2$s."
+
+#: functions.php:112
+msgctxt "submit button"
+msgid "Search"
+msgstr "Search"
+
+#: functions.php:110
+msgctxt "placeholder"
+msgid "Search &hellip;"
+msgstr "Search &hellip;"
+
+#: functions.php:109 functions.php:110
+msgctxt "label"
+msgid "Search for:"
+msgstr "Search for:"
+
+#. Author URI of the plugin/theme
+msgid "https://themeisle.com"
+msgstr "https://themeisle.com"
+
+#. Author of the plugin/theme
+msgid "Themeisle"
+msgstr "Themeisle"
