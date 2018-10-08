@@ -57,19 +57,21 @@ if ( ! is_user_logged_in() ) {
 			 */
 			function mail_bank_table() {
 				global $wpdb;
-				$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . 'mail_bank
+				$collate = $wpdb->get_charset_collate();
+				$sql     = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . 'mail_bank
                         (
                                 `id` int(11) NOT NULL AUTO_INCREMENT,
                                 `type` varchar(100) NOT NULL,
                                 `parent_id` int(11) NOT NULL,
                                 PRIMARY KEY (`id`)
-                        )';
+                        )' . $collate;
 				dbDelta( $sql );
 
 				$data = 'INSERT INTO ' . mail_bank() . " (`type`, `parent_id`) VALUES
                         ('email_configuration', 0),
                         ('email_logs', 0),
                         ('settings', 0),
+						('collation_type', 0),
                         ('roles_and_capabilities', 0)";
 				dbDelta( $data );
 			}
@@ -80,12 +82,13 @@ if ( ! is_user_logged_in() ) {
 			 */
 			function mail_bank_email_logs_table() {
 				global $wpdb;
-				$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . 'mail_bank_email_logs
+				$collate = $wpdb->get_charset_collate();
+				$sql     = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . 'mail_bank_email_logs
 				(
 					`id` int(11) NOT NULL AUTO_INCREMENT,
 					`email_data` longtext NOT NULL,
 					PRIMARY KEY (`id`)
-				)';
+				)' . $collate;
 				dbDelta( $sql );
 			}
 		}
@@ -97,14 +100,15 @@ if ( ! is_user_logged_in() ) {
 			function mail_bank_meta_table() {
 				$obj_dbhelper_install_script_mail_bank = new Db_Helper_Install_Script_Mail_Bank();
 				global $wpdb;
-				$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . 'mail_bank_meta
+				$collate = $wpdb->get_charset_collate();
+				$sql     = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . 'mail_bank_meta
                         (
                                 `id` int(11) NOT NULL AUTO_INCREMENT,
                                 `meta_id` int(11) NOT NULL,
                                 `meta_key` varchar(255) NOT NULL,
                                 `meta_value` longtext NOT NULL,
                                 PRIMARY KEY (`id`)
-                        )';
+                        )' . $collate;
 				dbDelta( $sql );
 
 				$admin_email = get_option( 'admin_email' );
@@ -229,6 +233,7 @@ if ( ! is_user_logged_in() ) {
 							$settings_data_array['debug_mode']                 = 'enable';
 							$settings_data_array['remove_tables_at_uninstall'] = 'enable';
 							$settings_data_array['monitor_email_logs']         = 'enable';
+							$settings_data_array['fetch_settings']             = 'individual_site';
 
 							$settings_array               = array();
 							$settings_array['meta_id']    = $row->id;
@@ -346,6 +351,13 @@ if ( ! is_user_logged_in() ) {
 					mail_bank_meta_table();
 					mail_bank_email_logs_table();
 				}
+				$mail_bank_admin_notices_array                    = array();
+				$mb_start_date                                    = date( 'm/d/Y' );
+				$mb_start_date                                    = strtotime( $mb_start_date );
+				$mb_start_date                                    = strtotime( '+7 day', $mb_start_date );
+				$mb_start_date                                    = date( 'm/d/Y', $mb_start_date );
+				$mail_bank_admin_notices_array['two_week_review'] = array( 'start' => $mb_start_date, 'int' => 7, 'dismissed' => 0 ); // @codingStandardsIgnoreLine.
+				update_option( 'mb_admin_notice', $mail_bank_admin_notices_array );
 				break;
 
 			default:
@@ -359,6 +371,9 @@ if ( ! is_user_logged_in() ) {
 					$settings_data_array = maybe_unserialize( $settings_data );
 					if ( ! array_key_exists( 'monitor_email_logs', $settings_data_array ) ) {
 						$settings_data_array['monitor_email_logs'] = 'enable';
+					}
+					if ( ! array_key_exists( 'fetch_settings', $settings_data_array ) ) {
+						$settings_data_array['fetch_settings'] = 'individual_site';
 					}
 					$where                        = array();
 					$settings_array               = array();
@@ -471,7 +486,7 @@ if ( ! is_user_logged_in() ) {
 					$wpdb->query(
 						$wpdb->prepare(
 							'INSERT INTO ' . $wpdb->prefix . 'mail_bank_email_logs (email_data)
-                            SELECT  meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta WHERE meta_key=%s', 'email_logs'
+								SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta WHERE meta_key=%s', 'email_logs'
 						)
 					);// db call ok; no-cache ok.
 					$wpdb->query(
@@ -480,7 +495,36 @@ if ( ! is_user_logged_in() ) {
 						)
 					);// db call ok; no-cache ok.
 				}
+				$get_collate_status_data = $wpdb->query(
+					$wpdb->prepare(
+						'SELECT type FROM ' . $wpdb->prefix . 'mail_bank WHERE type=%s', 'collation_type'
+					)
+				);// db call ok; no-cache ok.
+				if ( 0 === $get_collate_status_data ) {
+					$charset_collate = '';
+					if ( ! empty( $wpdb->charset ) ) {
+						$charset_collate .= 'CONVERT TO CHARACTER SET ' . $wpdb->charset;
+					}
+					if ( ! empty( $wpdb->collate ) ) {
+						$charset_collate .= ' COLLATE ' . $wpdb->collate;
+					}
+					if ( ! empty( $charset_collate ) ) {
+						$change_collate_main_table         = $wpdb->query(
+							'ALTER TABLE ' . $wpdb->prefix . 'mail_bank ' . $charset_collate // @codingStandardsIgnoreLine.
+						);// WPCS: db call ok, no-cache ok.
+						$change_collate_meta_table         = $wpdb->query(
+							'ALTER TABLE ' . $wpdb->prefix . 'mail_bank_meta ' . $charset_collate // @codingStandardsIgnoreLine.
+						);// WPCS: db call ok, no-cache ok.
+						$change_collate_email_logs_table   = $wpdb->query(
+							'ALTER TABLE ' . $wpdb->prefix . 'mail_bank_email_logs ' . $charset_collate // @codingStandardsIgnoreLine.
+						);// WPCS: db call ok, no-cache ok.
+						$collation_data_array              = array();
+						$collation_data_array['type']      = 'collation_type';
+						$collation_data_array['parent_id'] = '0';
+						$obj_dbhelper_install_script_mail_bank->insert_command( mail_bank(), $collation_data_array );
+					}
+				}
 		}
-		update_option( 'mail-bank-version-number', '3.0.3' );
+		update_option( 'mail-bank-version-number', '3.0.5' );
 	}
 }

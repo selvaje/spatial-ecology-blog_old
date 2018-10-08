@@ -1,53 +1,32 @@
-﻿=== WP Mail, Email Logs, Gmail SMTP, PHP Mailer - Mail Bank ===
+﻿=== WP Mail SMTP Plugin by Mail Bank===
 Contributors: contact-banker, Gallery-Bank, wordpress-empire
 Donate link: https://mail-bank.tech-banker.com/
-Tags: gmail, mail, email, smtp, sendgrid, smtp gmail, phpmailer, mailer, wp_mail, wp mail smtp, wordpress smtp, wp smtp
-Requires at least: 3.6
+Tags: smtp, mail, gmail smtp, wp mail, wordpress smtp plugin
+Requires at least: 3.8
 Tested up to: 4.9
 Stable Tag: trunk
 Requires PHP: 5.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-WordPress SMTP Plugin that sends outgoing email with SMTP or PHP Mailer. Supports Gmail SMTP, Sendgrid SMTP, oAuth, Email Logs and almost everything!
+Mail Bank is a wordpress smtp plugin that solves email deliverability issue. Configures Gmail Smtp Settings, OAuth, and any SMTP server. Reconfigures wp_mail().
 
 == Description ==
 
-### BEST SMTP PLUGIN FOR WORDPRESS
+### WP Mail Bank: The #1 WordPress Mail SMTP Plugin
 
-[**WP Mail Bank**](https://mail-bank.tech-banker.com/) | [Documentation](https://mail-bank.tech-banker.com/documentation/) | [Demos](https://mail-bank.tech-banker.com/backend-demos/)
+[**WP Mail Bank — Tech Banker**](https://mail-bank.tech-banker.com/) | [Documentation](https://mail-bank.tech-banker.com/documentation/) | [Demonstrations](https://mail-bank.tech-banker.com/backend-demos/)
+
+Are you **100% confident** all your WordPress emails reach their destination?
+
+**Watch the featured video below** to see how easy Mail Bank is to set up.
 
 https://youtu.be/f2C2mUnMRPA
 
-Is your WordPress site facing problems sending emails to your customers?
+> #### **Demonstrations — WP Mail Bank**
 
-When an email doesn't reach its destination, What happened? What went wrong?
-
-[**WP Mail SMTP by Mail Bank**](https://mail-bank.tech-banker.com/) is one of easiest way of sending emails and logging them from your WordPress site using your preferred PHPMailer or SMTP Server Settings.
-
-It will bypass the normal flow of email, making your email deliverability much more reliable and secure!
-
-It allows you to send email directly through your mail server as opposed to the web server. This helps to prevent issues with **Sender Domain Policy** and **Spoofing**.
-
-Over 50,000+ websites use [**WP Mail Bank**](https://mail-bank.tech-banker.com/) to get their outgoing email deliverability issues fixed easily.
-
-Our **WordPress SMTP Plugin** reconfigures the **wp_mail()** function to use a proper SMTP provider.
-
-It works with all major email services such as Gmail, Yahoo, Outlook, Microsoft Live, and any other email sending service that offers SMTP.
-
-The goal of SMTP plugin is to help fix the common "WordPress not sending an email issue".
-
-= Why use WP Mail SMTP by Mail Bank? =
-
-* Send email using a SMTP sever.
-* You can use Gmail, Yahoo, Hotmail's SMTP server if you have an account with them.
-* Seamlessly connect your WordPress blog with a mail server to handle all outgoing emails (it's as if the email has been composed inside your mail account).
-* Securely deliver emails to your recipients.
-
-> #### **Live Demos - Mail Bank**
-
-> * [WP Mail Bank](https://mail-bank.tech-banker.com/)
-> * [WP Mail Bank Demos](https://mail-bank.tech-banker.com/backend-demos/)
+> * [Mail Bank](https://mail-bank.tech-banker.com/)
+> * [Mail Bank Demonstrations](https://mail-bank.tech-banker.com/backend-demos/)
 > * [Installation](https://mail-bank.tech-banker.com/backend-demos/installation/)
 > * [Email Setup](https://mail-bank.tech-banker.com/backend-demos/email-setup/)
 > * [Test Email](https://mail-bank.tech-banker.com/backend-demos/test-email/)
@@ -57,262 +36,188 @@ The goal of SMTP plugin is to help fix the common "WordPress not sending an emai
 > * [Roles & Capabilities](https://mail-bank.tech-banker.com/backend-demos/roles-capabilities/)
 > * [System Information](https://mail-bank.tech-banker.com/backend-demos/system-information/)
 
-> #### **User Guide - Mail Bank**
+It's impossible to know what's happening to your emails unless you have a well-designed and well-rounded SMTP plugin installed. ***Explained why and how down below.***
 
-> * [Installation](https://mail-bank.tech-banker.com/documentation/installation/)
-> * [Email Setup](https://mail-bank.tech-banker.com/documentation/email-setup/)
-> * [Test Email Screen](https://mail-bank.tech-banker.com/documentation/test-email/)
-> * [Connectivity](https://mail-bank.tech-banker.com/documentation/connectivity-test/)
-> * [Email Logs](https://mail-bank.tech-banker.com/documentation/email-logs/)
-> * [Plugin Settings](https://mail-bank.tech-banker.com/documentation/plugin-settings/)
-> * [Roles & Capabilities](https://mail-bank.tech-banker.com/documentation/roles-capabilities/)
-> * [System Information](https://mail-bank.tech-banker.com/documentation/system-information/)
+Mail Bank is a **FREE** SMTP plugin that gives you every feature needed to **guarantee fast and 100% confident email deliverability**. This includes a list of features designed to test, log, and control your email deliverability, even over multiple WordPress installations and networks.
 
-It has following two options to send emails one is SMTP server and other is inbuilt PHPMailer.
+This plugin is developed by the in-house team of expert coders at [Tech Banker](https://mail-bank.tech-banker.com/). These are the people that will keep bringing you new and improved versions of Mail Bank every day of the week. The plugin updates automatically by default. The professionals behind Mail Bank make sure to support earlier versions of WordPress in every update.
 
+WP Mail Bank is the Best SMTP plugin for wordpress.
 
-> #### **List of SMTP Servers (Outgoing)**
+Our customer support team is in direct ties with our coding team. All of your problems, suggestions, and feedback will be seen by our coding team, and they will take action on them. We listen to and care deeply about our customers.
 
-> * **Gmail SMTP Details** :- Host: smtp.gmail.com - Secure(SSL) - Port(465)
-> * **Gmail SMTP Details** :- Host: smtp.gmail.com - Secure(TLS) - Port(587)
-> * **Outlook.com SMTP Details** :- Host: smtp-mail.outlook.com - Secure(TLS) - Port(587)
-> * **Office365.com SMTP Details** :- Host: smtp.office365.com - Secure(TLS) - Port(587)
-> * **Hotmail.com SMTP Details** :- Host: smtp.live.com - Secure(TLS) - Port(587)
-> * **Yahoo Mail SMTP Details** :- Host: smtp.mail.yahoo.com  - Secure(TLS) - Port(587)
-> * **Yahoo Mail SMTP Details** :- Host: smtp.mail.yahoo.com  - Secure(SSL) - Port(465)
-> * **Yahoo Mail Deutschland SMTP Details** :- Host: smtp.mail.yahoo.com - Secure(SSL) - Port(465)
-> * **Yahoo Mail Plus SMTP Details** :- Host: plus.smtp.mail.yahoo.com - Secure(SSL) - Port(465)
-> * **AOL.com SMTP Details** :- Host: smtp.aol.com - Secure(TLS) - Port(587)
-> * **AT&T SMTP Details** :- Host: smtp.att.yahoo.com - Secure(SSL) - Port(465)
-> * **NTL @ntlworld.com** :- Host: smtp.ntlworld.com - Secure(SSL) - Port(465)
-> * **BT Connect** :- Host: smtp.btconnect.com -  No-Encryption - Port(25)
-> * **BT Openworld** :- Host: mail.btopenworld.com - No-Encryption - Port(25)
-> * **BT Internet** :- Host: mail.btinternet.com - No-Encryption - Port(25)
-> * **Orange** :- Host: smtp.orange.net - No-Encryption - Port(25)
-> * **Orange UK** :- Host: smtp.orange.co.uk - No-Encryption - Port(25)
-> * **Wanadoo UK** :- Host: smtp.wanadoo.co.uk - No-Encryption - Port(25)
-> * **Comcast** :- Host: smtp.comcast.net - No-Encryption - Port(587)
-> * **Yahoo Mail AU/NZ** :- Host: smtp.mail.yahoo.com.au - Secure(SSL) - Port(465)
-> * **O2 Deutschland** :- Host: mail.o2online.de -  No-Encryption - Port(25)
-> * **zoho Mail** :- Host: smtp.zoho.com - Secure(SSL) - Port(465)
-> * **T-Online Deutschland** :- Host: securesmtp.t-online.de - Secure(TLS) - Port(587)
-> * **1&1 (1and1)** :- Host: smtp.1and1.com - Secure(TLS) - Port(587)
-> * **1&1 Deutschland** :- Host: smtp.1und1.de - Secure(TLS) - Port(587)
-> * **Verizon** :- Host: outgoing.verizon.net - Secure (SSL) - Port(465)
-> * **Verizon (Yahoo hosted)** :- Host: outgoing.yahoo.verizon.net - No-Encryption - Port(587)
-> * **Mail.com** :- Host: smtp.mail.com - Secure(SSL) - Port(465)
-> * **GMX.com** :- Host: smtp.gmx.com - Secure(SSL) - Port(465)
-> * **Yahoo Mail UK** :- Host: smtp.mail.yahoo.co.uk - Secure(SSL) - Port(465)
-> * **Airmail** :- Host: smtp.airmail.net - Secure(SSL) - Port(465)
-> * **Bluewin.ch** :- Host: smtpauth.bluewin.ch - Secure(SSL) - Port(465)
-> * **Eartlink.net** :- Host: smtpauth.earthlink.net - Secure(SSL) - Port(587)
-> * **iCloud Mail** :- Host: smtp.mail.me.com - Secure(SSL) - Port(587)
-> * **Rocketmail** :- Host: smtp.mail.yahoo.com - Secure(SSL) - Port(465)
-> * **Rogers** :- Host: smtp.broadband.rogers.com - Secure(SSL) - Port(465)
-> * **Ameritech.net** :- Host: smtp.mail.att.net - Secure(SSL) - Port(465)
-> * **Pacbell** :- Host: smtp.mail.att.net - Secure(SSL) - Port(465)
-> * **Swbell** :- Host: smtp.mail.att.net - Secure(SSL) - Port(465)
-> * **Bellsouth** :- Host: smtp.mail.att.net - Secure(SSL) - Port(465)
-> * **Flash** :- Host:- smtp.mail.att.net - Secure(SSL) - Port(465)
+You can read all about the full features of Mail Bank down below. Also **try the plugin yourself by activating it right now, for FREE.**
 
-Note: These SMTP Ports and Settings may be different depending upon your Host Provider. Please contact your Web Server Host for correct details.
+### An SMTP plugin will solve your email deliverability issues. But how?
 
-### Now Import Settings from Postman SMTP Plugin!
+We're confident that you'll love Mail Bank. The reason for this is that our plugin is one of the most reliable ways to fix email deliverability issues, as we understand what causes them. Let me explain.
 
-Your Postman SMTP settings are easily automatically imported to Mail Bank when you migrate to Mail Bank.
+There are many reasons why you might need an SMTP plugin. The most common reasons are poor authentication or your host blocking email delivery. The less common is bulk mail overload and being marked as a spammer due to it. This is why we have respective features for both situations. The email logger being the most important. Here are the reasons in detail:
 
-= What is SMTP? =
+* **Your host might have PHPmailer disabled.** In this situation, your WP emails are plain and simple not delivered, as WordPress uses the PHPmailer by default to send mail.
 
-Simple Mail Transfer Protocol (SMTP) is the standard protocol for email services on a TCP/IP network. SMTP provides the ability to send and receive email messages.
+* **Poor authentication due to PHPmailer.** It's a very complicated process to set up PHPmailer properly on a small WordPress site. In most cases trying to set up PHPmailer will result in your emails being either undelivered or being sent to the Spam folders. The cause for this is that PHPmailer doesn't use any sort of authentication. The email service providers don't know whether the emails they're receiving are coming from a legitimate sender or not.
 
-SMTP is an application-layer protocol that enables the transmission and delivery of email over the Internet. SMTP is created and maintained by the Internet Engineering Task Force (IETF).
+* **Bulk sending overload can happen even on SMTP.** If you send hundreds of emails per day via a free SMTP provider you might be a victim of a lesser known problem. Sending this many emails puts a lot of load on the undedicated SMTP provider's servers. Only a dedicated server such as Mailgun's or SendGrid's can handle large loads of outgoing emails daily. Install our plugin and see our email logger.
 
-Simple Mail Transfer Protocol is also known as RFC 821 and RFC 2821.
+### Where does WP Mail Bank come into this?
 
-### WordPress Mail SMTP Plugin
+Mail Bank is an SMTP plugin that reconfigures the wp_mail() function so you can set up your own outgoing email settings. You can use almost any SMTP service provider with our plugin.
 
-= Mail Bank Standard Edition Features =
+This prevents the core issues with **Sender Domain Policy** and **Spoofing**, which are the primary causes of undelivered mail.
 
-* Different Mailer Type
-* Oauth 2.0 Protocol for security
-* Send Test Emails
-* Transport Layer Security for Encryption
-* Supports different types of SMTP Host or Outgoing Server Name
-* Automatically sends email to verify settings just by a single click
-* View Email Logs
-* Connectivity Test
-* Automatic Plugin Updates
-* 24/7 Technical Support
-* Other Settings
-* Supported on all current PHP versions (5.2 – 7.1)
-* WordPress Multisite/Network Support
+As said before, Mail Bank also supports the Mailgun and SendGrid APIs. This means that if you're running a website with a larger userbase you'll be able to improve your email deliverability drastically.
 
-= Mail Bank Premium Edition Features =
+Over 50,000+ website owners have chosen [**Mail Bank**](https://mail-bank.tech-banker.com/) as their email deliverability solution. Mail Bank fixes email deliverability issues quickly and painlessly.
 
-* Different Mailer Types
-* Send Test Emails
-* Automatically send email to verify settings just by a single click
-* Transport Layer Security for Encryption
-* Supports different types of SMTP Host or Outgoing Server Name
-* Filter Logged Emails
-* Delete Logged Emails
-* View Debugging Output
-* Email Details
-* Set Reply To Address
-* Send Mail To multiple Recipients
-* Oauth 2.0 for added security
-* Automatic Plugin Updates
-* Roles & Capabilities
-* Multisite Compatibility
-* 24/7 Technical Support
-* Other Settings
-* Supported on all current PHP versions (5.2 – 7.1)
-* WordPress Multisite/Network Support
+### Benefits of Using WP Mail Bank
 
-Mail Bank provides the following options :
+#### Confident SMTP Email Deliverability
 
-* provides easily configurable email parameters for sending emails
-* allows to view the detailed records of each and every logged emails such as Email To, Subject, Cc, Bcc, From, Debugging Output, Date/Time
-* configures the settings to send or log emails
-* it configures emails whether successful or failure with debugging output to troubleshoot your outgoing emails
-* can configure debug mode settings to view the debugging output with complete details
-* support various Oauth 2.0 implementations such as  Gmail, Microsoft and Yahoo
-* let you customize the email details that appear on emails sent from WordPress
-* allows you override your email and name by other details
-* allows you to send emails to multiple recipients just in few seconds
+* Mail Bank gives you a large list of free email service providers to choose from. The most prominent and important being Gmail, Outlook, and Yahoo, which all support oAuth 2.0. But we know larger email senders require more serious solutions. So we've added support for the freemium **Mailgun** with 10,000 free emails per month and **SendGrid** APIs. Both of these APIs will drastically increase WP email deliverability.
 
-It provides two types of Encryption that are the following:
+* Our **email logger** will give you information on all of your emails. This includes undelivered mail and the information required to debug undelivered mail. You'll also be able to take action on each of the emails or use **bulk actions to delete or resend** them. You'll never have to leave a portion of your users in the dark again with this feature.
 
-* TLS (Transport Layer Security) - It proceed to the secure connections after successful communication between Client & Server.
-* SSL (Secure Sockets Layer) - It directly proceed to secure connections.
+* Our customer support team will always help you with any arising issue. Note that **[Premium Edition](https://mail-bank.tech-banker.com/) Customers** get priority support. If your emails become undelivered, and you can't find a solution in our [documentation](https://mail-bank.tech-banker.com/documentation/), we ask you to please [contact us](https://mail-bank.tech-banker.com/contact-us/) at [support@tech-banker.com](mailto:support@tech-banker.com). You may also give us suggestions and feedback on how well we're doing for you. **We care about our customers.**
 
-It allows user to view
+#### SMTP Security & Flexibility
 
-* complete details including status
-* Delivery Report
-* Test Emails Address
-* Date
-* MIME version
-* cause of unsuccessful delivery of Mail
+* Depending on your email service provider, you will be able to choose between oAuth 2.0, Cram-MD5, Simple Login, or Plain Authentication. **oAuth 2.0 is the most secure** and works with Gmail, Outlook365, Outlook, and Yahoo! Using oAuth 2.0 means you won't have to store your username and password in a WordPress database. You'll feel much safer with this. In addition to that, with oAuth 2.0 you won't need to update your credentials if your email account's password changes, it's a set-and-forget feature.
 
-This Plugin is compatible with SMTP Servers such as Gmail, Microsoft and Yahoo and many more.
+* You will be able to choose between TLS (Transport Layer Security) and SSL (Secure Sockets Layer) encryption. Both encryption methods are valid for use, but we recommend using TLS as it's more secure.
 
-= OAuth 2.0 Features =
+#### Multisite & Teamwork Support
 
-* Supports the proprietary OAuth 2.0 implementations of Gmail, Hotmail and Yahoo
-* Fire-and-forget delivery continues even if your password changes
-* Gmail: By combining OAuth2 and the Gmail API, WP Mail Bank can deliver where other plugins can not
+* You'll have support for **WordPress multisite**. You won't have to install Mail Bank on all of the WordPress sites on your network. You'll be able to take full control of all your networked sites from your main installation.
 
-= List of Settings that you can set with this plugin are the following: =
+* You'll have the option to set **roles and restrictions** for other users. This is a perfect solution for working in teams. As if something goes wrong with your email service provider or settings you can be alerted by one of your users and no-one but you can touch the SMTP account's settings.
 
-* From Name
-* From Email
-* Email Address
-* Reply To
-* Cc
-* Bcc
-* Mailer Type
-* SMTP Host
-* Encryption
-* SMTP Port
-* Username
-* Password
-* Authentication
-* Client ID
-* Secret Key
+#### Fast & In-Depth Email Setup
 
-There are two ways to send Emails from your WordPress site to SMTP servers
+* Our **"Email Setup"** tab will guide you and let you create a working connection in seconds. But you'll also have access to a large amount of more complicated settings as well. Just in case you need them.
 
-* The first method uses OAuth Authentication : This is a more secure method to send emails. It requires both Client ID and Secret key.
+1. Download, install, and activate Mail Bank on your WordPress hosted site.
+2. Open the "Email Setup" tab.
+3. Enter your chosen name in the "From Name" tab, and enter a valid email in the "From Email" tab. Or choose not to override. A valid email will be provided by your email service provider or hosted on your domain, e.g. JohnDoe@[your domain].com or your Gmail address. Then, press "Next Step", and you'll be taken to the SMTP account setup screen.
+4. Your email address should already be entered, and some default SMTP settings should appear. You can use these settings or set a different mailer type. The default settings for a Gmail SMTP account are: **Mailer Type:** Send Email via SMTP, **Encryption:** TLS Encryption, **SMTP Host:** SMTP.gmail.com **SMTP Port:** 587, **Authentication:** Login. You need to enter your Gmail credentials in this case. If you want to use oAuth 2.0, you'll have to set it up with Google. Check whether you want to send a "Test Email", we recommend leaving this checked.
+5. Press "Next Step", and you'll be taken to the "Test Email" screen. If anything's wrong, it will tell you **Email Status : Email Not Sent**. Then, you need to look at the debugging information and recheck your SMTP settings. **Note:** You can't use the "Login" option with Gmail SMTP accounts that have 2-factor authentication enabled, you have to use oAuth 2.0 with secured Gmail SMTP accounts.
+6. If all is well you're **done**. If you've gotten stuck, there's a button to ask for help on the test page, and there's a "Help & Support" button on the tab list. Be sure to check your email logs frequently for any trouble.
 
-* The second method is by allowing to use less secure apps : This method is not recommended because it's less secure. You have to type in your Username and Password. It should only be used if you are unable to use the first method.
+#### Supports Multiple Languages
 
-== SMTP Error Messages ==
+Mail Bank is translated by professionals and native speakers in these 16 languages:
 
-= Communication Error [334] make sure the Envelope From Email is the same account used to create the Client ID. =
+* Brazilian
+* Portuguese
+* Japanese
+* Farsi (Iran)
+* Arabic
+* Polish
+* Vietnamese
+* Deutsch
+* French
+* Italian
+* Portuguese (Portugal)
+* Dutch
+* Spanish (Spain)
+* Chinese (Mainland China)
+* Turkish
+* Russian
 
-* This is almost always caused by being logged in to Google/Microsoft/Yahoo with a different user than the one Post is configured to send mail with. Logout and try again with the correct user
-* Login to [Webmail](http://www.gmail.com) and see if there is an "Unusual Activity" warning waiting for your attention
+> Want to help translate the plugin to another language? Contact us at [support@tech-banker.com](mailto:support@tech-banker.com).
 
-= Could not open socket =
+#### Easily Import Settings From The Postman SMTP Plugin
+
+* Your Postman settings will be automatically imported to Mail Bank once you migrate.
+
+### Full List of WP Mail Bank Features
+
+* **Support & Updates for up to 5 Installations:** You'll be able to install Mail Bank on up to 5 seperate WordPress sites. Free users can install Mail Bank only to 1 site.
+* **Support for WordPress Multisite:** Premium users will be able to enjoy WordPress multisite network support. Install Mail Bank on your main site, and you'll be able to manage all of your networked sites from a single installation.
+* **Technical Support:** Free users will get support on WordPress.org. Premium users will have a seperate, priority support package available off-site.
+* **Free & Automatic Updates:** You'll be able to choose whether your plugin is updated automatically or not. All updates come for free.
+* **Compatibility With All Major Plugins**: Mail Bank is compatible with almost all of the WordPress plugins available. We're constantly bringing out compatibility updates.
+* **Email Setup Wizard:** The Email Setup tab is a quick and painless way to get you going in seconds. It includes fields such as: "From Name", "From Email", "Reply To", "CC", "BCC", and "Additional Headers". 
+* **SMTP Support:** You'll have support for almost every FREE SMTP provider, and that includes the Mailgun and SendGrid APIs.
+* **Authentication Options:** You'll be able to login using your username and password, or the more secure **oAuth 2.0**. There are also options for no authentication and plain login.
+* **Test Emails:** Test Emails will give you quick feedback on how your configuration is doing. Full debugging information will be provided, as well as a button to contact our support team.
+* **Debug Mode & Email Logging Settings:** Debugging information and email logging can be turned on or off in the Plugin Settings tab.
+* **SMTP Server Port Testing / Connectivity Test:** The "Connectivity Test" tab will reveal to you which ports your SMTP provider has opened for you.
+* **Encryption:** You'll be able to choose between SSL, TSL, and no encryption.
+* **Email Logs:** Will give you an overview of sent emails. It will let you take action on undelivered emails.
+* **Roles & Capabilities:** Will let you set different kinds of restrictions to different kinds of users. This includes creating your own custom entries for users.
+
+> Some of these features are only available in the **[Premium Edition](https://mail-bank.tech-banker.com/)** of the plugin. You can purchase the plugin on [our site at: https://mail-bank.tech-banker.com/](https://mail-bank.tech-banker.com/)
+
+### Error Messages
+
+#### Communication Error [334] make sure the Envelope From Email is the same account used to create the Client ID.
+
+* This is usually caused by being logged in to Google/Microsoft/Yahoo with a different user than the one Mail Bank is configured to send mail with. Log out and try again with the correct user.
+* Login to your email provider and see if there is an "Unusual Activity" warning waiting for your attention.
+
+#### Could not open socket
 
 * Your host may have installed a firewall between you and the server. Ask them to open the ports.
 * Your may have tried to (incorrectly) use SSL over port 587. Check your encryption and port settings.
 
-= Operation Timed out =
+#### Operation Timed out
 
 * Your host may have poor connectivity to the mail server. Try doubling the Read Timeout.
 * Your host may have installed a firewall (DROP packets) between you and the server. Ask them to open the ports.
-* Your may have tried to (incorrectly) use TLS over port 465. Check your encryption and port settings.
+* You may have tried to incorrectly use TLS over port 465. Check your encryption and port settings.
 
-= Connection refused =
+#### Connection refused
 
-Your host has likely installed a firewall (REJECT packets) between you and the server. Ask them to open the ports.
+* Your host has likely installed a firewall (REJECT packets) between you and the server. Ask them to open the ports.
 
-= 503 Bad sequence of commands =
+#### 503 Bad sequence of commands
 
-You configured TLS security when you should have selected no security.
+* You configured TLS security when you should have selected no security.
 
-= XOAUTH2 authentication mechanism not supported =
+#### XOAUTH2 authentication mechanism not supported
 
-You may be on a Virtual Private Server that is [playing havoc with your communications](https://wordpress.org/support/topic/oh-bother-xoauth2-authentication-mechanism-not-supported?replies=9). Jump ship.
+* You may be on a Virtual Private Server that is [playing havoc with your communications](https://wordpress.org/support/topic/oh-bother-xoauth2-authentication-mechanism-not-supported?replies=9). Jump ship.
 
-= OAuth 2.0 Features =
+### Mail ends up in the Spam folder
 
-* Supports the proprietary OAuth 2.0 implementations of Gmail, Hotmail and Yahoo
-* Fire-and-forget delivery continues even if your password changes
-* Gmail: By combining OAuth2 and the Gmail API, Post can deliver where other plugins can not
+To avoid being flagged as spam, you need to prove your email isn't forged. On a custom domain, **it's up to you** to set that up.
 
-== Mail ends up in the Spam folder ==
+* Ensure you're using the correct SMTP server with authentication - the correct SMTP server is the one defined by your email service's SPF record.
+* If you use a custom domain name for email, add an [SPF record](http://www.openspf.org/Introduction) to your DNS zone file. The SPF is specific to your email provider, for example [Google](https://support.google.com/a/answer/33786).
+* If you use a custom domain name, add a DKIM record to your DNS zone file and upload your Domain Key (a digital signature) to, for example [Google](https://support.google.com/a/answer/174124?hl=en).
 
-To avoid being flagged as spam, you need to prove your email isn't forged. On a custom domain, its up to YOU to set that up:
+### Welcome Screen
 
-* Ensure you are using the correct SMTP server with authentication - the correct SMTP server is the one defined by your email service's SPF record
-* If you use a custom domain name for email, add an [SPF record](http://www.openspf.org/Introduction) to your DNS zone file. The SPF is specific to your email provider, for example [Google](https://support.google.com/a/answer/33786)
-* If you use a custom domain name for email, add a DKIM record to your DNS zone file and upload your Domain Key (a digital signature) to, for example [Google]((https://support.google.com/a/answer/174124?hl=en))
+Mail Bank redirects you to a **Welcome Screen** on activation, and asks you to either **Skip** or **Opt-In** for sending us non-sensitive information about your website.
 
-There are lot of features also available in Premium Editions, you can check before downloading & purchasing.
-Click [here](https://mail-bank.tech-banker.com/) for Mail Bank Premium Editions.
+In case of a **Skip**, we send the following information to our server at http://stats.tech-banker-services.org
 
-Mail Bank redirects you to a Welcome Screen on Activation of the Plugin and asks you to either Skip or Opt-In for Non Sensitive  Information about your Website.
+* Site URL, WordPress language used.
+* Status of plugin, activation, deactivation, uninstall.
 
-In case of Skip, we send the following information to our server at http://stats.tech-banker-services.org/
+In case of an **Opt-In**, we send the following information to our server at http://stats.tech-banker-services.org
 
-* Site URL, WordPress Language used
-* Status of Plugin at Activation, De-activation, Uninstall
+* Name & Email Address.
+* Site URL, WP version, PHP info, plugins & themes info.
+* Display updates & announcements.
+* Status of plugin at activation, de-activation, uninstall
 
-In case of an Opt-In, we send the following information to our server at http://stats.tech-banker-services.org/
+### Technical Support
 
-* Name and Email Address
-* Site URL, WP Version, PHP Info, Plugins & Themes Info
-* Display Updates & Announcements
-* Status of Plugin at Activation, De-activation, Uninstall
+If you you've found a bug in our plugin or have questions please contact us at [support@tech-banker.com](mailto:support@tech-banker.com).
 
-### Mail Bank is the best WP SMTP Plugin available!
+Please use the support forum on WordPress.org only for the free **Standard Version** of the plugin.
 
-= Translate this Plugin =
+For the **[Premium Edition](https://mail-bank.tech-banker.com/) Customers** there is a seperate, priority support package available. Please, don't use the WordPress.org support forum for questions about the [Premium Edition](https://mail-bank.tech-banker.com/) of Mail Bank.
 
-If you can help us with translation to some other language please contact us at [support@tech-banker.com]
-
-We're really appreciate it!
-
-= Technical Support =
-
-Dear users, our plugins are available for free download. If you have any questions or recommendations regarding the functionality of our plugins, please feel free to contact us.
-
-If you think, that you found a bug in our plugin or have any question contact us at [support@tech-banker.com](mailto:support@tech-banker.com)
-
-Please use the support forum on WordPress.org only for this free Standard version of the plugin.
-
-For the Premium Edition there is a separate support package available. Please do not use the WordPress.org support forum for questions about the Premium Edition.
-
-= Contact Us =
+### Contact Us
 
 * [https://mail-bank.tech-banker.com/contact-us](https://mail-bank.tech-banker.com/contact-us/)
 
 == Installation ==
 
-### Minimum requirements.
+### Minimum requirements
 *   WordPress 3.6+
 *   PHP 5.3.9+
 *   MySQL 5.x
@@ -325,8 +230,8 @@ After downloading the ZIP file,
 2. Go to Plugins Add > New > Upload.
 3. Click "Choose file" ("Browse") and select the downloaded zip file.
 
-*For Mac Users*
-*Go to your Downloads folder and locate the folder with the plugin. Right-click on the folder and select Compress. Now you have a newly created .zip file which can be installed as described here.*
+* **For Mac Users**
+Go to your **Downloads folder** and locate the folder with the plugin. Right-click on the folder and select **Compress**. Now you have a newly created .zip file which can be installed as described here.
 
 1. Click "Install Now" button.
 2. Click "Activate Plugin" button for activating the plugin.
@@ -335,50 +240,22 @@ If any problem occurs, please contact us at [support@tech-banker.com](mailto:sup
 
 == Frequently Asked Questions ==
 
-= What are Configuration Settings ? =
-
-It allows the users to configure the settings easily to send Emails.
-
-= What does Override Authentication do? =
-
-It allows the users to override the From Name and From Email Parameters.
-
-= What are the Different Mailer Types available in Mail Bank? =
-
-User can choose either PHP mail() function or SMTP for sending Emails.
-
-= What are Email Logs Entries ? =
+= What are Email Logs Entries? =
 
 You can view detailed records of logged emails such as Date/Time, Debugging Output, Email To, Subject and Status.
 
-= What is a Debug Mode ? =
+= What is a Debug Mode? =
 
 You can enable or disable the debug mode to get the debugging output of logged emails.
 
-= What are the different Encryption  Methods available in Mail Bank? =
-
-This Plugin provides the users two types of Encryption such as SSL (Secure Sockets Layer) and TLS (Transport Layer Security).
-
-= What does Authentication do ? =
-
-Users can authenticate either by choosing username and Password or Oauth which requires both Client ID and Security Key.
-
-= Does Mail Bank remove Tables At Uninstall ? =
-
-You can configure the settings to drop Tables from database when uninstalled in Other Settings.
-
-= What is Debugging Output ? =
-
-It allows the users to view the debugging output of logged emails.
-
 == Screenshots ==
 
-1. Email Setup - Basic Info Screen
-2. Email Setup - PHP Mailer Account Setup Screen
-3. Email Setup - SMTP Account Setup Screen
-4. Email Setup - Confirm Screen
+1. Email Setup - You can configure your "From Name" and "From Email" here.
+2. Email Setup - This is the PHPMailer setup screen.
+3. Email Setup - The SMTP account setup screen.
+4. Email Setup - The confirmation screen that lets you send a test email.
 5. Test Email Screen
-6. Connectivity Test Screen
+6. Connectivity Port Testing Screen
 7. Email Logs Screen
 8. Plugin Settings Screen
 9. Roles & Capabilities Screen
@@ -386,268 +263,44 @@ It allows the users to view the debugging output of logged emails.
 
 == Changelog ==
 
-= 3.0.49 =
+= 3.0.65 =
 
-* TRANSLATIONS: Indonesian Language
+* FIX: Google SMTP Bug.
 
-= 3.0.48 =
+= 3.0.64 =
 
-* FIX: From Name Bug in emails
+* FIX: System Information Bug
 
-= 3.0.47 =
+= 3.0.63 =
 
-* FIX: Minor Bugs
-* TRANSLATIONS: Persian (Farsi) Language
-* TRANSLATIONS: Portuguese Language
+* FIX: Multisite Bug Fixed
 
-= 3.0.46 =
+= 3.0.62 =
 
-* FIX: Minor Bugs
-* FIX: 100% PHP Compatibility
-* FIX: 100% WP Tide Compliance
+* TWEAK: GDPR Message Changed
+* TWEAK: Multisite Network Settings Added
 
-= 3.0.45 =
+= 3.0.61 =
 
-* TRANSLATIONS: Arabic Language
-* FIX: Office 365 & Outlook Connectivity Issues
-* FIX: PHP Compatibility Issues
-* FIX: WordPress Compatibility Issues
+* TWEAK: Readme updated
 
-= 3.0.44 =
+= 3.0.60 =
 
-* TRANSLATIONS: Polish Language
-* TRANSLATIONS: Vietnamese Language
+* TWEAK: GDPR Compliance
 
-= 3.0.43 =
+= 3.0.59 =
 
-* TRANSLATIONS: Japanese Language
-* FIX: Dashboard Widget Bugs
+* TWEAK: Links Added to Google oAuth API for help
 
-= 3.0.42 =
+= 3.0.58 =
 
-* FIX: Dashboard Widget Bugs
+* TWEAK: Message Notification about Possible Conflictions with Other SMTP Plugins.
 
-= 3.0.41 =
+= 3.0.57 =
 
-* TRANSLATIONS: French Language
-* TRANSLATIONS: German Language
-* TRANSLATIONS: Italian Language
+* TWEAK: Email Log recorded when emails are sent using PhpMailer.
 
-= 3.0.40 =
-
-* FIX: Major Bugs
-* FIX: PHP Compatibility Issues
-* FIX: WordPress Compatibility Issues
-* TWEAK: Compliance with WP Tide
-* TRANSLATIONS: Dutch Language
-* TRANSLATIONS: French Language
-* TRANSLATIONS: Brazilian Portuguese Language
-* TRANSLATIONS: Russian Language
-* TRANSLATIONS: Spanish Language
-* TRANSLATIONS: Simplified Chinese Language
-* TRANSLATIONS: Turkish Language
-
-= 3.0.38 =
-
-* FIX: Bug with Jet Pack Contact Forms
-* FIX: Wrong Mime Types
-
-= 3.0.37 =
-
-* FIX: Timeout Issue
-* FIX: Memory Exception
-
-= 3.0.36 =
-
-* TWEAK: Strict Compliance in Mail Bank as per PHP Standards.
-* TWEAK: Strict Compliance in WordPress SMTP Plugin as per WordPress Standards.
-* TWEAK: Obsolete Code Removed
-
-= 3.0.33 =
-
-* TWEAK: Feedback Request on De-Activation of Plugin
-
-= 3.0.32 =
-
-* TWEAK: Minor Changes in Plugin Translation
-* TWEAK: Bulk Resend Email in Premium Editions
-
-= 3.0.31 =
-
-* FIX: Changes in Admin Notices
-
-= 3.0.29 =
-
-* FEATURE: Message to Recommend Gallery Bank & Contact Bank plugins
-
-= 3.0.28 =
-
-* FEATURE: Import Email Settings from POSTMAN plugin if already installed.
-* FEATURE: Import Authentication Settings from POSTMAN plugin if already installed.
-* FEATURE: Add Additional Headers Feature Added
-* FEATURE: Email Address Textbox for User Input at Wizard Page
-* FIX: Minor Bugs
-
-= 3.0.27 =
-
-* FIX: Multipart Mime Email were not sent.
-
-= 3.0.26 =
-
-* FIX: Email Logs Missing from MyISAM Databases.
-
-= 3.0.25 =
-
-* TWEAK: Improved Messages for Errors when configuring Mail Bank
-
-= 3.0.24 =
-
-* TWEAK: Ability to remove Mail Bank from Top Admin Bar Menu
-
-= 3.0.23 =
-
-* FIX: Uninstall Bug for Dropping of Tables in case of a Multisite
-
-= 3.0.22 =
-
-* TWEAK: Database Optimized to reduce Query Execution Time
-* FIX: Minor Bugs
-
-= 3.0.19 =
-
-* FIX: Security Vulnerability Issues
-
-= 3.0.18 =
-
-* FIX: Major Confliction with Admin Menu Editor Plugin
-* FIX: Broken Links
-* FIX: Pricing Page Removed from Page
-* FIX: Minor Bugs
-* TWEAK: CSS Optimized
-
-= 3.0.17 =
-
-* FIX: Broken Link
-* FIX: Confliction with Admin Menu Editor Plugin
-
-= 3.0.16 =
-
-* TWEAK: Pricing Tables Changed
-* TWEAK: Feedback Removed
-* TWEAK: WordPress.org Support Forum Link Added
-
-= 3.0.15 =
-
-* TWEAK: Could Not Open Socket Solution Provided
-* TWEAK: Connection Timeout Solution Provided
-* TWEAK: Could No Inititate mail() Function Solution Provided
-
-= 3.0.14 =
-
-* FIX: Wizard Bugs
-* FIX: Uninstall PLugin Bugs
-
-= 3.0.13 =
-
-* TWEAK: Freemius Code Removed
-* TWEAK: Wizard Page Added
-* TWEAK: Support Forum Link Added
-
-= 3.0.12 =
-
-* FIX: CSS Conflictions
-* TWEAK: New & Easy Gallery UI
-* TWEAK: Premium Version Links Removed
-* TWEAK: Banners Removed
-* TWEAK: Unwanted JS/CSS Files Removed
-
-= 3.0.11 =
-
-* FIX: Confliction with JetPack Contact Module Fixed
-* FIX: Major Bugs
-* TWEAK: Code Optimized
-
-= 3.0.10 =
-
-* FIX: Major Bugs
-* TWEAK: Code Optimized
-* TWEAK: Overview Page Added
-* TWEAK: Wizard Page Removed
-
-= 3.0.9 =
-
-* FIX: Already Sent Headers Bug Fixed
-* TWEAK: Code Optimized
-
-= 3.0.8 =
-
-* TWEAK: Links Added
-* FIX: unserialize changed to maybe_unserialize
-* TWEAK: Code Optimized
-* TRANSLATIONS: Language Updated - Vietnamese
-
-= 3.0.7 =
-
-* TWEAK: Unused Files Removed
-* TWEAK: Code Optimized
-
-= 3.0.6 =
-
-* FIX: Proper Sanitization, Escaping, Validation of all Post Calls
-* TWEAK: Unused Files Removed
-* TWEAK: Code Optimized
-* TRANSLATIONS: New Language Added - Hungarian
-* TRANSLATIONS: New Language Added - Swedish
-* TRANSLATIONS: New Language Added - Vietnamese
-
-= 3.0.5 =
-
-* FIX: Proper Sanitization, Escaping, Validation of all Post Calls
-* FIX: Uninstall File Fatal Error
-* FIX: Error Reporting in file Removed
-* FIX: Auto Updates Removed from Translations
-
-
-= 3.0.4 =
-
-* FIX: Proper Sanitization, Escaping, Validation of all Post Calls
-* FIX: Removal of all function_exists, class_exists, typeof from all the files.
-* FIX: Uninstall File moved to root folder and changes done as per wordpress guidelines.
-* FIX: Error Reporting in file Removed
-* FIX: Auto Updates Removed
-* FIX: Curl Calls Removed
-
-= 3.0.3 =
-
-* FIX: Code Removed from Skip Action Hook on Wizard Page
-* FIX: Code Removed from De-activation Hook in case of Skipped Wizard Page
-* FIX: Code Removed from Uninstall Hook in case of Skipped Wizard Page
-* FIX: Obsolete Code Removed
-* FIX: Obsolete Code Removed
-
-= 3.0.1 =
-
-* TWEAK: Translations File updated
-* FIX: Major Bugs Fixed
-* FIX: Obsolete Code Removed
-
-= 3.0.0 =
-
-* Major Version Release
-* TWEAK: Database Optimized
-* TWEAK: Layouts Changed
-* TWEAK: Email Logs Modified
-* TWEAK: Email Logs Filters Data for 1 Month now
-* TWEAK: Authentication type 'None' added
-* TWEAK: Install Script Modified
-* TWEAK: Code optimized
-* TWEAK: Screenshots Changed
-* TWEAK: CSS Improved
-* TWEAK: Screenshots Added
-* TWEAK: Translations File updated
-* TWEAK: Wizard Page Added
-
-* For Logs Prior to Version 3.0.0, please click [here](https://mail-bank.tech-banker.com/old-change-log.txt)
+[See changelog for all versions](https://plugins.svn.wordpress.org/wp-mail-bank/trunk/changelog.txt)
 
 == Upgrade Notice ==
 

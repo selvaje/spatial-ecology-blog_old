@@ -13,11 +13,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Orbit Fox Companion
- * Plugin URI:        https://themeisle.com/plugins/orbit-fox-companion
+ * Plugin URI:        https://orbitfox.com/
  * Description:       This swiss-knife plugin comes with a quality template library, menu/sharing icons modules, and newly added Elementor/BeaverBuilder page builder widgets on each release.
- * Version:           2.3.4
+ * Version:           2.5.8
  * Author:            Themeisle
- * Author URI:        https://themeisle.com
+ * Author URI:        https://orbitfox.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       themeisle-companion
@@ -37,7 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 function activate_orbit_fox() {
 	$obfx_activator = new Orbit_Fox_Activator();
-	$obfx_activator::activate();
+	$obfx_activator->activate();
 }
 
 /**
@@ -46,7 +46,7 @@ function activate_orbit_fox() {
  */
 function deactivate_orbit_fox() {
 	$obfx_deactivator = new Orbit_Fox_Deactivator();
-	$obfx_deactivator::deactivate();
+	$obfx_deactivator->deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_orbit_fox' );
@@ -71,7 +71,8 @@ function run_orbit_fox() {
 		require_once $vendor_file;
 	}
 	add_filter(
-		'themeisle_sdk_products', function ( $products ) {
+		'themeisle_sdk_products',
+		function ( $products ) {
 			$products[] = __FILE__;
 
 			return $products;
@@ -79,7 +80,8 @@ function run_orbit_fox() {
 	);
 
 	add_filter(
-		'themeisle_companion_friendly_name', function( $name ) {
+		'themeisle_companion_friendly_name',
+		function( $name ) {
 			return 'Orbit Fox';
 		}
 	);

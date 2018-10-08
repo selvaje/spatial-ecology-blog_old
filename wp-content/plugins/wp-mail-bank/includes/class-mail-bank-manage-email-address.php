@@ -42,7 +42,7 @@ if ( ! class_exists( 'Mail_Bank_Manage_Email_Address' ) ) {
 			 */
 		public function __construct( $email, $name = null ) {
 			if ( preg_match( '/(.*)<(.+)>/', $email, $matches ) ) {
-				if ( 3 === count( $matches ) ) {
+				if ( 3 == count( $matches ) ) { // WPCS: loose comparison ok.
 					$name  = $matches [1];
 					$email = $matches [2];
 				}

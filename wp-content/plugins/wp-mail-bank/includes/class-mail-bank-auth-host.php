@@ -315,12 +315,24 @@ if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
 		public static function override_wp_mail_function() {
 			global $wpdb, $email_configuration_settings;
 			$mail_bank_version_number = get_option( 'mail-bank-version-number' );
-			if ( '' !== $mail_bank_version_number ) {
+			if ( false !== $mail_bank_version_number ) {
+				$mb_table_prefix = $wpdb->prefix;
+				if ( is_multisite() ) {
+					$settings_data       = $wpdb->get_var(
+						$wpdb->prepare(
+							'SELECT meta_value FROM ' . $wpdb->base_prefix . 'mail_bank_meta WHERE meta_key=%s', 'settings'
+						)
+					);// WPCS: db call ok; no-cache ok.
+					$settings_data_array = maybe_unserialize( $settings_data );
+					if ( isset( $settings_data_array['fetch_settings'] ) && 'network_site' === $settings_data_array['fetch_settings'] ) {
+						$mb_table_prefix = $wpdb->base_prefix;
+					}
+				}
 				$email_configuration_data     = $wpdb->get_var(
 					$wpdb->prepare(
-						'SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta WHERE meta_key = %s', 'email_configuration'
+						'SELECT meta_value FROM ' . $mb_table_prefix . 'mail_bank_meta WHERE meta_key = %s', 'email_configuration'
 					)
-				); // db call ok; no-cache ok.
+				); // WPCS: db call ok; no-cache ok, unprepared SQL ok.
 				$email_configuration_settings = maybe_unserialize( $email_configuration_data );
 				if ( 'smtp' === $email_configuration_settings['mailer_type'] ) {
 					if ( ! function_exists( 'wp_mail' ) ) {
@@ -334,6 +346,44 @@ if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
 						 * @param string $attachments .
 						 */
 						function wp_mail( $to, $subject, $message, $headers = '', $attachments = '' ) {
+							/**
+							 * Filters the wp_mail() arguments.
+							 *
+							 * @since 2.2.0
+							 *
+							 * @param array $args A compacted array of wp_mail() arguments, including the "to" email,
+							 *                    subject, message, headers, and attachments values.
+							 */
+							$atts = apply_filters( 'wp_mail', compact( 'to', 'subject', 'message', 'headers', 'attachments' ) );
+
+							if ( isset( $atts['to'] ) ) {
+								$to = $atts['to'];
+							}
+
+							if ( ! is_array( $to ) ) {
+								$to = explode( ',', $to );
+							}
+
+							if ( isset( $atts['subject'] ) ) {
+								$subject = $atts['subject'];
+							}
+
+							if ( isset( $atts['message'] ) ) {
+								$message = $atts['message'];
+							}
+
+							if ( isset( $atts['headers'] ) ) {
+								$headers = $atts['headers'];
+							}
+
+							if ( isset( $atts['attachments'] ) ) {
+								$attachments = $atts['attachments'];
+							}
+
+							if ( ! is_array( $attachments ) ) {
+								$attachments = explode( "\n", str_replace( "\r\n", "\n", $attachments ) );
+							}
+
 							global $wpdb, $email_configuration_settings;
 							$obj_send_test_mail = new Mail_Bank_Auth_Host( $email_configuration_settings );
 							$result             = $obj_send_test_mail->send_test_mail_bank( $to, $subject, $message, $headers, $attachments, $email_configuration_settings );

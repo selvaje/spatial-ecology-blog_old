@@ -75,13 +75,14 @@ function sccss_register_codemirror( $hook ) {
 	// Note that this only loads on the admin tools page (Appearance > Custom CSS).
 	if ( 'appearance_page_simple-custom-css' === $hook ) {
 		// Maintaining for backwards compatibility.
-		wp_enqueue_style( 'sccss-editor-css', plugins_url( 'simple-custom-css/includes/css/editor.css' ) );
-		wp_enqueue_style( 'sccss-codemirror-css', plugins_url( 'simple-custom-css/codemirror/codemirror.min.css' ) );
-		wp_enqueue_script( 'sccss-codemirror-js', plugins_url( 'simple-custom-css/codemirror/codemirror.js' ), array(), '20180208', true );
 		wp_enqueue_script( 'sccss-css-lint-js', plugins_url( 'simple-custom-css/codemirror/csslint.js' ), array( 'sccss-codemirror-js' ), '1.0.3', true );
 		wp_enqueue_script( 'sccss-codemirror-lint-js', plugins_url( 'simple-custom-css/codemirror/codemirror-lint.js' ), array( 'sccss-css-lint-js' ), '20180208', true );
-		wp_enqueue_script( 'sccss-codemirror-css-js', plugins_url( 'simple-custom-css/codemirror/css.js' ), array( 'sccss-codemirror-lint-js' ), '20180208', true );
 		wp_enqueue_script( 'sccss-codemirror-css-lint-js', plugins_url( 'simple-custom-css/codemirror/codemirror-css-lint.js' ), array( 'sccss-codemirror-css-js' ), '20180208', true );
+		wp_enqueue_script( 'sccss-codemirror-js', plugins_url( 'simple-custom-css/codemirror/codemirror.js' ), array(), '20180208', true );
+		wp_enqueue_script( 'sccss-codemirror-css-js', plugins_url( 'simple-custom-css/codemirror/css.js' ), array( 'sccss-codemirror-lint-js' ), '20180208', true );
+
+		wp_enqueue_style( 'sccss-codemirror-css', plugins_url( 'simple-custom-css/codemirror/codemirror.min.css' ) );
+		wp_enqueue_style( 'sccss-editor-css', plugins_url( 'simple-custom-css/includes/css/editor.css' ) );
 	}
 }
 
@@ -139,16 +140,18 @@ function sccss_render_submenu_page() {
 			<div id="templateside">
 				<?php do_action( 'sccss_sidebar_top' ); ?>
 
-				<p style="margin-top: 0"><?php esc_html_e( 'Simple Custom CSS allows you to add your own styles or override the default CSS of a plugin or theme.', 'simple-custom-css' ) ?></p>
-				<p style="margin-top: 0"><?php _e( 'The styles you save here will remain even if you switch themes.', 'simple-custom-css' ) ?></p>
+				<p style="margin-top: 0"><?php esc_html_e( 'Simple Custom CSS allows you to add your own styles or override the default CSS of a plugin or theme.', 'simple-custom-css' ); ?></p>
+				<p style="margin-top: 0"><?php _e( 'The styles you save here will remain even if you switch themes.', 'simple-custom-css' ); ?></p>
 
-				<p><?php esc_html_e( 'To use, enter your custom CSS, then click "Update Custom CSS".  It\'s that simple!', 'simple-custom-css' ) ?></p>
+				<p><?php esc_html_e( 'To use, enter your custom CSS, then click "Update Custom CSS".  It\'s that simple!', 'simple-custom-css' ); ?></p>
 				<?php submit_button( __( 'Update Custom CSS', 'simple-custom-css' ), 'primary', 'submit', true ); ?>
 
 				<?php if ( ! version_compare( $wp_version, 4.9 ) >= 0 ) : ?>
 					<p class="description">
-						<?php // translators: Placeholder represents the URL to the Customizer Section. ?>
-						<?php echo wp_kses_post( sprintf( __( 'Did you know that you can edit Simple Custom CSS in <a href="%s" title="Simple Custom CSS in the Customizer">the Customizer</a>?', 'simple-custom-css' ), esc_url( wp_customize_url() . '?autofocus[control]=sccss_editor' ) ) ); ?>
+						<?php
+						// translators: Placeholder represents the URL to the Customizer Section.
+						echo wp_kses_post( sprintf( __( 'Did you know that you can edit Simple Custom CSS in <a href="%s" title="Simple Custom CSS in the Customizer">the Customizer</a>?', 'simple-custom-css' ), esc_url( wp_customize_url() . '?autofocus[control]=sccss_editor' ) ) );
+						?>
 					</p>
 				<?php endif; ?>
 
@@ -176,9 +179,9 @@ function sccss_render_submenu_page() {
 				var editor = CodeMirror.fromTextArea( document.getElementById( 'sccss_settings[sccss-content]' ), {
 					lineNumbers: true,
 					lineWrapping: true,
+					mode: 'text/css',
 					indentUnit: 2,
 					tabSize: 2,
-					mode: 'text/css',
 					lint: true,
 					gutters: [ 'CodeMirror-lint-markers' ]
 				} );

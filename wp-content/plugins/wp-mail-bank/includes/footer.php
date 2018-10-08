@@ -155,6 +155,7 @@ if ( ! is_user_logged_in() ) {
 		{
 			jQuery("#ux_div_mail_console").css("display", "none");
 			jQuery("#console_log_div").css("display", "none");
+			jQuery("#ux_div_help_support").css("display", "none");
 			jQuery("#ux_div_test_mail").css("display", "block");
 		}
 
@@ -165,18 +166,25 @@ if ( ! is_user_logged_in() ) {
 			var hostname = smtp_host.substr(indexof, 5);
 			if (smtp_host === "smtp.gmail.com")
 			{
-				jQuery("#ux_link_content").text("(" +<?php echo wp_json_encode( $mb_email_configuration_get_google_credentials ); ?> + ")");
-				jQuery("#ux_link_reference").attr("href", "https://console.developers.google.com");
+				jQuery("#ux_link_content_google").text("(" +<?php echo wp_json_encode( $mb_email_configuration_get_credentials ); ?>);
+				jQuery("#ux_link_content").text(" / "+<?php echo wp_json_encode( $mb_email_configuration_how_to_set_up ); ?>+" )");
+				jQuery("#ux_link_reference_google").attr("href", "https://console.developers.google.com");
+				jQuery("#ux_link_reference").attr("href", "https://mail-bank.tech-banker.com/documentation/google-oauth-api/");
 			} else if (smtp_host === "smtp.live.com")
 			{
-				jQuery("#ux_link_content").text("(" +<?php echo wp_json_encode( $mb_email_configuration_get_microsoft_credentials ); ?> + ")");
-				jQuery("#ux_link_reference").attr("href", "https://account.live.com/developers/applications/create");
+				jQuery("#ux_link_content_google").text("(" +<?php echo wp_json_encode( $mb_email_configuration_get_credentials ); ?>);
+				jQuery("#ux_link_content").text(" / "+<?php echo wp_json_encode( $mb_email_configuration_how_to_set_up ); ?>+" )");
+				jQuery("#ux_link_reference_google").attr("href", "https://account.live.com/developers/applications/create");
+				jQuery("#ux_link_reference").attr("href", "https://mail-bank.tech-banker.com/documentation/microsoft-oauth-api/");
 			} else if (hostname === "yahoo")
 			{
-				jQuery("#ux_link_content").text("(" +<?php echo wp_json_encode( $mb_email_configuration_get_yahoo_credentials ); ?> + ")");
-				jQuery("#ux_link_reference").attr("href", "https://developer.yahoo.com/apps/");
+				jQuery("#ux_link_content_google").text("(" +<?php echo wp_json_encode( $mb_email_configuration_get_credentials ); ?>);
+				jQuery("#ux_link_content").text(" / "+<?php echo wp_json_encode( $mb_email_configuration_how_to_set_up ); ?>+" )");
+				jQuery("#ux_link_reference_google").attr("href", "https://developer.yahoo.com/apps/");
+				jQuery("#ux_link_reference").attr("href", "https://mail-bank.tech-banker.com/documentation/yahoo-oauth-api/");
 			} else
 			{
+				jQuery("#ux_link_content_google").text("");
 				jQuery("#ux_link_content").text("");
 			}
 		}
@@ -194,6 +202,7 @@ if ( ! is_user_logged_in() ) {
 					{
 						jQuery("#ux_txtarea_result_log").html("<?php echo esc_attr( $mb_email_configuration_send_test_email_textarea ); ?>\n");
 						jQuery("#ux_txtarea_result_log").append(<?php echo wp_json_encode( $mb_test_email_sending_test_email ); ?> + "&nbsp;" + to_email_address + "\n");
+						jQuery("#ux_div_help_support").css("display", "block");
 						if (jQuery.trim(data) === "true" || jQuery.trim(data) === "1")
 						{
 							jQuery("#ux_div_mail_console").css("display", "block");
@@ -263,6 +272,7 @@ if ( ! is_user_logged_in() ) {
 							}
 							mail_bank_mail_sender(to_email_address);
 							jQuery("#console_log_div").css("display", "block");
+							jQuery("#ux_div_help_support").css("display", "block");
 							jQuery("#ux_div_test_mail").css("display", "none");
 						}
 					});
@@ -329,12 +339,22 @@ if ( ! is_user_logged_in() ) {
 					}
 					function plugin_stats_wp_mail_bank(type)
 					{
-						if(jQuery("#ux_txt_email_address_notifications").val() ==  "" && type != "skip")
+						if( jQuery("#ux_txt_email_address_notifications").val() ===  "" && type !== "skip")
 						{
-							alert("Please fill in the Email Address");
+							if( jQuery("#ux_txt_email_address_notifications").val() ===  "" )
+							{
+								jQuery("#ux_txt_validation_gdpr_mail_bank").css({"display":'','color':'red'});
+								jQuery("#ux_txt_email_address_notifications").css("border-color","red");
+							}
+							else {
+								jQuery("#ux_txt_email_address_notifications").css("border-color","#ddd");
+								jQuery("#ux_txt_email_address_notifications").css("border-color","#ddd");
+							}
 						}
 						else
 						{
+							jQuery("#ux_txt_validation_gdpr_mail_bank").css( 'display','none' );
+							jQuery("#ux_txt_email_address_notifications").css("border-color","#ddd");
 							overlay_loading_mail_bank();
 							jQuery.post(ajaxurl,
 							{
@@ -635,6 +655,7 @@ if ( ! is_user_logged_in() ) {
 							?>
 							mail_bank_mail_sender("<?php echo esc_attr( get_option( 'admin_email' ) ); ?>");
 							jQuery("#console_log_div").css("display", "block");
+							jQuery("#ux_div_help_support").css("display", "block");
 							jQuery("#ux_div_mail_console").css("display", "none");
 							jQuery("#ux_div_test_mail").css("display", "none");
 							mail_bank_third_step_settings();
@@ -642,6 +663,7 @@ if ( ! is_user_logged_in() ) {
 						} elseif ( isset( $_REQUEST['auto_mail'] ) && sanitize_text_field( wp_unslash( $_REQUEST['auto_mail'] ) ) === 'false' ) {// Input var okay, CSRF ok.
 							?>
 							jQuery("#ux_div_mail_console").css("display", "none");
+							jQuery("#ux_div_help_support").css("display", "none");
 							jQuery("#ux_div_test_mail").css("display", "block");
 							mail_bank_third_step_settings();
 							<?php
@@ -910,6 +932,7 @@ if ( ! is_user_logged_in() ) {
 						jQuery("#ux_ddl_debug_mode").val("<?php echo isset( $settings_data_array['debug_mode'] ) ? esc_attr( $settings_data_array['debug_mode'] ) : 'enable'; ?>");
 						jQuery("#ux_ddl_remove_tables").val("<?php echo isset( $settings_data_array['remove_tables_at_uninstall'] ) ? esc_attr( $settings_data_array['remove_tables_at_uninstall'] ) : 'disable'; ?>");
 						jQuery("#ux_ddl_monitor_email_logs").val("<?php echo isset( $settings_data_array['monitor_email_logs'] ) ? esc_attr( $settings_data_array['monitor_email_logs'] ) : 'enable'; ?>");
+						jQuery("#ux_ddl_fetch_settings").val("<?php echo isset( $settings_data_array['fetch_settings'] ) ? esc_attr( $settings_data_array['fetch_settings'] ) : 'individual_site'; ?>");
 						});
 						jQuery("#ux_frm_settings").validate
 							({

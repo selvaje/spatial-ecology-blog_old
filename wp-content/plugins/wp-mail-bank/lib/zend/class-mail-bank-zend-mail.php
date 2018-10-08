@@ -22,32 +22,36 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly
-/** Includes Transport Abstract File.
-
+/**
+ * Includes Transport Abstract File.
+ *
  * @see Mail_Bank_Zend_Mail_Transport_Abstract
  */
 if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/mail/transport/class-mail-bank-zend-mail-transport-abstract.php' ) ) {
 	require_once MAIL_BANK_DIR_PATH . 'lib/zend/mail/transport/class-mail-bank-zend-mail-transport-abstract.php';
 }
 
-/** Includes Zend Mime File.
-
+/**
+ * Includes Zend Mime File.
+ *
  * @see Mail_Bank_Zend_Mime
  */
 if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/class-mail-bank-zend-mime.php' ) ) {
 	require_once MAIL_BANK_DIR_PATH . 'lib/zend/class-mail-bank-zend-mime.php';
 }
 
-/** Includes Mime Message File.
-
+/**
+ * Includes Mime Message File.
+ *
  * @see Mail_Bank_Zend_Mime_Message
  */
 if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/mime/class-mail-bank-zend-mime-message.php' ) ) {
 	require_once MAIL_BANK_DIR_PATH . 'lib/zend/mime/class-mail-bank-zend-mime-message.php';
 }
 
-/** Includes Mime Part File.
-
+/**
+ * Includes Mime Part File.
+ *
  * @see Mail_Bank_Zend_Mime_Part
  */
 if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/mime/class-mail-bank-zend-mime-part.php' ) ) {
@@ -62,11 +66,9 @@ if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/mime/class-mail-bank-zend-mime-
  * @license     http://framework.zend.com/license/new-bsd        New BSD License
  */
 class Mail_Bank_Zend_Mail extends Mail_Bank_Zend_Mime_Message {
-	/*
-	* @access protected
-	*/
-	/** Variable Declaration.
-
+	/**
+	 * Variable Declaration.
+	 *
 	 * @var Mail_Bank_Zend_Mail_Transport_Abstract
 	 * @static
 	 */

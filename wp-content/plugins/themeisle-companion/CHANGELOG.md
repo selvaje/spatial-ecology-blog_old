@@ -1,8 +1,99 @@
 
- ### v2.3.4 - 2018-02-08 
+ ### v2.5.8 - 2018-09-12 
  **Changes:** 
- * Enhancements for Hestia Theme 
-* Made structure more modular
+ * Extend image optimization module for 50% of users.
+* Enable safe updates for all users.
+* Adds image optimization integration with Optimole.
+ 
+ ### v2.5.7 - 2018-08-13 
+ **Changes:** 
+ * -fixed fatal error with Elementor extra widgets
+ 
+ ### v2.5.6 - 2018-07-26 
+ **Changes:** 
+ * Fix Elementor content forms bug.
+ 
+ ### v2.5.5 - 2018-07-23 
+ **Changes:** 
+ * Add new controls for Elementor content forms.
+ 
+ ### v2.5.4 - 2018-07-11 
+ **Changes:** 
+ * Fixed undefined method for old elementor versions.
+ 
+ ### v2.5.3 - 2018-07-11 
+ **Changes:** 
+ * Small alignment fix for menu icons module
+* Added styling options for Elementor content forms
+ 
+ ### v2.5.2 - 2018-07-06 
+ **Changes:** 
+ * Fixes post grid pagination issue
+* Fixes post grid colors not applying correctly
+* Fixes Templates directory import issue
+* New templates in the templates directory
+* Fixes content forms placeholder not used
+* Fixes for Hestia Theme enhancements module
+* Fixes issue where url's were replaced with CDN url for beta users
+ 
+ ### v2.5.1 - 2018-07-02 
+ **Changes:** 
+ * Fix social icons saving bug. 
+* Fix z-index issue on policy notice.
+ 
+ ### v2.5.0 - 2018-06-22 
+ **Changes:** 
+ * Adds privacy policy module, allows users to set a notice for their visitors.
+* Adds Image CDN and Optimization module in private BETA .
+* Adds Themes Safe Updates module in private BETA.
+* Adds more Elementor templates into the library.
+* Improvements for Hestia enhancements module.
+ 
+ ### v2.4.7 - 2018-05-03 
+ **Changes:** 
+ * Add content forms for Beaver Builder
+* Bug fixes and performance enhancements for Hestia
+* Fix issue with plugin activation and deactivation
+ 
+ ### v2.4.6 - 2018-04-12 
+ **Changes:** 
+ * Add video to readme file 
+* Added notification about conflict with navwalker overrides 
+* Added safeguard for navwalker overrides 
+* Remove unused animation functions from Legacy Module 
+* Added Azera Shop, Llorix One Lite, Shop Isle themes functionality to Legacy Module
+ 
+ ### v2.4.5 - 2018-03-29 
+ **Changes:** 
+ * Fixed issue with duplicated widgets in Hestia theme
+* Fix undefined errors in Analytics Module
+* Unset monitor email field on deactivation
+ 
+ ### v2.4.4 - 2018-03-08 
+ **Changes:** 
+ * Fixed Analytics module error.
+* UX Improvements.
+ 
+ ### v2.4.3 - 2018-03-04 
+ **Changes:** 
+ * Fixed Analytics module issues.
+* Better UX on module activation.
+ 
+ ### v2.4.2 - 2018-03-02 
+ **Changes:** 
+ * Added a new Google Analytics Integration module
+* Small UX improvements
+ 
+ ### v2.4.1 - 2018-02-20 
+ **Changes:** 
+ * Added intent confirmation for uptime monitor.
+* Register site to endpoint only if we have a valid email address.
+* UX improvements for module activation.
+ 
+ ### v2.4.0 - 2018-02-16 
+ **Changes:** 
+ * Adds a new module for uptime monitor of your website. 
+* Adds 4 more hooks for modules related actions.
  
  ### v2.3.1 - 2018-01-17 
  **Changes:** 

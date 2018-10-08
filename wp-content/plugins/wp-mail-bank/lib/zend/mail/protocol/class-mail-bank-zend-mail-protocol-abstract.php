@@ -405,7 +405,7 @@ abstract class Mail_Bank_Zend_Mail_Protocol_Abstract {
 
 			if ( '' !== $err_msg ) {
 				$err_msg .= ' ' . $msg;
-			} elseif ( null === $cmd || ! in_array( $cmd, $code ) ) {
+			} elseif ( null === $cmd || ! in_array( $cmd, $code ) ) { // @codingStandardsIgnoreLine
 				$err_msg = $msg;
 			}
 		} while ( strpos( $more, '-' ) === 0 ); // The '-' message prefix indicates an information string instead of a response string.

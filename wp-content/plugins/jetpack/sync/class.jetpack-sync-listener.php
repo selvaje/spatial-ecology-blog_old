@@ -174,6 +174,15 @@ class Jetpack_Sync_Listener {
 		}
 
 		/**
+		 * Add an action hook to execute when anything on the whitelist gets sent to the queue to sync.
+		 *
+		 * @module sync
+		 *
+		 * @since 5.9.0
+		 */
+		do_action( 'jetpack_sync_action_before_enqueue' );
+
+		/**
 		 * Modify or reject the data within an action before it is enqueued locally.
 		 *
 		 * @since 4.2.0
@@ -259,6 +268,7 @@ class Jetpack_Sync_Listener {
 			'is_wp_rest'       => defined( 'REST_REQUEST' ) ? REST_REQUEST : false,
 			'is_ajax'          => defined( 'DOING_AJAX' ) ? DOING_AJAX : false,
 			'is_wp_admin'      => is_admin(),
+			'is_cli'           => defined( 'WP_CLI' ) ? WP_CLI : false,
 		);
 
 		if ( $this->should_send_user_data_with_actor( $current_filter ) ) {

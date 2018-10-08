@@ -42,6 +42,12 @@ if ( ! is_user_logged_in() ) {
 		$mb_premium_edition_label   = __( 'Premium Edition', 'wp-mail-bank' );
 		$mb_message_premium_edition = __( 'This feature is available only in Premium Editions! <br> Kindly Purchase to unlock it!', 'wp-mail-bank' );
 
+		// fetch settings.
+		$mb_fetch_settings         = __( 'Fetch Settings', 'wp-mail-bank' );
+		$mb_fetch_settings_tooltip = __( 'Choose options for Fetch Settings', 'wp-mail-bank' );
+		$mb_indivisual_site        = __( 'Individual Site', 'wp-mail-bank' );
+		$mb_multiple_site          = __( 'Network Site', 'wp-mail-bank' );
+
 		// wizard.
 		$mb_wizard_basic_info    = __( 'Basic Info', 'wp-mail-bank' );
 		$mb_wizard_account_setup = __( 'Account Setup', 'wp-mail-bank' );
@@ -121,7 +127,6 @@ if ( ! is_user_logged_in() ) {
 		$mb_email_configuration_content                        = __( 'Email Content', 'wp-mail-bank' );
 		$mb_email_configuration_content_tooltip                = __( 'Email Content for your Test Email', 'wp-mail-bank' );
 		$mb_email_configuration_send_test_email                = __( 'Send Test Email', 'wp-mail-bank' );
-		$mb_email_configuration_smtp_debugging_output          = __( 'SMTP Debugging Output', 'wp-mail-bank' );
 		$mb_email_configuration_send_test_email_textarea       = __( 'Checking your settings', 'wp-mail-bank' );
 		$mb_email_configuration_result                         = __( 'Result', 'wp-mail-bank' );
 		$mb_email_configuration_send_another_test_email        = __( 'Send Another Test Email', 'wp-mail-bank' );
@@ -155,9 +160,8 @@ if ( ! is_user_logged_in() ) {
 		$mb_email_configuration_reply_to                       = __( 'Reply To', 'wp-mail-bank' );
 		$mb_email_configuration_reply_to_tooltip               = __( 'A valid Email Address that will be used in the \'Reply-To\' field of the email', 'wp-mail-bank' );
 		$mb_email_configuration_reply_to_placeholder           = __( 'Please provide Reply To Email Address', 'wp-mail-bank' );
-		$mb_email_configuration_get_google_credentials         = __( 'Get Google Client Id and Secret Key', 'wp-mail-bank' );
-		$mb_email_configuration_get_microsoft_credentials      = __( 'Get Microsoft Client Id and Secret Key', 'wp-mail-bank' );
-		$mb_email_configuration_get_yahoo_credentials          = __( 'Get Yahoo Client Id and Secret Key', 'wp-mail-bank' );
+		$mb_email_configuration_get_credentials                = __( 'Get API Key', 'wp-mail-bank' );
+		$mb_email_configuration_how_to_set_up                  = __( 'How to setup?', 'wp-mail-bank' );
 		$mb_email_configuration_send_email_via_sendgrid_api    = __( 'SendGrid API', 'wp-mail-bank' );
 		// Email Logs.
 		$mb_start_date_title        = __( 'Start Date', 'wp-mail-bank' );

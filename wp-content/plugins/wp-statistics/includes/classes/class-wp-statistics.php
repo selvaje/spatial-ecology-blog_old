@@ -177,7 +177,12 @@ class WP_Statistics {
 		$this->set_timezone();
 		$this->load_options();
 		$this->get_IP();
-		$this->set_ip_hash();
+
+		// Check if the has IP is enabled.
+		if ( $this->get_option( 'hash_ips' ) == true ) {
+			$this->ip_hash = $this->get_hash_string();
+		}
+
 		$this->set_pages();
 
 		// Autoload composer
@@ -379,16 +384,14 @@ class WP_Statistics {
 	}
 
 	/**
-	 * Set IP Hash
+	 * Generate hash string
 	 */
-	public function set_ip_hash() {
-		if ( $this->get_option( 'hash_ips' ) == true ) {
-			$this->ip_hash = '#hash#' . sha1( $this->ip . $_SERVER['HTTP_USER_AGENT'] );
-		}
+	private function get_hash_string() {
+		return '#hash#' . sha1( $this->ip . $_SERVER['HTTP_USER_AGENT'] );
 	}
 
 	/**
-	 * loads the options from WordPress,
+	 * Loads the options from WordPress
 	 */
 	public function load_options() {
 		$this->options = get_option( 'wp_statistics' );
@@ -672,9 +675,11 @@ class WP_Statistics {
 	 * During installation of WP Statistics some initial options need to be set.
 	 * This function will save a set of default options for the plugin.
 	 *
+	 * @param null $option_name
+	 *
 	 * @return array
 	 */
-	public function Default_Options() {
+	public function Default_Options( $option_name = null ) {
 		$options = array();
 
 		if ( ! isset( $wps_robotarray ) ) {
@@ -688,6 +693,7 @@ class WP_Statistics {
 		$options['search_converted'] = 1;
 
 		// If this is a first time install or an upgrade and we've added options, set some intelligent defaults.
+		$options['anonymize_ips']         = false;
 		$options['geoip']                 = false;
 		$options['browscap']              = false;
 		$options['useronline']            = true;
@@ -710,6 +716,10 @@ class WP_Statistics {
 		$options['map_type']              = 'jqvmap';
 
 		$options['force_robot_update'] = true;
+
+		if ( $option_name and isset( $options[ $option_name ] ) ) {
+			return $options[ $option_name ];
+		}
 
 		return $options;
 	}
@@ -775,11 +785,11 @@ class WP_Statistics {
 			return $this->ip;
 		}
 
+		$temp_ip = false;
+
 		// By default we use the remote address the server has.
 		if ( array_key_exists( 'REMOTE_ADDR', $_SERVER ) ) {
 			$temp_ip = $this->get_ip_value( $_SERVER['REMOTE_ADDR'] );
-		} else {
-			$temp_ip = '127.0.0.1';
 		}
 
 		if ( false !== $temp_ip ) {
@@ -800,6 +810,7 @@ class WP_Statistics {
 			'HTTP_X_FORWARDED',
 			'HTTP_FORWARDED_FOR',
 			'HTTP_FORWARDED',
+			'HTTP_X_REAL_IP',
 		);
 
 		foreach ( $envs as $env ) {
@@ -816,6 +827,11 @@ class WP_Statistics {
 		if ( false === $this->ip ) {
 			$this->ip = '127.0.0.1';
 		}
+
+		// If the anonymize IP enabled for GDPR.
+		if ( $this->get_option( 'anonymize_ips' ) == true ) {
+            $this->ip = substr($this->ip, 0, strrpos($this->ip, '.')).'.000';
+        }
 
 		return $this->ip;
 	}

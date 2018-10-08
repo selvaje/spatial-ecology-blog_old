@@ -49,13 +49,23 @@ class Posts_Grid extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Register dependent script.
+	 *
+	 * @return array
+	 */
+	public function get_script_depends() {
+		return [ 'obfx-grid-js' ];
+	}
+
+	/**
 	 * Widget Category.
 	 *
 	 * @return array
 	 */
 	public function get_categories() {
 		$category_args = apply_filters( 'elementor_extra_widgets_category_args', array() );
-		$slug = isset( $category_args['slug'] ) ?  $category_args['slug'] : 'obfx-elementor-widgets';
+		$slug          = isset( $category_args['slug'] ) ? $category_args['slug'] : 'obfx-elementor-widgets';
+
 		return [ $slug ];
 	}
 
@@ -480,6 +490,16 @@ class Posts_Grid extends \Elementor\Widget_Base {
 			]
 		);
 
+		// Show full content.
+		$this->add_control(
+			'grid_content_full_post',
+			[
+				'label'   => __( 'Show full content', 'themeisle-companion' ),
+				'type'    => \Elementor\Controls_Manager::SWITCHER,
+				'default' => '',
+			]
+		);
+
 		// Length.
 		$this->add_control(
 			'grid_content_length',
@@ -488,6 +508,9 @@ class Posts_Grid extends \Elementor\Widget_Base {
 				'label'       => '<i class="fa fa-arrows-h"></i> ' . __( 'Length (words)', 'themeisle-companion' ),
 				'placeholder' => __( 'Length of content (words)', 'themeisle-companion' ),
 				'default'     => 30,
+				'condition'   => [
+						'grid_content_full_post!' => 'yes'
+				]
 			]
 		);
 
@@ -673,7 +696,7 @@ class Posts_Grid extends \Elementor\Widget_Base {
 		);
 
 		// Columns margin.
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_style_columns_margin',
 			[
 				'label'     => __( 'Columns margin', 'themeisle-companion' ),
@@ -695,7 +718,7 @@ class Posts_Grid extends \Elementor\Widget_Base {
 		);
 
 		// Row margin.
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_style_rows_margin',
 			[
 				'label'     => __( 'Rows margin', 'themeisle-companion' ),
@@ -736,7 +759,7 @@ class Posts_Grid extends \Elementor\Widget_Base {
 		);
 
 		// Items internal padding.
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_items_style_padding',
 			[
 				'label'      => __( 'Padding', 'themeisle-companion' ),
@@ -830,7 +853,7 @@ class Posts_Grid extends \Elementor\Widget_Base {
 		);
 
 		// Image margin.
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_image_style_margin',
 			[
 				'label'      => __( 'Margin', 'themeisle-companion' ),
@@ -870,7 +893,7 @@ class Posts_Grid extends \Elementor\Widget_Base {
 			[
 				'name'     => 'grid_title_style_typography',
 				'scheme'   => \Elementor\Scheme_Typography::TYPOGRAPHY_1,
-				'selector' => '{{WRAPPER}} .obfx-grid-title',
+				'selector' => '{{WRAPPER}} .obfx-grid .entry-title.obfx-grid-title, {{WRAPPER}} .obfx-grid .entry-title.obfx-grid-title > a',
 			]
 		);
 
@@ -885,14 +908,14 @@ class Posts_Grid extends \Elementor\Widget_Base {
 					'value' => \Elementor\Scheme_Color::COLOR_1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .obfx-grid-title'   => 'color: {{VALUE}};',
-					'{{WRAPPER}} .obfx-grid-title a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .obfx-grid .entry-title.obfx-grid-title'       => 'color: {{VALUE}};',
+					'{{WRAPPER}} .obfx-grid .entry-title.obfx-grid-title > a'   => 'color: {{VALUE}};',
 				],
 			]
 		);
 
 		// Title margin.
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_title_style_margin',
 			[
 				'label'      => __( 'Margin', 'themeisle-companion' ),
@@ -952,7 +975,7 @@ class Posts_Grid extends \Elementor\Widget_Base {
 		);
 
 		// Meta margin.
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_meta_style_margin',
 			[
 				'label'      => __( 'Margin', 'themeisle-companion' ),
@@ -1013,7 +1036,7 @@ class Posts_Grid extends \Elementor\Widget_Base {
 		);
 
 		// Content margin
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_content_style_margin',
 			[
 				'label'      => __( 'Margin', 'themeisle-companion' ),
@@ -1077,7 +1100,7 @@ class Posts_Grid extends \Elementor\Widget_Base {
 		);
 
 		// Price bottom margin.
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_content_price_style_margin',
 			[
 				'label'      => __( 'Margin', 'themeisle-companion' ),
@@ -1327,7 +1350,7 @@ class Posts_Grid extends \Elementor\Widget_Base {
 		);
 
 		// Image margin.
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_pagination_style_margin',
 			[
 				'label'      => __( 'Margin', 'themeisle-companion' ),
@@ -1399,7 +1422,10 @@ class Posts_Grid extends \Elementor\Widget_Base {
 
 		// Pagination.
 		if ( ! empty( $settings['grid_pagination'] ) ) {
-			$paged         = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+			$paged         = get_query_var( 'paged' );
+			if ( empty( $paged ) ) {
+				$paged         = get_query_var( 'page' );
+			}
 			$args['paged'] = $paged;
 		}
 
@@ -1665,15 +1691,18 @@ class Posts_Grid extends \Elementor\Widget_Base {
 	 */
 	protected function renderContent() {
 		$settings = $this->get_settings();
-
 		if ( $settings['grid_content_hide'] !== 'yes' ) { ?>
 			<div class="entry-content obfx-grid-content">
 				<?php
-				if ( empty( $settings['grid_content_length'] ) ) {
-					the_excerpt();
+				if( $settings['grid_content_full_post'] === 'yes' ) {
+					the_content();
 				} else {
-					echo wp_trim_words( get_the_excerpt(), $settings['grid_content_length'] );
-				} ?>
+					if ( empty( $settings['grid_content_length'] ) ) {
+						the_excerpt();
+					} else {
+						echo wp_trim_words( get_the_excerpt(), $settings['grid_content_length'] );
+					}
+				}?>
 			</div>
 			<?php
 		}
@@ -1717,7 +1746,8 @@ class Posts_Grid extends \Elementor\Widget_Base {
 						break;
 					} ?>
 					<span class="obfx-grid-categories-item">
-						<a href="<?php echo get_category_link( $category->term_id ); ?>" title="<?php echo $category->name; ?>">
+						<a href="<?php echo get_category_link( $category->term_id ); ?>"
+						   title="<?php echo $category->name; ?>">
 							<?php echo $category->name; ?>
 						</a>
 					</span>

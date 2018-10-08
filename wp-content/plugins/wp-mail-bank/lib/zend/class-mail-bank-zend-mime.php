@@ -495,7 +495,6 @@ class Mail_Bank_Zend_Mime {
 
 		// Split encoded text into separate lines.
 		$tmp = '';
-		// $len_count = strlen( $str ); .
 		while ( strlen( $str ) > 0 ) { // @codingStandardsIgnoreLine
 			$current_line = max( count( $lines ) - 1, 0 );
 			$token        = self::get_next_quoted_printable_token( $str );

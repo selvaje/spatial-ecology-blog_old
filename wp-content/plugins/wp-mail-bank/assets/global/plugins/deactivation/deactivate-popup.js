@@ -27,24 +27,24 @@ jQuery(document).ready(function($) {
 							if ( '' !== this.value )
 									result[ this.name ] = this.value;
 						});
-						if ( ! jQuery.isEmptyObject( result ) ) {
-							result.action = 'post_user_feedback_mail_bank';
-								$.ajax({
-										url: post_feedback.admin_ajax,
-										type: 'POST',
-										data: result,
-										error: function(){},
-										success: function(msg){},
-										beforeSend: function() {
-											go.addClass('mail-bank-ajax-progress');
-										},
-										complete: function() {
-											go.removeClass('mail-bank-ajax-progress');
-												dialog.dialog( "close" );
-												location.href = deactivateLink;
-										}
-								});
-						}
+								if ( ! jQuery.isEmptyObject( result ) ) {
+									result.action = 'post_user_feedback_mail_bank';
+										$.ajax({
+												url: post_feedback.admin_ajax,
+												type: 'POST',
+												data: result,
+												error: function(){},
+												success: function(msg){},
+												beforeSend: function() {
+													go.addClass('mail-bank-ajax-progress');
+												},
+												complete: function() {
+													go.removeClass('mail-bank-ajax-progress');
+														dialog.dialog( "close" );
+														location.href = deactivateLink;
+												}
+										});
+								}
 							},
 						},
 						'cancel' : {

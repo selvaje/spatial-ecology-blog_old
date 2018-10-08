@@ -100,9 +100,14 @@ if ( ! is_user_logged_in() ) {
 								</div>
 							</div>
 						</div>
+						<div id="ux_div_help_support" style="display: none;">
+							<a class="help-support" href="<?php echo esc_url( TECH_BANKER_BETA_URL ) . '/live-chat-support/'; ?>" target="_blank">
+								<img class="blink-image" src="<?php echo esc_url( plugins_url( 'assets/global/img/help-support.png', dirname( dirname( __FILE__ ) ) ) ); ?>">
+								</a>
+						</div>
 						<div id="console_log_div" style="display: none;">
 							<div class="form-group">
-								<label class="control-label"><?php echo esc_attr( $mb_email_configuration_smtp_debugging_output ); ?> :</label>
+								<label class="control-label"><?php echo esc_attr( $mb_email_configuration_result ); ?> :</label>
 								<textarea name="ux_txtarea_console_log" class="form-control" id="ux_txtarea_console_log" rows="15" readonly="readonly"><?php echo esc_attr( $mb_email_configuration_send_test_email_textarea ); ?></textarea>
 							</div>
 						</div>

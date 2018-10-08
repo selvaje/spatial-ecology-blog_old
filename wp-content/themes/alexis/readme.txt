@@ -61,10 +61,15 @@ https://wpqa.net/demo/
 = 1.4.6 (2016)
 * Fix the_post_thumbnail_caption() error
 
+= 2.0 (2018)
+* Fix WordPress gallery
+* Update Font Awesome to v4.7.0
+* Make the theme compatible for WordPress 4.9.6
+
 
 == Copyrights/Licenses for Resources Used in this Theme ==
 
-Alexis WordPress theme is created by WPQA, https://wpqa.net (c) 2014
+Alexis WordPress theme is created by Yan Susanto, https://www.yansusanto.com (c) 2018
 This theme is released & distributed under the terms of GNU GPL license v3.0
 
 /*!
@@ -74,8 +79,8 @@ This theme is released & distributed under the terms of GNU GPL license v3.0
  *
  
 /*!
- *  Font Awesome v4.2 by Dave Gandy - http://fontawesome.io - @fontawesome
- *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ *  Font Awesome v4.7.0 by Dave Gandy - http://fontawesome.io - @fontawesome
+ *  License - https://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  *
   
 /*!
@@ -87,6 +92,7 @@ This theme is released & distributed under the terms of GNU GPL license v3.0
 == Additional Notes ==
 
 The theme is released for free under the terms of the GNU General Public License v3.0 and some parts under their respective licenses.
+
 Feel free to use, modify and redistribute this theme as you like. You may remove any copyright references if you wish (unless required by third party components).
 
 == End == 

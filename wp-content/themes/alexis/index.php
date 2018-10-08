@@ -17,9 +17,10 @@ get_header(); ?>
 				<?php /* start loop */ ?>
 				<?php while (have_posts()) : the_post(); ?>
 					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>	
-						<h3 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 						<?php if( is_sticky() ): ?><span class="label right">FEATURED</span> <?php endif; ?>
-						<p class="entry-meta"><?php echo get_the_date(); ?><?php _e(' / by ','alexis'); ?><?php the_author_posts_link(); ?><?php _e(' / in ','alexis'); ?><?php the_category(', '); ?></p>						
+						<h3 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+
+						
 						<?php if( has_post_thumbnail() ): ?>
   							<figure> 
   								<?php if( is_sticky() ): ?> 
@@ -32,6 +33,7 @@ get_header(); ?>
 						<div class="entry-excerpt">
 							<?php the_excerpt(); ?>
 						</div>						
+						<p class="entry-meta"><?php echo get_the_date(); ?><?php _e(' / by ','alexis'); ?><?php the_author_posts_link(); ?><?php _e(' / in ','alexis'); ?><?php the_category(', '); ?></p>
 						<hr />
 					</article>
 				<?php endwhile; // end the loop ?>

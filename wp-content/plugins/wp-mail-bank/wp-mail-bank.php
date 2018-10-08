@@ -5,7 +5,7 @@
  * Description: WordPress SMTP Plugin that sends outgoing email with SMTP or PHP Mailer. Supports Gmail SMTP, Sendgrid SMTP, oAuth, Email Logs and almost everything!
  * Author: Tech Banker
  * Author URI: https://mail-bank.tech-banker.com/
- * Version: 3.0.49
+ * Version: 3.0.65
  * License: GPLv3
  * Text Domain: wp-mail-bank
  * Domain Path: /languages
@@ -32,27 +32,23 @@ if ( ! defined( 'MAIL_BANK_LOCAL_TIME' ) ) {
 if ( ! defined( 'MAIL_BANK_PLUGIN_DIR_URL' ) ) {
 	define( 'MAIL_BANK_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
 }
-
+if ( ! defined( 'TECH_BANKER_BETA_URL' ) ) {
+	define( 'TECH_BANKER_BETA_URL', 'https://mail-bank.tech-banker.com' );
+}
 if ( is_ssl() ) {
 	if ( ! defined( 'TECH_BANKER_URL' ) ) {
 		define( 'TECH_BANKER_URL', 'https://tech-banker.com' );
 	}
-	if ( ! defined( 'TECH_BANKER_BETA_URL' ) ) {
-		define( 'TECH_BANKER_BETA_URL', 'https://mail-bank.tech-banker.com' );
-	}
 } else {
 	if ( ! defined( 'TECH_BANKER_URL' ) ) {
 		define( 'TECH_BANKER_URL', 'http://tech-banker.com' );
-	}
-	if ( ! defined( 'TECH_BANKER_BETA_URL' ) ) {
-		define( 'TECH_BANKER_BETA_URL', 'http://mail-bank.tech-banker.com' );
 	}
 }
 if ( ! defined( 'TECH_BANKER_STATS_URL' ) ) {
 	define( 'TECH_BANKER_STATS_URL', 'http://stats.tech-banker-services.org' );
 }
 if ( ! defined( 'MAIL_BANK_VERSION_NUMBER' ) ) {
-	define( 'MAIL_BANK_VERSION_NUMBER', '3.0.49' );
+	define( 'MAIL_BANK_VERSION_NUMBER', '3.0.65' );
 }
 
 
@@ -75,7 +71,7 @@ function install_script_for_mail_bank() {
 		foreach ( $blog_ids as $blog_id ) {
 			switch_to_blog( $blog_id ); // @codingStandardsIgnoreLine
 			$version = get_option( 'mail-bank-version-number' );
-			if ( $version < '3.0.3' ) {
+			if ( $version < '3.0.5' ) {
 				if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/class-db-helper-install-script-mail-bank.php' ) ) {
 					include MAIL_BANK_DIR_PATH . 'lib/class-db-helper-install-script-mail-bank.php';
 				}
@@ -84,7 +80,7 @@ function install_script_for_mail_bank() {
 		}
 	} else {
 		$version = get_option( 'mail-bank-version-number' );
-		if ( $version < '3.0.3' ) {
+		if ( $version < '3.0.5' ) {
 			if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/class-db-helper-install-script-mail-bank.php' ) ) {
 				include_once MAIL_BANK_DIR_PATH . 'lib/class-db-helper-install-script-mail-bank.php';
 			}
@@ -197,7 +193,7 @@ function mail_bank_settings_link( $action ) {
 	return $action;
 }
 $version = get_option( 'mail-bank-version-number' );
-if ( $version >= '3.0.3' ) {
+if ( $version >= '3.0.5' ) {
 	/**
 	 * Function Name: get_users_capabilities_mail_bank
 	 * Parameters: No
@@ -392,12 +388,12 @@ if ( $version >= '3.0.3' ) {
 	 * Created By: Tech Banker Team
 	 */
 	function oauth_handling_mail_bank() {
-		if ( is_admin() && is_user_logged_in() ) {
-			if ( ( count( $_REQUEST ) <= 2 ) && isset( $_REQUEST['code'] ) ) { // WPCS: CSRF ok, Input var okay.
+		if ( is_admin() && is_user_logged_in() && ! isset( $_REQUEST['action'] ) ) { // WPCS: CSRF ok,Input var okay.
+			if ( ( count( $_REQUEST ) <= 3 ) && isset( $_REQUEST['code'] ) ) { // WPCS: CSRF ok, Input var okay.
 				if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/callback.php' ) ) {
 					include_once MAIL_BANK_DIR_PATH . 'lib/callback.php';
 				}
-			} elseif ( ( count( $_REQUEST ) <= 2 ) && isset( $_REQUEST['error'] ) ) { // WPCS: CSRF ok,Input var okay.
+			} elseif ( ( count( $_REQUEST ) <= 3 ) && isset( $_REQUEST['error'] ) ) { // WPCS: CSRF ok,Input var okay.
 				$url = admin_url( 'admin.php?page=mb_email_configuration' );
 				header( "location: $url" );
 			}
@@ -503,7 +499,7 @@ if ( $version >= '3.0.3' ) {
 					}
 				}
 			}
-			add_filter( 'wp_mail', 'wp_mail' );
+			apply_filters( 'wp_mail', 'wp_mail' );
 		}
 		oauth_handling_mail_bank();
 	}
@@ -514,6 +510,27 @@ if ( $version >= '3.0.3' ) {
 	 */
 	mailer_file_for_mail_bank();
 	Mail_Bank_Auth_Host::override_wp_mail_function();
+
+	/**
+	 * This function is used to log email in case of phpmailer.
+	 */
+	function generate_logs_mail_bank() {
+		global $wpdb;
+		$email_configuration_data_array = $wpdb->get_var(
+			$wpdb->prepare(
+				'SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta WHERE meta_key=%s', 'email_configuration'
+			)
+		);// WPCS: db call ok; no-cache ok.
+		$email_configuration_data       = maybe_unserialize( $email_configuration_data_array );
+
+		if ( 'php_mail_function' === $email_configuration_data['mailer_type'] ) {
+			if ( file_exists( MAIL_BANK_DIR_PATH . 'includes/class-mail-bank-email-logger.php' ) ) {
+				include_once MAIL_BANK_DIR_PATH . 'includes/class-mail-bank-email-logger.php';
+			}
+			$email_logger = new Mail_Bank_Email_Logger();
+			$email_logger->load_emails_mail_bank();
+		}
+	}
 
 	/* hooks */
 
@@ -578,6 +595,11 @@ if ( $version >= '3.0.3' ) {
 	 * This hook is used for calling the function of settings link.
 	*/
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'mail_bank_settings_link', 10, 2 );
+
+	/**
+	 * This hook is used to generate logs.
+	 */
+	add_action( 'plugins_loaded', 'generate_logs_mail_bank', 101 );
 
 } else {
 	/**
@@ -743,11 +765,9 @@ function mail_bank_admin_notice_class() {
 					$current_date = current_time( 'm/d/Y' );
 					$start        = ( isset( $admin_notices[ $slug ]['start'] ) ? $admin_notices[ $slug ]['start'] : $current_date );
 					$start        = date( 'm/d/Y' );
-					$date_array   = explode( '/', $start );
 					$interval     = ( isset( $admin_notices[ $slug ]['int'] ) ? $admin_notices[ $slug ]['int'] : 0 );
-
-					$date_array[1] += $interval;
-					$start          = date( 'm/d/Y', mktime( 0, 0, 0, $date_array[0], $date_array[1], $date_array[2] ) );
+					$date         = strtotime( '+' . $interval . ' days', strtotime( $start ) );
+					$start        = date( 'm/d/Y', $date );
 
 					// This is the main notices storage option.
 					$admin_notices_option = get_option( 'mb_admin_notice', array() );
@@ -827,16 +847,14 @@ function mail_bank_admin_notice_class() {
 			if ( isset( $_REQUEST['mb_admin_notice_temp_ignore'] ) ) { // WPCS: CSRF ok,Input var okay.
 				$admin_notices_option = get_option( 'mb_admin_notice', array() );
 				$current_date         = current_time( 'm/d/Y' );
-				$date_array           = explode( '/', $current_date );
-				$interval             = ( isset( $_REQUEST['mb_int'] ) ? wp_unslash( $_REQUEST['mb_int'] ) : 7 ); // @codingStandardsIgnoreLine
-
-				$date_array[1] += $interval;
-				$new_start      = date( 'm/d/Y', mktime( 0, 0, 0, $date_array[0], $date_array[1], $date_array[2] ) );
+				$interval             = ( isset( $_GET['int'] ) ? wp_unslash( $_GET['int'] ) : 7 ); // @codingStandardsIgnoreLine.
+				$date                 = strtotime( '+' . $interval . ' days', strtotime( $current_date ) );
+				$new_start            = date( 'm/d/Y', $date );
 
 				$admin_notices_option[ wp_unslash( $_REQUEST['mb_admin_notice_temp_ignore'] ) ]['start']     = $new_start; // @codingStandardsIgnoreLine
 				$admin_notices_option[ wp_unslash( $_REQUEST['mb_admin_notice_temp_ignore'] ) ]['dismissed'] = 0;// @codingStandardsIgnoreLine
 				update_option( 'mb_admin_notice', $admin_notices_option );
-				$query_str = remove_query_arg( array( 'mb_admin_notice_temp_ignore', 'mb_int' ) );
+				$query_str = remove_query_arg( array( 'mb_admin_notice_temp_ignore', 'int' ) );
 				wp_safe_redirect( $query_str );
 				exit;
 			}
@@ -1057,6 +1075,8 @@ function add_popup_on_deactivation_mail_bank() {
 						<p><?php echo esc_attr( _e( "If Mail Bank isn't working for you, others also may not.", 'wp-mail-bank' ) ); ?></p>
 						<p><?php echo esc_attr( _e( 'We would love to hear your feedback about what went wrong.', 'wp-mail-bank' ) ); ?></p>
 						<p><?php echo esc_attr( _e( 'We would like to help you in fixing the issue.', 'wp-mail-bank' ) ); ?></p>
+						<p><?php echo esc_attr( _e( 'If you click Continue, some data would be sent to our servers for Compatiblity Testing Purposes.', 'wp-mail-bank' ) ); ?></p>
+						<p><?php echo esc_attr( _e( 'If you Skip, no data would be shared with our servers.', 'wp-mail-bank' ) ); ?></p>
 			<form>
 				<?php wp_nonce_field(); ?>
 				<ul id="mail-bank-deactivate-reasons">
@@ -1100,7 +1120,75 @@ add_action( 'plugins_loaded', 'add_popup_on_deactivation_mail_bank' );
  * @param string $links .
  */
 function insert_deactivate_link_id_mail_bank( $links ) {
-	$links['deactivate'] = str_replace( '<a', '<a id="mail-bank-plugin-disable-link"', $links['deactivate'] );
+	if ( ! is_multisite() ) {
+		$links['deactivate'] = str_replace( '<a', '<a id="mail-bank-plugin-disable-link"', $links['deactivate'] );
+	}
 	return $links;
 }
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'insert_deactivate_link_id_mail_bank', 10, 2 );
+/**
+ * This function is used to deactivate plugins.
+ */
+function deactivate_plugin_mail_bank() {
+	if ( wp_verify_nonce( isset( $_GET['_wpnonce'] ) ? $_GET['_wpnonce'] : '', 'mb_deactivate_plugin_nonce' ) ) {
+		deactivate_plugins( isset( $_GET['plugin'] ) ? wp_unslash( $_GET['plugin'] ) : '' );// WPCS: Input var ok, sanitization ok.
+		wp_safe_redirect( wp_get_referer() );
+		die();
+	}
+}
+add_action( 'admin_post_mail_bank_deactivate_plugin', 'deactivate_plugin_mail_bank' );
+/**
+ * This function is used to display admin notice.
+ */
+function display_admin_notice_mail_bank() {
+	$conflict_plugins_list = array(
+		'WP Mail SMTP by WPForms'    => 'wp-mail-smtp/wp_mail_smtp.php',
+		'Post SMTP Mailer/Email Log' => 'post-smtp/postman-smtp.php',
+		'Easy WP SMTP'               => 'easy-wp-smtp/easy-wp-smtp.php',
+		'Gmail SMTP'                 => 'gmail-smtp/main.php',
+		'SMTP Mailer'                => 'smtp-mailer/main.php',
+		'WP Email SMTP'              => 'wp-email-smtp/wp_email_smtp.php',
+		'SMTP by BestWebSoft'        => 'bws-smtp/bws-smtp.php',
+		'WP SendGrid SMTP'           => 'wp-sendgrid-smtp/wp-sendgrid-smtp.php',
+		'Cimy Swift SMTP'            => 'cimy-swift-smtp/cimy_swift_smtp.php',
+		'SAR Friendly SMTP'          => 'sar-friendly-smtp/sar-friendly-smtp.php',
+		'WP Easy SMTP'               => 'wp-easy-smtp/wp-easy-smtp.php',
+		'WP Gmail SMTP'              => 'wp-gmail-smtp/wp-gmail-smtp.php',
+		'Email Log'                  => 'email-log/email-log.php',
+		'SendGrid'                   => 'sendgrid-email-delivery-simplified/wpsendgrid.php',
+		'Mailgun for WordPress'      => 'mailgun/mailgun.php',
+	);
+	$found                 = array();
+	foreach ( $conflict_plugins_list as $name => $path ) {
+		if ( is_plugin_active( $path ) ) {
+				$found[] = array(
+					'name' => $name,
+					'path' => $path,
+				);
+		}
+	}
+	if ( count( $found ) ) {
+		?>
+		<div class="notice notice-error notice-warning" style="margin:5px 20px 15px 0px;">
+			<img src="<?php echo esc_attr( plugins_url( 'assets/global/img/wizard-icon.png', __FILE__ ) ); ?>" height="60" width="60" style='float:left;margin:10px 10px 10px 0;'>
+			<h3 style=''><?php echo esc_attr( _e( 'WP Mail Bank Compatibility Warning', 'wp-mail-bank' ) ); ?></h3>
+			<p style='margin-top:-1%'><?php echo esc_attr( _e( 'The following plugins are not compatible with Mail Bank and may lead to unexpected results: ', 'wp-mail-bank' ) ); ?></p>
+			<ul>
+			<?php
+			foreach ( $found as $plugin ) {
+				?>
+					<li style='line-height:28px;list-style:disc;margin-left:80px;'><strong><?php echo $plugin['name']; // WPCS: XSS ok. ?></strong>
+						<a style='margin-left:10px' href='<?php echo wp_nonce_url( admin_url( 'admin-post.php?action=mail_bank_deactivate_plugin&plugin=' . urlencode( $plugin['path'] ) ), 'mb_deactivate_plugin_nonce' ); // WPCS: XSS ok, @codingStandardsIgnoreLine. ?>'class='button button-primary'><?php echo esc_attr( _e( 'Deactivate', 'wp-mail-bank' ) ); ?></a>
+					</li>
+					<?php
+			}
+			?>
+			</ul>
+		</div>
+		<?php
+	}
+}
+/**
+ * This hook is used to display admin notice.
+ */
+add_action( 'admin_notices', 'display_admin_notice_mail_bank' );

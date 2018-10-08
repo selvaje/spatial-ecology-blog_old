@@ -95,6 +95,23 @@ if ( ! is_user_logged_in() ) {
 								</div>
 							</div>
 						</div>
+						<?php
+						if ( is_multisite() && is_main_site() ) {
+							?>
+							<div class="form-group">
+								<label class="control-label">
+									<?php echo esc_attr( $mb_fetch_settings ); ?> :
+									<span class="required" aria-required="true">*</span>
+								</label>
+								<select name="ux_ddl_fetch_settings" id="ux_ddl_fetch_settings" class="form-control">
+									<option value="individual_site"><?php echo esc_attr( $mb_indivisual_site ); ?></option>
+									<option value="network_site"><?php echo esc_attr( $mb_multiple_site ); ?></option>
+								</select>
+								<i class="controls-description"><?php echo esc_attr( $mb_fetch_settings_tooltip ); ?></i>
+							</div>
+							<?php
+						}
+						?>
 						<div class="line-separator"></div>
 						<div class="form-actions">
 							<div class="pull-right">

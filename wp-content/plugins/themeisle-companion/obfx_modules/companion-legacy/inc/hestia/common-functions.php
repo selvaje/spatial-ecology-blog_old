@@ -30,174 +30,120 @@ function themeisle_hestia_clients_default_content(){
 }
 
 /**
- * Function to load content in top bar.
+ * Execute this function once to check all widgets and see if there are any duplicates.
+ * If there are duplicates, remove that widget and generate a new one with same
+ * data but a new id.
+ *
+ * @since 2.4.5
  */
-function themeisle_hestia_top_bar_default_content() {
-	if ( class_exists( 'WooCommerce' ) ) {
-		$top_bar_state = 'woo_top';
-	} else {
-		if ( 'page' == get_option('show_on_front') ) {
-			$top_bar_state = 'page_top';
-		} else {
-			$top_bar_state = 'blog_top';
-		}
-	}
+function themeisle_hestia_fix_duplicate_widgets() {
 
-	$load_default = get_option( 'hestia_load_default' );
+	$load_default = get_option( 'hestia_fix_duplicate_widgets' );
 	if ( $load_default !== false ) {
 		return;
 	}
 
-	switch ( $top_bar_state ) {
-		case 'woo_top':
-			themeisle_hestia_set_top_bar_menu( 'contact' );
-			themeisle_hestia_set_top_bar_widgets( $top_bar_state );
-			break;
-		case 'blog_top':
-			themeisle_hestia_set_top_bar_menu( 'socials' );
-			themeisle_hestia_set_top_bar_widgets( $top_bar_state );
-			break;
-		case 'page_top':
-			themeisle_hestia_set_top_bar_menu( 'contact' );
-			themeisle_hestia_set_top_bar_widgets( $top_bar_state );
-			break;
-	}
+	global $wp_registered_widgets;
+	$current_sidebars = get_option( 'sidebars_widgets' );
 
-	update_option( 'hestia_load_default', true );
-}
-
-
-/**
- * Set default widgets in top bar.
- *
- * @param string $type Top bar state.
- */
-function themeisle_hestia_set_top_bar_widgets( $type ) {
-
-	$active_widgets = get_option( 'sidebars_widgets' );
-
-	if ( ! empty( $active_widgets['sidebar-top-bar'] ) ) :
-		/* There is already some content. */
+	$duplicates = themeisle_hestia_get_duplicate_widgets();
+	if(empty($duplicates)){
 		return;
-	endif;
-
-	switch ( $type ) {
-		case 'woo_top':
-			$counter                              = 1;
-			$active_widgets['sidebar-top-bar'][0] = 'woocommerce_widget_cart-' . $counter;
-			$cart_widget[ $counter ]              = array( 'title' => 'Cart' );
-			update_option( 'widget_woocommerce_widget_cart', $cart_widget );
-			$counter++;
-
-			$active_widgets['sidebar-top-bar'][] = 'woocommerce_product_search-' . $counter;
-			$search_widget[ $counter ]           = array( 'title' => 'Search' );
-			update_option( 'widget_woocommerce_product_search', $search_widget );
-			break;
-		case 'blog_top':
-			$active_widgets['sidebar-top-bar'][0] = 'search-1';
-			$search_widget[1]                     = array( 'title' => 'Search' );
-			update_option( 'widget_search', $search_widget );
-			break;
-		case 'page_top':
-			$menu_id                              = themeisle_hestia_create_menu( 'socials' );
-			$active_widgets['sidebar-top-bar'][0] = 'nav_menu-1';
-			$menu_widget[1]                       = array(
-				'title'    => 'Socials',
-				'nav_menu' => $menu_id,
-			);
-			update_option( 'widget_nav_menu', $menu_widget );
-			break;
 	}
-	update_option( 'sidebars_widgets', $active_widgets );
+	foreach ($duplicates as $widget){
+		$old_widget_id = $widget['widget_id'];
+		$old_widget_sidebar = $widget['sidebar'];
+		$old_widget_index = array_search($old_widget_id,$current_sidebars[$old_widget_sidebar]);
+		if( empty($old_widget_index)){
+			return;
+		}
+
+		/* Remove the widget id and obtain the widget name */
+		$old_widget_name = explode( '-', $old_widget_id );
+		array_pop( $old_widget_name );
+		$widget_name = implode('-', $old_widget_name);
+
+		/* Get the id of new widget */
+		$new_widget_name = themeisle_hestia_generate_unique_widget_name($widget_name);
+		$new_widget_index  = trim( substr( $new_widget_name, strrpos( $new_widget_name, '-' ) + 1 ) );
+
+
+		/* Get the options of old widget and update its id */
+		$old_widget_options = $wp_registered_widgets[$old_widget_id];
+		if(!empty($old_widget_options)) {
+			if ( ! empty( $old_widget_options['params'] ) ) {
+				unset( $old_widget_options['params'] );
+			}
+			if ( ! empty( $old_widget_options['callback'] ) ) {
+				unset( $old_widget_options['callback'] );
+			}
+			if ( ! empty( $old_widget_options['id'] ) ) {
+				unset( $old_widget_options['id'] );
+			}
+		} else {
+			$old_widget_options = array();
+		}
+
+		$current_sidebars[$old_widget_sidebar][$old_widget_index] = $new_widget_name;
+		$new_widget[ $new_widget_index ] = $old_widget_options;
+
+		update_option( 'widget_'.$widget_name, $new_widget );
+	}
+	update_option( 'sidebars_widgets', $current_sidebars );
+
+	update_option( 'hestia_fix_duplicate_widgets', true );
 }
 
 /**
- * Set default menu in top bar.
+ * Generate new unique widget name.
  *
- * @param string $type Top bar state.
+ * @param string $widget_name Widget name.
+ *
+ * @since 2.4.5
+ * @return string
  */
-function themeisle_hestia_set_top_bar_menu( $type ) {
-	$theme_navs = get_theme_mod( 'nav_menu_locations' );
-	if ( empty( $theme_navs['top-bar-menu'] ) ) {
-		$menu_id                    = themeisle_hestia_create_menu( $type );
-		$theme_navs['top-bar-menu'] = $menu_id;
-		set_theme_mod( 'nav_menu_locations', $theme_navs );
+function themeisle_hestia_generate_unique_widget_name( $widget_name ) {
+	$current_sidebars = get_option( 'sidebars_widgets' );
+	$all_widget_array = array();
+	foreach ( $current_sidebars as $sidebar => $widgets ) {
+		if ( ! empty( $widgets ) && is_array( $widgets ) && $sidebar != 'wp_inactive_widgets' ) {
+			foreach ( $widgets as $widget ) {
+				$all_widget_array[] = $widget;
+			}
+		}
 	}
+	$widget_index = 1;
+	while ( in_array( $widget_name . '-' . $widget_index, $all_widget_array ) ) {
+		$widget_index ++;
+	}
+	$new_widget_name = $widget_name . '-' . $widget_index;
+	return $new_widget_name;
 }
 
+
 /**
- * Create default menu for top bar
+ * Get an array of duplicate widgets and their sidebars.
  *
- * @param string $type Top bar state.
+ * @since 2.4.5
  */
-function themeisle_hestia_create_menu( $type ) {
+function themeisle_hestia_get_duplicate_widgets() {
 
-	$menu_name = 'Default Top Menu';
-	if ( $type === 'socials' ) {
-		$menu_name = 'Socials Top Menu';
-	}
-
-	$menu_exists = wp_get_nav_menu_object( $menu_name );
-	if ( ! $menu_exists ) {
-
-		$menu_id    = wp_create_nav_menu( $menu_name );
-		$menu_items = array();
-		switch ( $type ) {
-			case 'contact':
-				$menu_items = array(
-					array(
-						'title' => esc_html__('1-800-123-4567','themeisle-companion'),
-						'url'   => esc_html__('tel:1-800-123-4567','themeisle-companion'),
-					),
-					array(
-						'title' => esc_html__('friends@themeisle.com','themeisle-companion'),
-						'url'   => esc_html__('mailto:friends@themeisle.com','themeisle-companion'),
-					),
-				);
-				break;
-			case 'socials':
-				$menu_items = array(
-					array(
-						'title' => esc_html__('Facebook','themeisle-companion'),
-						'url'   => esc_html__('www.facebook.com','themeisle-companion'),
-					),
-					array(
-						'title' => esc_html__('Twitter','themeisle-companion'),
-						'url'   => esc_html__('www.twitter.com','themeisle-companion'),
-					),
-					array(
-						'title' => esc_html__('Google','themeisle-companion'),
-						'url'   => esc_html__('www.google.com','themeisle-companion'),
-					),
-					array(
-						'title' => esc_html__('Linkedin','themeisle-companion'),
-						'url'   => esc_html__('www.linkedin.com','themeisle-companion'),
-					),
-					array(
-						'title' => esc_html__('Instagram','themeisle-companion'),
-						'url'   => esc_html__('www.instagram.com','themeisle-companion'),
-					),
-					array(
-						'title' => esc_html__('Pinterest','themeisle-companion'),
-						'url'   => esc_html__('www.pinterest.com','themeisle-companion'),
-					),
-					array(
-						'title' => esc_html__('Youtube','themeisle-companion'),
-						'url'   => esc_html__('www.youtube.com','themeisle-companion'),
-					),
-				);
-				break;
+	$current_sidebars = get_option( 'sidebars_widgets' );
+	$all_widget_array = array();
+	$duplicate_widgets = array();
+	foreach ( $current_sidebars as $sidebar => $widgets ) {
+		if ( ! empty( $widgets ) && is_array( $widgets ) && $sidebar != 'wp_inactive_widgets' ) {
+			foreach ( $widgets as $widget ) {
+				if( in_array($widget,$all_widget_array)){
+					$duplicate_widgets[] = array(
+						'widget_id' => $widget,
+						'sidebar' => $sidebar
+					);
+				} else{
+					$all_widget_array[] = $widget;
+				}
+			}
 		}
-		foreach ( $menu_items as $menu_item ) {
-			wp_update_nav_menu_item(
-				$menu_id, 0, array(
-					'menu-item-title'  => $menu_item['title'],
-					'menu-item-url'    => $menu_item['url'],
-					'menu-item-status' => 'publish',
-				)
-			);
-		}
-		return $menu_id;
 	}
-	return '';
+	return $duplicate_widgets;
 }

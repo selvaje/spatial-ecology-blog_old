@@ -61,7 +61,7 @@ if ( ! is_user_logged_in() ) {
 							$plugin_stat_data['wp_language']      = defined( 'WPLANG' ) && WPLANG ? WPLANG : get_locale();
 							$plugin_stat_data['email']            = $user_admin_email;
 							$plugin_stat_data['wp_version']       = $wp_version;
-							$plugin_stat_data['php_version']      = esc_html( phpversion() );
+							$plugin_stat_data['php_version']      = sanitize_text_field( phpversion() );
 							$plugin_stat_data['mysql_version']    = $wpdb->db_version();
 							$plugin_stat_data['max_input_vars']   = ini_get( 'max_input_vars' );
 							$plugin_stat_data['operating_system'] = PHP_OS . '  (' . PHP_INT_SIZE * 8 . ') BIT';
@@ -171,29 +171,6 @@ if ( ! is_user_logged_in() ) {
 							}
 							echo esc_attr( $debugging_output );
 						} else {
-							$to_address = $phpmailer->getToAddresses();
-
-							$email_logs_data_array             = array();
-							$email_logs_data_array['email_to'] = $to_address[0][0];
-							$monitor_email_logs                = isset( $settings_data_array['monitor_email_logs'] ) ? sanitize_text_field( $settings_data_array['monitor_email_logs'] ) : '';
-							if ( 'enable' === $monitor_email_logs ) {
-								$email_logs_data_array['sender_name']  = isset( $unserialized_email_configuration_data['sender_name'] ) ? sanitize_text_field( $unserialized_email_configuration_data['sender_name'] ) : '';
-								$email_logs_data_array['sender_email'] = isset( $unserialized_email_configuration_data['sender_email'] ) ? sanitize_text_field( $unserialized_email_configuration_data['sender_email'] ) : '';
-								$email_logs_data_array['cc']           = '';
-								$email_logs_data_array['bcc']          = '';
-								$email_logs_data_array['subject']      = $phpmailer->Subject; // @codingStandardsIgnoreLine
-								$email_logs_data_array['content']      = $phpmailer->Body; // @codingStandardsIgnoreLine
-								$email_logs_data_array['timestamp']    = MAIL_BANK_LOCAL_TIME;
-
-								if ( 'true' == $result || '1' == $result ) { // WPCS: loose comparison ok.
-									$email_logs_data_array['status'] = 'Sent';
-								} else {
-									$email_logs_data_array['status'] = 'Not Sent';
-								}
-								$email_logs_data               = array();
-								$email_logs_data['email_data'] = maybe_serialize( $email_logs_data_array );
-								$obj_db_helper_mail_bank->insert_command( mail_bank_email_logs(), $email_logs_data );
-							}
 							if ( 'true' != $result || '1' != $result ) { // WPCS: loose comparison ok.
 								$result = $mb_email_blocked_message . "\n" . $mb_enable_mail_message;
 							}
@@ -210,6 +187,7 @@ if ( ! is_user_logged_in() ) {
 						$settings_data['debug_mode']                 = sanitize_text_field( $settings_array['ux_ddl_debug_mode'] );
 						$settings_data['remove_tables_at_uninstall'] = sanitize_text_field( $settings_array['ux_ddl_remove_tables'] );
 						$settings_data['monitor_email_logs']         = sanitize_text_field( $settings_array['ux_ddl_monitor_email_logs'] );
+						$settings_data['fetch_settings']             = sanitize_text_field( $settings_array['ux_ddl_fetch_settings'] );
 						$where                                       = array();
 						$settings_data_array                         = array();
 						$where['meta_key']                           = 'settings'; // WPCS: slow query ok.
@@ -231,17 +209,17 @@ if ( ! is_user_logged_in() ) {
 						$update_email_configuration_array['mailgun_api_key']           = '';
 						$update_email_configuration_array['mailgun_domain_name']       = '';
 						$update_email_configuration_array['sender_name_configuration'] = sanitize_text_field( $form_data['ux_ddl_from_name'] );
-						$update_email_configuration_array['sender_name']               = isset( $form_data['ux_txt_mb_from_name'] ) ? esc_html( $form_data['ux_txt_mb_from_name'] ) : '';
+						$update_email_configuration_array['sender_name']               = isset( $form_data['ux_txt_mb_from_name'] ) ? sanitize_text_field( $form_data['ux_txt_mb_from_name'] ) : '';
 						$update_email_configuration_array['from_email_configuration']  = sanitize_text_field( $form_data['ux_ddl_from_email'] );
-						$update_email_configuration_array['sender_email']              = isset( $form_data['ux_txt_mb_from_email_configuration'] ) ? esc_html( $form_data['ux_txt_mb_from_email_configuration'] ) : '';
-						$update_email_configuration_array['hostname']                  = esc_html( $form_data['ux_txt_host'] );
+						$update_email_configuration_array['sender_email']              = isset( $form_data['ux_txt_mb_from_email_configuration'] ) ? sanitize_text_field( $form_data['ux_txt_mb_from_email_configuration'] ) : '';
+						$update_email_configuration_array['hostname']                  = sanitize_text_field( $form_data['ux_txt_host'] );
 						$update_email_configuration_array['port']                      = intval( $form_data['ux_txt_port'] );
 						$update_email_configuration_array['enc_type']                  = sanitize_text_field( $form_data['ux_ddl_encryption'] );
 						$update_email_configuration_array['auth_type']                 = sanitize_text_field( $form_data['ux_ddl_mb_authentication'] );
-						$update_email_configuration_array['client_id']                 = esc_html( trim( $form_data['ux_txt_client_id'] ) );
-						$update_email_configuration_array['client_secret']             = esc_html( trim( $form_data['ux_txt_client_secret'] ) );
-						$update_email_configuration_array['username']                  = esc_html( $form_data['ux_txt_username'] );
-						$update_email_configuration_array['automatic_mail']            = isset( $form_data['ux_chk_automatic_sent_mail'] ) ? esc_html( $form_data['ux_chk_automatic_sent_mail'] ) : '';
+						$update_email_configuration_array['client_id']                 = sanitize_text_field( trim( $form_data['ux_txt_client_id'] ) );
+						$update_email_configuration_array['client_secret']             = sanitize_text_field( trim( $form_data['ux_txt_client_secret'] ) );
+						$update_email_configuration_array['username']                  = sanitize_text_field( $form_data['ux_txt_username'] );
+						$update_email_configuration_array['automatic_mail']            = isset( $form_data['ux_chk_automatic_sent_mail'] ) ? sanitize_text_field( $form_data['ux_chk_automatic_sent_mail'] ) : '';
 
 						if ( preg_match( '/^\**$/', $form_data['ux_txt_password'] ) ) {
 							$email_configuration_data                     = $wpdb->get_var(
@@ -252,10 +230,10 @@ if ( ! is_user_logged_in() ) {
 							$email_configuration_array                    = maybe_unserialize( $email_configuration_data );
 							$update_email_configuration_array['password'] = isset( $email_configuration_array['password'] ) ? sanitize_text_field( $email_configuration_array['password'] ) : '';
 						} else {
-							$update_email_configuration_array['password'] = base64_encode( esc_html( $form_data['ux_txt_password'] ) );
+							$update_email_configuration_array['password'] = base64_encode( sanitize_text_field( $form_data['ux_txt_password'] ) );
 						}
 
-						$update_email_configuration_array['redirect_uri'] = esc_html( $form_data['ux_txt_redirect_uri'] );
+						$update_email_configuration_array['redirect_uri'] = sanitize_text_field( $form_data['ux_txt_redirect_uri'] );
 
 						update_option( 'update_email_configuration', $update_email_configuration_array );
 

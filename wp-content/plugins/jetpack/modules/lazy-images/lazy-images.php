@@ -47,6 +47,7 @@ class Jetpack_Lazy_Images {
 		add_action( 'admin_bar_menu', array( $this, 'remove_filters' ), 0 );
 
 		add_filter( 'wp_kses_allowed_html', array( $this, 'allow_lazy_attributes' ) );
+		add_action( 'wp_head', array( $this, 'add_nojs_fallback' ) );
 	}
 
 	public function setup_filters() {
@@ -113,6 +114,45 @@ class Jetpack_Lazy_Images {
 	}
 
 	/**
+	 * Returns true when a given string of classes contains a class signifying lazy images
+	 * should not process the image.
+	 *
+	 * @since 5.9.0
+	 *
+	 * @param string $classes A string of space-separated classes.
+	 * @return bool
+	 */
+	public static function should_skip_image_with_blacklisted_class( $classes ) {
+		$blacklisted_classes = array(
+			'skip-lazy',
+			'gazette-featured-content-thumbnail',
+		);
+
+		/**
+		 * Allow plugins and themes to tell lazy images to skip an image with a given class.
+		 *
+		 * @module lazy-images
+		 *
+		 * @since 5.9.0
+		 *
+		 * @param array An array of strings where each string is a class.
+		 */
+		$blacklisted_classes = apply_filters( 'jetpack_lazy_images_blacklisted_classes', $blacklisted_classes );
+
+		if ( ! is_array( $blacklisted_classes ) || empty( $blacklisted_classes ) ) {
+			return false;
+		}
+
+		foreach ( $blacklisted_classes as $class ) {
+			if ( false !== strpos( $classes, $class ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Processes images in content by acting as the preg_replace_callback
 	 *
 	 * @since 5.6.0
@@ -131,6 +171,15 @@ class Jetpack_Lazy_Images {
 
 		$old_attributes = self::flatten_kses_hair_data( $old_attributes_kses_hair );
 		$new_attributes = self::process_image_attributes( $old_attributes );
+
+		// If we didn't add lazy attributes, just return the original image source.
+		if ( empty( $new_attributes['data-lazy-src'] ) ) {
+			return $matches[0];
+		}
+
+		// Ensure we add the jetpack-lazy-image class to this image.
+		$new_attributes['class'] = sprintf( '%s jetpack-lazy-image', empty( $new_attributes['class'] ) ? '' : $new_attributes['class'] );
+
 		$new_attributes_str = self::build_attributes_string( $new_attributes );
 
 		return sprintf( '<img %1$s><noscript>%2$s</noscript>', $new_attributes_str, $matches[0] );
@@ -151,8 +200,38 @@ class Jetpack_Lazy_Images {
 			return $attributes;
 		}
 
-		// check for gazette featured images, which are incompatible
-		if ( isset( $attributes['class'] ) && false !== strpos( $attributes['class'], 'gazette-featured-content-thumbnail' ) ) {
+		if ( ! empty( $attributes['class'] ) && self::should_skip_image_with_blacklisted_class( $attributes['class'] ) ) {
+			return $attributes;
+		}
+
+		/**
+		 * Allow plugins and themes to conditionally skip processing an image via its attributes.
+		 *
+		 * @module-lazy-images
+		 *
+		 * @deprecated 6.5.0 Use jetpack_lazy_images_skip_image_with_attributes instead.
+		 *
+		 * @since 5.9.0
+		 *
+		 * @param bool  Default to not skip processing the current image.
+		 * @param array An array of attributes via wp_kses_hair() for the current image.
+		 */
+		if ( apply_filters( 'jetpack_lazy_images_skip_image_with_atttributes', false, $attributes ) ) {
+			return $attributes;
+		}
+
+		/**
+		 * Allow plugins and themes to conditionally skip processing an image via its attributes.
+		 *
+		 * @module-lazy-images
+		 *
+		 * @since 6.5.0 Filter name was updated from jetpack_lazy_images_skip_image_with_atttributes to correct typo.
+		 * @since 5.9.0
+		 *
+		 * @param bool  Default to not skip processing the current image.
+		 * @param array An array of attributes via wp_kses_hair() for the current image.
+		 */
+		if ( apply_filters( 'jetpack_lazy_images_skip_image_with_attributes', false, $attributes ) ) {
 			return $attributes;
 		}
 
@@ -192,6 +271,32 @@ class Jetpack_Lazy_Images {
 		return apply_filters( 'jetpack_lazy_images_new_attributes', $attributes );
 	}
 
+	/**
+	 * Adds JavaScript to check if the current browser supports JavaScript as well as some styles to hide lazy
+	 * images when the browser does not support JavaScript.
+	 *
+	 * @return void
+	 */
+	public function add_nojs_fallback() {
+		?>
+			<style type="text/css">
+				html:not( .jetpack-lazy-images-js-enabled ) .jetpack-lazy-image {
+					display: none;
+				}
+			</style>
+			<script>
+				document.documentElement.classList.add(
+					'jetpack-lazy-images-js-enabled'
+				);
+			</script>
+		<?php
+	}
+
+	/**
+	 * Retrieves the placeholder image after running it through the lazyload_images_placeholder_image filter.
+	 *
+	 * @return string The placeholder image source.
+	 */
 	private static function get_placeholder_image() {
 		/**
 		 * Allows plugins and themes to modify the placeholder image.
@@ -202,12 +307,13 @@ class Jetpack_Lazy_Images {
 		 * @module lazy-images
 		 *
 		 * @since 5.6.0
+		 * @since 6.5.0 Default image is now a base64 encoded transparent gif.
 		 *
 		 * @param string The URL to the placeholder image
 		 */
 		return apply_filters(
 			'lazyload_images_placeholder_image',
-			plugins_url( 'modules/lazy-images/images/1x1.trans.gif', JETPACK__PLUGIN_FILE )
+			'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 		);
 	}
 
@@ -232,6 +338,9 @@ class Jetpack_Lazy_Images {
 	}
 
 	public function enqueue_assets() {
+		if ( Jetpack_AMP_Support::is_amp_request() ) {
+			return;
+		}
 		wp_enqueue_script(
 			'jetpack-lazy-images',
 			Jetpack::get_file_url_for_environment(

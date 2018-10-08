@@ -514,7 +514,7 @@ if ( ! is_user_logged_in() ) {
 									}
 									$get_plugins = array();
 									foreach ( $active_plugins as $plugin ) {
-										$plugin_data    = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+										$plugin_data    = @get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin ); //@codingStandardsIgnoreLine.
 										$version_string = '';
 										if ( ! empty( $plugin_data['Name'] ) ) {
 											$plugin_name = $plugin_data['Name'];
@@ -584,7 +584,7 @@ if ( ! is_user_logged_in() ) {
 								</tbody>
 								</table>
 							</div>
-							<?php
+								<?php
 							}
 							?>
 						</div>

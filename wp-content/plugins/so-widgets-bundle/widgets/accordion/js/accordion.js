@@ -7,7 +7,11 @@ jQuery( function ( $ ) {
 	sowb.setupAccordion = function() {
 		$( '.sow-accordion' ).each( function ( index, element ) {
 			var $widget = $( this ).closest( '.so-widget-sow-accordion' );
+			if ( $widget.data( 'initialized' ) ) {
+				return $( this );
+			}
 			var useAnchorTags = $widget.data( 'useAnchorTags' );
+			var initialScrollPanel = $widget.data( 'initialScrollPanel' );
 			
 			var $accordionPanels = $( element ).find( '> .sow-accordion-panel' );
 			
@@ -24,6 +28,7 @@ jQuery( function ( $ ) {
 					$panel.find( '> .sow-accordion-panel-content' ).slideDown(
 						function() {
 							$( this ).trigger( 'show' );
+							$( sowb ).trigger( 'setup_widgets' );
 						}
 					);
 					$panel.addClass( 'sow-accordion-panel-open' );
@@ -99,7 +104,16 @@ jQuery( function ( $ ) {
 				} else {
 					updateHash();
 				}
+				if ( initialScrollPanel > 0 ) {
+					var $initialScrollPanel = initialScrollPanel > $accordionPanels.length ?
+						$accordionPanels.last() :
+						$accordionPanels.eq( initialScrollPanel - 1 );
+					var navOffset = 90;// Add some magic number offset to make space for possible nav menus etc.
+					window.scrollTo( 0, $initialScrollPanel.offset().top - navOffset );
+				}
 			}
+			
+			$widget.data( 'initialized', true );
 		} );
 	};
 	

@@ -68,18 +68,17 @@ class WP_Statistics_Admin {
 
 		// WP-Statistics welcome page hooks
 		add_action( 'admin_menu', 'WP_Statistics_Welcome::menu' );
-		add_action( 'upgrader_process_complete', 'WP_Statistics_Welcome::do_welcome', 10, 2 );
+		//add_action( 'upgrader_process_complete', 'WP_Statistics_Welcome::do_welcome', 10, 2 );
 		add_action( 'admin_init', 'WP_Statistics_Welcome::init' );
-
-        // Runs some scripts at the end of the admin panel inside the body tag.
-        add_action('admin_footer', array($this, 'admin_footer_scripts'));
+		
+		// Runs some scripts at the end of the admin panel inside the body tag
+		add_action( 'admin_footer', array( $this, 'admin_footer_scripts' ) );
 	}
 
 	/**
 	 * Set the headers to download the export file and then stop running WordPress.
 	 */
 	static function export_data() {
-
 		if ( array_key_exists( 'wps_export', $_POST ) ) {
 			if ( ! function_exists( 'wp_statistics_export_data' ) ) {
 				include WP_Statistics::$reg['plugin-dir'] . 'includes/functions/export.php';
@@ -625,49 +624,49 @@ class WP_Statistics_Admin {
 		}
 	}
 
-    /**
-     * Admin footer scripts
-     */
+	/**
+	 * Admin footer scripts
+	 */
 	public function admin_footer_scripts() {
-        global $WP_Statistics;
+		global $WP_Statistics;
 
-        // Check to see if the browscap database needs to be downloaded and do so if required.
-        if ( $WP_Statistics->get_option( 'update_browscap' ) ) {
-            echo WP_Statistics_Updates::download_browscap();
-        }
+		// Check to see if the browscap database needs to be downloaded and do so if required.
+		if ( $WP_Statistics->get_option( 'update_browscap' ) ) {
+			echo WP_Statistics_Updates::download_browscap();
+		}
 
-        // Check to see if the GeoIP database needs to be downloaded and do so if required.
-        if ( $WP_Statistics->get_option( 'update_geoip' ) ) {
-            echo WP_Statistics_Updates::download_geoip();
-        }
+		// Check to see if the GeoIP database needs to be downloaded and do so if required.
+		if ( $WP_Statistics->get_option( 'update_geoip' ) ) {
+			echo WP_Statistics_Updates::download_geoip();
+		}
 
-        // Check to see if the referrer spam database needs to be downloaded and do so if required.
-        if ( $WP_Statistics->get_option( 'update_referrerspam' ) ) {
-            WP_Statistics_Updates::download_referrerspam();
-        }
+		// Check to see if the referrer spam database needs to be downloaded and do so if required.
+		if ( $WP_Statistics->get_option( 'update_referrerspam' ) ) {
+			WP_Statistics_Updates::download_referrerspam();
+		}
 
-        if ( $WP_Statistics->get_option( 'send_upgrade_email' ) ) {
-            $WP_Statistics->update_option( 'send_upgrade_email', false );
+		if ( $WP_Statistics->get_option( 'send_upgrade_email' ) ) {
+			$WP_Statistics->update_option( 'send_upgrade_email', false );
 
-            $blogname  = get_bloginfo( 'name' );
-            $blogemail = get_bloginfo( 'admin_email' );
+			$blogname  = get_bloginfo( 'name' );
+			$blogemail = get_bloginfo( 'admin_email' );
 
-            $headers[] = "From: $blogname <$blogemail>";
-            $headers[] = "MIME-Version: 1.0";
-            $headers[] = "Content-type: text/html; charset=utf-8";
+			$headers[] = "From: $blogname <$blogemail>";
+			$headers[] = "MIME-Version: 1.0";
+			$headers[] = "Content-type: text/html; charset=utf-8";
 
-            if ( $WP_Statistics->get_option( 'email_list' ) == '' ) {
-                $WP_Statistics->update_option( 'email_list', $blogemail );
-            }
+			if ( $WP_Statistics->get_option( 'email_list' ) == '' ) {
+				$WP_Statistics->update_option( 'email_list', $blogemail );
+			}
 
-            wp_mail(
-                $WP_Statistics->get_option( 'email_list' ),
-                sprintf( __( 'WP Statistics %s installed on', 'wp-statistics' ), WP_Statistics::$reg['version'] ) .
-                ' ' .
-                $blogname,
-                "Installation/upgrade complete!",
-                $headers
-            );
-        }
-    }
+			wp_mail(
+				$WP_Statistics->get_option( 'email_list' ),
+				sprintf( __( 'WP Statistics %s installed on', 'wp-statistics' ), WP_Statistics::$reg['version'] ) .
+				' ' .
+				$blogname,
+				__( 'Installation/upgrade complete!', 'wp-statistics' ),
+				$headers
+			);
+		}
+	}
 }

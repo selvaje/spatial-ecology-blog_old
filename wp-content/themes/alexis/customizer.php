@@ -86,18 +86,20 @@ class alexis_theme_customizer {
 		}
 
 		.header a { 
-			color: <?php echo get_theme_mod( 'menu_text_color', '#fff' ); ?>; 
+			color: <?php echo get_theme_mod( 'menu_text_color', '#ffffff' ); ?>; 
 		}
 		
 		a,
 		a:hover,
-		.widget_categories li, 
-		.widget_archive li { 
+		.widget-title,		
+		.widget li, 
+		.widget li a:hover { 
 			color: <?php echo get_theme_mod( 'theme_color', '#5fccb2' ); ?>; 
 		}
 
 		.pagination a, 
 		.entry-tags a, 
+		.entry-meta a:hover,
 		input[type="submit"]:hover { 
 			color: <?php echo get_theme_mod( 'theme_color', '#5fccb2' ); ?>!important; 
 		}
@@ -116,7 +118,7 @@ class alexis_theme_customizer {
 		.entry-tags a:hover, 
 		.comment-reply-link:hover { 
 			background-color: <?php echo get_theme_mod( 'theme_color', '#5fccb2' ); ?>!important; 
-			color: #fff!important;   
+			color: #ffffff!important;   
 		}
 
 		blockquote { 

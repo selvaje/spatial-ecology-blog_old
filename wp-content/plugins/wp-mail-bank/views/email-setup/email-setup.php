@@ -268,7 +268,7 @@ if ( ! is_user_logged_in() ) {
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="control-label">
-												<?php echo esc_attr( $mb_email_configuration_client_id ); ?> <a href="" target="_blank" id="ux_link_reference"><span id="ux_link_content"></span></a>:
+												<?php echo esc_attr( $mb_email_configuration_client_id ); ?><a href="https://console.developers.google.com" target="_blank" id="ux_link_reference_google" ><span id="ux_link_content_google">( <?php echo esc_attr( $mb_email_configuration_get_credentials ); ?> / </span></a><a id="ux_link_reference" href="https://mail-bank.tech-banker.com/documentation/google-oauth-api/" target="_blank"> <span id="ux_link_content"><?php echo esc_attr( $mb_email_configuration_how_to_set_up ); ?> )</a></span>:
 												<span class="required" aria-required="true">*</span>
 											</label>
 											<input type="text" class="form-control" name="ux_txt_client_id" id="ux_txt_client_id" value="<?php echo isset( $email_configuration_array['client_id'] ) ? esc_html( $email_configuration_array['client_id'] ) : ''; ?>" placeholder="<?php echo esc_attr( $mb_email_configuration_client_id_placeholder ); ?>" onclick="this.select()">
@@ -389,9 +389,14 @@ if ( ! is_user_logged_in() ) {
 									</div>
 									</div>
 								</div>
+								<div id="ux_div_help_support" style="display: none;">
+									<a class="help-support" href="<?php echo esc_url( TECH_BANKER_BETA_URL ) . '/live-chat-support/'; ?>" target="_blank">
+										<img class="blink-image" src="<?php echo esc_url( plugins_url( 'assets/global/img/help-support.png', dirname( dirname( __FILE__ ) ) ) ); ?>">
+										</a>
+								</div>
 								<div id="console_log_div" style="display: none;">
 									<div class="form-group">
-									<label class="control-label"><?php echo esc_attr( $mb_email_configuration_smtp_debugging_output ); ?> :</label>
+									<label class="control-label"><?php echo esc_attr( $mb_email_configuration_result ); ?> :</label>
 									<textarea name="ux_txtarea_console_log" class="form-control" id="ux_txtarea_console_log" rows="15" readonly="readonly"><?php echo esc_attr( $mb_email_configuration_send_test_email_textarea ); ?></textarea>
 									</div>
 								</div>

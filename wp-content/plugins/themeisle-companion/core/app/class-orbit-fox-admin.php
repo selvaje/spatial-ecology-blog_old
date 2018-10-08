@@ -119,7 +119,10 @@ class Orbit_Fox_Admin {
 	 */
 	public function menu_pages() {
 		add_menu_page(
-			__( 'Orbit Fox', 'themeisle-companion' ), __( 'Orbit Fox', 'themeisle-companion' ), 'manage_options', 'obfx_companion',
+			__( 'Orbit Fox', 'themeisle-companion' ),
+			__( 'Orbit Fox', 'themeisle-companion' ),
+			'manage_options',
+			'obfx_companion',
 			array(
 				$this,
 				'page_modules_render',
@@ -275,6 +278,7 @@ class Orbit_Fox_Admin {
 			$response['type']    = 'warning';
 			$response['message'] = __( 'Something went wrong, can not change module status!', 'themeisle-companion' );
 			$result              = $module->set_status( 'active', $data['checked'] );
+			$this->trigger_activate_deactivate( $data['checked'], $module );
 			if ( $result ) {
 				$response['type']    = 'success';
 				$response['message'] = __( 'Module status changed!', 'themeisle-companion' );
@@ -282,6 +286,25 @@ class Orbit_Fox_Admin {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * A method to trigger module activation or deavtivation hook
+	 * based in active status.
+	 *
+	 * @codeCoverageIgnore
+	 *
+	 * @since   2.3.3
+	 * @access  public
+	 * @param   boolean                   $active_status The active status.
+	 * @param   Orbit_Fox_Module_Abstract $module The module referenced.
+	 */
+	public function trigger_activate_deactivate( $active_status, Orbit_Fox_Module_Abstract $module ) {
+		if ( $active_status == true ) {
+			do_action( $module->get_slug() . '_activate' );
+		} else {
+			do_action( $module->get_slug() . '_deactivate' );
+		}
 	}
 
 	/**
@@ -332,10 +355,12 @@ class Orbit_Fox_Admin {
 					}
 
 					$data  = array(
-						'slug'        => $slug,
-						'name'        => $module->name,
-						'description' => $module->description,
-						'checked'     => $checked,
+						'slug'           => $slug,
+						'name'           => $module->name,
+						'description'    => $module->description,
+						'checked'        => $checked,
+						'beta'           => $module->beta,
+						'confirm_intent' => $module->confirm_intent,
 					);
 					$tiles .= $rdh->get_partial( 'module-tile', $data );
 					$tiles .= '<div class="divider"></div>';
@@ -345,7 +370,7 @@ class Orbit_Fox_Admin {
 				$options_fields = '';
 				if ( ! empty( $module_options ) ) {
 					foreach ( $module_options as $option ) {
-						$options_fields .= $rdh->render_option( $option );
+						$options_fields .= $rdh->render_option( $option, $module );
 					}
 
 					$panels .= $rdh->get_partial(
@@ -355,6 +380,8 @@ class Orbit_Fox_Admin {
 							'name'           => $module->name,
 							'active'         => $module->get_is_active(),
 							'description'    => $module->description,
+							'show'           => $module->show,
+							'no_save'        => $module->no_save,
 							'options_fields' => $options_fields,
 						)
 					);

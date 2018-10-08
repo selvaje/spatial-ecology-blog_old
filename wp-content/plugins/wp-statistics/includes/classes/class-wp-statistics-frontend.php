@@ -15,9 +15,8 @@ class WP_Statistics_Frontend {
 		// Add the honey trap code in the footer.
 		add_action( 'wp_footer', 'WP_Statistics_Frontend::add_honeypot' );
 
-		if ( $WP_Statistics->get_option( 'menu_bar' ) ) {
-			add_action( 'wp_enqueue_scripts', 'WP_Statistics_Frontend::enqueue_scripts' );
-		}
+		// Enqueue scripts & styles
+		add_action( 'wp_enqueue_scripts', 'WP_Statistics_Frontend::enqueue_scripts' );
 
 		// We can wait until the very end of the page to process the statistics,
 		// that way the page loads and displays quickly.
@@ -42,12 +41,7 @@ class WP_Statistics_Frontend {
 	 */
 	static function enqueue_scripts( $hook ) {
 		// Load our CSS to be used.
-		wp_enqueue_style(
-			'wpstatistics-css',
-			WP_Statistics::$reg['plugin-url'] . 'assets/css/frontend.css',
-			true,
-			WP_Statistics::$reg['version']
-		);
+		wp_enqueue_style( 'wpstatistics-css', WP_Statistics::$reg['plugin-url'] . 'assets/css/frontend.css', true, WP_Statistics::$reg['version'] );
 	}
 
 	/**

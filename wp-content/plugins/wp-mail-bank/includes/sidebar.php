@@ -111,6 +111,11 @@ if ( ! is_user_logged_in() ) {
 						</span>
 					</a>
 					</li>
+					<li id="ux_li_help_support">
+						<a class="help-support" style="text-align:center" href="<?php echo esc_url( TECH_BANKER_BETA_URL ) . '/live-chat-support/'; ?>" target="_blank">
+							<img src="<?php echo esc_url( plugins_url( 'assets/global/img/help-and-support.png', dirname( __FILE__ ) ) ); ?>">
+							</a>
+					</li>
 				</ul>
 			</div>
 		</div>

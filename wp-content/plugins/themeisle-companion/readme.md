@@ -1,9 +1,9 @@
-# Orbit Fox Companion #
+# Orbit Fox by ThemeIsle #
 **Contributors:** [themeisle](https://profiles.wordpress.org/themeisle), [codeinwp](https://profiles.wordpress.org/codeinwp), [rodicaelena](https://profiles.wordpress.org/rodicaelena), [baicusandrei](https://profiles.wordpress.org/baicusandrei)  
 **Tags:** widget, admin, widgets, sharing, sections, themes, stock photos, custom icons, icons, menu icons, stock, templates  
-**Requires at least:** 3.0  
+**Requires at least:** 4.7  
 **Tested up to:** 4.9  
-**Requires PHP:** 5.3  
+**Requires PHP:** 5.4  
 **Stable tag:** trunk  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
@@ -12,9 +12,16 @@ This swiss-knife plugin comes with a quality template library, menu/sharing icon
 
 ## Description ##
 
-Extend your theme functionality with <a href="https://themeisle.com/plugins/orbit-fox-companion/" rel="nofollow">Orbit Fox Companion</a> with various modules like Social Media Share Buttons & Icons, custom menu-icons, one click import page templates, page builder addons and free stock featured images.
+Extend your theme functionality with <a href="https://orbitfox.com/" rel="nofollow">Orbit Fox</a> with various modules like Social Media Share Buttons & Icons, Uptime Monitoring, Google Analytics, custom menu-icons, one click import page templates, page builder addons and free stock featured images.
+
+https://www.youtube.com/watch?v=YHhK_twfYB8
 
 **Features:**
+- Beta: Image CDN & Optimization
+- Beta: Themes Safe updates feedback
+- Privacy policy notice ( GDPR friendly )
+- Uptime Monitor
+- Google Analytics Integration
 - Template Directory
 - Elementor Addons and Widgets
 - Beaver Builder Widgets
@@ -24,17 +31,17 @@ Extend your theme functionality with <a href="https://themeisle.com/plugins/orbi
 - More widgets and sections for Hestia Theme
 - More widgets and sections for Zerif Theme
 
-You can check out the demo <a href="https://demo.themeisle.com/orbit-fox/#blog" rel="nofollow" target="_blank">here</a> for a more detailed overview of the features.
+You can check out the demo <a href="https://orbitfox.com/#blog" rel="nofollow" target="_blank">here</a> for a more detailed overview of the features.
 
 OrbitFox is a user-centred plugin with an easy-to-use admin panel. One of the most important features is that modules will only be loaded if they meet two conditions. If they are needed and if they are compatible with your existing themes and plugins. This will cut down on the unnecessary bloating of your website.
 
-We've also built some fantastic <a href="http://themeisle.com/wordpress-themes/free/" rel="nofollow" target="_blank">free themes</a> that work well with Orbit Fox Companion, check them out.
+We've also built some fantastic <a href="http://themeisle.com/wordpress-themes/free/" rel="nofollow" target="_blank">free themes</a> that work well with Orbit Fox, check them out.
 
 ## Frequently Asked Questions ##
 
 ### How I can get support for this plugin ? ###
 
-You can learn more about Orbit Fox Companion and ask for help by <a href="https://themeisle.com/contact/"  >visiting ThemeIsle website</a>.
+You can learn more about Orbit Fox and ask for help by <a href="https://themeisle.com/contact/"  >visiting ThemeIsle website</a>.
 
 ### What can I do with this plugin ###
 This plugin extends the features of your sites by adding numerous features.
@@ -42,6 +49,13 @@ This plugin extends the features of your sites by adding numerous features.
 **Why use our custom icons module:**
 - Choose from a large variety of custom icons.
 - No coding needed, you can leverage the power of our dropdown icons selector and choose the right icon for your menu.
+
+**Why use our uptime monitor module:**
+- Really easy to use, just put in your email and you will receive a message when / if your site goes down.
+
+**Why use our Google Analytics integration module:**
+- It's a one-click configuration.
+- Just sign in with your google accounts
 
 **Why use our sharing module:**
 - It's easy to use
@@ -71,13 +85,13 @@ This plugin extends the features of your sites by adding numerous features.
 
 ## Installation ##
 
-Activating the Orbit Fox Companion plugin is just like any other plugin. If you've uploaded the plugin package to your server already, skip to step 5 below:
+Activating the Orbit Fox plugin is just like any other plugin. If you've uploaded the plugin package to your server already, skip to step 5 below:
 
 1. In your WordPress admin, go to **Plugins &gt; Add New**
 2. In the Search field type "Orbit Fox"
-3. Under "Orbit Fox Companion" click the **Install Now** link
+3. Under "Orbit Fox" click the **Install Now** link
 4. Once the process is complete, click the **Activate Plugin** link
-5. Now, you're able to use Orbit fox and setup the modules you need. These can be found on the **Orbit Fox Companion** dashboard page
+5. Now, you're able to use Orbit fox and setup the modules you need. These can be found on the **Orbit Fox** dashboard page
 6. Make the changes desired, then click the **Save changes** button at the bottom
 
 ## Screenshots ##
@@ -89,10 +103,117 @@ Activating the Orbit Fox Companion plugin is just like any other plugin. If you'
 5. Social Sharing Module
 
 ## Changelog ##
-### 2.3.4 - 2018-02-08  ###
+### 2.5.8 - 2018-09-12  ###
 
-* Enhancements for Hestia Theme 
-* Made structure more modular
+* Extend image optimization module for 50% of users.
+* Enable safe updates for all users.
+* Adds image optimization integration with Optimole.
+
+
+### 2.5.7 - 2018-08-13  ###
+
+* -fixed fatal error with Elementor extra widgets
+
+
+### 2.5.6 - 2018-07-26  ###
+
+* Release
+
+
+### 2.5.5 - 2018-07-23  ###
+
+* Add new controls for Elementor content forms.
+
+
+### 2.5.4 - 2018-07-11  ###
+
+* Fixed undefined method for old elementor versions.
+
+
+### 2.5.3 - 2018-07-11  ###
+
+* Small alignment fix for menu icons module
+* Added styling options for Elementor content forms
+
+
+### 2.5.2 - 2018-07-06  ###
+
+* Fixes post grid pagination issue
+* Fixes post grid colors not applying correctly
+* Fixes Templates directory import issue
+* New templates in the templates directory
+* Fixes content forms placeholder not used
+* Fixes for Hestia Theme enhancements module
+* Fixes issue where url's were replaced with CDN url for beta users
+
+
+### 2.5.1 - 2018-07-02  ###
+
+* Fix social icons saving bug. 
+* Fix z-index issue on policy notice.
+
+
+### 2.5.0 - 2018-06-22  ###
+
+* Adds privacy policy module, allows users to set a notice for their visitors.
+* Adds Image CDN and Optimization module in private BETA .
+* Adds Themes Safe Updates module in private BETA.
+* Adds more Elementor templates into the library.
+* Improvements for Hestia enhancements module.
+
+
+### 2.4.7 - 2018-05-03  ###
+
+* Add content forms for Beaver Builder
+* Bug fixes and performance enhancements for Hestia
+* Fix issue with plugin activation and deactivation
+
+
+### 2.4.6 - 2018-04-12  ###
+
+* Add video to readme file
+* Added notification about conflict with navwalker overrides
+* Added safeguard for navwalker overrides
+* Remove unused animation functions from Legacy Module
+* Added Azera Shop, Llorix One Lite, Shop Isle themes functionality to Legacy Module
+
+
+### 2.4.5 - 2018-03-29  ###
+
+* Fixed issue with duplicated widgets in Hestia theme
+* Fix undefined errors in Analytics Module
+* Unset monitor email field on deactivation
+
+
+### 2.4.4 - 2018-03-08  ###
+
+* Fixed Analytics module error.
+* UX Improvements.
+
+
+### 2.4.3 - 2018-03-04  ###
+
+* Fixed Analytics module issues.
+* Better UX on module activation.
+
+
+### 2.4.2 - 2018-03-02  ###
+
+* Added a new Google Analytics Integration module
+* Small UX improvements
+
+
+### 2.4.1 - 2018-02-20  ###
+
+* Added intent confirmation for uptime monitor.
+* Register site to endpoint only if we have a valid email address.
+* UX improvements for module activation.
+
+
+### 2.4.0 - 2018-02-16  ###
+
+* Adds a new module for uptime monitor of your website. 
+* Adds 4 more hooks for modules related actions.
 
 
 ### 2.3.1 - 2018-01-17  ###

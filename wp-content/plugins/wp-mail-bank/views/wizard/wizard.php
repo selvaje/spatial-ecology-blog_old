@@ -49,9 +49,10 @@ if ( ! is_user_logged_in() ) {
 									</div>
 									<div class="row row-custom">
 										<div class="col-md-12 textalign">
-											<p><?php echo esc_attr( __( 'Hi there!', 'wp-mail-bank' ) ); ?></p>
-											<p><?php echo esc_attr( __( "Don't ever miss an opportunity to opt in for Email Notifications / Announcements about exciting New Features and Update Releases.", 'wp-mail-bank' ) ); ?></p>
-											<p><?php echo esc_attr( __( 'Contribute in helping us making our plugin compatible with most plugins and themes by allowing to share non-sensitive information about your website.', 'wp-mail-bank' ) ); ?></p>
+											<p><?php echo esc_attr( __( 'Hi!', 'wp-mail-bank' ) ); ?></p>
+											<p><?php echo esc_attr( __( 'Don\'t ever miss an opportunity to opt-in for Email Notifications / Announcements about exciting New Features and Update Releases.', 'wp-mail-bank' ) ); ?></p>
+											<p><?php echo esc_attr( __( 'Contribute to helping us make our plugin compatible with most plugins and themes by allowing to share non-sensitive information about your website.', 'wp-mail-bank' ) ); ?></p>
+											<p><?php echo esc_attr( __( 'If you opt-in, some data about your usage will be sent to our servers for Compatibility Testing Purposes and Email Notifications.', 'wp-mail-bank' ) ); ?></p>
 										</div>
 									</div>
 									<div class="row row-custom">
@@ -60,6 +61,7 @@ if ( ! is_user_logged_in() ) {
 												<label style="font-size:16px;" class="control-label">
 													<?php echo esc_attr( __( 'Email Address for Notifications', 'wp-mail-bank' ) ); ?> :
 												</label>
+												<span id="ux_txt_validation_gdpr_mail_bank" style="display:none;vertical-align:middle;">*</span>
 												<input type="text" style="width: 90%;" class="form-control" name="ux_txt_email_address_notifications" id="ux_txt_email_address_notifications" value="<?php echo esc_attr( get_option( 'admin_email' ) ); ?>">
 											</div>
 											<div class="textalign">

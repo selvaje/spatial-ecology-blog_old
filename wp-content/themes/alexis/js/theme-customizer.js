@@ -11,9 +11,9 @@
 		value.bind( function( to ) {
 			$( '.header' ).css( 'background-color', to ); 
 			$( '.menu .menu-item a, .label.right' ).css( 'background-color', to );   
-			$( 'a,.widget_categories li, .widget_archive li' ).css( 'color', to ); 
+			$( '.entry-title a, .widget-title' ).css( 'color', to ); 
 			$( '.header a' ).css({
-				color: '#fff'
+				color: '#ffffff'
 			});    				 
 		});
 	});

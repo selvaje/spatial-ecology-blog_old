@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mail Bank\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-14 09:35+0530\n"
-"PO-Revision-Date: 2018-02-14 09:35+0530\n"
+"POT-Creation-Date: 2018-06-22 12:57+0530\n"
+"PO-Revision-Date: 2018-06-22 13:01+0530\n"
 "Last-Translator: Tech Banker\n"
 "Language-Team: Indonesian (Indonesia)\n"
 "Language: id_ID\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Loco-Source-Locale: en-IN\n"
 "X-Loco-Project-Id: 38931\n"
 "X-Loco-Api-Version: 1.0.18 20181210-1\n"
@@ -128,66 +128,82 @@ msgstr ""
 "Fitur ini hanya tersedia di Edisi Premium! Silakan Beli untuk membukanya!"
 
 #: includes/translations.php:46
+msgid "Fetch Settings"
+msgstr "Pengaturan Fetch"
+
+#: includes/translations.php:47
+msgid "Choose options for Fetch Settings"
+msgstr "Pilih opsi untuk Pengaturan Fetch"
+
+#: includes/translations.php:48
+msgid "Individual Site"
+msgstr "Situs Individu"
+
+#: includes/translations.php:49
+msgid "Network Site"
+msgstr "Situs Jaringan"
+
+#: includes/translations.php:52
 msgid "Basic Info"
 msgstr "Info Dasar"
 
-#: includes/translations.php:47
+#: includes/translations.php:53
 msgid "Account Setup"
 msgstr "Pengaturan Akun"
 
-#: includes/translations.php:48
+#: includes/translations.php:54
 msgid "Confirm"
 msgstr "Konfirmasi"
 
-#: includes/translations.php:52
+#: includes/translations.php:58
 msgid "Email Setup"
 msgstr "Pengaturan Email"
 
-#: includes/translations.php:53 lib/dashboard-widget.php:169
+#: includes/translations.php:59 lib/dashboard-widget.php:169
 msgid "Email Logs"
 msgstr "Log Email"
 
-#: includes/translations.php:54
+#: includes/translations.php:60
 msgid "Test Email"
 msgstr "Email Tes"
 
-#: includes/translations.php:55
+#: includes/translations.php:61
 msgid "Plugin Settings"
 msgstr "Pengaturan Plugin"
 
-#: includes/translations.php:56
+#: includes/translations.php:62
 msgid "System Information"
 msgstr "Sistem Informasi"
 
-#: includes/translations.php:57
+#: includes/translations.php:63
 msgid "Ask For Help"
 msgstr "Minta Bantuan"
 
-#: includes/translations.php:58
+#: includes/translations.php:64
 msgid "Roles & Capabilities"
 msgstr "Peran & Kapabilitas"
 
-#: includes/translations.php:61
+#: includes/translations.php:67
 msgid "Success!"
 msgstr "Sukses!"
 
-#: includes/translations.php:62
+#: includes/translations.php:68
 msgid "Email Setup has been updated Successfully"
 msgstr "Pengaturan Email telah Sukses diperbarui"
 
-#: includes/translations.php:63
+#: includes/translations.php:69
 msgid "Test Email was sent Successfully!"
 msgstr "Email Tes Sukses terkirim!"
 
-#: includes/translations.php:64
+#: includes/translations.php:70
 msgid "Test Email was not sent!"
 msgstr "Email Tes tidak terkirim!"
 
-#: includes/translations.php:65
+#: includes/translations.php:71
 msgid "Plugin Settings have been updated Successfully"
 msgstr "Pengaturan Plugin telah Sukses diperbarui"
 
-#: includes/translations.php:66
+#: includes/translations.php:72
 msgid ""
 "The OAuth is not supported by providing SMTP Host, kindly provide username "
 "and password"
@@ -195,27 +211,27 @@ msgstr ""
 "OAuth tidak digukung dengan memberikan Host SMTP, silakan berikan nama "
 "pengguna dan kata sandi"
 
-#: includes/translations.php:67
+#: includes/translations.php:73
 msgid "Your Name"
 msgstr "Nama Anda"
 
-#: includes/translations.php:68
+#: includes/translations.php:74
 msgid "Please provide your Name"
 msgstr "Silakan berikan Nama Anda"
 
-#: includes/translations.php:69
+#: includes/translations.php:75
 msgid "Roles & Capabilities have been updated Successfully"
 msgstr "Peran & Kapabilitas telah Sukses diperbarui"
 
-#: includes/translations.php:72 lib/dashboard-widget.php:173
+#: includes/translations.php:78 lib/dashboard-widget.php:173
 msgid "Email Sent"
 msgstr "Email Terkirim"
 
-#: includes/translations.php:73 lib/dashboard-widget.php:178
+#: includes/translations.php:79 lib/dashboard-widget.php:178
 msgid "Email Not Sent"
 msgstr "Email Tidak Terkirim"
 
-#: includes/translations.php:74
+#: includes/translations.php:80
 msgid ""
 "You don't have Sufficient Access to this Page. Kindly contact the "
 "Administrator for more Privileges"
@@ -223,55 +239,55 @@ msgstr ""
 "Anda tidak memiliki Akses Cukup ke halaman ini. Silakan hubungi "
 "Administrator untuk lebih banyak Hak Istimewa"
 
-#: includes/translations.php:75
+#: includes/translations.php:81
 msgid "Enable"
 msgstr "Aktifkan"
 
-#: includes/translations.php:76
+#: includes/translations.php:82
 msgid "Disable"
 msgstr "Matikan"
 
-#: includes/translations.php:77
+#: includes/translations.php:83
 msgid "Override"
 msgstr "Tolak"
 
-#: includes/translations.php:78
+#: includes/translations.php:84
 msgid "Don't Override"
 msgstr "Jangan Tolak"
 
-#: includes/translations.php:79
+#: includes/translations.php:85
 msgid "Save Settings"
 msgstr "Simpan Pengaturan"
 
-#: includes/translations.php:80
+#: includes/translations.php:86
 msgid "Subject"
 msgstr "Subjek"
 
-#: includes/translations.php:81
+#: includes/translations.php:87
 msgid "Next Step"
 msgstr "Langkah Selanjutnya"
 
-#: includes/translations.php:82
+#: includes/translations.php:88
 msgid "Previous Step"
 msgstr "Langkah Sebelumnya"
 
-#: includes/translations.php:83
+#: includes/translations.php:89
 msgid "Know about Full Features"
 msgstr "Ketahui tentang Fitur Penuh"
 
-#: includes/translations.php:84
+#: includes/translations.php:90
 msgid "or"
 msgstr "atau"
 
-#: includes/translations.php:85
+#: includes/translations.php:91
 msgid "Check our Online Demos"
 msgstr "Cek Demo Online kami"
 
-#: includes/translations.php:86
+#: includes/translations.php:92
 msgid "N/A"
 msgstr "N/A"
 
-#: includes/translations.php:91
+#: includes/translations.php:97
 msgid ""
 "A valid Email Address that will be used in the \"CC\" field of the email. "
 "Use Comma \",\" for including multiple email addresses in the \"CC\" field"
@@ -279,7 +295,7 @@ msgstr ""
 "Alamat Email valid yang akan digunakan di kolom 'CC' email. Gunakan Koma ',' "
 "untuk memasukkan beberapa alamat email di kolom 'CC'"
 
-#: includes/translations.php:92
+#: includes/translations.php:98
 msgid ""
 "A valid Email Address that will be used in the 'BCC' field of the email. Use "
 "Comma ',' for including multiple email addresses in the 'BCC' field"
@@ -287,75 +303,75 @@ msgstr ""
 "Alamat Email valid yang akan digunakan di kolom 'BCC' email. Gunakan Koma "
 "',' untuk memasukkan beberapa alamat email di kolom 'BCC'"
 
-#: includes/translations.php:93
+#: includes/translations.php:99
 msgid "Please provide CC Email Address"
 msgstr "Silakan berikan Alamat Email CC"
 
-#: includes/translations.php:94
+#: includes/translations.php:100
 msgid "Please provide BCC Email Address"
 msgstr "Silakan berikan Alamat Email BCC"
 
-#: includes/translations.php:95
+#: includes/translations.php:101
 msgid "From Name"
 msgstr "Dari Nama"
 
-#: includes/translations.php:96
+#: includes/translations.php:102
 msgid "Please provide From Name"
 msgstr "Silakan berikan Dari Nama"
 
-#: includes/translations.php:97
+#: includes/translations.php:103
 msgid "From Email"
 msgstr "Dari Email"
 
-#: includes/translations.php:98
+#: includes/translations.php:104
 msgid "Please provide From Email Address"
 msgstr "Silakan berikan Dari Alamat Email"
 
-#: includes/translations.php:99
+#: includes/translations.php:105
 msgid "Mailer Type"
 msgstr "Tipe Mailer"
 
-#: includes/translations.php:100
+#: includes/translations.php:106
 msgid "Choose among the variety of options for routing emails."
 msgstr "Pilih di antara opsi untuk merute email"
 
-#: includes/translations.php:101
+#: includes/translations.php:107
 msgid "Send Email via SMTP"
 msgstr "Kirim Email via SMTP"
 
-#: includes/translations.php:102
+#: includes/translations.php:108
 msgid "Use The PHP mail() Function"
 msgstr "Gunakan Fungsi mail() PHP"
 
-#: includes/translations.php:103 includes/translations.php:232
+#: includes/translations.php:109 includes/translations.php:236
 msgid "SMTP Host"
 msgstr "Host SMTP"
 
-#: includes/translations.php:104
+#: includes/translations.php:110
 msgid "Server that will send the email"
 msgstr "Server yang akan mengirim email"
 
-#: includes/translations.php:105
+#: includes/translations.php:111
 msgid "Please provide SMTP Host"
 msgstr "Silakan berikan Host SMTP"
 
-#: includes/translations.php:106
+#: includes/translations.php:112
 msgid "SMTP Port"
 msgstr "Port SMTP"
 
-#: includes/translations.php:107
+#: includes/translations.php:113
 msgid "Port to connect to the email server"
 msgstr "Port untuk terhubung ke server email"
 
-#: includes/translations.php:108
+#: includes/translations.php:114
 msgid "Please provide SMTP Port"
 msgstr "Silakan berikan Port SMTP"
 
-#: includes/translations.php:109
+#: includes/translations.php:115
 msgid "Encryption"
 msgstr "Enkripsi"
 
-#: includes/translations.php:110
+#: includes/translations.php:116
 msgid ""
 "Encrypt the email when sent to the email server using the different methods "
 "available"
@@ -363,67 +379,63 @@ msgstr ""
 "Enkripsi email saat mengirimkan ke server email menggunakan metode berbeda "
 "yang tersedia"
 
-#: includes/translations.php:114
+#: includes/translations.php:120
 msgid "Authentication"
 msgstr "Otentikasi"
 
-#: includes/translations.php:115
+#: includes/translations.php:121
 msgid "Method for authentication (almost always Login)"
 msgstr "Metode untuk otentikasi (hampir setiap Login)"
 
-#: includes/translations.php:116 includes/translations.php:152
+#: includes/translations.php:122 includes/translations.php:157
 msgid "Email Address"
 msgstr "Alamat Email"
 
-#: includes/translations.php:117
+#: includes/translations.php:123
 msgid "A valid Email Address on which you would like to send a Test Email"
 msgstr "Alamat Email valid asal yang Anda ingin kirim Email Tes dari sana"
 
-#: includes/translations.php:118
+#: includes/translations.php:124
 msgid "Please provide Email Address"
 msgstr "Silakan berikan Alamat Email"
 
-#: includes/translations.php:119
+#: includes/translations.php:125
 msgid "Subject Line for your Test Email"
 msgstr "Baris Subjek untuk Email Tes Anda"
 
-#: includes/translations.php:120
+#: includes/translations.php:126
 msgid "Please provide Subject"
 msgstr "Silakan berikan Subjek"
 
-#: includes/translations.php:121 includes/translations.php:183
+#: includes/translations.php:127 includes/translations.php:187
 msgid "Email Content"
 msgstr "Konten Email"
 
-#: includes/translations.php:122
+#: includes/translations.php:128
 msgid "Email Content for your Test Email"
 msgstr "Konten email untuk Email Tes Anda"
 
-#: includes/translations.php:123
+#: includes/translations.php:129
 msgid "Send Test Email"
 msgstr "Kirim Email Tes"
 
-#: includes/translations.php:124
-msgid "SMTP Debugging Output"
-msgstr "Hasil Debugging SMTP"
-
-#: includes/translations.php:125
+#: includes/translations.php:130
 msgid "Checking your settings"
 msgstr "Memeriksa pengaturan Anda"
 
-#: includes/translations.php:126
+#: includes/translations.php:131
 msgid "Result"
 msgstr "Hasil"
 
-#: includes/translations.php:127
+#: includes/translations.php:132
 msgid "Send Another Test Email"
 msgstr "Kirim Email Tes Lain"
 
-#: includes/translations.php:128
+#: includes/translations.php:133
 msgid "From Name Configuration"
 msgstr "Dari Konfigurasi Nama"
 
-#: includes/translations.php:129
+#: includes/translations.php:134
 msgid ""
 "Do you want to override the Default Name that tells email recipient about "
 "who sent the email?"
@@ -431,11 +443,11 @@ msgstr ""
 "Ingin menolak Nama Default yang memberi tahu penerima email tentang siapa "
 "yang mengirim email?"
 
-#: includes/translations.php:130
+#: includes/translations.php:135
 msgid "From Email Configuration"
 msgstr "Dari Konfigurasi Email"
 
-#: includes/translations.php:131
+#: includes/translations.php:136
 msgid ""
 "Do you want to override the Default Email Address that tells email recipient "
 "about the sender?"
@@ -443,38 +455,38 @@ msgstr ""
 "Ingin menolak Alamat Email Default yang memberi tahu penerima email tentang "
 "pengirim?"
 
-#: includes/translations.php:132
+#: includes/translations.php:137
 msgid "Username"
 msgstr "Nama pengguna"
 
-#: includes/translations.php:133
+#: includes/translations.php:138
 msgid ""
 " Login is typically the full email address (Example: mailbox@yourdomain.com)"
 msgstr "Login umumnya alamat email penuh (Contoh: mailbox@yourdomain.com)"
 
-#: includes/translations.php:134
+#: includes/translations.php:139
 msgid "Please provide username"
 msgstr "Silakan berikan Nama Pengguna"
 
-#: includes/translations.php:135
+#: includes/translations.php:140
 msgid "Password"
 msgstr "Kata sandi"
 
-#: includes/translations.php:136
+#: includes/translations.php:141
 msgid "Password is typically the same as the password to retrieve the email"
 msgstr ""
 "Kata Sandi umumnya sama dengan kata sandi yang digunakan untuk mendapatkan "
 "kembali email"
 
-#: includes/translations.php:137
+#: includes/translations.php:142
 msgid "Please provide password"
 msgstr "Silakan berikan Kata Sandi"
 
-#: includes/translations.php:138
+#: includes/translations.php:143
 msgid "Redirect URI"
 msgstr "URI Redirect"
 
-#: includes/translations.php:139
+#: includes/translations.php:144
 msgid ""
 "Please copy this Redirect URI and Paste into Redirect URI field when "
 "creating your app"
@@ -482,31 +494,31 @@ msgstr ""
 "Silakan salin URI Redirect ini dan Salin ke kolom URI Redirect saat membuat "
 "aplikasi Anda"
 
-#: includes/translations.php:145
+#: includes/translations.php:150
 msgid "Client Id"
 msgstr "ID Klien"
 
-#: includes/translations.php:146
+#: includes/translations.php:151
 msgid "Secret Key"
 msgstr "Kunci Rahasia"
 
-#: includes/translations.php:147
+#: includes/translations.php:152
 msgid "Client Id issued by your SMTP Host"
 msgstr "Id Klien diterbitkan oleh Host SMTP Anda"
 
-#: includes/translations.php:148
+#: includes/translations.php:153
 msgid "Secret Key issued by your SMTP Host"
 msgstr "Kunci Rahasia diterbitkan oleh Host SMTP Anda"
 
-#: includes/translations.php:149
+#: includes/translations.php:154
 msgid "Please provide Client Id"
 msgstr "Silakan berikan Id Klien"
 
-#: includes/translations.php:150
+#: includes/translations.php:155
 msgid "Please provide Secret Key"
 msgstr "Silakan berikan Kunci Rahasia"
 
-#: includes/translations.php:151
+#: includes/translations.php:156
 msgid ""
 "Yes, automatically send a Test Email upon clicking on the Next Step Button "
 "to verify settings"
@@ -514,292 +526,288 @@ msgstr ""
 "Ya, kirim otomatis Email Tes saat mengklik Tombol Langkah Selanjutnya untuk "
 "verifikasi pengaturan"
 
-#: includes/translations.php:153
+#: includes/translations.php:158
 msgid "A valid Email Address account from which you would like to send Emails"
 msgstr "Akun Alamat Email valid asal yang Anda ingin kirim Email dari sana"
 
-#: includes/translations.php:154
+#: includes/translations.php:159
 msgid "Please provide valid Email Address"
 msgstr "Silakan berikan Alamat Email valid"
 
-#: includes/translations.php:155
+#: includes/translations.php:160
 msgid "Reply To"
 msgstr "Kirim Ke"
 
-#: includes/translations.php:156
+#: includes/translations.php:161
 msgid ""
 "A valid Email Address that will be used in the 'Reply-To' field of the email"
 msgstr "Alamat Email valid yang akan digunakan di kolom 'Balas-Ke' email"
 
-#: includes/translations.php:157
+#: includes/translations.php:162
 msgid "Please provide Reply To Email Address"
 msgstr "Silakan berikan Balas Ke Alamat Email"
 
-#: includes/translations.php:158
-msgid "Get Google Client Id and Secret Key"
-msgstr "Dapatkan Id Klien Google dan Kunci Rahasia"
+#: includes/translations.php:163
+msgid "Get API Key"
+msgstr "Dapatkan Kunci API"
 
-#: includes/translations.php:159
-msgid "Get Microsoft Client Id and Secret Key"
-msgstr "Dapatkan Id Klien Microsoft dan Kunci Rahasia"
+#: includes/translations.php:164
+msgid "How to setup?"
+msgstr "Bagaimana cara mengaturnya?"
 
-#: includes/translations.php:160
-msgid "Get Yahoo Client Id and Secret Key"
-msgstr "Dapatkan Id Klien Yahoo dan Kunci Rahasia"
-
-#: includes/translations.php:161
+#: includes/translations.php:165
 msgid "SendGrid API"
 msgstr "SendGrid API"
 
-#: includes/translations.php:163
+#: includes/translations.php:167
 msgid "Start Date"
 msgstr "Tanggal Mulai"
 
-#: includes/translations.php:164 includes/translations.php:179
+#: includes/translations.php:168 includes/translations.php:183
 msgid "Resend Email"
 msgstr "Kirim Ulang Email"
 
-#: includes/translations.php:165
+#: includes/translations.php:169
 msgid "Please provide Start Date"
 msgstr "Silakan berikan Waktu Akhir"
 
-#: includes/translations.php:166
+#: includes/translations.php:170
 msgid "Start Date for Email Logs"
 msgstr "Waktu Mulai untuk Log Email"
 
-#: includes/translations.php:167
+#: includes/translations.php:171
 msgid "End Date"
 msgstr "Tanggal Akhir"
 
-#: includes/translations.php:168
+#: includes/translations.php:172
 msgid "Limit Records"
 msgstr "Batasi Catatan"
 
-#: includes/translations.php:169
+#: includes/translations.php:173
 msgid "Number of Logs to view"
 msgstr "Jumlah Log untuk dilihat"
 
-#: includes/translations.php:174
+#: includes/translations.php:178
 msgid "Please provide End Date"
 msgstr "Silakan berikan Waktu Akhir"
 
-#: includes/translations.php:175
+#: includes/translations.php:179
 msgid "End Date for Email Logs"
 msgstr "Waktu Akhir untuk Log Email"
 
-#: includes/translations.php:176
+#: includes/translations.php:180
 msgid "Submit"
 msgstr "Kirim"
 
-#: includes/translations.php:177
+#: includes/translations.php:181
 msgid "Bulk Action"
 msgstr "Aksi Banyak"
 
-#: includes/translations.php:178
+#: includes/translations.php:182
 msgid "Delete"
 msgstr "Hapus"
 
-#: includes/translations.php:180
+#: includes/translations.php:184
 msgid "Apply"
 msgstr "Terapkan"
 
-#: includes/translations.php:181
+#: includes/translations.php:185
 msgid "Email To"
 msgstr "Email ke"
 
-#: includes/translations.php:182
+#: includes/translations.php:186
 msgid "Action"
 msgstr "Tindakan"
 
-#: includes/translations.php:184
+#: includes/translations.php:188
 msgid "Debug Output"
 msgstr "Hasil Debug"
 
-#: includes/translations.php:185
+#: includes/translations.php:189
 msgid "Date/Time"
 msgstr "Tanggal/Waktu"
 
-#: includes/translations.php:188
+#: includes/translations.php:192
 msgid "Debug Mode"
 msgstr "Mode Debug"
 
-#: includes/translations.php:189
+#: includes/translations.php:193
 msgid "Do you want to see Debugging Output for your emails?"
 msgstr "Ingin melihat Hasil Debugging untuk email Anda?"
 
-#: includes/translations.php:190
+#: includes/translations.php:194
 msgid "Remove Database at Uninstall"
 msgstr "Hapus database di Uninstall"
 
-#: includes/translations.php:191
+#: includes/translations.php:195
 msgid "Do you want to remove database at Uninstall of the Plugin?"
 msgstr "Anda ingin menghapus database di Uninstall Plugin?"
 
-#: includes/translations.php:192
+#: includes/translations.php:196
 msgid "Monitor Email Logs"
 msgstr "Awasi Log Email"
 
-#: includes/translations.php:193
+#: includes/translations.php:197
 msgid "Do you want to monitor your all Outgoing Emails?"
 msgstr "Anda ingin mengawasi semua Email Keluar Anda?"
 
-#: includes/translations.php:196
+#: includes/translations.php:200
 msgid "Show Mail Bank Menu"
 msgstr "Tunjukkan Menu Mail Bank"
 
-#: includes/translations.php:197
+#: includes/translations.php:201
 msgid ""
 "Choose among the following roles who would be able to see the Mail Bank Menu?"
 msgstr "Pilih dari peran berikut siapa yang akan bisa melihat Menu Mail Bank?"
 
-#: includes/translations.php:198
+#: includes/translations.php:202
 msgid "Administrator"
 msgstr "Administrator"
 
-#: includes/translations.php:199
+#: includes/translations.php:203
 msgid "Author"
 msgstr "Penulis"
 
-#: includes/translations.php:200
+#: includes/translations.php:204
 msgid "Editor"
 msgstr "Editor"
 
-#: includes/translations.php:201
+#: includes/translations.php:205
 msgid "Contributor"
 msgstr "Kontributor"
 
-#: includes/translations.php:202
+#: includes/translations.php:206
 msgid "Subscriber"
 msgstr "Pelanggan"
 
-#: includes/translations.php:203
+#: includes/translations.php:207
 msgid "Others"
 msgstr "Lainnya"
 
-#: includes/translations.php:204
+#: includes/translations.php:208
 msgid "Show Mail Bank Top Bar Menu"
 msgstr "Tunjukkan Bar Atas Mail Bank "
 
-#: includes/translations.php:205
+#: includes/translations.php:209
 msgid "Do you want to show Mail Bank menu in Top Bar?"
 msgstr "Apa Anda ingin menunjukkan menu Mail Bank di Bar Atas?"
 
-#: includes/translations.php:206
+#: includes/translations.php:210
 msgid "An Administrator Role can do the following "
 msgstr "Peran Administrator dapat melakukan hal berikut"
 
-#: includes/translations.php:207
+#: includes/translations.php:211
 msgid ""
 "Choose what pages would be visible to the users having Administrator Access"
 msgstr ""
 "Pilih halaman apa yang akan terlihat bagi pengguna yang memiliki Akses "
 "Administrator"
 
-#: includes/translations.php:208
+#: includes/translations.php:212
 msgid "Full Control"
 msgstr "Kontrol Penuh"
 
-#: includes/translations.php:209
+#: includes/translations.php:213
 msgid "An Author Role can do the following "
 msgstr "Peran Penulis dapat melakukan hal berikut"
 
-#: includes/translations.php:210
+#: includes/translations.php:214
 msgid "Choose what pages would be visible to the users having Author Access"
 msgstr ""
 "Pilih halaman apa yang akan terlihat bagi pengguna yang memiliki Akses "
 "Penulis"
 
-#: includes/translations.php:211
+#: includes/translations.php:215
 msgid "An Editor Role can do the following "
 msgstr "Peran Editor dapat melakukan hal berikut"
 
-#: includes/translations.php:212
+#: includes/translations.php:216
 msgid "Choose what pages would be visible to the users having Editor Access"
 msgstr ""
 "Pilih halaman apa yang akan terlihat pada pengguna yang memiliki Akses Editor"
 
-#: includes/translations.php:213
+#: includes/translations.php:217
 msgid "A Contributor Role can do the following "
 msgstr "Peran Kontributor dapat melakukan hal berikut"
 
-#: includes/translations.php:214
+#: includes/translations.php:218
 msgid ""
 "Choose what pages would be visible to the users having Contributor Access"
 msgstr ""
 "Pilih halaman apa yang akan terlihat pada pengguna yang memiliki Akses "
 "Kontributor"
 
-#: includes/translations.php:215
+#: includes/translations.php:219
 msgid "Other Roles can do the following "
 msgstr "Peran Lainnya dapat melakukan hal berikut"
 
-#: includes/translations.php:216
+#: includes/translations.php:220
 msgid ""
 "Choose what pages would be visible to the users having Others Role Access"
 msgstr ""
 "Pilih halaman apa yang akan terlihat pada pengguna yang memiliki Akses Peran "
 "Lain"
 
-#: includes/translations.php:217
+#: includes/translations.php:221
 msgid "Please tick the appropriate capabilities for security purposes "
 msgstr "Silakan centang kapabilitas sesuai untuk tujuan keamanan"
 
-#: includes/translations.php:218
+#: includes/translations.php:222
 msgid "Only users with these capabilities can access Mail Bank"
 msgstr "Hanya pengguna dengan kapabilitas ini yang bisa mengakses Mail Bank"
 
-#: includes/translations.php:219
+#: includes/translations.php:223
 msgid "A Subscriber Role can do the following"
 msgstr "Peran Pelanggan bisa melakukan hal berikut"
 
-#: includes/translations.php:220
+#: includes/translations.php:224
 msgid ""
 "Choose what pages would be visible to the users having Subscriber Access"
 msgstr ""
 "Pilih halaman apa yang akan terlihat pada pengguna yang memiliki Akses "
 "Pelanggan"
 
-#: includes/translations.php:223
+#: includes/translations.php:227
 msgid "Sending Test Email to"
 msgstr "Mengirim Email Tes ke"
 
-#: includes/translations.php:224
+#: includes/translations.php:228
 msgid "Email Status"
 msgstr "Status Email"
 
-#: includes/translations.php:227
+#: includes/translations.php:231
 msgid "Connectivity Test"
 msgstr "Tes Konektivitas"
 
-#: includes/translations.php:228
+#: includes/translations.php:232
 msgid "Transport"
 msgstr "Bawa"
 
-#: includes/translations.php:229
+#: includes/translations.php:233
 msgid "Socket"
 msgstr "Soket"
 
-#: includes/translations.php:230
+#: includes/translations.php:234
 msgid "Status"
 msgstr "Status"
 
-#: includes/translations.php:231
+#: includes/translations.php:235
 msgid "SMTP"
 msgstr "SMTP"
 
-#: includes/translations.php:233
+#: includes/translations.php:237
 msgid "Begin Test"
 msgstr "Mulai Tes"
 
-#: includes/translations.php:235
+#: includes/translations.php:239
 msgid "SMTP Server that will be used for a Connectivity Test"
 msgstr "Server SMTP yang akan digunakan untuk Tes Konektivitas"
 
-#: includes/translations.php:238
+#: includes/translations.php:242
 msgid "Additional Headers"
 msgstr "Header Tambahan"
 
-#: includes/translations.php:239
+#: includes/translations.php:243
 msgid ""
 "You also can insert additional headers in this optional field in order to "
 "include in your email"
@@ -852,87 +860,96 @@ msgstr ""
 "kebanyakan plugin dan tema dengan membiarkan untuk membagikan informasi non-"
 "sensitif mengenai website Anda."
 
-#: views/wizard/wizard.php:61
+#: views/wizard/wizard.php:55
+msgid ""
+"If you opt in, some data about your usage of Mail Bank Plugin will be sent "
+"to our servers for Compatiblity Testing Purposes and email notifications."
+msgstr ""
+"Jika Anda ikut serta, beberapa data tentang penggunaan Plugin Mail Bank Anda "
+"akan dikirim ke server kami untuk tujuan Pengujian Compatiblity dan "
+"pemberitahuan email."
+
+#: views/wizard/wizard.php:62
 msgid "Email Address for Notifications"
 msgstr "Alamat Email untuk Notifikasi"
 
-#: views/wizard/wizard.php:66
+#: views/wizard/wizard.php:68
 msgid "If you're not ready to Opt-In, that's ok too!"
 msgstr "Jika Anda tidak siap untuk Memilih, tak apa!"
 
-#: views/wizard/wizard.php:67
+#: views/wizard/wizard.php:69
 msgid "Mail Bank will still work fine."
 msgstr "Mail Bank akan tetap bekerja dengan baik."
 
-#: views/wizard/wizard.php:71
+#: views/wizard/wizard.php:73
 msgid "What permissions are being granted?"
 msgstr "Izin apa yang sedang disetujui?"
 
-#: views/wizard/wizard.php:79
+#: views/wizard/wizard.php:81
 msgid "User Details"
 msgstr "Detail Pengguna"
 
-#: views/wizard/wizard.php:80
+#: views/wizard/wizard.php:82
 msgid "Name and Email Address"
 msgstr "Nama dan Alamat Email"
 
-#: views/wizard/wizard.php:90
+#: views/wizard/wizard.php:92
 msgid "Current Plugin Status"
 msgstr "Status Plugin Saat Ini"
 
-#: views/wizard/wizard.php:91
+#: views/wizard/wizard.php:93
 msgid "Activation, Deactivation and Uninstall"
 msgstr "Aktivasi, Deaktivasi dan Uninstall"
 
-#: views/wizard/wizard.php:101
+#: views/wizard/wizard.php:103
 msgid "Notifications"
 msgstr "Notifikasi"
 
-#: views/wizard/wizard.php:102
+#: views/wizard/wizard.php:104
 msgid "Updates &amp; Announcements"
 msgstr "Pembaruan & Pengumuman"
 
-#: views/wizard/wizard.php:112
+#: views/wizard/wizard.php:114
 msgid "Website Overview"
 msgstr "Pratinjau Website"
 
-#: views/wizard/wizard.php:113
+#: views/wizard/wizard.php:115
 msgid "Site URL, WP Version, PHP Info, Plugins &amp; Themes Info"
 msgstr "URL situs, Versi WP, Info PHP, Plugin & Info Tema"
 
-#: views/wizard/wizard.php:122
+#: views/wizard/wizard.php:124
 msgid "Opt-In &amp; Continue"
 msgstr "Izinkan & Lanjut"
 
-#: views/wizard/wizard.php:126
+#: views/wizard/wizard.php:128
 msgid "Skip &amp; Continue"
 msgstr "Lewati & Lanjut"
 
-#: views/wizard/wizard.php:133
+#: views/wizard/wizard.php:135
 msgid "Privacy Policy"
 msgstr "Kebijakan Privasi"
 
-#: views/wizard/wizard.php:135
+#: views/wizard/wizard.php:137
 msgid "Terms &amp; Conditions"
 msgstr "Syarat & Ketentuan"
 
-#: wp-mail-bank.php:894
+#: wp-mail-bank.php:912
 msgid "Sure! I'd love to!"
 msgstr "Tentu! Saya mau!"
 
-#: wp-mail-bank.php:895
+#: wp-mail-bank.php:913
 msgid "I've already left a review"
 msgstr "Saya telah tinggalkan ulasan"
 
-#: wp-mail-bank.php:896
+#: wp-mail-bank.php:914
 msgid "Maybe Later"
 msgstr "Mungkin Nanti"
 
-#: wp-mail-bank.php:898
+#: wp-mail-bank.php:916
 msgid "Leave A Review For Mail Bank ?"
 msgstr "Tinggalkan Ulasan Untuk Mail Bank ?"
 
-#: wp-mail-bank.php:899
+#: wp-mail-bank.php:917
 msgid ""
 "We love and care about you. Mail Bank Team is putting our maximum efforts to "
 "provide you the best functionalities.<br> We would really appreciate if you "
@@ -944,38 +961,79 @@ msgstr ""
 "jika Anda bisa menghabiskan beberapa saat untuk memberikan Review Bagus pada "
 "plugin untuk memotivasi kami!"
 
-#: wp-mail-bank.php:1056
+#: wp-mail-bank.php:1074
 msgid "We feel guilty when anyone stop using Mail Bank."
 msgstr "Kami merasa bersalah ketika siapa saja berhenti menggunakan Mail Bank."
 
-#: wp-mail-bank.php:1057
+#: wp-mail-bank.php:1075
 msgid "If Mail Bank isn't working for you, others also may not."
 msgstr "Jika Mail Bank tidak bekerja untuk Anda, yang lain juga tidak."
 
-#: wp-mail-bank.php:1058
+#: wp-mail-bank.php:1076
 msgid "We would love to hear your feedback about what went wrong."
 msgstr "Kami akan senang mendengar tanggapan Anda tentang apa yang salah."
 
-#: wp-mail-bank.php:1059
+#: wp-mail-bank.php:1077
 msgid "We would like to help you in fixing the issue."
 msgstr "Kami ingin membantu Anda mengatasi masalah."
 
-#: wp-mail-bank.php:1066
+#: wp-mail-bank.php:1078
+msgid ""
+"If you click Continue, some data would be sent to our servers for "
+"Compatiblity Testing Purposes."
+msgstr ""
+"Jika Anda mengklik Lanjutkan, beberapa data akan dikirim ke server kami "
+"untuk tujuan Pengujian Compatiblity."
+
+#: wp-mail-bank.php:1079
+msgid "If you Skip, no data would be shared with our servers."
+msgstr ""
+"Jika Anda Lewati, tidak ada data yang akan dibagikan dengan server kami."
+
+#: wp-mail-bank.php:1086
 msgid "The Plugin didn't work"
 msgstr "Plugin tidak bekerja"
 
-#: wp-mail-bank.php:1072
+#: wp-mail-bank.php:1092
 msgid "I found a better Plugin"
 msgstr "Saya menemukan Plugin yang lebih baik"
 
-#: wp-mail-bank.php:1078
+#: wp-mail-bank.php:1098
 msgid "It's a temporary deactivation. I'm just debugging an issue."
 msgstr ""
 "Ini adalah deaktivasi sementara. Saya hanya melakukan debugging masalah."
 
-#: wp-mail-bank.php:1084
+#: wp-mail-bank.php:1104
 msgid "Open a Support Ticket for me."
 msgstr "Buka Tiket Dukungan untuk saya."
+
+#: wp-mail-bank.php:1174
+msgid "WP Mail Bank Compatibility Warning"
+msgstr "Peringatan Kompatibilitas Bank WP Mail"
+
+#: wp-mail-bank.php:1175
+msgid ""
+"The following plugins are not compatible with Mail Bank and may lead to "
+"unexpected results: "
+msgstr ""
+"Plugin berikut tidak kompatibel dengan Mail Bank dan dapat mengarah ke hasil "
+"yang tidak diharapkan:"
+
+#: wp-mail-bank.php:1181
+msgid "Deactivate"
+msgstr "Menonaktifkan"
+
+#~ msgid "SMTP Debugging Output"
+#~ msgstr "Hasil Debugging SMTP"
+
+#~ msgid "Get Google Client Id and Secret Key"
+#~ msgstr "Dapatkan Id Klien Google dan Kunci Rahasia"
+
+#~ msgid "Get Microsoft Client Id and Secret Key"
+#~ msgstr "Dapatkan Id Klien Microsoft dan Kunci Rahasia"
+
+#~ msgid "Get Yahoo Client Id and Secret Key"
+#~ msgstr "Dapatkan Id Klien Yahoo dan Kunci Rahasia"
 
 #~ msgid "Email Log Details"
 #~ msgstr "Detail Log Email"
@@ -1031,9 +1089,6 @@ msgstr "Buka Tiket Dukungan untuk saya."
 #~ "aktif. Ini mungkin mengakibatkan beberapa masalah dalam mengatur Mail "
 #~ "Bank. Silakan hubungi WebHost Anda untuk mengatur ekstensi ini di server "
 #~ "Anda."
-
-#~ msgid "Get Mailgun API Key"
-#~ msgstr "Dapatkan Mailgun API Key"
 
 #~ msgid "In this field, you would need to provide Mailgun API Key"
 #~ msgstr "Di kolom ini, Anda akan perlu memberikan API Key Mailgun."

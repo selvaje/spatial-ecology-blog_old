@@ -72,7 +72,7 @@ For instance, you may have:
 
 When you need:
 
-	.content a {
+	\#content a {
 		color: #f00;
 	}
 
@@ -89,6 +89,9 @@ Please check your CSS at the [W3C CSS Validation Service](http://jigsaw.w3.org/c
 2. The Simple Custom CSS Customizer Section
 
 == Changelog ==
+
+= 4.0.1 =
+* Fixed bug with broken editor styles on older versions of WP.
 
 = 4.0 =
 * New Customizer Control (still compatible with older WP versions)
@@ -154,6 +157,12 @@ Instead of using print_scripts to insert the CSS directly into the HEAD, CSS sty
 * Inital Release
 
 == Upgrade Notice ==
+
+= 4.0.1 =
+Settings page style fixes for older versions of WP.
+
+= 4.0 =
+Tested for compatibility with WP 4.9.4.  Added Customizer support.
 
 = 3.3 =
 Tested for compatibility with WP 4.4.1.  Added support for http://.

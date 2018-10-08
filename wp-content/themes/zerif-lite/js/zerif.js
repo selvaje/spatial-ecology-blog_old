@@ -67,9 +67,8 @@ jQuery( document ).ready( callback_mobile_dropdown );
 
 jQuery( document ).ready(
 	function() {
-		var current_height = jQuery( '.header .container' ).height();
-		jQuery( '.header' ).css( 'min-height',current_height );
-
+		var current_height = parseInt( jQuery( '.header .container' ).height() );
+		jQuery( '.header' ).css( 'min-height', current_height);
 	}
 );
 
@@ -173,9 +172,10 @@ jQuery( document ).ready(
 
 jQuery( window ).load(
 	function(){
-		jQuery( '#site-navigation a[href*="#"]:not([href="#"]), header.header a[href*="#"]:not([href="#"])' ).bind(
+		jQuery( '#site-navigation a[href*="#"]:not([href="#"]), header.header a[href*="#"]:not([href="#"]), #focus .focus-box .service-icon a[href*="#"]:not([href="#"])' ).bind(
 			'click',function () {
 				var headerHeight;
+				var navigationHeight;
 				var hash   = this.hash;
 				var idName = hash.substring( 1 );    // get id name
 				var alink  = this;                 // this button pressed
@@ -188,8 +188,10 @@ jQuery( window ).load(
 				}
 				if ( jQuery( window ).width() >= 751 ) {
 					headerHeight = jQuery( '#main-nav' ).height();
+					navigationHeight = 0;
 				} else {
 					headerHeight = 0;
+					navigationHeight = jQuery( '#site-navigation' ).height() + jQuery( '#mega-menu-wrap-primary' ).height();
 				}
 				if (location.pathname.replace( /^\//,'' ) === this.pathname.replace( /^\//,'' ) && location.hostname === this.hostname) {
 					var target = jQuery( this.hash );
@@ -197,7 +199,7 @@ jQuery( window ).load(
 					if (target.length) {
 						jQuery( 'html,body' ).animate(
 							{
-								scrollTop: target.offset().top - headerHeight + 10
+								scrollTop: target.offset().top - headerHeight - navigationHeight + 10
 							}, 1200
 						);
 
@@ -207,6 +209,9 @@ jQuery( window ).load(
 						}
 						if ( jQuery( '.navbar li.dropdown' ).hasClass( 'open' ) ) {
 							jQuery( '.navbar li.dropdown.open' ).removeClass( 'open' );
+						}
+						if ( jQuery( '.mega-menu-toggle' ).hasClass( 'mega-menu-open' ) ) {
+							jQuery( '.mega-menu-toggle.mega-menu-open' ).removeClass( 'mega-menu-open' );
 						}
 
 						return false;
@@ -220,19 +225,22 @@ jQuery( window ).load(
 jQuery( document ).ready(
 	function(){
 		var headerHeight;
+		var navigationHeight;
 		jQuery( '#site-navigation .current' ).removeClass( 'current' );
 		jQuery( '#site-navigation a[href$="' + window.location.hash + '"]' ).parent( 'li' ).addClass( 'current' );
 		if ( jQuery( window ).width() >= 751 ) {
 			headerHeight = jQuery( '#main-nav' ).height();
+			navigationHeight = 0;
 		} else {
 			headerHeight = 0;
+			navigationHeight = jQuery( '#site-navigation' ).height() + jQuery( '#mega-menu-wrap-primary' ).height();
 		}
 		if (location.pathname.replace( /^\//,'' ) === window.location.pathname.replace( /^\//,'' ) && location.hostname === window.location.hostname) {
 			var target = jQuery( window.location.hash );
 			if (target.length) {
 				jQuery( 'html,body' ).animate(
 					{
-						scrollTop: target.offset().top - headerHeight + 10
+						scrollTop: target.offset().top - headerHeight - navigationHeight + 10
 					}, 1200
 				);
 				return false;
@@ -417,18 +425,26 @@ jQuery( window ).load(
 		setminHeightHeader();
 	}
 );
+
+
+/* check if resize is actually due to window resize and not iOS */
+var windowWidth = jQuery(window).width();
 jQuery( window ).resize(
 	function() {
-		setminHeightHeader();
+		if ( jQuery(window).width() != windowWidth ) {
+			windowWidth = jQuery(window).width();
+			setminHeightHeader();
+		}
+
 	}
 );
+
 function setminHeightHeader()
 {
 	jQuery( '#main-nav' ).css( 'min-height','75px' );
 	jQuery( '.header' ).css( 'min-height','75px' );
 	var minHeight = parseInt( jQuery( '#main-nav' ).height() );
-	jQuery( '#main-nav' ).css( 'min-height',minHeight );
-	jQuery( '.header' ).css( 'min-height',minHeight );
+	jQuery( '.header' ).css( 'min-height', minHeight);
 }
 /* - */
 
@@ -463,19 +479,21 @@ function fixFooterBottom(){
 /*** CENTERED MENU */
 var callback_menu_align = function () {
 
-	var headerWrap    = jQuery( '.header' );
-	var navWrap       = jQuery( '#site-navigation' );
-	var logoWrap      = jQuery( '.responsive-logo' );
-	var containerWrap = jQuery( '.container' );
-	var classToAdd    = 'menu-align-center';
+	var headerWrap     = jQuery( '.header' );
+	var navWrap        = jQuery( '#site-navigation' );
+	var maxMenuNavWrap = jQuery('#mega-menu-primary');
+	var logoWrap       = jQuery( '.responsive-logo' );
+	var containerWrap  = jQuery( '.container' );
+	var classToAdd     = 'menu-align-center';
+	
 
 	if ( headerWrap.hasClass( classToAdd ) ) {
 		headerWrap.removeClass( classToAdd );
 	}
 	var logoWidth      = logoWrap.outerWidth();
-	var menuWidth      = navWrap.outerWidth();
+	var menuWidth      = navWrap.outerWidth() + maxMenuNavWrap.outerWidth();
 	var containerWidth = containerWrap.width();
-
+	
 	if ( menuWidth + logoWidth > containerWidth ) {
 		headerWrap.addClass( classToAdd );
 	} else {
