@@ -1,15 +1,15 @@
 <?php /****************************************************************************************************************************
 Plugin Name: Testimonial Slider
-Plugin URI: http://slidervilla.com/testimonial-slider/
+Plugin URI: https://wordpress.org/plugins/testimonial-slider/
 Description: Use Testimonial Slider to show the awesome testimonials you have received in a beautiful horizontal slider format.
-Version: 1.2.5	
-Author: SliderVilla
+Version: 1.3.0
+Author: DavidAnderson
 Text Domain: testimonial-slider
-Author URI: http://slidervilla.com/
-Wordpress version supported: 3.5 and above
+Author URI: https://wordpress.org/plugins/testimonial-slider/
 License: GPL2
 *-----------------------------------------*
-Copyright 2008-2017  SliderVilla (email : support@slidervilla.com)
+Copyright 2008-2017  SliderVilla
+Copyright 2018 - David Anderson
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as 
@@ -24,14 +24,25 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 *-----------------------------------------*
-* Developers: Tejaswini (@WebFanzine Media)
-* Tested By: Sagar (@WebFanzine Media)
+* Credited developers for past versions: Tejaswini (@WebFanzine Media)
+* Past versions tested by: Sagar (@WebFanzine Media)
 **************************************************************************************************************************************/
 //defined global variables and constants here
-global $testimonial_slider,$default_testimonial_slider_settings,$testimonial_db_version;
-$testimonial_db_version='1.2.4'; //current version of testimonial slider database 
+
+if (!defined('ABSPATH')) die('No direct access.');
+
+define('TESTIMONIAL_SLIDER_TABLE','testimonial_slider'); //Slider TABLE NAME
+define('TESTIMONIAL_SLIDER_META','testimonial_slider_meta'); //Meta TABLE NAME
+define('TESTIMONIAL_SLIDER_POST_META','testimonial_slider_postmeta'); //Meta TABLE NAME
+define("TESTIMONIAL_SLIDER_VER", '1.3.0'); //Current Version of Testimonial Slider
+
+global $testimonial_slider, $default_testimonial_slider_settings, $testimonial_db_version;
+$testimonial_db_version='1.2.4'; //current version of testimonial slider database
+
 $testimonial_slider = get_option('testimonial_slider_options');
-$default_testimonial_slider_settings = array('speed'=>'6', 
+
+$default_testimonial_slider_settings = array(
+	'speed'=>'6', 
 	'time'=>'20',
 	'no_posts'=>'10',
 	'visible'=>'1',
@@ -110,10 +121,7 @@ $default_testimonial_slider_settings = array('speed'=>'6',
 	'noscript'=>'This page is having a slideshow that uses Javascript. Your browser either doesn\'t support Javascript or you have it turned off. To see this page as it is meant to appear please use a Javascript enabled browser.',
 	'reviewme'=>strtotime("+1 week")
 );
-define('TESTIMONIAL_SLIDER_TABLE','testimonial_slider'); //Slider TABLE NAME
-define('TESTIMONIAL_SLIDER_META','testimonial_slider_meta'); //Meta TABLE NAME
-define('TESTIMONIAL_SLIDER_POST_META','testimonial_slider_postmeta'); //Meta TABLE NAME
-define("TESTIMONIAL_SLIDER_VER","1.2.5",false);//Current Version of Testimonial Slider
+
 if ( ! defined( 'TESTIMONIAL_SLIDER_PLUGIN_BASENAME' ) )
 	define( 'TESTIMONIAL_SLIDER_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 if ( ! defined( 'TESTIMONIAL_SLIDER_CSS_DIR' ) ){
@@ -213,24 +221,24 @@ add_action('plugins_loaded', 'testimonial_update_db_check');
 
 require_once (dirname (__FILE__) . '/includes/testimonial-slider-functions.php');
 
-//This adds the post to the slider
+//This adds the post to the slider. This is called by the publish_post and edit_post actions.
 function testimonial_add_to_slider($post_id) {
 	global $testimonial_slider;
-	if(isset($_POST['testimonial-sldr-verify']) and current_user_can( $testimonial_slider['user_level'] ) ) {
+	if(isset($_POST['testimonial-sldr-verify']) && current_user_can( $testimonial_slider['user_level'] ) ) {
 		global $wpdb, $table_prefix, $post;
 		$table_name = $table_prefix.TESTIMONIAL_SLIDER_TABLE;
 	
-		if(isset($_POST['testimonial-slider']) and !isset($_POST['testimonial_slider_name'])) {
+		if(isset($_POST['testimonial-slider']) && !isset($_POST['testimonial_slider_name'])) {
 	  		$slider_id = '1';
 			if(is_post_on_any_testimonial_slider($post_id)){
 				$wpdb->delete($table_name, array('post_id' => $post_id), array('%d'));
 			}
-	  		if(isset($_POST['testimonial-slider']) and $_POST['testimonial-slider'] == "testimonial-slider" and !testimonial_slider($post_id,$slider_id)) {
+	  		if(isset($_POST['testimonial-slider']) && $_POST['testimonial-slider'] == "testimonial-slider" && !testimonial_slider($post_id,$slider_id)) {
 				$dt = date('Y-m-d H:i:s');
 				$wpdb->insert($table_name, array('post_id' => $post_id, 'date' => $dt, 'slider_id' => $slider_id), array('%d', '%s', '%d'));
 			}
 		}
-		if(isset($_POST['testimonial-slider']) and $_POST['testimonial-slider'] == "testimonial-slider" and isset($_POST['testimonial_slider_name'])) {
+		if(isset($_POST['testimonial-slider']) && $_POST['testimonial-slider'] == "testimonial-slider" and isset($_POST['testimonial_slider_name'])) {
 			$slider_id_arr = $_POST['testimonial_slider_name'];
 			$post_sliders_data = testimonial_ss_get_post_sliders($post_id);
 	  
@@ -262,57 +270,58 @@ function testimonial_add_to_slider($post_id) {
 		}
 	
 		$_testimonial_by = get_post_meta($post_id,'_testimonial_by',true);
-		$post_testimonial_by = $_POST['_testimonial_by'];
+		$post_testimonial_by = sanitize_text_field($_POST['_testimonial_by']);
 		if($_testimonial_by!= $post_testimonial_by) {
 		  update_post_meta($post_id, '_testimonial_by', $post_testimonial_by);	
 		}
 
 		$_testimonial_avatar = get_post_meta($post_id,'_testimonial_avatar',true);
-		$post_testimonial_avatar = $_POST['_testimonial_avatar'];
+		// A URL
+		$post_testimonial_avatar = (string)$_POST['_testimonial_avatar'];
 		if($_testimonial_avatar!= $post_testimonial_avatar) {
 		  update_post_meta($post_id, '_testimonial_avatar', $post_testimonial_avatar);	
 		}
 
 		$_testimonial_site = get_post_meta($post_id,'_testimonial_site',true);
-		$post_testimonial_site = $_POST['_testimonial_site'];
+		$post_testimonial_site = sanitize_text_field($_POST['_testimonial_site']);
 		if($_testimonial_site!= $post_testimonial_site) {
 		  update_post_meta($post_id, '_testimonial_site', $post_testimonial_site);	
 		}
 
 		$_testimonial_siteurl = get_post_meta($post_id,'_testimonial_siteurl',true);
-		$post_testimonial_siteurl = $_POST['_testimonial_siteurl'];
+		$post_testimonial_siteurl = (string)$_POST['_testimonial_siteurl'];
 		if($_testimonial_siteurl!= $post_testimonial_siteurl) {
 		  update_post_meta($post_id, '_testimonial_siteurl', $post_testimonial_siteurl);	
 		}
 		// Added for star rating
 		$testimonial_star = get_post_meta($post_id,'_testimonial_star',true);
-		$post_testimonial_star = $_POST['testimonial_star'];
+		$post_testimonial_star = intval($_POST['testimonial_star']);
 		if($testimonial_star!= $post_testimonial_star) {
 			update_post_meta($post_id, '_testimonial_star', $post_testimonial_star);	
 		}
 
 		$testimonial_link_attr = get_post_meta($post_id,'testimonial_link_attr',true);
-		$link_attr=htmlentities($_POST['testimonial_link_attr'],ENT_QUOTES);
+		$link_attr = htmlentities($_POST['testimonial_link_attr'], ENT_QUOTES);
 		if($testimonial_link_attr != $link_attr) {
 		  update_post_meta($post_id, 'testimonial_link_attr', $link_attr);	
 		}
 
 		$testimonial_sslider_link = get_post_meta($post_id,'testimonial_slide_redirect_url',true);
-		$link=$_POST['testimonial_sslider_link'];
+		$link = (string)$_POST['testimonial_sslider_link'];
 		if($testimonial_sslider_link != $link) {
 		  update_post_meta($post_id, 'testimonial_slide_redirect_url', $link);	
 		}
 
 		$_testimonial_sslider_nolink = get_post_meta($post_id,'_testimonial_sslider_nolink',true);
-		$post__testimonial_sslider_nolink = $_POST['_testimonial_sslider_nolink'];
-		if($_testimonial_sslider_nolink != $post__testimonial_sslider_nolink) {
-		  update_post_meta($post_id, '_testimonial_sslider_nolink', $post__testimonial_sslider_nolink);	
+		$post__testimonial_sslider_nolink = empty($_POST['_testimonial_sslider_nolink']) ? 0 : intval($_POST['_testimonial_sslider_nolink']);
+		if ($post__testimonial_sslider_nolink && $_testimonial_sslider_nolink != $post__testimonial_sslider_nolink) {
+			update_post_meta($post_id, '_testimonial_sslider_nolink', $post__testimonial_sslider_nolink);	
 		}
 	
   	} //testimonial-sldr-verify
 }
 
-//Removes the post from the slider, if you uncheck the checkbox from the edit post screen
+//Removes the post from the slider, if you uncheck the checkbox from the edit post screen. This is called on the WP actions publish_post and edit_post
 function testimonial_remove_from_slider($post_id) {
 	if(isset($_POST['testimonial-sldr-verify'])) {
 		global $wpdb, $table_prefix;
@@ -329,9 +338,8 @@ function testimonial_remove_from_slider($post_id) {
 			$wpdb->delete($table_name, array('post_id' => $post_id), array('%d'));
 		}
 	
-		$display_slider = $_POST['testimonial_display_slider'];
 		$table_name = $table_prefix.TESTIMONIAL_SLIDER_POST_META;
-		if(empty($display_slider) and testimonial_ss_slider_on_this_post($post_id)){
+		if(empty($_POST['testimonial_display_slider']) and testimonial_ss_slider_on_this_post($post_id)){
 		  $wpdb->delete($table_name, array('post_id' => $post_id), array('%d'));
 		}
 	}
@@ -451,12 +459,12 @@ function testimonial_add_to_slider_checkbox() {
 			</script>
 			<tr valign="top">
 				<th scope="row"><label for="_testimonial_site"><?php _e('Customer\'s Company Name ','testimonial-slider'); ?></label></th>
-				<td><input type="text" name="_testimonial_site" class="_testimonial_site" value="<?php echo $_testimonial_site;?>" size="50" /></td>
+				<td><input type="text" name="_testimonial_site" class="_testimonial_site" value="<?php echo htmlspecialchars($_testimonial_site);?>" size="50" /></td>
 			</tr>
 			
 			<tr valign="top">
 				<th scope="row"><label for="_testimonial_siteurl"><?php _e('Customer\'s Website ','testimonial-slider'); ?></label></th>
-				<td><input type="text" name="_testimonial_siteurl" class="_testimonial_siteurl" value="<?php echo $_testimonial_siteurl;?>" size="50" /></td>
+				<td><input type="text" name="_testimonial_siteurl" class="_testimonial_siteurl" value="<?php echo htmlspecialchars($_testimonial_siteurl);?>" size="50" /></td>
 			</tr>
 			
 			<tr valign="top">
@@ -470,13 +478,13 @@ function testimonial_add_to_slider_checkbox() {
 						<div id="<?php echo $i;?>" class="dashicons dashicons-star-empty rt-star"></div>
 				<?php }
 				} ?>
-				 <input type="hidden" name="testimonial_star" value="<?php echo $testimonial_star;?>" />
+				 <input type="hidden" name="testimonial_star" value="<?php echo esc_attr($testimonial_star);?>" />
 				</td>		
 	       		</tr>
 				
 			<tr valign="top">
 				<th scope="row"><label for="testimonial_sslider_link"><?php _e('"Read more" URL ','testimonial-slider'); ?></label></th>
-				<td><input type="text" name="testimonial_sslider_link" class="testimonial_sslider_link" value="<?php echo $testimonial_sslider_link;?>" size="50" /></td>
+				<td><input type="text" name="testimonial_sslider_link" class="testimonial_sslider_link" value="<?php echo esc_attr($testimonial_sslider_link);?>" size="50" /></td>
 			</tr>
 			
 			<tr valign="top">
@@ -485,7 +493,7 @@ function testimonial_add_to_slider_checkbox() {
 			</tr>
 			<tr valign="top">
                			<th scope="row"><label for="testimonial_link_attr"><?php _e('Read more" URL (anchor) attributes ','testimonial-slider'); ?></label></th>
-                		<td><input type="text" name="testimonial_link_attr" class="testimonial_link_attr" value="<?php echo $testimonial_link_attr;?>" size="50" /><small><?php _e('e.g. target="_blank" rel="external nofollow"','testimonial-slider'); ?></small></td>
+                		<td><input type="text" name="testimonial_link_attr" class="testimonial_link_attr" value="<?php echo esc_attr($testimonial_link_attr);?>" size="50" /><small><?php _e('e.g. target="_blank" rel="external nofollow"','testimonial-slider'); ?></small></td>
 			</tr>
 		</table>
 		</div>
@@ -603,19 +611,19 @@ function testimonial_updated_messages( $messages ) {
 
   $messages['testimonial'] = array(
     0 => '', // Unused. Messages start at index 1.
-    1 => sprintf( __('Testimonial updated. <a href="%s">View testimonial</a>'), esc_url( get_permalink($post_ID) ) ),
+    1 => sprintf( __('Testimonial updated. <a href="%s">View testimonial</a>'), esc_url( get_permalink($post) ) ),
     2 => __('Custom field updated.'),
     3 => __('Custom field deleted.'),
     4 => __('Testimonial updated.'),
     /* translators: %s: date and time of the revision */
     5 => isset($_GET['revision']) ? sprintf( __('Testimonial restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-    6 => sprintf( __('Testimonial published. <a href="%s">View testimonial</a>'), esc_url( get_permalink($post_ID) ) ),
+    6 => sprintf( __('Testimonial published. <a href="%s">View testimonial</a>'), esc_url( get_permalink($post) ) ),
     7 => __('Testimonial saved.'),
-    8 => sprintf( __('Testimonial submitted. <a target="_blank" href="%s">Preview testimonial</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+    8 => sprintf( __('Testimonial submitted. <a target="_blank" href="%s">Preview testimonial</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post) ) ) ),
     9 => sprintf( __('Testimonial scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview testimonial</a>'),
       // translators: Publish box date format, see http://php.net/date
-      date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-    10 => sprintf( __('Testimonial draft updated. <a target="_blank" href="%s">Preview testimonial</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+      date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post) ) ),
+    10 => sprintf( __('Testimonial draft updated. <a target="_blank" href="%s">Preview testimonial</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post) ) ) ),
   );
 
   return $messages;
@@ -624,4 +632,3 @@ function testimonial_updated_messages( $messages ) {
 require_once (dirname (__FILE__) . '/slider_versions/testimonial_1.php');
 require_once (dirname (__FILE__) . '/slider_versions/testimonials_list.php');
 require_once (dirname (__FILE__) . '/settings/settings.php');
-?>

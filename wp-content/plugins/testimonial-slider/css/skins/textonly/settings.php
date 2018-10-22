@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die('No direct access.');
 global $default_settings_textonly;
 $default_settings_textonly = array(
 	   'height'=>'440',
@@ -25,4 +26,3 @@ $default_settings_textonly = array(
 	   'content_limit'=>'50',
 	   'nav_color'=>'#999999'
 );
-?>

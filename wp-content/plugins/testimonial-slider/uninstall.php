@@ -15,4 +15,3 @@ if( !defined( 'RICH_TESTIMONIALS_PLUGIN_BASENAME' ) ) {
 	$sql = "DROP TABLE $slider_postmeta;";
 	$wpdb->query($sql);
 }
-?>

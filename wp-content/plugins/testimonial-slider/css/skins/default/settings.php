@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die('No direct access.');
 global $default_settings_default;
 $default_settings_default = array(
 	   'height'=>'250',
@@ -25,4 +26,3 @@ $default_settings_default = array(
 	   'avatar_shape'=> 'square',
            'avatar_radius'=> '0'
 );
-?>

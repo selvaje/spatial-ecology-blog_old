@@ -77,6 +77,7 @@ if ( ! class_exists( 'Microsoft_Authentication_Mail_Bank' ) ) {
 				'redirect_uri'    => rawurlencode( $this->callback_uri ),
 				'client_id'       => $this->client_id,
 				'client_secret'   => $this->client_secret,
+				'state'           => $transaction_id,
 				'scope'           => rawurlencode( 'wl.imap,wl.offline_access' ),
 				'access_type'     => 'offline',
 				'approval_prompt' => 'force',

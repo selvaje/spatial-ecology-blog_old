@@ -1,4 +1,5 @@
 <?php 
+if (!defined('ABSPATH')) die('No direct access.');
 function testimonial_post_processor_default( $posts, $testimonial_slider_curr,$out_echo,$set,$data=array() ){
 	$skin='default';
 	global $testimonial_slider,$default_testimonial_slider_settings;
@@ -29,7 +30,7 @@ function testimonial_post_processor_default( $posts, $testimonial_slider_curr,$o
 		   $permalink = $testimonial_slide_redirect_url;
 		}
 		else{
-		   $permalink = get_permalink($post_id);
+		   $permalink = get_permalink($post);
 		}
 		if($_testimonial_sslider_nolink=='1'){
 		  $permalink='';
@@ -254,4 +255,3 @@ function testimonial_slider_get_default($slider_handle,$r_array,$testimonial_sli
 	if($echo == '1')  {echo $slider_html; }
 	else { return $slider_html; }	
 }
-?>

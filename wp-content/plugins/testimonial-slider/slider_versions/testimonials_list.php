@@ -1,4 +1,7 @@
 <?php 
+
+if (!defined('ABSPATH')) die('No direct access.');
+
 if(!function_exists('get_global_testimonial_list')){
 	function get_global_testimonial_list($slider_handle,$r_array,$testimonial_slider_curr,$set,$echo='1',$data=array()){
 		global $testimonial_slider,$default_testimonial_slider_settings; 
@@ -256,4 +259,4 @@ function testimonial_list_shortcode($atts) {
 }
 
 add_shortcode('testimonialList', 'testimonial_list_shortcode');
-?>
+

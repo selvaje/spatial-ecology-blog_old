@@ -1,4 +1,7 @@
 <?php 
+
+if (!defined('ABSPATH')) die('No direct access.');
+
 function testimonial_global_posts_processor( $posts, $testimonial_slider_curr,$out_echo,$set,$data=array() ){
 	//If no Skin specified, consider Default
 	$skin='default';
@@ -226,19 +229,19 @@ global $testimonial_slider;
   if ( is_admin() ){ // admin actions
   // Settings page only
 	if ( isset($_GET['page']) && ('testimonial-slider-admin' == $_GET['page'] or 'testimonial-slider-settings' == $_GET['page'] )  ) {
-	wp_register_script('jquery', false, false, false, false);
-	wp_enqueue_script( 'jquery-ui-tabs' );
-	wp_enqueue_script( 'jquery-ui-core' );
-    wp_enqueue_script( 'jquery-ui-sortable' );
-	wp_enqueue_script( 'testimonial_slider_admin_js', testimonial_slider_plugin_url( 'js/admin.js' ),
-		array('jquery'), TESTIMONIAL_SLIDER_VER, false);
-	wp_enqueue_style( 'testimonial_slider_admin_css', testimonial_slider_plugin_url( 'css/admin.css' ),
-		false, TESTIMONIAL_SLIDER_VER, 'all');
-	wp_enqueue_script( 'testimonial', testimonial_slider_plugin_url( 'js/testimonial.js' ),
-		array('jquery'), TESTIMONIAL_SLIDER_VER, false);
-	wp_enqueue_script( 'easing', testimonial_slider_plugin_url( 'js/jquery.easing.js' ),
-		false, TESTIMONIAL_SLIDER_VER, false);  
-	wp_enqueue_script( 'jquery.bpopup.min', testimonial_slider_plugin_url( 'js/jquery.bpopup.min.js' ),'', TESTIMONIAL_SLIDER_VER, false);
+		wp_register_script('jquery', false, false, false, false);
+		wp_enqueue_script( 'jquery-ui-tabs' );
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-ui-sortable' );
+		wp_enqueue_script( 'testimonial_slider_admin_js', testimonial_slider_plugin_url( 'js/admin.js' ),
+			array('jquery'), TESTIMONIAL_SLIDER_VER, false);
+		wp_enqueue_style( 'testimonial_slider_admin_css', testimonial_slider_plugin_url( 'css/admin.css' ),
+			false, TESTIMONIAL_SLIDER_VER, 'all');
+		wp_enqueue_script( 'testimonial', testimonial_slider_plugin_url( 'js/testimonial.js' ),
+			array('jquery'), TESTIMONIAL_SLIDER_VER, false);
+		wp_enqueue_script( 'easing', testimonial_slider_plugin_url( 'js/jquery.easing.js' ),
+			false, TESTIMONIAL_SLIDER_VER, false);  
+		wp_enqueue_script( 'jquery.bpopup.min', testimonial_slider_plugin_url( 'js/jquery.bpopup.min.js' ),'', TESTIMONIAL_SLIDER_VER, false);
 	}
   }
 }
@@ -254,17 +257,17 @@ if ( is_admin() ){ // admin actions
 	  $sliders = testimonial_ss_get_sliders(); 
 		global $testimonial_slider;
 		$cntr='';
-		if(isset($_GET['scounter'])) $cntr = $_GET['scounter'];
+		if(isset($_GET['scounter'])) $cntr = (int)$_GET['scounter'];
 		$testimonial_slider_options='testimonial_slider_options'.$cntr;
 		$testimonial_slider_curr=get_option($testimonial_slider_options);
 		$active_tab=(isset($testimonial_slider_curr['active_tab']))?$testimonial_slider_curr['active_tab']:0;
-		if ( isset($_GET['page']) && ('testimonial-slider-admin' == $_GET['page']) && isset($_POST['active_tab']) ) $active_tab=$_POST['active_tab'];
+		if ( isset($_GET['page']) && ('testimonial-slider-admin' == $_GET['page']) && isset($_POST['active_tab']) ) $active_tab=(string)$_POST['active_tab'];
 	?>
 		<script type="text/javascript">
             // <![CDATA[
         jQuery(document).ready(function() {
                 jQuery(function() {
-					jQuery("#slider_tabs").tabs({fx: { opacity: "toggle", duration: 300}, active: <?php echo $active_tab;?> }).addClass( "ui-tabs-vertical-left ui-helper-clearfix" );jQuery( "#slider_tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+					jQuery("#slider_tabs").tabs({fx: { opacity: "toggle", duration: 300}, active: <?php echo esc_js($active_tab);?> }).addClass( "ui-tabs-vertical-left ui-helper-clearfix" );jQuery( "#slider_tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
 				<?php 	if ( isset($_GET['page']) && (( 'testimonial-slider-settings' == $_GET['page']) or ('testimonial-slider-admin' == $_GET['page']) ) ) { ?>
 					jQuery( "#slider_tabs" ).on( "tabsactivate", function( event, ui ) { jQuery( "#testimonial_activetab, .testimonial_activetab" ).val( jQuery( "#slider_tabs" ).tabs( "option", "active" ) ); });
 				<?php 	}
@@ -535,4 +538,4 @@ if($css and !empty($css)){?>
 }
 add_action('wp_head', 'testimonial_slider_css');
 add_action('admin_head', 'testimonial_slider_css');
-?>
+

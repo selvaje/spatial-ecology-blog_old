@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die('No direct access.');
 global $default_settings_minimal;
 $default_settings_minimal = array(
 	   'height'=>'250',
@@ -26,4 +27,3 @@ $default_settings_minimal = array(
 	   'content_fcolor'=>'#444',
 	   'nav_color'=>'#999999'
 );
-?>

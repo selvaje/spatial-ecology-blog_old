@@ -1,4 +1,7 @@
 <?php // Hook for adding admin menus
+
+if (!defined('ABSPATH')) die('No direct access.');
+
 if ( is_admin() ){ // admin actions
   add_action('admin_menu', 'testimonial_slider_settings');
   add_action( 'admin_init', 'register_testimonial_settings' ); 
@@ -10,10 +13,10 @@ function testimonial_process_set_requests(){
 	$scounter=get_option('testimonial_slider_scounter');
 	
 	$cntr='';
-	if(isset($_GET['scounter'])) $cntr = $_GET['scounter'];
+	if(isset($_GET['scounter'])) $cntr = (int)$_GET['scounter'];
 	
 	if(isset($_POST['create_set'])){
-		if ($_POST['create_set']=='Create New Settings Set') {
+		if ('Create New Settings Set' == $_POST['create_set']) {
 		  $scounter++;
 		  update_option('testimonial_slider_scounter',$scounter);
 		  $options='testimonial_slider_options'.$scounter;
@@ -31,8 +34,7 @@ function testimonial_process_set_requests(){
 			@ob_end_clean();
 			
 			// required for IE, otherwise Content-Disposition may be ignored
-			if(ini_get('zlib.output_compression'))
-			ini_set('zlib.output_compression', 'Off');
+			if (ini_get('zlib.output_compression')) ini_set('zlib.output_compression', 'Off');
 			
 			header('Content-Type: ' . "text/x-csv");
 			header('Content-Disposition: attachment; filename="testimonial-settings-set-'.$cntr.'.csv"');
@@ -88,7 +90,7 @@ require_once (dirname (__FILE__) . '/sliders.php');
 function testimonial_slider_settings_page() {
 global $testimonial_slider,$default_testimonial_slider_settings;
 $scounter=get_option('testimonial_slider_scounter');
-if (isset($_GET['scounter']))$cntr = $_GET['scounter'];
+if (isset($_GET['scounter']))$cntr = (int)$_GET['scounter'];
 else $cntr = '';
 
 if(!empty($cntr))$cntr=intval($cntr);
@@ -116,7 +118,7 @@ if (isset ($_POST['testimonial_reset_settings_submit'])) {
 		update_option($options,$new_settings_value);
 	  }
 	  elseif(!is_numeric($testimonial_reset_settings)){
-		$skin=$testimonial_reset_settings;
+		$skin = (string)$testimonial_reset_settings;
 		$new_settings_value=$default_testimonial_slider_settings;
 		$skin_defaults_str='default_settings_'.$skin;
 		global ${$skin_defaults_str};
@@ -184,7 +186,7 @@ if (isset ($_POST['import'])) {
 }
 
 //Delete Set
-if (isset ($_POST['delete_set'])) {
+if (isset($_POST['delete_set'])  && !empty($_POST['_slider_delete_set_nonce']) && wp_verify_nonce($_POST['_slider_delete_set_nonce'], 'slider_delete_set')) {
 	if ($_POST['delete_set']=='Delete this Set' and isset($cntr) and !empty($cntr)) {
 	  $options='testimonial_slider_options'.$cntr;
 	  delete_option($options);
@@ -205,6 +207,7 @@ foreach($default_testimonial_slider_settings as $key=>$value){
 <div class="wrap" style="clear:both;">
 <h2 class="top_heading"><?php _e('Testimonial Slider Settings ','testimonial-slider');?> <span><?php echo $curr; ?> </span></h2>
 <form style="float:left;margin:10px 20px" action="" method="post">
+<?php wp_nonce_field('slider_delete_set', '_slider_delete_set_nonce') ?>
 <?php if(isset($cntr) and !empty($cntr)){ ?>
 <input type="submit" class="button-primary" value="Delete this Set" name="delete_set"  onclick="return confirmSettingsDelete()" />
 <?php } ?>
@@ -1411,26 +1414,14 @@ for($i=1;$i<=$scounter;$i++){
 </div>
 
 <?php if ($testimonial_slider['support'] == "1"){ ?>
-    
-     		<div class="postbox" style="margin:10px 0;"> 
-				<div class="inside">
-				<div style="margin:10px auto;">
-							<a href="//slidervilla.com" title="Premium WordPress Slider Plugins" target="_blank"><img src="<?php echo testimonial_slider_plugin_url('images/banner-premium.png');?>" alt="Premium WordPress Slider Plugins" width="100%" /></a>
-				</div>
-				<p><a href="//slidervilla.com/" title="Recommended WordPress Sliders" target="_blank"><?php _e('SliderVilla slider plugins','testimonial-slider'); ?></a> <?php _e('are feature rich and stylish plugins to embed a nice looking featured content slider in your existing or new theme template. 100% customization options available on WordPress Settings page of the plugin.','testimonial-slider'); ?></p>
-						<p><strong><?php _e('Stylish Sliders,','testimonial-slider'); ?> <a href="//slidervilla.com/blog/testimonials/" target="_blank"><?php _e('Happy Customers','testimonial-slider'); ?></a>!</strong></p>
-                        <p><a href="//slidervilla.com/" title="Recommended WordPress Sliders" target="_blank"><?php _e('For more info visit SliderVilla','testimonial-slider'); ?></a></p>
-            </div></div>
-			
-			
           
 			<div class="postbox"> 
 			  <h3 class="hndle"><span><?php _e('About this Plugin:','testimonial-slider'); ?></span></h3> 
 			  <div class="inside">
                 <ul>
-                <li><a href="//slidervilla.com/testimonial-slider/" title="<?php _e('Testimonial Slider Homepage','testimonial-slider'); ?>
+                <li><a href="https://wordpress.org/plugins/testimonial-slider/" title="<?php _e('Testimonial Slider Homepage','testimonial-slider'); ?>
 " ><?php _e('Plugin Homepage','testimonial-slider'); ?></a></li>
-				<li><a href="//support.slidervilla.com/" title="<?php _e('Support Forum','testimonial-slider'); ?>
+				<li><a href="https://wordpress.org/support/plugin/testimonial-slider" title="<?php _e('Support forum','testimonial-slider'); ?>
 " ><?php _e('Support Forum','testimonial-slider'); ?></a></li>
 				<li><a href="//guides.slidervilla.com/testimonial-slider/" title="<?php _e('Usage Guide','testimonial-slider'); ?>
 " ><?php _e('Usage Guide','testimonial-slider'); ?></a></li>
@@ -1462,4 +1453,3 @@ function register_testimonial_settings() { // whitelist options
 	   }
   }
 }
-?>

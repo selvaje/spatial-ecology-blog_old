@@ -263,17 +263,21 @@ You can enable or disable the debug mode to get the debugging output of logged e
 
 == Changelog ==
 
+= 3.0.66 =
+
+* FIX: Google OAuth Confliction
+
 = 3.0.65 =
 
-* FIX: Google SMTP Bug.
+* FIX: Google SMTP
 
 = 3.0.64 =
 
-* FIX: System Information Bug
+* FIX: System Information
 
 = 3.0.63 =
 
-* FIX: Multisite Bug Fixed
+* FIX: Multisite Bug
 
 = 3.0.62 =
 

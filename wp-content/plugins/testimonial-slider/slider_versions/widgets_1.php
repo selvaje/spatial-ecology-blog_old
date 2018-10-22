@@ -1,12 +1,15 @@
 <?php
+
+if (!defined('ABSPATH')) die('No direct access.');
+
 if(!class_exists('Testimonial_Slider_Simple_Widget')){
 	class Testimonial_Slider_Simple_Widget extends WP_Widget {
-		function __construct() {
+		public function __construct() {
 			$widget_options = array('classname' => 'testimonial_slider_wclass', 'description' => 'Insert Testimonial Slider' );
 			parent::__construct('testimonial_sslider_wid', 'Testimonial Slider - Simple', $widget_options);
 		}
 
-		function widget($args, $instance) {
+		public function widget($args, $instance) {
 			extract($args, EXTR_SKIP);
 		    global $testimonial_slider;
 	
@@ -25,7 +28,7 @@ if(!class_exists('Testimonial_Slider_Simple_Widget')){
 			echo $after_widget;
 		}
 
-		function update($new_instance, $old_instance) {
+		public function update($new_instance, $old_instance) {
 		    global $testimonial_slider;
 			$instance = $old_instance;
 			if($testimonial_slider['multiple_sliders'] == '1') {
@@ -36,7 +39,7 @@ if(!class_exists('Testimonial_Slider_Simple_Widget')){
 			return $instance;
 		}
 
-		function form($instance) {
+		public function form($instance) {
 		    global $testimonial_slider;
 	
 			$instance = wp_parse_args( (array) $instance, array( 'slider_id' => '','set' => '' ) );
@@ -72,7 +75,10 @@ if(!class_exists('Testimonial_Slider_Simple_Widget')){
 		 
 	<?php }
 	}
-	add_action( 'widgets_init', create_function('', 'return register_widget("Testimonial_Slider_Simple_Widget");') );
+	function testimonial_slider_simple_widget_register() {
+		return register_widget("Testimonial_Slider_Simple_Widget");
+	}
+	add_action('widgets_init', 'testimonial_slider_simple_widget_register');
 }
 if(!class_exists('Testimonial_Slider_Category_Widget')){
 	//Category Widget
@@ -82,7 +88,7 @@ if(!class_exists('Testimonial_Slider_Category_Widget')){
 			parent::__construct('testimonial_ssliderc_wid', 'Testimonial Slider - Category', $widget_options);
 		}
 
-		function widget($args, $instance) {
+		public function widget($args, $instance) {
 			extract($args, EXTR_SKIP);
 		    global $testimonial_slider;
 		
@@ -96,7 +102,7 @@ if(!class_exists('Testimonial_Slider_Category_Widget')){
 			echo $after_widget;
 		}
 
-		function update($new_instance, $old_instance) {
+		public function update($new_instance, $old_instance) {
 		    global $testimonial_slider;
 			$instance = $old_instance;
 		
@@ -106,7 +112,7 @@ if(!class_exists('Testimonial_Slider_Category_Widget')){
 			return $instance;
 		}
 
-		function form($instance) {
+		public function form($instance) {
 		    global $testimonial_slider;
 		
 			$scounter=get_option('testimonial_slider_scounter');
@@ -146,17 +152,20 @@ if(!class_exists('Testimonial_Slider_Category_Widget')){
 		 
 	<?php }
 	}
-	add_action( 'widgets_init', create_function('', 'return register_widget("Testimonial_Slider_Category_Widget");') );
+	add_action( 'widgets_init', 'testimonial_slider_category_widget_register');
+	function testimonial_slider_category_widget_register() {
+		return register_widget("Testimonial_Slider_Category_Widget");
+	}
 }
 if(!class_exists('Testimonial_Slider_Recent_Widget')){
 	//Recent Posts Widget
 	class Testimonial_Slider_Recent_Widget extends WP_Widget {
-		function __construct() {
+		public function __construct() {
 			$widget_options = array('classname' => 'testimonial_sliderr_wclass', 'description' => 'Testimonial Recent Posts Slider' );
 			parent::__construct('testimonial_ssliderr_wid', 'Testimonial Slider - Recent Posts', $widget_options);
 		}
 	
-		function widget($args, $instance) {
+		public function widget($args, $instance) {
 			extract($args, EXTR_SKIP);
 		    global $testimonial_slider;
 		
@@ -169,7 +178,7 @@ if(!class_exists('Testimonial_Slider_Recent_Widget')){
 			echo $after_widget;
 		}
 
-		function update($new_instance, $old_instance) {
+		public function update($new_instance, $old_instance) {
 		    global $testimonial_slider;
 			$instance = $old_instance;
 		
@@ -178,7 +187,7 @@ if(!class_exists('Testimonial_Slider_Recent_Widget')){
 			return $instance;
 		}
 
-		function form($instance) {
+		public function form($instance) {
 		    global $testimonial_slider;
 		
 			$scounter=get_option('testimonial_slider_scounter');
@@ -204,6 +213,8 @@ if(!class_exists('Testimonial_Slider_Recent_Widget')){
 		 
 	<?php }
 	}
-	add_action( 'widgets_init', create_function('', 'return register_widget("Testimonial_Slider_Recent_Widget");') );
+	add_action( 'widgets_init', 'testimonial_slider_recent_widget_register');
+	function testimonial_slider_recent_widget_register() {
+		return register_widget("Testimonial_Slider_Recent_Widget");
+	}
 }
-?>

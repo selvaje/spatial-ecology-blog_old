@@ -1,4 +1,7 @@
 <?php 
+
+if (!defined('ABSPATH')) die('No direct access.');
+
 function return_global_testimonial_slider($slider_handle,$r_array,$testimonial_slider_curr,$set,$echo='0'){
 	$slider_html='';
 	$slider_html=get_global_testimonial_slider($slider_handle,$r_array,$testimonial_slider_curr,$set,$echo);
@@ -88,4 +91,4 @@ function testimonial_slider_recent_shortcode($atts) {
 	return return_testimonial_slider_recent($set,$offset);
 }
 add_shortcode('testimonialrecent', 'testimonial_slider_recent_shortcode');
-?>
+

@@ -116,8 +116,7 @@ a.svorangebutton{background:#f07057;color:#fff !important;margin-right:10px;font
 font-family: "Century Gothic", "Avant Garde", "Trebuchet MS", sans-serif;}
 .modal_preview{text-align: center;background: #efeeee;min-height: 80px;font-size: 14px;line-height: 4em;font-weight: bold;font-family:"Century Gothic", "Avant Garde", "Trebuchet MS", sans-serif;border-bottom: 4px solid #ed4938;}
 .admin_shortcode{background:#fff;}
-
-#poststuff{min-width:255px;}
+#poststuff{min-width: 254px!important;}
 .testimonial_sliders_create .ui-tabs-vertical-left .ui-tabs-panel {
 margin-left: 10px;
 margin-right: 10px;

@@ -1,4 +1,5 @@
 <?php 
+if (!defined('ABSPATH')) die('No direct access.');
 function testimonial_post_processor_round( $posts, $testimonial_slider_curr,$out_echo,$set,$data=array() ){
 	$skin='round';
 	global $testimonial_slider,$default_testimonial_slider_settings;
@@ -16,7 +17,7 @@ function testimonial_post_processor_round( $posts, $testimonial_slider_curr,$out
 	}
 	
 	foreach($posts as $post) {
-		$id = $post->ID;	
+		$id = $post->ID;
 		$post_id = $post->ID;
 		$testimonial_by_wrap=$testimonial_quote='';
 		
@@ -29,7 +30,7 @@ function testimonial_post_processor_round( $posts, $testimonial_slider_curr,$out
 		   $permalink = $testimonial_slide_redirect_url;
 		}
 		else{
-		   $permalink = get_permalink($post_id);
+		   $permalink = get_permalink($post);
 		}
 		if($_testimonial_sslider_nolink=='1'){
 		  $permalink='';
@@ -267,4 +268,3 @@ function testimonial_slider_get_round($slider_handle,$r_array,$testimonial_slide
 	if($echo == '1')  {echo $slider_html; }
 	else { return $slider_html; }	
 }
-?>

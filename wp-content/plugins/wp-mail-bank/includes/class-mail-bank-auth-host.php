@@ -206,7 +206,7 @@ if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
 			}
 			$obj_microsoft_authentication_mail_bank = new Microsoft_Authentication_Mail_Bank( $this->client_id, $this->client_secret, $this->authorization_token, $this->redirect_uri );
 
-			$obj_microsoft_authentication_mail_bank->get_token_code( md5( rand() ) );
+			$obj_microsoft_authentication_mail_bank->get_token_code( 'wp-mail-bank' );
 		}
 		/**
 		 * This function is used google authentication.
@@ -220,7 +220,7 @@ if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
 			}
 			$obj_google_authentication_mail_bank = new Google_Authentication_Mail_Bank( $this->client_id, $this->client_secret, $this->authorization_token, $this->redirect_uri, $this->sender_email );
 
-			$obj_google_authentication_mail_bank->get_token_code( md5( rand() ) );
+			$obj_google_authentication_mail_bank->get_token_code( 'wp-mail-bank' );
 		}
 		/**
 		 * This function is used to send test email.
@@ -284,7 +284,7 @@ if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
 			}
 
 			$obj_yahoo_authentication_mail_bank = new Yahoo_Authentication_Mail_Bank( $this->client_id, $this->client_secret, $this->authorization_token, $this->redirect_uri );
-			$obj_yahoo_authentication_mail_bank->get_token_code( md5( rand() ) );
+			$obj_yahoo_authentication_mail_bank->get_token_code( 'wp-mail-bank' );
 		}
 		/**
 		 * This function is used for yahoo authentication.

@@ -230,7 +230,7 @@ if ( ! is_user_logged_in() ) {
 							$email_configuration_array                    = maybe_unserialize( $email_configuration_data );
 							$update_email_configuration_array['password'] = isset( $email_configuration_array['password'] ) ? sanitize_text_field( $email_configuration_array['password'] ) : '';
 						} else {
-							$update_email_configuration_array['password'] = base64_encode( sanitize_text_field( $form_data['ux_txt_password'] ) );
+							$update_email_configuration_array['password'] = base64_encode( esc_attr( $form_data['ux_txt_password'] ) );
 						}
 
 						$update_email_configuration_array['redirect_uri'] = sanitize_text_field( $form_data['ux_txt_redirect_uri'] );

@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die('No direct access.');
 global $default_settings_oval;
 $default_settings_oval = array(
 	   'height'=>'400',
@@ -26,4 +27,3 @@ $default_settings_oval = array(
            'avatar_radius'=> '0',
 	   'nav_color'=>'#999999'
 );
-?>

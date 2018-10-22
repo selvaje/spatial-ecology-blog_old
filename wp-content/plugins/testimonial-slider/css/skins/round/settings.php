@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die('No direct access.');
 global $default_settings_round;
 $default_settings_round = array(
 	   'height'=>'300',
@@ -26,4 +27,3 @@ $default_settings_round = array(
            'avatar_radius'=> '50',
 	   'content_fcolor'=>'#54495C'
 );
-?>

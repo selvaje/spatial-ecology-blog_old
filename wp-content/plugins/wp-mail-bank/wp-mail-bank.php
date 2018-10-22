@@ -5,7 +5,7 @@
  * Description: WordPress SMTP Plugin that sends outgoing email with SMTP or PHP Mailer. Supports Gmail SMTP, Sendgrid SMTP, oAuth, Email Logs and almost everything!
  * Author: Tech Banker
  * Author URI: https://mail-bank.tech-banker.com/
- * Version: 3.0.65
+ * Version: 3.0.66
  * License: GPLv3
  * Text Domain: wp-mail-bank
  * Domain Path: /languages
@@ -48,7 +48,7 @@ if ( ! defined( 'TECH_BANKER_STATS_URL' ) ) {
 	define( 'TECH_BANKER_STATS_URL', 'http://stats.tech-banker-services.org' );
 }
 if ( ! defined( 'MAIL_BANK_VERSION_NUMBER' ) ) {
-	define( 'MAIL_BANK_VERSION_NUMBER', '3.0.65' );
+	define( 'MAIL_BANK_VERSION_NUMBER', '3.0.66' );
 }
 
 
@@ -388,7 +388,7 @@ if ( $version >= '3.0.5' ) {
 	 * Created By: Tech Banker Team
 	 */
 	function oauth_handling_mail_bank() {
-		if ( is_admin() && is_user_logged_in() && ! isset( $_REQUEST['action'] ) ) { // WPCS: CSRF ok,Input var okay.
+		if ( is_admin() && is_user_logged_in() && ! isset( $_REQUEST['action'] ) && 'wp-mail-bank' == $_REQUEST['state'] ) { // WPCS: CSRF ok,Input var okay.
 			if ( ( count( $_REQUEST ) <= 3 ) && isset( $_REQUEST['code'] ) ) { // WPCS: CSRF ok, Input var okay.
 				if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/callback.php' ) ) {
 					include_once MAIL_BANK_DIR_PATH . 'lib/callback.php';
