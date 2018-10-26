@@ -263,6 +263,10 @@ You can enable or disable the debug mode to get the debugging output of logged e
 
 == Changelog ==
 
+= 3.0.67 =
+
+* FIX: Minor Bugs
+
 = 3.0.66 =
 
 * FIX: Google OAuth Confliction

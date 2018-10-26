@@ -3,7 +3,7 @@
 Plugin Name: Page Builder by SiteOrigin
 Plugin URI: https://siteorigin.com/page-builder/
 Description: A drag and drop, responsive page builder that simplifies building your website.
-Version: 2.9.0
+Version: 2.9.1
 Author: SiteOrigin
 Author URI: https://siteorigin.com
 License: GPL3
@@ -11,12 +11,12 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Donate link: http://siteorigin.com/page-builder/#donate
 */
 
-define( 'SITEORIGIN_PANELS_VERSION', '2.9.0' );
+define( 'SITEORIGIN_PANELS_VERSION', '2.9.1' );
 if ( ! defined( 'SITEORIGIN_PANELS_JS_SUFFIX' ) ) {
 	define( 'SITEORIGIN_PANELS_JS_SUFFIX', '.min' );
 }
 define( 'SITEORIGIN_PANELS_CSS_SUFFIX', '.min' );
-define( 'SITEORIGIN_PANELS_VERSION_SUFFIX', '-290' );
+define( 'SITEORIGIN_PANELS_VERSION_SUFFIX', '-291' );
 
 require_once plugin_dir_path( __FILE__ ) . 'inc/functions.php';
 
@@ -374,8 +374,11 @@ class SiteOrigin_Panels {
 				}
 			}
 			
+			$text = strip_shortcodes( $raw_excerpt );
+			$text = str_replace( ']]>', ']]&gt;', $text );
+			
 			$excerpt_more = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
-			$text = wp_trim_words( $raw_excerpt, $excerpt_length, $excerpt_more );
+			$text = wp_trim_words( $text, $excerpt_length, $excerpt_more );
 		}
 		
 		return $text;

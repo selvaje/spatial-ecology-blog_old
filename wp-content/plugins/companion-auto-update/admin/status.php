@@ -165,19 +165,6 @@
 </table>
 
 <?php 
-function checkAutomaticUpdaterDisabled() {
-
-	if( doing_filter( 'AUTOMATIC_UPDATER_DISABLED' ) ) {
-		return true;
-	} elseif( automatic_updater_disabled == 'true' ) {
-		return true;
-	} elseif( automatic_updater_disabled == 'minor' ) {
-		return true;
-	} else {
-		return false;
-	}
-
-}
 
 if( checkAutomaticUpdaterDisabled() ) { ?>
 

@@ -3,8 +3,8 @@ Contributors: Papin, qweb
 Donate link: https://www.paypal.me/dakel/2
 Tags: auto, automatic, background, update, updates, updating, automatic updates, automatic background updates, easy update, wordpress update, theme update, plugin update, up-to-date, security, update latest version, update core, update wp, update wp core, major updates, minor updates, update to new version, update core, update plugin, update plugins, update plugins automatically, update theme, plugin, theme, advance, control, mail, notifations, enable
 Requires at least: 3.5.0
-Tested up to: 4.9
-Stable tag: 3.2.2
+Tested up to: 5.0
+Stable tag: 3.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,15 @@ For some reason this plugin seems to have trouble with updating themes by Elegan
 4. Keep track of updates with the update log
 
 == Changelog ==
+
+= 3.2.5 (October 26, 2018) =
+* Improvement: Few minor tweaks to the critical error messages
+
+= 3.2.4 (October 25, 2018) =
+* Fix: Errors with PHP 7.2
+
+= 3.2.3 (October 25, 2018) =
+* Improved: New error notification when plugins runs into a critical error
 
 = 3.2.2 (October 5, 2018) =
 * Fix: Parse error: syntax error, unexpected ‘[‘ in cau_functions.php on line 247

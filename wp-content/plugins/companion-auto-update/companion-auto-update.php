@@ -3,7 +3,7 @@
  * Plugin Name: Companion Auto Update
  * Plugin URI: http://codeermeneer.nl/portfolio/companion-auto-update/
  * Description: This plugin auto updates all plugins, all themes and the wordpress core.
- * Version: 3.2.2
+ * Version: 3.2.5
  * Author: Papin Schipper
  * Author URI: http://codeermeneer.nl/
  * Contributors: papin
@@ -123,7 +123,7 @@ function cau_update_db_check() {
 add_action( 'plugins_loaded', 'cau_update_db_check' );
 
 // Load custom functions
-require_once( 'cau_functions.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'cau_functions.php' );
 
 // Add plugin to menu
 function register_cau_menu_page() {
@@ -178,7 +178,7 @@ function cau_frontend() { ?>
 
 		if( !isset( $_GET['tab'] ) ) {
 
-			require_once( 'admin/dashboard.php' );
+			require_once( plugin_dir_path( __FILE__ ) . 'admin/dashboard.php' );
 
 		} else {
 
@@ -186,7 +186,7 @@ function cau_frontend() { ?>
 			$allowedPages 	= array( 'dashboard', 'log', 'pluginlist', 'rollback', 'schedule', 'status', 'support' );
 
 			if( in_array( $requestedPage, $allowedPages) ) {
-				require_once( 'admin/'.$requestedPage.'.php' );
+				require_once( plugin_dir_path( __FILE__ ) . 'admin/'.$requestedPage.'.php' );
 			} else {
 				wp_die( 'You\'re not allowed to view <strong>'.$requestedPage.'</strong>.' );				
 			}
@@ -226,7 +226,7 @@ function load_cau_sytyles( $hook ) {
 add_action( 'admin_enqueue_scripts', 'load_cau_sytyles' );
 
 // Send e-mails
-require_once( 'cau_emails.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'cau_emails.php' );
 
 // Add settings link on plugin page
 function cau_settings_link( $links ) { 
@@ -246,6 +246,24 @@ function cau_settings_link( $links ) {
 }
 $plugin = plugin_basename(__FILE__); 
 add_filter( "plugin_action_links_$plugin", "cau_settings_link" );
+
+// Check for critical errors
+function cau_critical_errors() {
+
+	if( checkAutomaticUpdaterDisabled() ) {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+// Show the errors
+if( cau_critical_errors() ) {
+	if( is_admin() ) {
+		echo "<div class='error'><p><strong>".__( 'Critical Error', 'companion-auto-update' )."</strong> &dash; ".__( 'Companion Auto Update ran into a critical error. View the status log for more info.', 'companion-auto-update' )." <a href='".admin_url('tools.php?page=cau-settings&tab=status&cau_page=system')."'>Status log</a></p></div>";
+	}
+}
 
 // Auto Update Class
 class CAU_auto_update {

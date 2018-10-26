@@ -211,7 +211,7 @@ function cau_plugin_updated() {
 		if( $fileDate >= $lastday ) {
 
 			// Get theme name
-			array_push( $themeNames , $path_parts['filename'] );
+			array_push( $themeNames, $path_parts['filename'] );
 			array_push( $themeDates, $fileDate );
 			
 		}

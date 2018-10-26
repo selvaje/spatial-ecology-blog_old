@@ -1,5 +1,23 @@
 <?php
 
+function checkAutomaticUpdaterDisabled() {
+
+	if ( defined( 'automatic_updater_disabled' ) OR defined( 'AUTOMATIC_UPDATER_DISABLED' ) ) {
+		if( doing_filter( 'AUTOMATIC_UPDATER_DISABLED' ) ) {
+			return true;
+		} elseif( automatic_updater_disabled == 'true' OR AUTOMATIC_UPDATER_DISABLED == 'true' ) {
+			return true;
+		} elseif( automatic_updater_disabled == 'minor' OR AUTOMATIC_UPDATER_DISABLED == 'minor' ) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+
+}
+
 function cau_menloc() {
 
 	return 'tools.php';
@@ -223,7 +241,7 @@ function cau_plugin_info( $slug, $what ) {
     $cau_transient_name = 'cau' . $slug;
     $cau_info 			= get_transient( $cau_transient_name );
 
-	require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'wp-admin/includes/plugin-install.php' );
 	$cau_info = plugins_api( 'plugin_information', array( 'slug' => $slug ) );
 
 	if ( ! $cau_info or is_wp_error( $cau_info ) ) {

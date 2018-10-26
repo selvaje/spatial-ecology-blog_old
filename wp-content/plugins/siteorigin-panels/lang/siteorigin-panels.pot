@@ -747,7 +747,7 @@ msgstr ""
 msgid "Include styles into your Post Content. This keeps page layouts, even when Page Builder is deactivated."
 msgstr ""
 
-#: inc/settings.php:464, inc/styles-admin.php:267
+#: inc/settings.php:464, inc/styles-admin.php:269
 msgid "Enabled"
 msgstr ""
 
@@ -783,31 +783,31 @@ msgstr ""
 msgid "Theme"
 msgstr ""
 
-#: inc/styles-admin.php:185, inc/styles.php:254, inc/styles.php:283
+#: inc/styles-admin.php:187, inc/styles.php:254, inc/styles.php:283
 msgid "Top"
 msgstr ""
 
-#: inc/styles-admin.php:189, widgets/widgets/button/button.php:30
+#: inc/styles-admin.php:191, widgets/widgets/button/button.php:30
 msgid "Right"
 msgstr ""
 
-#: inc/styles-admin.php:193, inc/styles.php:256, inc/styles.php:285
+#: inc/styles-admin.php:195, inc/styles.php:256, inc/styles.php:285
 msgid "Bottom"
 msgstr ""
 
-#: inc/styles-admin.php:197, widgets/widgets/button/button.php:29
+#: inc/styles-admin.php:199, widgets/widgets/button/button.php:29
 msgid "Left"
 msgstr ""
 
-#: inc/styles-admin.php:242
+#: inc/styles-admin.php:244
 msgid "Select Image"
 msgstr ""
 
-#: inc/styles-admin.php:247
+#: inc/styles-admin.php:249
 msgid "Remove"
 msgstr ""
 
-#: inc/styles-admin.php:250
+#: inc/styles-admin.php:252
 msgid "External URL"
 msgstr ""
 
@@ -1212,11 +1212,11 @@ msgstr ""
 msgid "Read More"
 msgstr ""
 
-#: siteorigin-panels.php:470
+#: siteorigin-panels.php:473
 msgid "Edit Home Page"
 msgstr ""
 
-#: siteorigin-panels.php:490, tpl/js-templates.php:34, tpl/js-templates.php:36
+#: siteorigin-panels.php:493, tpl/js-templates.php:34, tpl/js-templates.php:36
 msgid "Live Editor"
 msgstr ""
 
