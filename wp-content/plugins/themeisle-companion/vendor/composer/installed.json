@@ -191,5 +191,42 @@
         "keywords": [
             "wordpress"
         ]
+    },
+    {
+        "name": "codeinwp/gutenberg-blocks",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Codeinwp/gutenberg-blocks.git",
+            "reference": "bddad4337259f7869b3b7428680bcae81b66dcce"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Codeinwp/gutenberg-blocks/zipball/bddad4337259f7869b3b7428680bcae81b66dcce",
+            "reference": "bddad4337259f7869b3b7428680bcae81b66dcce",
+            "shasum": ""
+        },
+        "time": "2018-10-16 12:43:44",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "load.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "ThemeIsle team",
+                "email": "friends@themeisle.com",
+                "homepage": "https://themeisle.com"
+            }
+        ],
+        "description": "A set of awesome Gutenberg Blocks!",
+        "homepage": "https://github.com/Codeinwp/gutenberg-blocks"
     }
 ]
