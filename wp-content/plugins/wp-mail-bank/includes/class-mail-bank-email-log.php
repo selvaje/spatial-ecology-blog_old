@@ -53,7 +53,7 @@ if ( ! class_exists( 'Mail_Bank_Email_Log_Writter' ) ) {
 	 *
 	 * @author  Tech Banker
 	 */
-	class Mail_Bank_Email_Log_Writter { // @codingStandardsIgnoreLine
+	class Mail_Bank_Email_Log_Writter {// @codingStandardsIgnoreLine.
 		/**
 		 * This function is used to write success logs.
 		 *
@@ -83,6 +83,7 @@ if ( ! class_exists( 'Mail_Bank_Email_Log_Writter' ) ) {
 			$this->mb_create_email_log( $email_logs, $email_message );
 			$this->mb_email_log( $email_logs, $debug_mode, $status, $email_configuration_settings, $obj_mail_bank_manage_email, $email_message );
 		}
+
 		/**
 		 * This function writes the Email Logs.
 		 *
@@ -121,7 +122,6 @@ if ( ! class_exists( 'Mail_Bank_Email_Log_Writter' ) ) {
 			} else {
 				$bcc_address = $email_configuration_settings['bcc'];
 			}
-
 			$email_logs_data_array                 = array();
 			$email_logs_data_array['email_to']     = $email_logs->to_recipients;
 			$email_logs_data_array['cc']           = $cc_address;
@@ -137,10 +137,7 @@ if ( ! class_exists( 'Mail_Bank_Email_Log_Writter' ) ) {
 			$email_logs_data_array['timestamp'] = MAIL_BANK_LOCAL_TIME;
 			$email_logs_data_array['status']    = $status;
 			global $wpdb;
-
-			$email_logs_data               = array();
-			$email_logs_data['email_data'] = maybe_serialize( $email_logs_data_array );
-			$wpdb->insert( mail_bank_email_logs(), $email_logs_data );// db call ok; no-cache ok.
+			$wpdb->insert( mail_bank_logs(), $email_logs_data_array );// db call ok; no-cache ok.
 		}
 		/**
 		 * This function is used to create email logs.

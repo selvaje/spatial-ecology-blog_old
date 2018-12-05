@@ -280,7 +280,7 @@ class Mail_Bank_Zend_Loader_Autoloader {
 		}
 
 			$this->zf_path = $this->get_version_path( $path, $version );
-			set_include_path( // @codingStandardsIgnoreLine
+			set_include_path(// @codingStandardsIgnoreLine.
 				implode(
 					PATH_SEPARATOR, array(
 						$this->zf_path,
@@ -483,7 +483,7 @@ class Mail_Bank_Zend_Loader_Autoloader {
 	 * @param  string $class MANDATORY.
 	 * @return bool
 	 */
-	protected function _autoload( $class ) { // @codingStandardsIgnoreLine
+	protected function _autoload( $class ) {// @codingStandardsIgnoreLine.
 			$callback = $this->get_default_autoloader();
 		try {
 			if ( $this->suppress_not_found_warnings() ) {

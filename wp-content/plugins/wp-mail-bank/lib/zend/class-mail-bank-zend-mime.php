@@ -424,7 +424,7 @@ class Mail_Bank_Zend_Mime {
 
 		// Split encoded text into separate lines.
 		// $string_length = strlen( $str );.
-		while ( strlen( $str ) > 0 ) { // @codingStandardsIgnoreLine
+		while ( strlen( $str ) > 0 ) {// @codingStandardsIgnoreLine.
 			$ptr = strlen( $str );
 			if ( $ptr > $line_length ) {
 				$ptr = $line_length;
@@ -437,7 +437,7 @@ class Mail_Bank_Zend_Mime {
 			}
 
 			// Check if there is a space at the end of the line and rewind.
-			if ( $ptr > 0 && ' ' == $str[ $ptr - 1 ] ) { // WPCS: loose comparison ok.
+			if ( $ptr > 0 && ' ' == $str[ $ptr - 1 ] ) {// WPCS: loose comparison ok.
 				--$ptr;
 			}
 
@@ -495,13 +495,14 @@ class Mail_Bank_Zend_Mime {
 
 		// Split encoded text into separate lines.
 		$tmp = '';
-		while ( strlen( $str ) > 0 ) { // @codingStandardsIgnoreLine
+		// $len_count = strlen( $str ); .
+		while ( strlen( $str ) > 0 ) {// @codingStandardsIgnoreLine.
 			$current_line = max( count( $lines ) - 1, 0 );
 			$token        = self::get_next_quoted_printable_token( $str );
 			$str          = substr( $str, strlen( $token ) );
 
 			$tmp .= $token;
-			if ( '=20' == $token ) { // WPCS: loose comparison ok.
+			if ( '=20' == $token ) {// WPCS: loose comparison ok.
 				// only if we have a single char token or space, we can append the
 				// tempstring it to the current line or start a new line if necessary.
 				if ( strlen( $lines[ $current_line ] . $tmp ) > $line_length ) {
@@ -512,14 +513,14 @@ class Mail_Bank_Zend_Mime {
 				$tmp = '';
 			}
 			// don't forget to append the rest to the last line.
-			if ( strlen( $str ) == 0 ) { // WPCS: loose comparison ok.
+			if ( strlen( $str ) == 0 ) {// WPCS: loose comparison ok.
 				$lines[ $current_line ] .= $tmp;
 			}
 		}
 
 		// assemble the lines together by pre- and appending delimiters, charset, encoding.
 		// $count_lines = count( $lines ); .
-		for ( $i = 0; $i < count( $lines ); $i++ ) { // @codingStandardsIgnoreLine
+		for ( $i = 0; $i < count( $lines ); $i++ ) {// @codingStandardsIgnoreLine.
 			$lines[ $i ] = ' ' . $prefix . $lines[ $i ] . '?=';
 		}
 		$str = trim( implode( $line_end, $lines ) );
@@ -533,7 +534,7 @@ class Mail_Bank_Zend_Mime {
 	 * @return string
 	 */
 	private static function get_next_quoted_printable_token( $str ) {
-		if ( substr( $str, 0, 1 ) == '=' ) { // WPCS: loose comparison ok.
+		if ( substr( $str, 0, 1 ) == '=' ) {// WPCS: loose comparison ok.
 			$token = substr( $str, 0, 3 );
 		} else {
 			$token = substr( $str, 0, 1 );

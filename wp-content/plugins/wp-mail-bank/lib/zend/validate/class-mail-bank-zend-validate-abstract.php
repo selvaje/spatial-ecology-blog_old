@@ -211,9 +211,9 @@ abstract class Mail_Bank_Zend_Validate_Abstract implements Mail_Bank_Zend_Valida
 		$translator = $this->getTranslator();
 		if ( null !== $translator ) {
 			if ( $translator->isTranslated( $message_key ) ) {
-				$message = $translator->translate( $message_key ); // @codingStandardsIgnoreLine
+				$message = $translator->translate( $message_key );// @codingStandardsIgnoreLine.
 			} else {
-				$message = $translator->translate( $message ); // @codingStandardsIgnoreLine
+				$message = $translator->translate( $message );// @codingStandardsIgnoreLine.
 			}
 		}
 
@@ -271,7 +271,7 @@ abstract class Mail_Bank_Zend_Validate_Abstract implements Mail_Bank_Zend_Valida
 	 * @param    string $value  OPTIONAL.
 	 * @return void
 	 */
-	protected function _error( $message_key, $value = null ) { // @codingStandardsIgnoreLine
+	protected function _error( $message_key, $value = null ) {// @codingStandardsIgnoreLine.
 		if ( null === $message_key ) {
 			$keys        = array_keys( $this->message_templates );
 			$message_key = current( $keys );

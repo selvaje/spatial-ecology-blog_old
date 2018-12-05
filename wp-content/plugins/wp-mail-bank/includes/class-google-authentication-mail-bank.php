@@ -95,7 +95,7 @@ if ( ! class_exists( 'Google_Authentication_Mail_Bank' ) ) {
 			);
 
 			$oauth_url = 'https://accounts.google.com/o/oauth2/auth?' . build_query( $configurations );
-			echo $oauth_url; // @codingStandardsIgnoreLine
+			echo $oauth_url;// @codingStandardsIgnoreLine.
 		}
 		/**
 		 * This function process the token code.
@@ -103,8 +103,8 @@ if ( ! class_exists( 'Google_Authentication_Mail_Bank' ) ) {
 		 * @param string $state_id  represent state id.
 		 */
 		public function process_token_Code( $state_id ) {
-			if ( isset( $_REQUEST['access_token'] ) ) { // WPCS: input var ok, CSRF ok.
-				$code           = esc_attr( $_REQUEST['access_token'] ); // @codingStandardsIgnoreLine
+			if ( isset( $_REQUEST['access_token'] ) ) { // WPCS: CSRF ok, WPCS: input var ok.
+				$code           = esc_attr( $_REQUEST['access_token'] ); // @codingStandardsIgnoreLine.
 				$configurations = array(
 					'client_id'     => $this->client_id,
 					'client_secret' => $this->client_secret,

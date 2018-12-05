@@ -1,16 +1,16 @@
 <?php
 /*
 Plugin Name: Dropdown Menu Widget
-Plugin URI: http://metinsaylan.com/projects/wordpress/dropdown-menu-widget/
+Plugin URI: https://metinsaylan.com/wordpress/plugins/dropdown-menu/
 Description: Highly customizable automatic pages, categories or custom dropdown navigation menu widget with nice jQuery effects.
 Tags: dropdown, menu, css, css-dropdown, navigation, widget, dropdown-menu, customization, theme, jquery, template, multi-color, theme
-Version: 1.9.6
+Version: 1.9.7
 Author: Metin Saylan
-Author URI: http://metinsaylan.com/
+Author URI: https://metinsaylan.com/
 Text Domain: shailan-dropdown-menu
 */
 
-define('VERSION', '1.9.6');
+define('VERSION', '1.9.7');
 
 class shailan_DropdownWidget extends WP_Widget {
 
@@ -31,7 +31,7 @@ class shailan_DropdownWidget extends WP_Widget {
 		$this->pluginname = "Dropdown Menu";
 		$this->shortname = "shailan_dm";
 
-		$this->help_url = "http://metinsaylan.com/docs/dropdown-menu-widget-help/";
+		$this->help_url = "https://metinsaylan.com/wordpress/plugins/dropdown-menu/help/";
 
 		$this->version = VERSION;
 		$this->settings_key = "shailan_dropdown_menu";
@@ -41,9 +41,9 @@ class shailan_DropdownWidget extends WP_Widget {
 		add_action( 'wp_head', array(&$this, 'header') );
 
 		// Hook up scripts
-			wp_enqueue_script( 'jquery' );
-			wp_enqueue_script( 'hoverIntent', plugins_url( '/scripts/hoverIntent.js' , __FILE__ ) , array('jquery') );
-			wp_enqueue_script( 'dropdown-ie-support', plugins_url( '/scripts/include.js' , __FILE__ ) , array('jquery') );
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'hoverIntent', plugins_url( '/scripts/hoverIntent.js' , __FILE__ ) , array('jquery') );
+		wp_enqueue_script( 'dropdown-ie-support', plugins_url( '/scripts/include.js' , __FILE__ ) , array('jquery') );
 
 		// Include options array
 		require_once("shailan-dropdown-menu-options.php");
@@ -115,7 +115,7 @@ function admin_header(){
 	$page = add_options_page(
 		__('Settings for Dropdown Menu', 'shailan-dropdown-menu'),
 		__('Dropdown Menu', 'shailan-dropdown-menu'),
-		'edit_themes',
+		'manage_options',
 		$this->options_page,
 		array( &$this, 'options_page')
 	);
@@ -181,9 +181,15 @@ function install_default_settings(){
 function update_plugin_settings( $current_settings ){
 	//Add missing keys
 	foreach($this->options as $option){
-		if( array_key_exists ( 'id' , $option ) && !array_key_exists ( $option['id'] ,$current_settings ) ){
-			$current_settings[ $option['id'] ] = $option['std'];
+
+		if( array_key_exists ( 'id' , $option ) ){
+			
+			// If this option has a default value
+			if( array_key_exists( 'std', $option ) && !array_key_exists( $option['id'], $current_settings ) ){
+				$current_settings[ $option['id'] ] = $option['std'];
+			}
 		}
+
 	}
 
 	update_option( $this->settings_key, $current_settings );
@@ -203,7 +209,7 @@ function options_page(){
 		"2" => __("Dropdown Menu Widget settings are reset.", "shailan-dropdown-menu")
 	);
 
-	$navigation = '<div id="stf_nav"><a href="http://metinsaylan.com/projects/wordpress/dropdown-menu-widget/" target="_blank">Plugin page</a> | <a href="http://metinsaylan.com/docs/dropdown-menu-widget-help/" target="_blank">Usage</a> | <a href="http://metinsaylan.com/donate/" target="_blank">Donate</a> | <a href="http://metinsaylan.com/projects/" target="_blank">Get more plugins..</a></div>';
+	$navigation = '<div id="stf_nav"><a href="https://metinsaylan.com/wordpress/plugins/dropdown-menu/" target="_blank">Plugin page</a> | <a href="https://metinsaylan.com/wordpress/plugins/dropdown-menu/help/" target="_blank">Usage</a> | <a href="https://metinsaylan.com/donate/" target="_blank">Donate</a> | <a href="https://metinsaylan.com/wordpress/plugins/" target="_blank">Get more plugins..</a></div>';
 
 	$footer_text = '';
 
@@ -368,13 +374,13 @@ function options_page(){
 						$menu_args = wp_parse_args( array('walker'=>$page_walker) , $menu_args );
 					}
 
-					echo $dropdown_wrapper_open;
-					do_action('dropdown_before');
-					echo $dropdown_open;
-					  wp_nav_menu($menu_args);
-					echo $dropdown_close;
-					do_action('dropdown_after');
-					echo $dropdown_wrapper_close;
+					//echo $dropdown_wrapper_open;
+					//do_action('dropdown_before');
+					//echo $dropdown_open;
+					  wp_nav_menu( $menu_args );
+					//echo $dropdown_close;
+					//do_action('dropdown_after');
+					//echo $dropdown_wrapper_close;
 
 				} // switch ($type)
 
@@ -502,7 +508,7 @@ function options_page(){
 			$shailan_dm_color_hoverlink = $this->get_plugin_setting('shailan_dm_color_hoverlink');
 			$is_fx_active = (bool) ( 'on' == $this->get_plugin_setting('shailan_dm_effects') );
 
-			echo "\n\n<!-- Dropdown Menu Widget Styles by shailan (http://metinsaylan.com) v" . VERSION . " on wp" . get_bloginfo( 'version' ) . " -->"; // For debug
+			echo "\n\n<!-- Dropdown Menu Widget Styles by shailan (https://metinsaylan.com) v" . VERSION . " on wp" . get_bloginfo( 'version' ) . " -->"; // For debug
 			echo "\n<link rel=\"stylesheet\" href=\"". plugins_url( '/css/shailan-dropdown.min.css' , __FILE__ ) . "\" type=\"text/css\" />";
 
 			if( $theme!='*none*' && $theme != '*custom*' ){
@@ -652,7 +658,7 @@ ul.dropdown li li.parent:hover>a:after{
 
 		if( $is_fx_active || $remove_title_attributes || $remove_top_level_links ){
 
-		echo "\n\n<!-- Dropdown Menu Widget Effects by shailan (http://metinsaylan.com) v". VERSION ." on wp".get_bloginfo( 'version' )." -->"; // For debug
+		echo "\n\n<!-- Dropdown Menu Widget Effects by shailan (https://metinsaylan.com) v". VERSION ." on wp".get_bloginfo( 'version' )." -->"; // For debug
 		echo "\n<script type=\"text/javascript\">/* <![CDATA[ */";
 		echo "\njQuery(document).ready(function($) { \n";
 
@@ -733,7 +739,10 @@ function get_dropdown_setting( $key, $default = '' ) {
 }
 
 // Register widget
-add_action('widgets_init', create_function('', 'return register_widget("shailan_DropdownWidget");'));
+function ddm_register_widget(){
+	register_widget("shailan_DropdownWidget");
+}
+add_action( 'widgets_init', 'ddm_register_widget' );
 
 /* Includes */
 include('shailan-page-walker.php'); // Load custom page walker
@@ -751,23 +760,6 @@ function shailan_dropdown_add_settings_link($links) {
 
 $plugin = plugin_basename(__FILE__);
 add_filter( "plugin_action_links_$plugin", 'shailan_dropdown_add_settings_link' );
-
-// After activation redirect
-register_activation_hook(__FILE__, 'shailan_dropdown_activate');
-add_action( 'admin_init', 'shailan_dropdown_redirect' );
-
-function shailan_dropdown_activate() {
-    add_option( 'shailan_dropdown_do_activation_redirect', true );
-}
-
-// Redirects to options page on activate
-function shailan_dropdown_redirect() {
-    if ( get_option( 'shailan_dropdown_do_activation_redirect', false ) ) {
-        delete_option( 'shailan_dropdown_do_activation_redirect' );
-		$url = admin_url( 'options-general.php?page=dropdown-menu' );
-        wp_redirect($url);
-    }
-}
 
 // Template tag support
 function shailan_dropdown_menu( $args = array() ){

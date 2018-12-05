@@ -1,6 +1,6 @@
 
 <h2 class="title"><?php _e('Support', 'companion-auto-update');?></h2>
-<?php _e('Feel free to reach out to me if you have any questions or feedback.', 'companion-auto-update'); ?>
+<?php _e('Feel free to reach out to us if you have any questions or feedback.', 'companion-auto-update'); ?>
 
 
 <table class="form-table cau_support">
@@ -32,9 +32,15 @@
 		</td>
 	</tr>
 	<tr>
-		<th scope="row"><?php _e('Check out my other plugins', 'companion-auto-update');?></th>
+		<th scope="row"><?php _e('Check out our other plugins', 'companion-auto-update');?></th>
 		<td>
-			<a href="https://codeermeneer.nl/plugins/" target="_blank" class="button"><span class="dashicons dashicons-category"></span> <?php _e('View my portfolio', 'companion-auto-update'); ?></a>
+			<a href="https://codeermeneer.nl/plugins/" target="_blank" class="button"><span class="dashicons dashicons-category"></span> <?php _e('View portfolio', 'companion-auto-update'); ?></a>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><?php _e('Developer?', 'companion-auto-update');?></th>
+		<td>
+			<a href="https://codeermeneer.nl/stuffs/codex-auto-updater/" target="_blank" class="button"><span class="dashicons dashicons-media-code"></span> <?php _e('Check out our codex', 'companion-auto-update'); ?></a>
 		</td>
 	</tr>
 

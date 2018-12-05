@@ -1,4 +1,23 @@
 
+ ### v8.1.4 - 2018-12-03 
+ **Changes:** 
+ * New: Admin pointers for new plugin installs
+* Change: Rename custom messages to "Share Variations"
+* Fix: Automatically remove whitespace when adding credentials
+* Fix: Excess blank space in shares caused by Gutenberg Editor
+* PRO Fix: Publish now not showing on custom post types edit screens
+ 
+ ### v8.1.3 - 2018-11-01 
+ **Changes:** 
+ * - Adds: Option to delete plugin settings on uninstall
+* - Fix: Change twitter credential labels to match that on developer.twitter.com apps
+* - Fix: Various typos
+* - Fix: Issue with media library not loading when PRO plugin is installed in some cases
+* - Fix: Error when other plugins also try to authenticate with Facebook
+* - PRO: Adds support for magic tags for Custom Share Messages and Additional Text
+* - PRO: Adds support for custom post type taxonomy hashtags
+* - PRO: Adds Option to make share instantly option checked by default
+ 
  ### v8.1.2 - 2018-10-08 
  **Changes:** 
  * Fixed issue with hashtags in content

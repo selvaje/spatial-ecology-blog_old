@@ -1,29 +1,136 @@
 <?php
 
+// Run custom hooks on plugin update
+function cau_run_custom_hooks_p() {
+
+	// Create array
+	$allDates 	= array();
+
+	// Where to look for plugins
+	$dirr    	= plugin_dir_path( __DIR__ );
+	$listOfAll 	= get_plugins();
+
+	// Loop trough all plugins
+	foreach ( $listOfAll as $key => $value) {
+
+		// Get data
+		$fullPath 		= $dirr.'/'.$key;
+		$fileDate 		= date ( 'YmdHi', filemtime( $fullPath ) );
+		$updateSched 	= wp_get_schedule( 'wp_update_plugins' );
+
+		// Check when the last update was
+		if( $updateSched == 'hourly' ) {
+			$lastday = date( 'YmdHi', strtotime( '-1 hour' ) );
+		} elseif( $updateSched == 'twicedaily' ) {
+			$lastday = date( 'YmdHi', strtotime( '-12 hours' ) );
+		} elseif( $updateSched == 'daily' ) {
+			$lastday = date( 'YmdHi', strtotime( '-1 day' ) );
+		}
+
+		// Push to array
+		if( $fileDate >= $lastday ) {
+			array_push( $allDates, $fileDate );
+		}
+
+	}
+
+	$totalNum = 0;
+
+	// Count number of updated plugins
+	foreach ( $allDates as $key => $value ) $totalNum++;
+
+	// If there have been plugin updates run hook
+	if( $totalNum > 0 ) {
+		do_action( 'cau_after_plugin_update' );
+	}
+
+}
+
+// Run custom hooks on theme update
+function cau_run_custom_hooks_t() {
+
+	// Create array
+	$allDates 	= array();
+
+	// Where to look for plugins
+	$dirr    	= get_theme_root();
+	$listOfAll 	= wp_get_themes();
+
+	// Loop trough all plugins
+	foreach ( $listOfAll as $key => $value) {
+
+		// Get data
+		$fullPath 		= $dirr.'/'.$key;
+		$fileDate 		= date ( 'YmdHi', filemtime( $fullPath ) );
+		$updateSched 	= wp_get_schedule( 'wp_update_themes' );
+
+		// Check when the last update was
+		if( $updateSched == 'hourly' ) {
+			$lastday = date( 'YmdHi', strtotime( '-1 hour' ) );
+		} elseif( $updateSched == 'twicedaily' ) {
+			$lastday = date( 'YmdHi', strtotime( '-12 hours' ) );
+		} elseif( $updateSched == 'daily' ) {
+			$lastday = date( 'YmdHi', strtotime( '-1 day' ) );
+		}
+
+		// Push to array
+		if( $fileDate >= $lastday ) {
+			array_push( $allDates, $fileDate );
+		}
+
+	}
+
+	$totalNum = 0;
+
+	// Count number of updated plugins
+	foreach ( $allDates as $key => $value ) $totalNum++;
+
+	// If there have been plugin updates run hook
+	if( $totalNum > 0 ) {
+		do_action( 'cau_after_theme_update' );
+	}
+
+}
+
+// Check if automatic updating is disabled globally
 function checkAutomaticUpdaterDisabled() {
 
-	if ( defined( 'automatic_updater_disabled' ) OR defined( 'AUTOMATIC_UPDATER_DISABLED' ) ) {
-		if( doing_filter( 'AUTOMATIC_UPDATER_DISABLED' ) ) {
+	// I mean, I know this can be done waaaay better but I's quite late and I need to push a fix so take it or leave it untill I decide to fix this :)
+
+	if ( defined( 'automatic_updater_disabled' ) ) {
+		if( doing_filter( 'automatic_updater_disabled' ) ) {
 			return true;
-		} elseif( automatic_updater_disabled == 'true' OR AUTOMATIC_UPDATER_DISABLED == 'true' ) {
+		} elseif( constant( 'automatic_updater_disabled' ) == 'true' ) {
 			return true;
-		} elseif( automatic_updater_disabled == 'minor' OR AUTOMATIC_UPDATER_DISABLED == 'minor' ) {
+		} elseif( constant( 'automatic_updater_disabled' ) == 'minor' ) {
 			return true;
 		} else {
 			return false;
 		}
+
+	} else if ( defined( 'AUTOMATIC_UPDATER_DISABLED' ) ) {
+		if( doing_filter( 'AUTOMATIC_UPDATER_DISABLED' ) ) {
+			return true;
+		} elseif( constant( 'AUTOMATIC_UPDATER_DISABLED' ) == 'true' ) {
+			return true;
+		} elseif( constant( 'AUTOMATIC_UPDATER_DISABLED' ) == 'minor' ) {
+			return true;
+		} else {
+			return false;
+		}
+
 	} else {
 		return false;
 	}
 
 }
 
+// Menu location
 function cau_menloc() {
-
 	return 'tools.php';
-
 }
 
+// Get the active tab
 function active_tab( $page, $identifier = 'tab' ) {
 
 	if( !isset( $_GET[ $identifier ] ) ) {
@@ -38,6 +145,7 @@ function active_tab( $page, $identifier = 'tab' ) {
 
 }
 
+// Get the active subtab
 function active_subtab( $page, $identifier = 'tab' ) {
 
 	if( !isset( $_GET[ $identifier ] ) ) {
@@ -52,7 +160,7 @@ function active_subtab( $page, $identifier = 'tab' ) {
 
 }
 
-
+// List of plugins that should not be updated
 function donotupdatelist() {
 
 	global $wpdb;
@@ -69,6 +177,7 @@ function donotupdatelist() {
 
 }
 
+// Show the update log
 function cau_fetch_log( $limit, $format = 'simple' ) {
 
 	// Create arrays
@@ -123,7 +232,12 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 		$getFile 	= $path_parts = pathinfo( $fullPath );
 
 		// Get theme name
-		array_push( $pluginNames , $path_parts['filename'] );
+		// array_push( $pluginNames , $path_parts['filename'] );
+		
+		$theme_data = wp_get_theme( $path_parts['filename'] );
+		$themeName 	= $theme_data->get( 'Name' ); 
+		array_push( $pluginNames , $themeName );
+
 
 		// Get last update date
 		$dateFormat = get_option( 'date_format' );
@@ -219,7 +333,7 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 
 }
 
-// Only update plugin which are enabled
+// Only update plugins which are enabled
 function cau_dont_update( $update, $item ) {
 
 	$plugins = donotupdatelist();

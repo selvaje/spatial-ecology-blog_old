@@ -79,7 +79,7 @@ if ( ! class_exists( 'Yahoo_Authentication_Mail_Bank' ) ) {
 				'language'      => get_locale(),
 			);
 			$auth_url       = 'https://api.login.yahoo.com/oauth2/request_auth?' . build_query( $configurations );
-			echo $auth_url; // WPCS: XSS ok.
+			echo $auth_url;// @codingStandardsIgnoreLine.
 		}
 		/**
 		 * This function is used to process token code.
@@ -87,8 +87,9 @@ if ( ! class_exists( 'Yahoo_Authentication_Mail_Bank' ) ) {
 		 * @param int $transaction_id transaction id.
 		 */
 		public function process_token_Code( $transaction_id ) {
-			if ( isset( $_REQUEST['access_token'] ) ) { // WPCS: input var ok, CSRF ok.
-				$code             = esc_attr( $_REQUEST['access_token'] );// @codingStandardsIgnoreLine
+			if ( isset( $_REQUEST['access_token'] ) ) {// WPCS: CSRF ok, WPCS: input var ok.
+				$code = esc_attr( $_REQUEST['access_token'] ); // @codingStandardsIgnoreLine.
+
 				$headers          = array(
 					'Authorization' => sprintf( 'Basic %s', base64_encode( $this->client_id . ':' . $this->client_secret ) ),
 				);

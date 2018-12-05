@@ -1,127 +1,100 @@
 <?php
 /**
- * This file is used for displaying sidebar menus.
+ * This contains sidebar widgets.
  *
  * @author  Tech Banker
  * @package wp-mail-bank/includes
  * @version 2.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
-if ( ! is_user_logged_in() ) {
-	return;
-} else {
-	$access_granted = false;
-	foreach ( $user_role_permission as $permission ) {
-		if ( current_user_can( $permission ) ) {
-			$access_granted = true;
-			break;
-		}
-	}
-	if ( ! $access_granted ) {
-		return;
-	} else {
-		?>
-		<div class="page-sidebar-wrapper-tech-banker">
-			<div class="page-sidebar-tech-banker navbar-collapse collapse">
-			<div class="sidebar-menu-tech-banker">
-				<ul class="page-sidebar-menu-tech-banker" data-slide-speed="200">
-					<div class="sidebar-search-wrapper" style="padding:20px;text-align:center">
-						<a class="plugin-logo" href="<?php echo esc_attr( TECH_BANKER_BETA_URL ); ?>" target="_blank">
-						<img src="<?php echo esc_attr( plugins_url( 'assets/global/img/mail-bank-logo.png', dirname( __FILE__ ) ) ); ?>" alt="Mail Bank">
-					</a>
-					</div>
-					<li id="ux_mb_li_email_configuration">
-						<a href="admin.php?page=mb_email_configuration">
-						<i class="icon-custom-envelope-open"></i>
-						<span class="title">
-							<?php echo esc_attr( $mb_email_configuration ); ?>
-						</span>
-					</a>
-					</li>
-					<li id="ux_mb_li_test_email">
-						<a href="admin.php?page=mb_test_email">
-						<i class="icon-custom-envelope "></i>
-						<span class="title">
-							<?php echo esc_attr( $mb_test_email ); ?>
-						</span>
-					</a>
-					</li>
-					<li id="ux_mb_li_connectivity_test">
-						<a href="admin.php?page=mb_connectivity_test">
-						<i class="icon-custom-globe"></i>
-						<span class="title">
-							<?php echo esc_attr( $mb_connectivity_test ); ?>
-						</span>
-					</a>
-					</li>
-					<li id="ux_mb_li_email_logs">
-						<a href="admin.php?page=mb_email_logs">
-						<i class="icon-custom-note"></i>
-						<span class="title">
-							<?php echo esc_attr( $mb_email_logs ); ?>
-						</span>
-						<span class="badge">
-							Pro
-						</span>
-					</a>
-					</li>
-					<li id="ux_mb_li_settings">
-						<a href="admin.php?page=mb_settings">
-						<i class="icon-custom-paper-clip"></i>
-						<span class="title">
-							<?php echo esc_attr( $mb_settings ); ?>
-						</span>
-					</a>
-					</li>
-					<li id="ux_mb_li_roles_and_capabilities">
-						<a href="admin.php?page=mb_roles_and_capabilities">
-						<i class="icon-custom-user"></i>
-						<span class="title">
-							<?php echo esc_attr( $mb_roles_and_capabilities ); ?>
-						</span>
-						<span class="badge">Pro</span>
-					</a>
-					</li>
-					<li id="ux_mb_li_support_forum">
-						<a href="https://wordpress.org/support/plugin/wp-mail-bank" target="_blank">
-						<i class="icon-custom-users"></i>
-						<span class="title">
-							<?php echo esc_attr( $mb_support_forum ); ?>
-						</span>
-					</a>
-					</li>
-					<li id="ux_mb_li_system_information">
-						<a href="admin.php?page=mb_system_information">
-						<i class="icon-custom-screen-desktop"></i>
-						<span class="title">
-							<?php echo esc_attr( $mb_system_information ); ?>
-						</span>
-					</a>
-					</li>
-					<li class="" id="ux_li_upgrade">
-						<a href="https://mail-bank.tech-banker.com/pricing/" target="_blank">
-						<i class="icon-custom-briefcase"></i>
-						<span class="title" style="color:yellow;">
-							<strong>
-								<?php echo esc_attr( $mb_premium_edition_label ); ?>
-							</strong>
-						</span>
-					</a>
-					</li>
-					<li id="ux_li_help_support">
-						<a class="help-support" style="text-align:center" href="<?php echo esc_url( TECH_BANKER_BETA_URL ) . '/live-chat-support/'; ?>" target="_blank">
-							<img src="<?php echo esc_url( plugins_url( 'assets/global/img/help-and-support.png', dirname( __FILE__ ) ) ); ?>">
-							</a>
-					</li>
-				</ul>
+?>
+<div class="portlet box vivid-blue mb-pro-options-head">
+	<div class="portlet-title mb-pro-options">
+		<div class="caption">
+			<i class="dashicons dashicons-admin-customizer"></i>
+			<?php echo esc_attr( $mb_more_options ); ?>
+		</div>
+	</div>
+	<div class="wpmb-addon-list-section">
+		<ul class="wpmb-addon-list">
+			<li class="wpmb-addon">
+				<a class="wpmb-addon-title" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/' ); ?>" target="_blank" rel="noopener"><?php echo esc_attr( $mb_advance_email_fields ); ?></a>
+				<div class="wpmb-addon-link-wrapper">
+					<a class="mb-learn-more" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/' ); ?>" target="_blank" rel="noopener"> <?php echo esc_attr( $mb_learn_more ); ?> </a>
+				</div>
+			</li>
+			<li class="wpmb-addon">
+				<a class="wpmb-addon-title" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/'); ?>" target="_blank" rel="noopener"><?php echo esc_attr( $mb_send_grid_api_details ); ?></a>
+				<div class="wpmb-addon-link-wrapper"><a class="mb-learn-more" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/'); ?>" target="_blank" rel="noopener"> <?php echo esc_attr( $mb_learn_more ); ?> </a>
+				</div>
+			</li>
+			<li class="wpmb-addon">
+				<a class="wpmb-addon-title" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/'); ?>" target="_blank" rel="noopener"><?php echo esc_attr( $mb_email_configuration_send_email_via_mailgun_api ); ?></a>
+
+				<div class="wpmb-addon-link-wrapper"><a class="mb-learn-more" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/' ); ?>" target="_blank" rel="noopener"> <?php echo esc_attr( $mb_learn_more ); ?> </a>
+				</div>
+			</li>
+			<li class="wpmb-addon">
+				<a class="wpmb-addon-title" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/'); ?>" target="_blank" rel="noopener"><?php echo esc_attr( $mb_detailed_email_reports ); ?></a>
+				<div class="wpmb-addon-link-wrapper"><a class="mb-learn-more" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/' ); ?>" target="_blank" rel="noopener"> <?php echo esc_attr( $mb_learn_more ); ?> </a>
+				</div>
+			</li>
+			<li class="wpmb-addon">
+				<a class="wpmb-addon-title" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/' ); ?>" target="_blank" rel="noopener"><?php echo esc_attr( $mb_reports_filtering ); ?></a>
+				<div class="wpmb-addon-link-wrapper"><a class="mb-learn-more" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/'); ?>" target="_blank" rel="noopener"> <?php echo esc_attr( $mb_learn_more ); ?> </a>
+				</div>
+			</li>
+			<li class="wpmb-addon">
+				<a class="wpmb-addon-title" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/' ); ?>" target="_blank" rel="noopener"><?php echo esc_attr( $mb_settings_automatic_plugin_update ); ?></a>
+				<div class="wpmb-addon-link-wrapper"><a class="mb-learn-more" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/' ); ?>" target="_blank" rel="noopener"> <?php echo esc_attr( $mb_learn_more ); ?> </a>
+				</div>
+			</li>
+			<li class="wpmb-addon">
+				<a class="wpmb-addon-title" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/'); ?>" target="_blank" rel="noopener"><?php echo esc_attr( $mb_roles_and_capabilities ); ?></a>
+				<div class="wpmb-addon-link-wrapper"><a class="mb-learn-more" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/'); ?>" target="_blank" rel="noopener"> <?php echo esc_attr( $mb_learn_more ); ?> </a>
+				</div>
+			</li>
+			<li class="wpmb-addon">
+				<a class="wpmb-addon-title" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/'); ?>" target="_blank" rel="noopener"><?php echo esc_attr( $mb_technical_support ); ?></a>
+				<div class="wpmb-addon-link-wrapper"><a class="mb-learn-more" href="<?php echo esc_url( TECH_BANKER_URL . '/wp-mail-bank/' ); ?>" target="_blank" rel="noopener"> <?php echo esc_attr( $mb_learn_more ); ?> </a>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="portlet-body form">
+		<div class="form-body">
+			<a class="btn mb-pro-options" target="_blank" href="<?php echo esc_attr( TECH_BANKER_URL . '/wp-mail-bank/' ); ?>"><?php echo esc_attr( $mb_upgrade ); ?></a>
+		</div>
+	</div>
+</div>
+<div class="tech-banker-bloc tech-banker-facebook mb-tech-banker-community">
+	<div class="tech-banker-ribbon"><div>VIP</div></div>
+	<p class="tech-banker-img">
+		<a href="https://www.facebook.com/groups/152567505440114/" target="_blank">
+			<img src="<?php echo esc_url( plugins_url( 'assets/global/img/facebook.svg', dirname( __FILE__ ) ) ); ?>" alt="Facebook Group">
+		</a>
+	</p>
+	<div class="mb-content-wrap">
+		<p class="content"><?php echo esc_attr( $mb_vip_community ); ?></p>
+		<a href="https://www.facebook.com/groups/152567505440114/" class="button tech-banker-button" target="_blank"><?php echo esc_attr( $mb_join_group ); ?></a>
+	</div>
+	<i class="dashicons dashicons-facebook-alt"></i>
+</div>
+<div class="portlet box tech-banker-bloc">
+	<div class="portlet-title tech-banker-review">
+		<div class="caption">
+			<i class="tech-banker-icon-review dashicons dashicons-heart"></i>
+			<?php echo esc_attr( $mb_star_review_title ); ?>
+		</div>
+	</div>
+	<div>
+		<p class="content"><?php echo esc_attr( $mb_greatful_message ); ?></p>
+		<p class="content"><?php echo esc_attr( $mb_star_review ); ?></p>
+		<div class="portlet-body form">
+			<div class="form-body">
+				<a class="btn tech-banker-leave-review" target="_blank" href="https://wordpress.org/support/plugin/wp-mail-bank/reviews/?filter=5"><?php echo esc_attr( $mb_leave_review ); ?> </a>
 			</div>
 		</div>
 	</div>
-	<div class="page-content-wrapper">
-		<div class="page-content">
-			<?php
-	}
-}
+	<i class="dashicons dashicons-wordpress"></i>
+</div>

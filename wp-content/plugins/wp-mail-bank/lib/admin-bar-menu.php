@@ -8,8 +8,8 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+	exit;
+} // Exit if accessed directly
 if ( ! is_user_logged_in() ) {
 	return;
 } else {
@@ -32,7 +32,7 @@ if ( ! is_user_logged_in() ) {
 		); // WPCS: db call ok; no-cache ok.
 
 		$roles_and_capabilities_unserialized_data = maybe_unserialize( $role_capabilities );
-		$capabilities                             = explode( ',', isset( $roles_and_capabilities_unserialized_data['roles_and_capabilities'] ) ? esc_attr( $roles_and_capabilities_unserialized_data['roles_and_capabilities'] ) : '' );
+		$capabilities                             = explode( ',', $roles_and_capabilities_unserialized_data['roles_and_capabilities'] );
 
 		if ( is_super_admin() ) {
 			$mb_role = 'administrator';
@@ -107,7 +107,14 @@ if ( ! is_user_logged_in() ) {
 					'href'   => admin_url( 'admin.php?page=mb_email_logs' ),
 				)
 			);
-
+			$wp_admin_bar->add_menu(
+				array(
+					'parent' => 'wp_mail_bank',
+					'id'     => 'notifications_mail_bank',
+					'title'  => $mb_notifications,
+					'href'   => admin_url( 'admin.php?page=mb_notifications' ),
+				)
+			);
 			$wp_admin_bar->add_menu(
 				array(
 					'parent' => 'wp_mail_bank',
@@ -116,7 +123,6 @@ if ( ! is_user_logged_in() ) {
 					'href'   => admin_url( 'admin.php?page=mb_settings' ),
 				)
 			);
-
 			$wp_admin_bar->add_menu(
 				array(
 					'parent' => 'wp_mail_bank',
@@ -125,14 +131,12 @@ if ( ! is_user_logged_in() ) {
 					'href'   => admin_url( 'admin.php?page=mb_roles_and_capabilities' ),
 				)
 			);
-
 			$wp_admin_bar->add_menu(
 				array(
 					'parent' => 'wp_mail_bank',
-					'id'     => 'support_forum_mail_bank',
-					'title'  => $mb_support_forum,
-					'href'   => 'https://wordpress.org/support/plugin/wp-mail-bank',
-					'meta'   => array( 'target' => '_blank' ),
+					'id'     => 'recommended_mail_bank',
+					'title'  => $mb_upgrade_now,
+					'href'   => admin_url( 'admin.php?page=mb_upgrade_now' ),
 				)
 			);
 			$wp_admin_bar->add_menu(
@@ -141,15 +145,6 @@ if ( ! is_user_logged_in() ) {
 					'id'     => 'system_information_mail_bank',
 					'title'  => $mb_system_information,
 					'href'   => admin_url( 'admin.php?page=mb_system_information' ),
-				)
-			);
-			$wp_admin_bar->add_menu(
-				array(
-					'parent' => 'wp_mail_bank',
-					'id'     => 'mb_upgrade',
-					'title'  => $mb_premium_edition_label,
-					'href'   => 'https://mail-bank.tech-banker.com/pricing/',
-					'meta'   => array( 'target' => '_blank' ),
 				)
 			);
 		}

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/dakel/2
 Tags: auto, automatic, background, update, updates, updating, automatic updates, automatic background updates, easy update, wordpress update, theme update, plugin update, up-to-date, security, update latest version, update core, update wp, update wp core, major updates, minor updates, update to new version, update core, update plugin, update plugins, update plugins automatically, update theme, plugin, theme, advance, control, mail, notifations, enable
 Requires at least: 3.5.0
 Tested up to: 5.0
-Stable tag: 3.2.5
+Stable tag: 3.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,14 @@ For some reason this plugin seems to have trouble with updating themes by Elegan
 
 == Changelog ==
 
+= 3.3.1 (November 15, 2018)  =
+* Fix: Can't Find constant error
+* Improvement: We've listened, Scheduling and Plugin filter are now two seperate tabs and Plugin filter is renamed to Select plugins
+* Improvement: Major core updates are now disabled by default for new installs
+
+= 3.3.0 (November 5, 2018) =
+* New: Custom hooks afer succesfull update, [How to use custom hooks in Companion Auto Update](https://codeermeneer.nl/stuffs/codex-auto-updater/)
+
 = 3.2.5 (October 26, 2018) =
 * Improvement: Few minor tweaks to the critical error messages
 
@@ -81,7 +89,7 @@ For some reason this plugin seems to have trouble with updating themes by Elegan
 * Improved: New error notification when plugins runs into a critical error
 
 = 3.2.2 (October 5, 2018) =
-* Fix: Parse error: syntax error, unexpected ‘[‘ in cau_functions.php on line 247
+* Fix: Parse error: syntax error, unexpected [ in cau_functions.php on line 247
 
 = 3.2.1 ( October 2, 2018) =
 * Fix: Cross-site request forgery (CSRF)/local file inclusion (LFI) vulnerability.

@@ -37,9 +37,9 @@ if ( ! class_exists( 'Authentication_Manager_Mail_Bank' ) ) {
 		 * This Function is used to create authentication manager.
 		 */
 		public function create_authentication_manager() {
-						$obj_mail_bank_register_transport = new Mail_Bank_Register_Transport();
-						$transport                        = $obj_mail_bank_register_transport->retrieve_mailertype_mail_bank();
-						return $this->create_manager( $transport );
+			$obj_mail_bank_register_transport = new Mail_Bank_Register_Transport();
+			$transport                        = $obj_mail_bank_register_transport->retrieve_mailertype_mail_bank();
+			return $this->create_manager( $transport );
 		}
 		/**
 		 * This function checks for the service providers.

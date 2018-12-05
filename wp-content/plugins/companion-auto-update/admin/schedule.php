@@ -4,6 +4,8 @@ $plugin_schedule 	= wp_get_schedule( 'wp_update_plugins' );
 $theme_schedule 	= wp_get_schedule( 'wp_update_themes' );
 $core_schedule 		= wp_get_schedule( 'wp_version_check' );
 $mail_sc 			= wp_get_schedule( 'cau_set_schedule_mail' );
+$cs_hooks_p 		= wp_get_schedule( 'cau_custom_hooks_plugins' );
+$cs_hooks_t 		= wp_get_schedule( 'cau_custom_hooks_themes' );
 
 if( isset( $_POST['submit'] ) ) {
 
@@ -21,6 +23,8 @@ if( isset( $_POST['submit'] ) ) {
 	wp_clear_scheduled_hook('wp_update_themes');
 	wp_clear_scheduled_hook('wp_version_check');
 	wp_clear_scheduled_hook('cau_set_schedule_mail');
+	wp_clear_scheduled_hook('cau_custom_hooks_plugins');
+	wp_clear_scheduled_hook('cau_custom_hooks_themes');
 
 	// Then set the new times
 	if( $plugin_sc == 'daily' ) {
@@ -33,10 +37,12 @@ if( isset( $_POST['submit'] ) ) {
 		$pluginSetTime 		= strtotime( $fullDate );
 
 		wp_schedule_event( $pluginSetTime, $plugin_sc, 'wp_update_plugins' );
+		wp_schedule_event( $pluginSetTime, $plugin_sc, 'cau_custom_hooks_plugins' );
 
 	} else {
 
 		wp_schedule_event( time(), $plugin_sc, 'wp_update_plugins' );
+		wp_schedule_event( time(), $plugin_sc, 'cau_custom_hooks_plugins' );
 
 	}
 	if( $theme_sc == 'daily' ) {
@@ -49,10 +55,12 @@ if( isset( $_POST['submit'] ) ) {
 		$themeSetTime 		= strtotime( $fullDateT );
 
 		wp_schedule_event( $themeSetTime, $theme_sc, 'wp_update_themes' );
+		wp_schedule_event( $themeSetTime, $theme_sc, 'cau_custom_hooks_themes' );
 
 	} else {
 
 		wp_schedule_event( time(), $theme_sc, 'wp_update_themes' );
+		wp_schedule_event( time(), $theme_sc, 'cau_custom_hooks_themes' );
 
 	}
 

@@ -24,10 +24,10 @@ if ( ! is_user_logged_in() ) {
 		return;
 	} else {
 		?>
-		<div class="page-container">
+	<div class="page-container">
 		<div id="manage_messages" style="display:none;">
 			<div class="radio">
-				<input type="radio" value="success" checked="checked" />
+			<input type="radio" value="success" checked="checked" />
 			</div>
 		</div>
 		<div id="toastTypeGroup_error" style="display:none;">
@@ -35,6 +35,6 @@ if ( ! is_user_logged_in() ) {
 				<input type="radio" value="error" checked=""/>
 			</div>
 		</div>
-			<?php
+		<?php
 	}
 }

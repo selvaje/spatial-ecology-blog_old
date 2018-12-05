@@ -168,7 +168,7 @@ if ( ! class_exists( 'Mail_Bank_Manage_Email' ) ) {
 
 			$body         = $this->mb_get_body();
 			$content_type = $this->mb_get_content_type();
-			if ( '' == $content_type ) { // WPCS: loose comparison ok.
+			if ( '' == $content_type ) {// WPCS: loose comparison ok.
 				$content_type = apply_filters( 'wp_mail_content_type', $content_type );
 			}
 			if ( substr( $content_type, 0, 9 ) === 'text/html' ) {
@@ -186,12 +186,12 @@ if ( ! class_exists( 'Mail_Bank_Manage_Email' ) ) {
 					} elseif ( stripos( $s, 'text/html' ) !== false ) {
 						$mode = 'foundHtml';
 					}
-					if ( 'foundText' == $mode ) { // WPCS: loose comparison ok.
+					if ( 'foundText' == $mode ) {// WPCS: loose comparison ok.
 						$trim = trim( $s );
 						if ( ! empty( $trim ) ) {
 							$text_body .= $s;
 						}
-					} elseif ( 'foundHtml' == $mode ) { // WPCS: loose comparison ok.
+					} elseif ( 'foundHtml' == $mode ) {// WPCS: loose comparison ok.
 						$trim = trim( $s );
 						if ( ! empty( $trim ) ) {
 							$html_body .= $s;
@@ -432,7 +432,7 @@ if ( ! class_exists( 'Mail_Bank_Manage_Email' ) ) {
 			}
 			foreach ( $attributes_array as $file ) {
 				if ( file_exists( $file ) ) {
-					$at              = new Mail_Bank_Zend_Mime_Part( file_get_contents( $file ) ); // @codingStandardsIgnoreLine
+					$at              = new Mail_Bank_Zend_Mime_Part( file_get_contents( $file ) );// @codingStandardsIgnoreLine.
 					$at->disposition = Mail_Bank_Zend_Mime::DISPOSITION_ATTACHMENT;
 					$at->encoding    = Mail_Bank_Zend_Mime::ENCODING_BASE64;
 					$at->filename    = basename( $file );
@@ -588,6 +588,12 @@ if ( ! class_exists( 'Mail_Bank_Manage_Email' ) ) {
 		 */
 		public function mb_get_body_html_part() {
 			return $this->body_htmlpart;
+		}
+		/**
+		 * Get mail attachments.
+		 */
+		public function get_attachments() {
+			return $this->attachments;
 		}
 	}
 }

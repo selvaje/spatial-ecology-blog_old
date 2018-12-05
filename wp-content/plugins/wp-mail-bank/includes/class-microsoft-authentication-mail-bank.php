@@ -77,13 +77,13 @@ if ( ! class_exists( 'Microsoft_Authentication_Mail_Bank' ) ) {
 				'redirect_uri'    => rawurlencode( $this->callback_uri ),
 				'client_id'       => $this->client_id,
 				'client_secret'   => $this->client_secret,
-				'state'           => $transaction_id,
 				'scope'           => rawurlencode( 'wl.imap,wl.offline_access' ),
+				'state'           => $transaction_id,
 				'access_type'     => 'offline',
 				'approval_prompt' => 'force',
 			);
 			$oauth_url      = 'https://login.live.com/oauth20_authorize.srf?' . build_query( $configurations );
-			echo $oauth_url; // @codingStandardsIgnoreLine
+			echo $oauth_url;// @codingStandardsIgnoreLine.
 		}
 		/**
 		 * This function is used to proccess the grant code.
@@ -91,8 +91,8 @@ if ( ! class_exists( 'Microsoft_Authentication_Mail_Bank' ) ) {
 		 * @param int $transaction_id transaction id.
 		 */
 		public function process_token_Code( $transaction_id ) {
-			if ( isset( $_REQUEST['access_token'] ) ) { // WPCS: input var ok, CSRF ok.
-				$code                 = esc_attr( $_REQUEST['access_token'] );// @codingStandardsIgnoreLine
+			if ( isset( $_REQUEST['access_token'] ) ) {// WPCS: CSRF ok, WPCS: input var ok.
+				$code                 = esc_attr( $_REQUEST['access_token'] ); // @codingStandardsIgnoreLine.
 				$configurations       = array(
 					'client_id'     => $this->client_id,
 					'client_secret' => $this->client_secret,

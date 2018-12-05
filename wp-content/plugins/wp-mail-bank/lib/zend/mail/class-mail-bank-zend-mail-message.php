@@ -61,7 +61,7 @@ class Mail_Bank_Zend_Mail_Message extends Mail_Bank_Zend_Mail_Part implements Ma
 	public function __construct( array $params ) {
 		if ( isset( $params['file'] ) ) {
 			if ( ! is_resource( $params['file'] ) ) {
-				$params['raw'] = wp_remote_get( $params['file'] ); // @codingStandardsIgnoreLine
+				$params['raw'] = wp_remote_get( $params['file'] );// @codingStandardsIgnoreLine.
 				if ( false === $params['raw'] ) {
 					/** Exception File Included.
 

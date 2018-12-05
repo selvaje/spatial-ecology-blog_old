@@ -71,7 +71,7 @@ if ( ! class_exists( 'Token_Manager_Mail_Bank' ) ) {
 		 * This function is used to check access token.
 		 */
 		public function check_access_token() {
-			$expiry_time   = ( $this->authorization_token->retrieve_token_expiry_time_mail_bank() - 60 );
+			$expiry_time   = intval( $this->authorization_token->retrieve_token_expiry_time_mail_bank() ) - 60;
 			$token_expired = time() > $expiry_time;
 			return $token_expired;
 		}

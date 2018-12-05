@@ -612,10 +612,6 @@
 	color: #acb3c2;
 }
 
-#rop_core .form-input::-moz-placeholder {
-	color: #acb3c2;
-}
-
 #rop_core .form-input::placeholder {
 	color: #acb3c2;
 }
@@ -2911,7 +2907,7 @@
 	border-color: #454d5d;
 	border-radius: 0.1rem;
 	color: #fff;
-	background: rgba(69, 77, 93, 0.9);
+	background: #1d466b;
 }
 
 #rop_core .toast.toast-primary {
@@ -4079,16 +4075,6 @@
 	border-top-right-radius: 8px;
 	border-bottom-right-radius: 8px;
 	border-bottom-left-radius: 20px;
-	background-image: -webkit-linear-gradient(
-	135deg,
-	rgba(255, 255, 255, 0.1) 25%,
-	transparent 25%,
-	transparent 50%,
-	rgba(255, 255, 255, 0.1) 50%,
-	rgba(255, 255, 255, 0.1) 75%,
-	transparent 75%,
-	transparent
-	);
 	background-image: linear-gradient(
 	-45deg,
 	rgba(255, 255, 255, 0.1) 25%,
@@ -4228,20 +4214,21 @@
 #rop_core .rop-image-placeholder {
 	margin: 0 auto;
 }
+
 #rop_core .rop-queue-tab-container .upsell,
-#rop_core .rop-schedule-tab-container .upsell{
-    color:#fff;
-    background:#8492a0;
-    text-align: center;
-    padding:5px 10px;
+#rop_core .rop-schedule-tab-container .upsell {
+	padding: 5px 10px;
+	color: #fff;
+	background: #8492a0;
+	text-align: center;
 }
 
 #rop_core .upsell {
 	margin-bottom: 0;
-	padding: 0px 10px;
+	padding: 0 10px;
 	border-radius: 0.1rem;
 	color: #8492a0;
-    text-align: right;
+	text-align: right;
 }
 
 #rop_core .panel-body h3 {
@@ -4332,6 +4319,32 @@
 		display: none;
 	}
 }
-.modal-footer a,.rop-post-type-badge a {
-    text-decoration: underline;
+
+.modal-footer a,
+.rop-post-type-badge a {
+	text-decoration: underline;
+}
+
+#rop_core .rop-steps{
+	background: #1d466b;
+	border-radius: 3px;
+	margin-bottom: 3px;
+	padding: 10px;
+	text-align: center;
+}
+
+#rop_core .rop-step{
+	margin-right: 5px;
+}
+
+#rop_core .rop-step-incomplete{
+	color: #ff0000;
+	font-weight: bold;
+	margin-bottom: 0px;
+}
+
+#rop_core .rop-step-complete{
+	color: #8bc34a;
+	font-weight: bold;
+	margin-bottom: 0px;
 }

@@ -229,7 +229,7 @@ abstract class Mail_Bank_Zend_Mail_Protocol_Abstract {
 	 * @throws Mail_Bank_Zend_Mail_Protocol_Exception Throws Exception.
 	 * @return boolean
 	 */
-	protected function _connect( $remote ) { // @codingStandardsIgnoreLine
+	protected function _connect( $remote ) {// @codingStandardsIgnoreLine.
 		$error_num = 0;
 		$error_str = '';
 
@@ -237,7 +237,7 @@ abstract class Mail_Bank_Zend_Mail_Protocol_Abstract {
 		$this->_socket = stream_socket_client( $remote, $error_num, $error_str, self::TIMEOUT_CONNECTION );
 
 		if ( false === $this->_socket ) {
-			if ( 0 == $error_num ) { // WPCS: loose comparison ok.
+			if ( 0 == $error_num ) {// WPCS: loose comparison ok.
 				$error_str = 'Could not open socket';
 			}
 			/** Exception File Included.
@@ -270,9 +270,9 @@ abstract class Mail_Bank_Zend_Mail_Protocol_Abstract {
 	 *
 	 * @return void
 	 */
-	protected function _disconnect() { // @codingStandardsIgnoreLine
+	protected function _disconnect() {// @codingStandardsIgnoreLine
 		if ( is_resource( $this->_socket ) ) {
-			fclose( $this->_socket ); // @codingStandardsIgnoreLine
+			fclose( $this->_socket );// @codingStandardsIgnoreLine
 		}
 	}
 	/**
@@ -297,7 +297,7 @@ abstract class Mail_Bank_Zend_Mail_Protocol_Abstract {
 
 		$this->_request = $request;
 
-		$result = fwrite( $this->_socket, $request . self::EOL ); // @codingStandardsIgnoreLine
+		$result = fwrite( $this->_socket, $request . self::EOL );// @codingStandardsIgnoreLine.
 
 		// Save request to internal log.
 		$this->add_log( $request . self::EOL );
@@ -405,7 +405,7 @@ abstract class Mail_Bank_Zend_Mail_Protocol_Abstract {
 
 			if ( '' !== $err_msg ) {
 				$err_msg .= ' ' . $msg;
-			} elseif ( null === $cmd || ! in_array( $cmd, $code ) ) { // @codingStandardsIgnoreLine
+			} elseif ( null === $cmd || ! in_array( $cmd, $code ) ) {// @codingStandardsIgnoreLine.
 				$err_msg = $msg;
 			}
 		} while ( strpos( $more, '-' ) === 0 ); // The '-' message prefix indicates an information string instead of a response string.

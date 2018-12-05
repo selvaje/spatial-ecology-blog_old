@@ -1,6 +1,6 @@
-﻿=== WP Mail SMTP Plugin by Mail Bank===
+﻿=== WP Mail SMTP Plugin with Email Logs===
 Contributors: contact-banker, Gallery-Bank, wordpress-empire
-Donate link: https://mail-bank.tech-banker.com/
+Donate link: https://tech-banker.com/wp-mail-bank/
 Tags: smtp, mail, gmail smtp, wp mail, wordpress smtp plugin
 Requires at least: 3.8
 Tested up to: 4.9
@@ -15,38 +15,23 @@ Mail Bank is a wordpress smtp plugin that solves email deliverability issue. Con
 
 ### WP Mail Bank: The #1 WordPress Mail SMTP Plugin
 
-[**WP Mail Bank — Tech Banker**](https://mail-bank.tech-banker.com/) | [Documentation](https://mail-bank.tech-banker.com/documentation/) | [Demonstrations](https://mail-bank.tech-banker.com/backend-demos/)
+[**WP Mail Bank — Tech Banker**](https://tech-banker.com/wp-mail-bank/)
 
 Are you **100% confident** all your WordPress emails reach their destination?
-
-**Watch the featured video below** to see how easy Mail Bank is to set up.
-
-https://youtu.be/f2C2mUnMRPA
-
-> #### **Demonstrations — WP Mail Bank**
-
-> * [Mail Bank](https://mail-bank.tech-banker.com/)
-> * [Mail Bank Demonstrations](https://mail-bank.tech-banker.com/backend-demos/)
-> * [Installation](https://mail-bank.tech-banker.com/backend-demos/installation/)
-> * [Email Setup](https://mail-bank.tech-banker.com/backend-demos/email-setup/)
-> * [Test Email](https://mail-bank.tech-banker.com/backend-demos/test-email/)
-> * [Connectivity](https://mail-bank.tech-banker.com/backend-demos/connectivity-test/)
-> * [Email Logs](https://mail-bank.tech-banker.com/backend-demos/email-logs/)
-> * [Plugin Settings](https://mail-bank.tech-banker.com/backend-demos/plugin-settings/)
-> * [Roles & Capabilities](https://mail-bank.tech-banker.com/backend-demos/roles-capabilities/)
-> * [System Information](https://mail-bank.tech-banker.com/backend-demos/system-information/)
 
 It's impossible to know what's happening to your emails unless you have a well-designed and well-rounded SMTP plugin installed. ***Explained why and how down below.***
 
 Mail Bank is a **FREE** SMTP plugin that gives you every feature needed to **guarantee fast and 100% confident email deliverability**. This includes a list of features designed to test, log, and control your email deliverability, even over multiple WordPress installations and networks.
 
-This plugin is developed by the in-house team of expert coders at [Tech Banker](https://mail-bank.tech-banker.com/). These are the people that will keep bringing you new and improved versions of Mail Bank every day of the week. The plugin updates automatically by default. The professionals behind Mail Bank make sure to support earlier versions of WordPress in every update.
+This plugin is developed by the in-house team of expert coders at [Tech Banker](https://tech-banker.com). These are the people that will keep bringing you new and improved versions of Mail Bank every day of the week. The plugin updates automatically by default. The professionals behind Mail Bank make sure to support earlier versions of WordPress in every update.
 
 WP Mail Bank is the Best SMTP plugin for wordpress.
 
 Our customer support team is in direct ties with our coding team. All of your problems, suggestions, and feedback will be seen by our coding team, and they will take action on them. We listen to and care deeply about our customers.
 
 You can read all about the full features of Mail Bank down below. Also **try the plugin yourself by activating it right now, for FREE.**
+
+Mail Bank is not another copy of WP Mail SMTP like Post SMTP or Easy SMTP Mailer. It provides unique functionality by sending emails with customized Zend Framework.
 
 ### An SMTP plugin will solve your email deliverability issues. But how?
 
@@ -68,7 +53,7 @@ This prevents the core issues with **Sender Domain Policy** and **Spoofing**, wh
 
 As said before, Mail Bank also supports the Mailgun and SendGrid APIs. This means that if you're running a website with a larger userbase you'll be able to improve your email deliverability drastically.
 
-Over 50,000+ website owners have chosen [**Mail Bank**](https://mail-bank.tech-banker.com/) as their email deliverability solution. Mail Bank fixes email deliverability issues quickly and painlessly.
+Over 50,000+ website owners have chosen [**Mail Bank**](https://tech-banker.com/wp-mail-bank/) as their email deliverability solution. Mail Bank fixes email deliverability issues quickly and painlessly.
 
 ### Benefits of Using WP Mail Bank
 
@@ -78,7 +63,7 @@ Over 50,000+ website owners have chosen [**Mail Bank**](https://mail-bank.tech-b
 
 * Our **email logger** will give you information on all of your emails. This includes undelivered mail and the information required to debug undelivered mail. You'll also be able to take action on each of the emails or use **bulk actions to delete or resend** them. You'll never have to leave a portion of your users in the dark again with this feature.
 
-* Our customer support team will always help you with any arising issue. Note that **[Premium Edition](https://mail-bank.tech-banker.com/) Customers** get priority support. If your emails become undelivered, and you can't find a solution in our [documentation](https://mail-bank.tech-banker.com/documentation/), we ask you to please [contact us](https://mail-bank.tech-banker.com/contact-us/) at [support@tech-banker.com](mailto:support@tech-banker.com). You may also give us suggestions and feedback on how well we're doing for you. **We care about our customers.**
+* Our customer support team will always help you with any arising issue. Note that **[Premium Edition](https://tech-banker.com/wp-mail-bank/) Customers** get priority support. If your emails become undelivered, and you can't find a solution in our [documentation](https://tech-banker.com/blog/), we ask you to please [contact us](https://tech-banker.com/contact-us/) at [support@tech-banker.com](mailto:support@tech-banker.com). You may also give us suggestions and feedback on how well we're doing for you. **We care about our customers.**
 
 #### SMTP Security & Flexibility
 
@@ -147,7 +132,7 @@ Mail Bank is translated by professionals and native speakers in these 16 languag
 * **Email Logs:** Will give you an overview of sent emails. It will let you take action on undelivered emails.
 * **Roles & Capabilities:** Will let you set different kinds of restrictions to different kinds of users. This includes creating your own custom entries for users.
 
-> Some of these features are only available in the **[Premium Edition](https://mail-bank.tech-banker.com/)** of the plugin. You can purchase the plugin on [our site at: https://mail-bank.tech-banker.com/](https://mail-bank.tech-banker.com/)
+> Some of these features are only available in the **[Premium Edition](https://tech-banker.com/wp-mail-bank/)** of the plugin. You can purchase the plugin on [our site at: https://tech-banker.com/wp-mail-bank/](https://tech-banker.com/wp-mail-bank/)
 
 ### Error Messages
 
@@ -209,11 +194,11 @@ If you you've found a bug in our plugin or have questions please contact us at [
 
 Please use the support forum on WordPress.org only for the free **Standard Version** of the plugin.
 
-For the **[Premium Edition](https://mail-bank.tech-banker.com/) Customers** there is a seperate, priority support package available. Please, don't use the WordPress.org support forum for questions about the [Premium Edition](https://mail-bank.tech-banker.com/) of Mail Bank.
+For the **[Premium Edition](https://tech-banker.com/wp-mail-bank/) Customers** there is a seperate, priority support package available. Please, don't use the WordPress.org support forum for questions about the [Premium Edition](https://tech-banker.com/wp-mail-bank/) of Mail Bank.
 
 ### Contact Us
 
-* [https://mail-bank.tech-banker.com/contact-us](https://mail-bank.tech-banker.com/contact-us/)
+* [https://tech-banker.com/contact-us/](https://tech-banker.com/contact-us/)
 
 == Installation ==
 
@@ -250,18 +235,50 @@ You can enable or disable the debug mode to get the debugging output of logged e
 
 == Screenshots ==
 
-1. Email Setup - You can configure your "From Name" and "From Email" here.
-2. Email Setup - This is the PHPMailer setup screen.
-3. Email Setup - The SMTP account setup screen.
-4. Email Setup - The confirmation screen that lets you send a test email.
-5. Test Email Screen
-6. Connectivity Port Testing Screen
-7. Email Logs Screen
-8. Plugin Settings Screen
-9. Roles & Capabilities Screen
-10. System Information Screen
+1. Setup Wizard - Basic Info
+2. Setup Wizard - Account Setup - This is the PHPMailer setup screen.
+3. Setup Wizard - Account Setup - This is the SMTP account setup screen.
+4. Setup Wizard - Account Setup - This is the Mailgun API account setup screen (Pro Edition).
+5. Setup Wizard - Account Setup - This is the Sendgrid API account setup screen (Pro Edition).
+6. Setup Wizard - Confirm - This is the confirmation screen to test the settings.
+6. Setup Wizard - Confirm - This is the output of the email sent with debug mode.
+7. Setup Wizard - Confirm - This is the output of the email sent with debug mode.
+8. Connectivity Test
+9. Email Reports with Charts
+10. Notifications - Email Notification Setup
+11. Notifications - Push Over Setup
+12. Notifications - Slack Setup
+13. General Settings
+14. Roles & Capabilities
+15. System Information
 
 == Changelog ==
+
+= 4.0.5 =
+
+* FIX: Banners Removed
+
+= 4.0.4 =
+
+* FIX: Minor Bugs Fixed
+* FIX: Banner Modified
+
+= 4.0.3 =
+
+* FIX: Minor Bugs Fixed
+
+= 4.0.2 =
+
+* TWEAK: Banner Added
+
+= 4.0.1 =
+
+* FIX: Google OAuth Confliction
+* FIX: Minor Bugs
+* TWEAK: Links Added to Setup Guides
+* TWEAK: Complete New Layouts
+* FEATURE: Charts for Email Stats
+* FEATURE: Dashboard Widget for Email Stats
 
 = 3.0.67 =
 

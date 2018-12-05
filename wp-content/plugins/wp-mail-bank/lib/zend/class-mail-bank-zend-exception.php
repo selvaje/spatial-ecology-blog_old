@@ -61,7 +61,7 @@ class Mail_Bank_Zend_Exception extends Exception {
 	 * @return mixed
 	 */
 	public function __call( $method, array $args ) {
-		if ( 'getprevious' == strtolower( $method ) ) { // WPCS: loose comparison ok.
+		if ( 'getprevious' == strtolower( $method ) ) {// WPCS: loose comparison ok.
 			return $this->get_previous();
 		}
 		return null;

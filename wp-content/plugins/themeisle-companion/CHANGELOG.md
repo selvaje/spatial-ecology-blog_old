@@ -1,4 +1,22 @@
 
+ ### v2.7.0 - 2018-11-26 
+ **Changes:** 
+ * Fix small typo on the module activation button.
+* Improves compatibility with Hestia Theme.
+* Adds compatibility for Neve theme.
+* Fix translation text for Agree button in Cookie notice.
+ 
+ ### v2.6.4 - 2018-11-12 
+ **Changes:** 
+ * Fix issue with elementor content forms php notice
+* Add alignment options to content forms
+* Security enhancements
+* Performance enhancements
+ 
+ ### v2.6.3 - 2018-10-29 
+ **Changes:** 
+ * - Minor bug fix in Gutenberg Blocks
+ 
  ### v2.6.2 - 2018-10-29 
  **Changes:** 
  * Adds Image Optimization and CDN module available for everyone.

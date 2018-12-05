@@ -41,13 +41,15 @@ ROP can work as a facebook or twitter auto-poster and using it you can easily au
 
 > * Share Posts Immediately to Your Social Accounts on Publish/Update
 > * Multiple Social Accounts
-> * Custom UTM tags
+> * Custom UTM tags for analytics
+> * Custom Share Messages
+> * Magic tags for Custom Share Messages
+> * Magic tags for Additional Texts option
 > * Share Images and Video From Your Media Library
 > * Custom Post Types support
 > * LinkedIn, Tumblr, Pinterest Support
 > * Post with image
 > * Custom Schedule
-> * Custom Share Messages
 
 Checkout the **Free vs Pro** table [HERE](https://docs.revive.social/article/941-revive-old-post-free-vs-pro).
 
@@ -110,9 +112,9 @@ If you have any questions please ask on the support forum and we will try our be
 
  - Please follow this [Tutorial.](http://docs.revive.social/article/349-how-to-create-a-facebook-application-for-revive-old-post)
 
-**How do I go back to an older version?**
+**How do I go back to an older version after updating?**
 
-- We DO NOT recommend this. But you can download previous versions of the plugin from [HERE.](https://wordpress.org/plugins/tweet-old-post/advanced/#download-previous-link)
+- Go to the Plugins area on your website dashboard and click "Rollback". This will rollback the plugin to the previous version.
 
 **Any more questions or doubts?**
 
@@ -131,7 +133,28 @@ http://revive.social/plugins/revive-old-post
 
 
 == Changelog ==
-= 8.1.2 - 2018-10-08  = 
+= 8.1.4 - 2018-12-03  = 
+
+* New: Admin pointers for new plugin installs
+* Change: Rename custom messages to "Share Variations"
+* Fix: Automatically remove whitespace when adding credentials
+* Fix: Excess blank space in shares caused by Gutenberg Editor
+* PRO Fix: Publish now not showing on custom post types edit screens
+
+
+= 8.1.3 - 2018-11-01  = 
+
+* - Adds: Option to delete plugin settings on uninstall
+* - Fix: Change twitter credential labels to match that on developer.twitter.com apps
+* - Fix: Various typos
+* - Fix: Issue with media library not loading when PRO plugin is installed in some cases
+* - Fix: Error when other plugins also try to authenticate with Facebook
+* - PRO: Adds support for magic tags for Custom Share Messages and Additional Text
+* - PRO: Adds support for custom post type taxonomy hashtags
+* - PRO: Adds Option to make share instantly option checked by default
+
+
+= 8.1.2 - 2018-10-08  =
 
 * Fixed issue with hashtags in content
 * Adds notice for PHP versions lower than 5.6

@@ -95,7 +95,7 @@ class Mail_Bank_Zend_Mail_Transport_Sendmail extends Mail_Bank_Zend_Mail_Transpo
 	 */
 	public function send_mail() {
 		if ( null === $this->parameters ) {
-			set_error_handler( array( $this, 'handle_mail_errors' ) ); // @codingStandardsIgnoreLine
+			set_error_handler( array( $this, 'handle_mail_errors' ) );// @codingStandardsIgnoreLine.
 			$result = mail(
 				$this->recipients, $this->_mail->getSubject(), $this->body, $this->header
 			);
@@ -118,7 +118,7 @@ class Mail_Bank_Zend_Mail_Transport_Sendmail extends Mail_Bank_Zend_Mail_Transpo
 				);
 			}
 
-			set_error_handler( array( $this, 'handle_mail_errors' ) ); // @codingStandardsIgnoreLine
+			set_error_handler( array( $this, 'handle_mail_errors' ) );// @codingStandardsIgnoreLine.
 			$result = mail(
 				$this->recipients, $this->_mail->getSubject(), $this->body, $this->header, $this->parameters
 			);

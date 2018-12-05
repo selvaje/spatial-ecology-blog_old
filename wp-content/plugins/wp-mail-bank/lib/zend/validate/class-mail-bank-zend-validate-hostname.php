@@ -1754,7 +1754,7 @@ class Mail_Bank_Zend_Validate_Hostname extends Mail_Bank_Zend_Validate_Abstract 
 						iconv_set_encoding( 'internal_encoding', 'UTF-8' );
 				}
 			} else {
-					ini_set( 'default_charset', 'UTF-8' ); // @codingStandardsIgnoreLine
+					ini_set( 'default_charset', 'UTF-8' );
 			}
 			do {
 					// First check TLD.
@@ -1863,7 +1863,7 @@ class Mail_Bank_Zend_Validate_Hostname extends Mail_Bank_Zend_Validate_Abstract 
 						iconv_set_encoding( 'internal_encoding', $origenc );
 				}
 			} else {
-					ini_set( 'default_charset', $origenc ); // @codingStandardsIgnoreLine
+					ini_set( 'default_charset', $origenc );// @codingStandardsIgnoreLine.
 			}
 					// If the input passes as an Internet domain name, and domain names are allowed, then the hostname passes validation.
 			if ( $status && ( $this->_options['allow'] & self::ALLOW_DNS ) ) {
@@ -1937,7 +1937,7 @@ class Mail_Bank_Zend_Validate_Hostname extends Mail_Bank_Zend_Validate_Abstract 
 			$char  = 0x80;
 
 		for ( $indexe = ( $separator ) ? ( $separator + 1 ) : 0; $indexe < $lengthe; ++$lengthd ) {
-			for ( $old_index = $index, $pos = 1, $key = 36; 1; $key += 36 ) { // @codingStandardsIgnoreLine
+			for ( $old_index = $index, $pos = 1, $key = 36; 1; $key += 36 ) {// @codingStandardsIgnoreLine.
 					$hex   = ord( $encoded[ $indexe++ ] );
 					$digit = ( $hex - 48 < 10 ) ? $hex - 22 : ( ( $hex - 65 < 26 ) ? $hex - 65 : ( ( $hex - 97 < 26 ) ? $hex - 97 : 36 ) );
 

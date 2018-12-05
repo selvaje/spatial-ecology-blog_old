@@ -26,11 +26,8 @@ class Rop_Admin {
 	 *
 	 * @var array Array of script vs. page slugs. If page slugs is an array, then an exact match will occur.
 	 */
-	private $allowed_screens = array(
-		'dashboard'   => 'TweetOldPost',
-		'exclude'     => 'rop_content_filters',
-		'publish_now' => array( 'post' ),
-	);
+	private $allowed_screens;
+
 	/**
 	 * The ID of this plugin.
 	 *
@@ -57,29 +54,22 @@ class Rop_Admin {
 	 * @param      string $plugin_name The name of this plugin.
 	 * @param      string $version The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name = '', $version = '' ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 
-	}
+		$general_settings = new Rop_Settings_Model;
 
-	/**
-	 * Shows a notice for sites running PHP less than 5.6.
-	 *
-	 * @since    8.1.2
-	 */
-	public function rop_php_notice() {
+		$post_types = wp_list_pluck( $general_settings->get_selected_post_types(), 'value' );
+		$attachment_post_type = array_search( 'attachment', $post_types );
+		unset( $post_types[ $attachment_post_type ] );
 
-		if ( version_compare( PHP_VERSION, '5.6.0', '<' ) ) {
-			?>
-
-			<div class="notice notice-error is-dismissible">
-				<?php printf( __( '%1$s You\'re using a PHP version lower than 5.6! Revive Old Posts requires at least %2$sPHP 5.6%3$s to function properly. %4$sLearn more here%5$s. %6$s', 'tweet-old-post' ), '<p>', '<b>', '</b>', '<a href="https://docs.revive.social/article/947-how-to-update-your-php-version" target="_blank">', '</a>', '</p>' ); ?>
-			</div>
-			<?php
-
-		}
+		$this->allowed_screens = array(
+			'dashboard'   => 'TweetOldPost',
+			'exclude'     => 'rop_content_filters',
+			'publish_now' => $post_types,
+		);
 
 	}
 
@@ -165,13 +155,15 @@ class Rop_Admin {
 		$active_accounts = $services->get_active_accounts();
 
 		$global_settings             = new Rop_Global_Settings();
+		$settings                   = new Rop_Settings_Model();
+
 		$array_nonce['license_type'] = $global_settings->license_type();
 		$array_nonce['labels']       = Rop_I18n::get_labels();
 		$array_nonce['upsell_link']  = Rop_I18n::UPSELL_LINK;
 		$array_nonce['staging']      = $this->rop_site_is_staging();
 		$array_nonce['debug']        = ( ( ROP_DEBUG ) ? 'yes' : 'no' );
 		$array_nonce['publish_now']  = array(
-			'action'   => false,
+			'action'   => $settings->get_instant_sharing_by_default(),
 			'accounts' => $active_accounts,
 		);
 
@@ -187,6 +179,49 @@ class Rop_Admin {
 	}
 
 	/**
+	 * Set our supported mime types.
+	 *
+	 * @since   8.1.0
+	 * @access  public
+	 *
+	 * @return array
+	 */
+	public function rop_supported_mime_types() {
+
+		$accepted_mime_types = array();
+
+		$image_mime_types = apply_filters(
+			'rop_accepted_image_mime_types',
+			array(
+				'image/jpeg',
+				'image/png',
+				'image/gif',
+			)
+		);
+
+		$video_mime_types = apply_filters(
+			'rop_accepted_video_mime_types',
+			array(
+				'video/mp4',
+				'video/x-m4v',
+				'video/quicktime',
+				'video/x-ms-asf',
+				'video/x-ms-wmv',
+				'video/avi',
+			)
+		);
+
+		$accepted_mime_types['image'] = $image_mime_types;
+
+		$accepted_mime_types['video'] = $video_mime_types;
+		// We use empty for non-attachament posts query.
+		$accepted_mime_types['all'] = array_merge( $image_mime_types, $video_mime_types, array( '' ) );
+
+		return $accepted_mime_types;
+
+	}
+
+	/**
 	 * Detects if is a staging environment
 	 *
 	 * @since     8.0.4
@@ -194,7 +229,6 @@ class Rop_Admin {
 	 */
 	public static function rop_site_is_staging() {
 
-		// JETPACK_STAGING_MODE if jetpack is installed and picks up on a staging environment we're not aware of
 		$rop_known_staging = array(
 			'IS_WPE_SNAPSHOT',
 			'KINSTA_DEV_ENV',
@@ -216,7 +250,7 @@ class Rop_Admin {
 
 			}
 		}
-
+		// JETPACK_STAGING_MODE if jetpack is installed and picks up on a staging environment we're not aware of
 		if ( defined( 'JETPACK_STAGING_MODE' ) && JETPACK_STAGING_MODE == true ) {
 			return apply_filters( 'rop_dont_work_on_staging', true );
 		}

@@ -86,6 +86,15 @@ class Rop_Linkedin_Service extends Rop_Services_Abstract {
 			session_start();
 		}
 
+		if ( ! $this->is_set_not_empty(
+			$_SESSION,
+			array(
+				'rop_linkedin_credentials',
+			)
+		) ) {
+			return false;
+		}
+
 		$credentials = $_SESSION['rop_linkedin_credentials'];
 
 		$api         = $this->get_api( $credentials['client_id'], $credentials['secret'] );
@@ -131,7 +140,7 @@ class Rop_Linkedin_Service extends Rop_Services_Abstract {
 		if ( ! class_exists( '\LinkedIn\Client' ) ) {
 			return false;
 		}
-		$this->api = new \LinkedIn\Client( $client_id, $client_secret );
+		$this->api = new \LinkedIn\Client( $this->strip_whitespace( $client_id ), $this->strip_whitespace( $client_secret ) );
 
 		$this->api->setRedirectUrl( $this->get_legacy_url( 'linkedin' ) );
 	}
@@ -413,7 +422,7 @@ class Rop_Linkedin_Service extends Rop_Services_Abstract {
 			}
 		}
 
-		$new_post['comment']                = $post_details['content'] . $post_details['hashtags'];
+		$new_post['comment']                = $this->strip_excess_blank_lines( $post_details['content'] ) . $post_details['hashtags'];
 		$new_post['content']['description'] = $post_details['content'];
 		$new_post['content']['title']       = html_entity_decode( get_the_title( $post_details['post_id'] ) );
 

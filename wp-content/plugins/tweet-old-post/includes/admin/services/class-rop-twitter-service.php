@@ -91,7 +91,18 @@ class Rop_Twitter_Service extends Rop_Services_Abstract {
 		if ( ! session_id() ) {
 			session_start();
 		}
+
+		if ( ! $this->is_set_not_empty(
+			$_SESSION,
+			array(
+				'rop_twitter_request_token',
+			)
+		) ) {
+			return false;
+		}
+
 		$request_token = $_SESSION['rop_twitter_request_token'];
+
 		$api           = $this->get_api( $request_token['oauth_token'], $request_token['oauth_token_secret'] );
 
 		$access_token = $api->oauth( 'oauth/access_token', [ 'oauth_verifier' => $_GET['oauth_verifier'] ] );
@@ -146,7 +157,7 @@ class Rop_Twitter_Service extends Rop_Services_Abstract {
 			$consumer_secret = $this->consumer_secret;
 		}
 
-		$this->api = new \Abraham\TwitterOAuth\TwitterOAuth( $consumer_key, $consumer_secret, $oauth_token, $oauth_token_secret );
+		$this->api = new \Abraham\TwitterOAuth\TwitterOAuth( $this->strip_whitespace( $consumer_key ), $this->strip_whitespace( $consumer_secret ), $this->strip_whitespace( $oauth_token ), $this->strip_whitespace( $oauth_token_secret ) );
 
 	}
 
@@ -228,12 +239,12 @@ class Rop_Twitter_Service extends Rop_Services_Abstract {
 			'credentials'        => $this->credentials,
 			'public_credentials' => array(
 				'consumer_key'    => array(
-					'name'    => 'Consumer Key',
+					'name'    => 'API Key',
 					'value'   => $this->consumer_key,
 					'private' => false,
 				),
 				'consumer_secret' => array(
-					'name'    => 'Consumer Secret',
+					'name'    => 'API secret key',
 					'value'   => $this->consumer_secret,
 					'private' => true,
 				),
@@ -415,7 +426,7 @@ class Rop_Twitter_Service extends Rop_Services_Abstract {
 		$new_post = array();
 
 		$post_id = $post_details['post_id'];
-		$message = $post_details['content'];
+		$message = $this->strip_excess_blank_lines( $post_details['content'] );
 
 		if ( ! empty( $post_details['post_image'] ) ) {
 

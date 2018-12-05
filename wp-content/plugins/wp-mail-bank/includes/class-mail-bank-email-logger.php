@@ -33,25 +33,16 @@ class Mail_Bank_Email_Logger {
 		$settings_array_unserialized = maybe_unserialize( $settings_array_serialized );
 		if ( 'enable' === $settings_array_unserialized['monitor_email_logs'] ) {
 			if ( isset( $mb_insert_id ) ) {
-				$email_logs_data_array_unserialized = $wpdb->get_var(
-					$wpdb->prepare(
-						'SELECT email_data FROM ' . $wpdb->prefix . 'mail_bank_email_logs WHERE id=%d', intval( $mb_insert_id )
-					)
-				);// db call ok; no-cache ok.
-
-				$email_logs_data_array           = maybe_unserialize( $email_logs_data_array_unserialized );
+				$email_logs_data_array           = array();
 				$email_logs_data_array['status'] = 'Not Sent';
 
 				if ( 'enable' === $settings_array_unserialized['debug_mode'] ) {
 					$email_logs_data_array['debug_mode']       = $settings_array_unserialized['debug_mode'];
 					$email_logs_data_array['debugging_output'] = $wp_error->get_error_message();
 				}
-
-				$email_logs_data               = array();
-				$where                         = array();
-				$where['id']                   = $mb_insert_id;
-				$email_logs_data['email_data'] = maybe_serialize( $email_logs_data_array );
-				$wpdb->update( mail_bank_email_logs(), $email_logs_data, $where );// db call ok; no-cache ok.
+				$where       = array();
+				$where['id'] = $mb_insert_id;
+				$wpdb->update( mail_bank_logs(), $email_logs_data_array, $where );// db call ok; no-cache ok.
 			}
 		}
 	}
@@ -181,7 +172,6 @@ class Mail_Bank_Email_Logger {
 		$sender_email = 'override' === $email_configuration_array['from_email_configuration'] ? $email_configuration_array['sender_email'] : $from_email;
 		$sender_name  = 'override' === $email_configuration_array['sender_name_configuration'] ? $email_configuration_array['sender_name'] : $from_name;
 		if ( 'enable' === $settings_array_unserialized['monitor_email_logs'] ) {
-
 			$email_logs_data_array                 = array();
 			$email_logs_data_array['email_to']     = $data['to_email'];
 			$email_logs_data_array['cc']           = '' === $email_configuration_array['cc'] ? implode( ',', $cc ) : $email_configuration_array['cc'];
@@ -192,12 +182,10 @@ class Mail_Bank_Email_Logger {
 			$email_logs_data_array['sender_email'] = $sender_email;
 			$email_logs_data_array['timestamp']    = MAIL_BANK_LOCAL_TIME;
 			$email_logs_data_array['status']       = 'Sent';
-
-			$email_logs_data               = array();
-			$email_logs_data['email_data'] = maybe_serialize( $email_logs_data_array );
-			$wpdb->insert( mail_bank_email_logs(), $email_logs_data );// db call ok; no-cache ok.
+			$wpdb->insert( mail_bank_logs(), $email_logs_data_array );// db call ok; no-cache ok.
 			$mb_insert_id = $wpdb->insert_id;
 		}
+
 		return $mail_info;
 	}
 }

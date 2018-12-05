@@ -101,7 +101,7 @@ table.rollbacklist td a.versionselectbutton {
 	width: 30px; 
 	height: 16px;
 	background: transparent;
-	border: 2px solid #9178B7;
+	border: 2px solid #0085BA;
 	border-radius: 15px;
 	transition: background-color .2s;
 }
@@ -111,16 +111,16 @@ table.rollbacklist td a.versionselectbutton {
 	transition: all .2s;
 	border-radius: 500px;
 	background: transparent;
-	border: 2px solid #9178B7;
+	border: 2px solid #0085BA;
 	top: 1px; 
 	left: 5px;
 }
 #the-list input[type="checkbox"]:not(:checked) + label:before {
- 	background: #9178B7; 
-	border: 2px solid #9178B7;
+ 	background: #0085BA; 
+	border: 2px solid #0085BA;
 }
 #the-list input[type="checkbox"]:not(:checked) + label:after {
-	background: #9178B7;
+	background: #0085BA;
 	border-color: #FFF;
 	left: 18px;
 }
@@ -150,25 +150,6 @@ table.rollbacklist td a.versionselectbutton {
 	bottom: -6px;
 	font-size: 1.3em;
 }
-.cau_content_wrap .button {
-	box-shadow: none!important;
-	text-shadow: none!important;
-	height: auto;
-}
-.cau_content_wrap .button-primary {
-	background-color: #9178B7;
-	border-color: #6B5887;
-	color: #FFF;
-}
-.cau_content_wrap .button-primary:hover {
-	background-color: #796597;
-	border-color: #5B4C72;
-	color: #FFF;
-}
-.cau_content_wrap .button-primary:active {
-	background-color: #796597;
-	border-color: #5B4C72;
-}
 .cau_content_wrap .buttonIsLoading {
 	background: #DDD!important;
 }
@@ -185,24 +166,25 @@ table.rollbacklist td a.versionselectbutton {
 .cau_support .donate-button {
 	padding: 10px 15px;
 	height: auto;
+	box-shadow: none!important;
+	text-shadow: none!important;
+	background-color: #9178B7;
+	border-color: #6B5887;
+	color: #FFF;
+}
+.cau_support .donate-button:hover {
+	background-color: #796597;
+	border-color: #5B4C72;
+	color: #FFF;
+}
+.cau_support .donate-button:active {
+	background-color: #796597;
+	border-color: #5B4C72;
 }
 .cau_support .rate-button {
 	padding: 10px 20px;
 	height: auto;
 	color: #735F91!important;
-}
-.cau_support_buttons .donate-button {
-	background-color: #9178B7;
-	color: #FFF;
-	border: 0px!important;
-}
-.cau_support_buttons .donate-button:hover {
-	background-color: #735F91;
-	color: #FFF;
-}
-.cau_support_buttons .donate-button:active {
-	background-color: #735F91;
-	color: #FFF;
 }
 
 @media screen and (max-width: 1000px) {

@@ -72,7 +72,7 @@ class Mail_Bank_Zend_Loader {
 				$dirs = explode( PATH_SEPARATOR, $dirs );
 			}
 			foreach ( $dirs as $key => $dir ) {
-				if ( '.' == $dir ) { // WPCS: loose comparison ok.
+				if ( '.' == $dir ) {// WPCS: loose comparison ok.
 					$dirs[ $key ] = $dir_path;
 				} else {
 					$dir          = rtrim( $dir, '\\/' );
@@ -127,7 +127,7 @@ class Mail_Bank_Zend_Loader {
 				$dirs = implode( PATH_SEPARATOR, $dirs );
 			}
 			$inc_path = get_include_path();
-			set_include_path( $dirs . PATH_SEPARATOR . $inc_path ); // @codingStandardsIgnoreLine
+			set_include_path( $dirs . PATH_SEPARATOR . $inc_path );// @codingStandardsIgnoreLine.
 		}
 
 		/**
@@ -147,7 +147,7 @@ class Mail_Bank_Zend_Loader {
 	 * If searching in directories, reset include_path
 	 */
 		if ( $inc_path ) {
-			set_include_path( $inc_path );// @codingStandardsIgnoreLine
+			set_include_path( $inc_path );// @codingStandardsIgnoreLine.
 		}
 
 		return true;
@@ -171,14 +171,14 @@ class Mail_Bank_Zend_Loader {
 			return true;
 		}
 
-		if ( 'WIN' == strtoupper( substr( PHP_OS, 0, 3 ) ) && preg_match( '/^[a-z]:/i', $filename ) // WPCS: loose comparison ok.
+		if ( 'WIN' == strtoupper( substr( PHP_OS, 0, 3 ) ) && preg_match( '/^[a-z]:/i', $filename )// WPCS: loose comparison ok.
 		) {
 			// If on windows, and path provided is clearly an absolute path, return false immediately.
 			return false;
 		}
 
 		foreach ( self::explode_include_path() as $path ) {
-			if ( '.' == $path ) { // WPCS: loose comparison ok.
+			if ( '.' == $path ) {// WPCS: loose comparison ok.
 				if ( is_readable( $filename ) ) {
 					return true;
 				}
@@ -205,7 +205,7 @@ class Mail_Bank_Zend_Loader {
 			$path = get_include_path();
 		}
 
-		if ( PATH_SEPARATOR == ':' ) { // WPCS: loose comparison ok.
+		if ( PATH_SEPARATOR == ':' ) {// WPCS: loose comparison ok.
 			// On *nix systems, include_paths which include paths with a stream
 			// schema cannot be safely explode'd, so we have to be a bit more
 			// intelligent in the approach.
@@ -228,7 +228,7 @@ class Mail_Bank_Zend_Loader {
 	 * @return string|false Class name on success; false on failure
 	 */
 	public static function autoload( $class ) {
-		trigger_error( __CLASS__ . '::' . __METHOD__ . ' is deprecated as of 1.8.0 and will be removed with 2.0.0; use Zend_Loader_Autoloader instead', E_USER_NOTICE ); // @codingStandardsIgnoreLine
+		trigger_error( __CLASS__ . '::' . __METHOD__ . ' is deprecated as of 1.8.0 and will be removed with 2.0.0; use Zend_Loader_Autoloader instead', E_USER_NOTICE );// @codingStandardsIgnoreLine.
 		try {
 			self::load_class( $class );
 			return $class;
@@ -247,7 +247,7 @@ class Mail_Bank_Zend_Loader {
 	 * or if the specified class does not have an autoload() method.
 	 */
 	public static function register_auto_load( $class = 'Mail_Bank_Zend_Loader', $enabled = true ) {
-		trigger_error( __CLASS__ . '::' . __METHOD__ . ' is deprecated as of 1.8.0 and will be removed with 2.0.0; use Mail_Bank_Zend_Loader_Autoloader instead', E_USER_NOTICE ); // @codingStandardsIgnoreLine
+		trigger_error( __CLASS__ . '::' . __METHOD__ . ' is deprecated as of 1.8.0 and will be removed with 2.0.0; use Mail_Bank_Zend_Loader_Autoloader instead', E_USER_NOTICE );// @codingStandardsIgnoreLine.
 		if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/loader/class-mail-bank-zend-loader-autoloader.php' ) ) {
 			require_once MAIL_BANK_DIR_PATH . 'lib/zend/loader/class-mail-bank-zend-loader-autoloader.php';
 		}
@@ -255,7 +255,7 @@ class Mail_Bank_Zend_Loader {
 		$autoloader = Mail_Bank_Zend_Loader_Autoloader::getInstance();
 		$autoloader->setFallbackAutoloader( true );
 
-		if ( 'Mail_Bank_Zend_Loader' != $class ) { // WPCS: loose comparison ok.
+		if ( 'Mail_Bank_Zend_Loader' != $class ) {// WPCS: loose comparison ok.
 			self::load_class( $class );
 			$methods = get_class_methods( $class );
 			if ( ! in_array( 'autoload', (array) $methods, true ) ) {
@@ -335,7 +335,7 @@ class Mail_Bank_Zend_Loader {
 		$file_name = ltrim( $file, '\\' );
 		$file      = '';
 		$namespace = '';
-		if ( $last_ns_pos = strripos( $file_name, '\\' ) ) {
+		if ( $last_ns_pos = strripos( $file_name, '\\' ) ) {// @codingStandardsIgnoreLine.
 			$namespace = substr( $file_name, 0, $last_ns_pos );
 			$file_name = substr( $file_name, $last_ns_pos + 1 );
 			$file      = str_replace( '\\', DIRECTORY_SEPARATOR, $namespace ) . DIRECTORY_SEPARATOR;

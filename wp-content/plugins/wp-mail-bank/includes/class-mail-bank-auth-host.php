@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly
 if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
-
 	/**
 	 * This class is used to host authentication.
 	 *
@@ -31,21 +30,21 @@ if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
 		 * Manage smtp host
 		 *
 		 * @access   public
-		 * @var      string    $smtp_host  holds from name.
+		 * @var      string    $smtp_host  holds smtp host.
 		 */
 		public $smtp_host;
 		/**
 		 * Manage smtp port
 		 *
 		 * @access   public
-		 * @var      string    $smtp_port  holds from name.
+		 * @var      string    $smtp_port  holds smtp port.
 		 */
 		public $smtp_port;
 		/**
 		 * Manage client id
 		 *
 		 * @access   public
-		 * @var      string    $client_id  holds from name.
+		 * @var      string    $client_id  holds client id.
 		 */
 		public $client_id;
 		/**
@@ -56,7 +55,7 @@ if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
 		 */
 		public $client_secret;
 		/**
-		 * Manage from name
+		 * Manage redirect uri
 		 *
 		 * @access   public
 		 * @var      string    $redirect_uri  holds redirect uri.
@@ -77,7 +76,7 @@ if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
 		 */
 		public $authorization_token;
 		/**
-		 * Manage authorization token
+		 * Manage oauth domains
 		 *
 		 * @access   public
 		 * @var      array    $oauth_domains array holds from authorization domains.
@@ -153,7 +152,7 @@ if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
 			if ( file_exists( MAIL_BANK_DIR_PATH . 'includes/class-mail-bank-manage-token.php' ) ) {
 				include_once MAIL_BANK_DIR_PATH . 'includes/class-mail-bank-manage-token.php';
 			}
-			$this->authorization_token = Mail_Bank_Manage_Token::get_instance();
+			$this->authorization_token = mail_bank_manage_token::get_instance();
 			$this->from_name           = $settings_array['sender_name'];
 			$this->from_email          = $settings_array['sender_email'];
 			$this->smtp_host           = $settings_array['hostname'];
@@ -332,7 +331,7 @@ if ( ! class_exists( 'Mail_Bank_Auth_Host' ) ) {
 					$wpdb->prepare(
 						'SELECT meta_value FROM ' . $mb_table_prefix . 'mail_bank_meta WHERE meta_key = %s', 'email_configuration'
 					)
-				); // WPCS: db call ok; no-cache ok, unprepared SQL ok.
+				);// db call ok; no-cache ok, unprepared SQL ok.
 				$email_configuration_settings = maybe_unserialize( $email_configuration_data );
 				if ( 'smtp' === $email_configuration_settings['mailer_type'] ) {
 					if ( ! function_exists( 'wp_mail' ) ) {

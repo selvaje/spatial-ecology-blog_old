@@ -179,9 +179,9 @@ if ( ! class_exists( 'Mail_Bank_Send_Mail' ) ) {
 				// Writes the log on failure.
 				if ( $e->getCode() === 334 && 'enable' === $settings_data['debug_mode'] ) {
 					update_option( 'mail_bank_mail_status', $e->getMessage() );
-				} elseif ( $engine->get_output_mail_bank() != '' && 'enable' === $settings_data['debug_mode'] ) { // WPCS: loose comparison ok.
+				} elseif ( $engine->get_output_mail_bank() != '' && 'enable' === $settings_data['debug_mode'] ) {// WPCS: loose comparison ok.
 					update_option( 'mail_bank_mail_status', $engine->get_output_mail_bank() );
-				} elseif ( $engine->get_output_mail_bank() == '' && 'enable' === $settings_data['debug_mode'] ) { // WPCS: loose comparison ok.
+				} elseif ( $engine->get_output_mail_bank() == '' && 'enable' === $settings_data['debug_mode'] ) {// WPCS: loose comparison ok.
 					update_option( 'mail_bank_mail_status', $e->getMessage() );
 				} else {
 					update_option( 'mail_bank_mail_status', false );

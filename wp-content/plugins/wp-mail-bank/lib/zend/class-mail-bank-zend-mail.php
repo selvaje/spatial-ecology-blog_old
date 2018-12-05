@@ -22,36 +22,32 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly
-/**
- * Includes Transport Abstract File.
- *
+/** Includes Transport Abstract File.
+
  * @see Mail_Bank_Zend_Mail_Transport_Abstract
  */
 if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/mail/transport/class-mail-bank-zend-mail-transport-abstract.php' ) ) {
 	require_once MAIL_BANK_DIR_PATH . 'lib/zend/mail/transport/class-mail-bank-zend-mail-transport-abstract.php';
 }
 
-/**
- * Includes Zend Mime File.
- *
+/** Includes Zend Mime File.
+
  * @see Mail_Bank_Zend_Mime
  */
 if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/class-mail-bank-zend-mime.php' ) ) {
 	require_once MAIL_BANK_DIR_PATH . 'lib/zend/class-mail-bank-zend-mime.php';
 }
 
-/**
- * Includes Mime Message File.
- *
+/** Includes Mime Message File.
+
  * @see Mail_Bank_Zend_Mime_Message
  */
 if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/mime/class-mail-bank-zend-mime-message.php' ) ) {
 	require_once MAIL_BANK_DIR_PATH . 'lib/zend/mime/class-mail-bank-zend-mime-message.php';
 }
 
-/**
- * Includes Mime Part File.
- *
+/** Includes Mime Part File.
+
  * @see Mail_Bank_Zend_Mime_Part
  */
 if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/mime/class-mail-bank-zend-mime-part.php' ) ) {
@@ -66,9 +62,11 @@ if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/mime/class-mail-bank-zend-mime-
  * @license     http://framework.zend.com/license/new-bsd        New BSD License
  */
 class Mail_Bank_Zend_Mail extends Mail_Bank_Zend_Mime_Message {
-	/**
-	 * Variable Declaration.
-	 *
+	/*
+	* @access protected
+	*/
+	/** Variable Declaration.
+
 	 * @var Mail_Bank_Zend_Mail_Transport_Abstract
 	 * @static
 	 */
@@ -216,7 +214,7 @@ class Mail_Bank_Zend_Mail extends Mail_Bank_Zend_Mime_Message {
 	 * @param    string $charset OPTIONAL.
 	 */
 	public function __construct( $charset = null ) {
-		if ( null != $charset ) { // WPCS: loose comparison ok.
+		if ( null != $charset ) {// WPCS: loose comparison ok.
 			$this->_charset = $charset;
 		}
 	}
@@ -817,7 +815,6 @@ class Mail_Bank_Zend_Mail extends Mail_Bank_Zend_Mime_Message {
 		if ( null === $this->return_path ) {
 			$email             = $this->filter_email( $email );
 			$this->return_path = $email;
-			$this->store_header( 'Return-Path', $email, false );
 		} else {
 			/** Includes Exception File
 
@@ -842,7 +839,6 @@ class Mail_Bank_Zend_Mail extends Mail_Bank_Zend_Mime_Message {
 		if ( null !== $this->return_path ) {
 			return $this->return_path;
 		}
-
 		return $this->_from;
 	}
 	/**
@@ -1046,8 +1042,8 @@ class Mail_Bank_Zend_Mail extends Mail_Bank_Zend_Mime_Message {
 
 		if ( null !== $this->_from ) {
 			$user = $this->_from;
-		} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) { // @codingStandardsIgnoreLine
-			$user = Filter_input( INPUT_SERVER, 'REMOTE_ADDR' );
+		} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) {// @codingStandardsIgnoreLine
+			$user = $_SERVER['REMOTE_ADDR']; // @codingStandardsIgnoreLine
 		} else {
 			$user = getmypid();
 		}
@@ -1060,8 +1056,8 @@ class Mail_Bank_Zend_Mail extends Mail_Bank_Zend_Mime_Message {
 			$recipient = 'unknown';
 		}
 
-		if ( isset( $_SERVER['SERVER_NAME'] ) ) { // WPCS: input var ok.
-			$host_name = Filter_input( INPUT_SERVER, 'SERVER_NAME' );
+		if ( isset( $_SERVER['SERVER_NAME'] ) ) {// WPCS: input var ok.
+			$host_name = $_SERVER['SERVER_NAME']; // @codingStandardsIgnoreLine
 		} else {
 			$host_name = php_uname( 'n' );
 		}
@@ -1216,7 +1212,7 @@ class Mail_Bank_Zend_Mail extends Mail_Bank_Zend_Mime_Message {
 			return $email;
 		} else {
 			$encoded_name = $this->encode_header( $name );
-			if ( $encoded_name === $name && strcspn( $name, '()<>[]:;@\\,.' ) != strlen( $name ) ) { // WPCS: loose comparison ok.
+			if ( $encoded_name === $name && strcspn( $name, '()<>[]:;@\\,.' ) != strlen( $name ) ) {// WPCS: loose comparison ok.
 				$format = '"%s" <%s>';
 			} else {
 				$format = '%s <%s>';

@@ -23,45 +23,25 @@ if ( ! is_user_logged_in() ) {
 	if ( ! $access_granted ) {
 		return;
 	} else {
+		$upgrade_database_mail_bank = wp_create_nonce( 'upgrade_database_mail_bank' );
+		if ( ! function_exists( 'get_mail_bank_meta_value' ) ) {
 			/**
-			 * This function is used to get logs data.
+			 * This function is used to return unserialized data.
 			 *
-			 * @param string $data holds data.
-			 * @param string $start_date holds start date.
-			 * @param string $end_date holds end date.
+			 * @param string $meta_key .
 			 */
-		function get_mail_bank_log_data_maybe_unserialize( $data, $start_date, $end_date ) {
-			$array_details = array();
-			foreach ( $data as $raw_row ) {
-				$unserialize_data       = maybe_unserialize( $raw_row->email_data );
-				$unserialize_data['id'] = $raw_row->id;
-				if ( $unserialize_data['timestamp'] >= $start_date && $unserialize_data['timestamp'] <= $end_date ) {
-					array_push( $array_details, $unserialize_data );
-				}
+			function get_mail_bank_meta_value( $meta_key ) {
+				global $wpdb;
+				$meta_value = $wpdb->get_var(
+					$wpdb->prepare(
+						'SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta WHERE meta_key=%s', $meta_key
+					)
+				);// WPCS: db call ok; no-cache ok.
+				return maybe_unserialize( $meta_value );
 			}
-			return $array_details;
 		}
-		/**
-		 * This function used to get the data.
-		 *
-		 * @param string $meta_key this parameter is used to fetch data on the basis of this key.
-		 */
-		function get_mail_bank_meta_value( $meta_key ) {
-			global $wpdb;
-			$meta_value = $wpdb->get_var(
-				$wpdb->prepare(
-					'SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta  WHERE meta_key=%s', $meta_key
-				)
-			); // db call ok; no-cache ok.
-			return maybe_unserialize( $meta_value );
-		}
-		if ( isset( $_REQUEST['page'] ) ) {
-			$page = sanitize_text_field( wp_unslash( $_REQUEST['page'] ) );// Input var okay, CSRF ok.
-		}
-		$check_wp_mail_bank_wizard = get_option( 'mail-bank-welcome-page' );
-		$page_url                  = false === $check_wp_mail_bank_wizard ? 'mb_mail_bank_welcome_page' : $page;
-		if ( isset( $_REQUEST['page'] ) ) {// Input var okay, CSRF ok.
-			switch ( $page_url ) {
+		if ( isset( $_GET['page'] ) ) { // WPCS: CSRF ok, WPCS: input var ok.
+			switch ( sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) { // WPCS: CSRF ok,WPCS: input var ok.
 				case 'mb_roles_and_capabilities':
 					$details_roles_capabilities = get_mail_bank_meta_value( 'roles_and_capabilities' );
 					$other_roles_access_array   = array(
@@ -80,20 +60,44 @@ if ( ! is_user_logged_in() ) {
 					$settings_data_array = get_mail_bank_meta_value( 'settings' );
 					break;
 
-				case 'mb_email_logs':
-					$end_date                     = MAIL_BANK_LOCAL_TIME + 86400;
-					$start_date                   = $end_date - 604800;
-					$email_logs_data              = $wpdb->get_results(
-						'SELECT * FROM ' . $wpdb->prefix . 'mail_bank_email_logs ORDER BY id DESC LIMIT 1000'
-					); // db call ok; no-cache ok.
-					$unserialized_email_logs_data = get_mail_bank_log_data_maybe_unserialize( $email_logs_data, $start_date, $end_date );
+				case 'mb_notifications':
+					$notifications_data = get_mail_bank_meta_value( 'notifications' );
 					break;
 
+				case 'mb_email_logs':
+					$end_date   = MAIL_BANK_LOCAL_TIME;
+					$start_date = strtotime( '-7 days', $end_date );
+
+					$email_logs_sent_data     = $wpdb->get_results(
+						"SELECT id, subject, timestamp, email_to, status, debug_mode, DATE_FORMAT(FROM_UNIXTIME(timestamp), '%m/%d/%Y') AS 'date_formatted' FROM " . $wpdb->prefix . "mail_bank_logs WHERE timestamp BETWEEN " . $start_date . " AND " . $end_date . " AND status = 'Sent' ORDER BY timestamp ASC LIMIT 3000", ARRAY_A // @codingStandardsIgnoreLine
+					);// WPCS: db call ok; no-cache ok.
+					$email_logs_not_sent_data = $wpdb->get_results(
+						"SELECT id, subject, timestamp, email_to, status, debug_mode, DATE_FORMAT(FROM_UNIXTIME(timestamp), '%m/%d/%Y') AS 'date_formatted' FROM " . $wpdb->prefix . "mail_bank_logs WHERE timestamp BETWEEN " . $start_date . " AND " . $end_date . " AND status = 'Not Sent' ORDER BY timestamp ASC LIMIT 3000", ARRAY_A// @codingStandardsIgnoreLine
+					);// WPCS: db call ok; no-cache ok.
+					$sent_array_dates         = array_column( $email_logs_sent_data, 'date_formatted' );
+					$email_logs_data          = array_merge( $email_logs_sent_data, $email_logs_not_sent_data );
+					$email_logs_array_dates   = array_column( $email_logs_data, 'date_formatted' );
+					$email_logs_array_dates   = array_values( array_unique( $email_logs_array_dates ) );
+					/**
+					 * This function is used to sort date.
+					 *
+					 * @param string $a passes parameter as a.
+					 * @param string $b passes parameter as b.
+					 */
+					function date_sort( $a, $b ) {
+						return strtotime( $a ) - strtotime( $b );
+					}
+					usort( $email_logs_array_dates, 'date_sort' );
+					$not_sent_array_dates = array_column( $email_logs_not_sent_data, 'date_formatted' );
+					$email_reports_array  = $email_logs_data;
+					$sort_ids             = array_column( $email_reports_array, 'id' );
+					array_multisort( $sort_ids, SORT_DESC, $email_reports_array );
+					break;
 
 				case 'mb_email_configuration':
 					$email_configuration_array = get_mail_bank_meta_value( 'email_configuration' );
-					if ( ! empty( $_REQUEST['access_token'] ) && isset( $_REQUEST['access_token'] ) ) {// Input var okay, CSRF ok.
-						$code                            = esc_attr( $_REQUEST['access_token'] ); // @codingStandardsIgnoreLine
+					if ( ! empty( $_REQUEST['access_token'] ) && isset( $_REQUEST['access_token'] ) ) {// WPCS: CSRF ok,WPCS: input var ok.
+						$code                            = esc_attr( $_REQUEST['access_token'] ); // @codingStandardsIgnoreLine.
 						$update_email_configuration_data = get_option( 'update_email_configuration' );
 						$mail_bank_auth_host             = new Mail_Bank_Auth_Host( $update_email_configuration_data );
 						if ( 'smtp.gmail.com' === $update_email_configuration_data['hostname'] ) {
@@ -115,13 +119,13 @@ if ( ! is_user_logged_in() ) {
 								break;
 							}
 						}
-						$obj_db_helper_mail_bank = new Db_Helper_Mail_Bank();
+						$obj_dbhelper_mail_bank = new Dbhelper_Mail_Bank();
 
 						$update_email_configuration_array = array();
 						$where                            = array();
-						$where['meta_key']                = 'email_configuration'; // WPCS: slow query ok.
-						$update_email_configuration_array['meta_value'] = maybe_serialize( $update_email_configuration_data ); // WPCS: slow query ok.
-						$obj_db_helper_mail_bank->update_command( mail_bank_meta(), $update_email_configuration_array, $where );
+						$where['meta_key']                = 'email_configuration';// WPCS: slow query ok.
+						$update_email_configuration_array['meta_value'] = maybe_serialize( $update_email_configuration_data );// WPCS: slow query ok.
+						$obj_dbhelper_mail_bank->update_command( mail_bank_meta(), $update_email_configuration_array, $where );
 						if ( '1' === $update_email_configuration_data['automatic_mail'] ) {
 							$automatically_send_mail = 'true';
 						} else {

@@ -171,7 +171,7 @@ if ( ! class_exists( 'Mail_Bank_Zend_Engine' ) ) {
 			/**
 			 * Add headers.
 			 */
-			$mail->addHeader( 'X-Mailer', sprintf( 'Mail Bank SMTP %s for WordPress (%s)', MAIL_BANK_VERSION_NUMBER, 'https://wordpress.org/plugins/wp-mail-bank/' ) );
+			$mail->addHeader( 'X-Mailer', sprintf( 'Mail Bank SMTP %s for WordPress (%s)', MAIL_BANK_VERSION_NUMBER, 'https://tech-banker.com/wp-mail-bank/' ) );
 			foreach ( (array) $message->mb_get_headers() as $header ) {
 				$mail->addHeader( $header['name'], $header['content'], true );
 			}

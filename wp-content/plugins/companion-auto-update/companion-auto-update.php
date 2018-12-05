@@ -3,7 +3,7 @@
  * Plugin Name: Companion Auto Update
  * Plugin URI: http://codeermeneer.nl/portfolio/companion-auto-update/
  * Description: This plugin auto updates all plugins, all themes and the wordpress core.
- * Version: 3.2.5
+ * Version: 3.3.1
  * Author: Papin Schipper
  * Author URI: http://codeermeneer.nl/
  * Contributors: papin
@@ -22,13 +22,18 @@ function cau_load_translations() {
 }
 add_action( 'init', 'cau_load_translations' );
 
-// Install db
+// Set up the database and required schedules
 function cau_install() {
 	cau_database_creation(); // Db handle
-	if (! wp_next_scheduled ( 'cau_set_schedule_mail' )) wp_schedule_event( time(), 'daily', 'cau_set_schedule_mail'); //Set schedule
+	if (! wp_next_scheduled ( 'cau_set_schedule_mail' )) wp_schedule_event( time(), 'daily', 'cau_set_schedule_mail'); // Set schedule for mail etc.
+	if (! wp_next_scheduled ( 'cau_custom_hooks_plugins' )) wp_schedule_event( time(), 'daily', 'cau_custom_hooks_plugins'); // Run custom hooks on plugin updates
+	if (! wp_next_scheduled ( 'cau_custom_hooks_themes' )) wp_schedule_event( time(), 'daily', 'cau_custom_hooks_themes'); // Run custom hooks on theme updates
 }
 add_action('cau_set_schedule_mail', 'cau_check_updates_mail');
+add_action('cau_custom_hooks_plugins', 'cau_run_custom_hooks_p');
+add_action('cau_custom_hooks_themes', 'cau_run_custom_hooks_t');
 
+// Create database
 function cau_database_creation() {
 
 	global $wpdb;
@@ -78,7 +83,7 @@ function cau_check_if_exists( $whattocheck ) {
 
 }
 
-// Inset Data
+// Insert date into database
 function cau_install_data() {
 
 	global $wpdb;
@@ -89,7 +94,7 @@ function cau_install_data() {
 	if( !cau_check_if_exists( 'plugins' ) ) $wpdb->insert( $table_name, array( 'name' => 'plugins', 'onoroff' => 'on' ) );
 	if( !cau_check_if_exists( 'themes' ) ) $wpdb->insert( $table_name, array( 'name' => 'themes', 'onoroff' => 'on' ) );
 	if( !cau_check_if_exists( 'minor' ) ) $wpdb->insert( $table_name, array( 'name' => 'minor', 'onoroff' => 'on' ) );
-	if( !cau_check_if_exists( 'major' ) ) $wpdb->insert( $table_name, array( 'name' => 'major', 'onoroff' => 'on' ) );
+	if( !cau_check_if_exists( 'major' ) ) $wpdb->insert( $table_name, array( 'name' => 'major', 'onoroff' => '' ) );
 
 	// Email configs
 	if( !cau_check_if_exists( 'email' ) ) $wpdb->insert( $table_name, array( 'name' => 'email', 'onoroff' => '' ) );
@@ -104,7 +109,7 @@ function cau_install_data() {
 }
 register_activation_hook( __FILE__, 'cau_install' );
 
-// Clear everything
+// Clear everything on deactivation
 function cau_remove() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "auto_updates"; 
@@ -146,7 +151,8 @@ function cau_frontend() { ?>
 
 		<h2 class="nav-tab-wrapper wp-clearfix">
 			<a href="<?php echo cau_menloc(); ?>?page=cau-settings" class="nav-tab <?php active_tab(''); ?>"><?php _e('Dashboard', 'companion-auto-update'); ?></a>
-			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=schedule&cau_page=advanced" class="nav-tab <?php active_tab('advanced', 'cau_page'); ?>"><?php _e('Advanced settings', 'companion-auto-update'); ?></a>
+			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=schedule&cau_page=advanced" class="nav-tab <?php active_tab('schedule', 'tab'); ?>"><?php _e('Advanced settings', 'companion-auto-update'); ?></a>
+			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=pluginlist&cau_page=advanced" class="nav-tab <?php active_tab('pluginlist', 'tab'); ?>"><?php _e('Select plugins', 'companion-auto-update'); ?></a>
 			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=log&amp;cau_page=system" class="nav-tab <?php active_tab('system', 'cau_page'); ?>"><?php _e('Systeminfo', 'companion-auto-update'); ?></a>
 			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=support" class="nav-tab <?php active_tab('support'); ?>"><?php _e('Support & Feedback', 'companion-auto-update'); ?></a>
 		</h2>
@@ -159,15 +165,6 @@ function cau_frontend() { ?>
 			<ul class="subsubsub">
 				<li><a class="<?php active_subtab('log'); ?>" href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=log&amp;cau_page=system"><?php _e('Update log', 'companion-auto-update'); ?></a> | </li>
 				<li><a class="<?php active_subtab('status'); ?>" href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=status&amp;cau_page=system"><?php _e('Status', 'companion-auto-update'); ?></a></li>
-			</ul>
-
-			<br class="clear" />
-
-		<?php } if( $cau_page == 'advanced' ) { ?>
-
-			<ul class="subsubsub">
-				<li><a class="<?php active_subtab('pluginlist'); ?>" href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=pluginlist&amp;cau_page=advanced"><?php _e('Filter plugins', 'companion-auto-update'); ?></a> | </li>
-				<li><a class="<?php active_subtab('schedule'); ?>" href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=schedule&amp;cau_page=advanced"><?php _e('Scheduling', 'companion-auto-update'); ?></a></li>
 			</ul>
 
 			<br class="clear" />

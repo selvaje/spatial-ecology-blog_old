@@ -102,7 +102,7 @@ class Mail_Bank_Zend_Mail_Transport_File extends Mail_Bank_Zend_Mail_Transport_A
 	protected function send_mail() {
 		$file = $this->_path . DIRECTORY_SEPARATOR . call_user_func( $this->_callback, $this );
 
-		if ( ! is_writable( dirname( $file ) ) ) { // @codingStandardsIgnoreLine
+		if ( ! is_writable( dirname( $file ) ) ) {// @codingStandardsIgnoreLine
 			if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/mail/transport/class-mail-bank-zend-mail-transport-exception.php' ) ) {
 				require_once MAIL_BANK_DIR_PATH . 'lib/zend/mail/transport/class-mail-bank-zend-mail-transport-exception.php';
 			}
@@ -116,7 +116,7 @@ class Mail_Bank_Zend_Mail_Transport_File extends Mail_Bank_Zend_Mail_Transport_A
 
 		$email = $this->header . $this->eol . $this->body;
 
-		if ( ! file_put_contents( $file, $email ) ) { // @codingStandardsIgnoreLine
+		if ( ! file_put_contents( $file, $email ) ) {// @codingStandardsIgnoreLine
 			if ( file_exists( MAIL_BANK_DIR_PATH . 'lib/zend/mail/transport/class-mail-bank-zend-mail-transport-exception.php' ) ) {
 				require_once MAIL_BANK_DIR_PATH . 'lib/zend/mail/transport/class-mail-bank-zend-mail-transport-exception.php';
 			}

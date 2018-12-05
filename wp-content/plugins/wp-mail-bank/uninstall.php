@@ -15,26 +15,26 @@ if ( ! current_user_can( 'manage_options' ) ) {
 } else {
 	global $wpdb;
 	if ( is_multisite() ) {
-		$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );// db call ok; no-cache ok.
+		$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );// WPCS: db call ok; no-cache ok.
 		foreach ( $blog_ids as $blog_id ) {
-			switch_to_blog( $blog_id ); // @codingStandardsIgnoreLine
+			switch_to_blog( $blog_id );// @codingStandardsIgnoreLine.
 			$version = get_option( 'mail-bank-version-number' );
 			if ( false !== $version ) {
 				$settings_remove_tables             = $wpdb->get_var(
 					$wpdb->prepare(
-						'SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta
-																				 WHERE meta_key = %s', 'settings'
+						'SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta WHERE meta_key = %s', 'settings'
 					)
-				);// db call ok; no-cache ok.
+				);// WPCS: db call ok; no-cache ok.
 				$settings_remove_tables_unserialize = maybe_unserialize( $settings_remove_tables );
 				if ( 'enable' === esc_attr( $settings_remove_tables_unserialize['remove_tables_at_uninstall'] ) ) {
 					$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank' );// @codingStandardsIgnoreLine.
-					$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank_meta' );// @codingStandardsIgnoreLine
-					$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank_email_logs' );// @codingStandardsIgnoreLine
+					$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank_meta' );// @codingStandardsIgnoreLine.
+					$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank_logs' );// @codingStandardsIgnoreLine.
 					// Delete options.
 					delete_option( 'mail-bank-version-number' );
 					delete_option( 'mb_admin_notice' );
 					delete_option( 'mail-bank-welcome-page' );
+					delete_option( 'mail_bank_update_database' );
 				}
 			}
 			restore_current_blog();
@@ -45,20 +45,20 @@ if ( ! current_user_can( 'manage_options' ) ) {
 			// Drop Tables.
 			$settings_remove_tables             = $wpdb->get_var(
 				$wpdb->prepare(
-					'SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta
-																		 WHERE meta_key = %s', 'settings'
+					'SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta WHERE meta_key = %s', 'settings'
 				)
-			);// db call ok; no-cache ok.
+			);// WPCS: db call ok; no-cache ok.
 			$settings_remove_tables_unserialize = maybe_unserialize( $settings_remove_tables );
 
 			if ( 'enable' === esc_attr( $settings_remove_tables_unserialize['remove_tables_at_uninstall'] ) ) {
-				$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank' );// @codingStandardsIgnoreLine
-				$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank_meta' );// @codingStandardsIgnoreLine
-				$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank_email_logs' );// @codingStandardsIgnoreLine
+				$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank' );// @codingStandardsIgnoreLine.
+				$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank_meta' );// @codingStandardsIgnoreLine.
+				$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'mail_bank_logs' );// @codingStandardsIgnoreLine.
 				// Delete options.
 				delete_option( 'mail-bank-version-number' );
 				delete_option( 'mb_admin_notice' );
 				delete_option( 'mail-bank-welcome-page' );
+				delete_option( 'mail_bank_update_database' );
 			}
 		}
 	}

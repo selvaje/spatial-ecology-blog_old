@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Classic Editor - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2018-10-24 23:44:04+0000\n"
+"PO-Revision-Date: 2018-11-20 02:12:57+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -462,10 +462,6 @@ msgstr "Custom field updated."
 msgid "WordPress Contributors"
 msgstr "WordPress Contributors"
 
-#. Plugin URI of the plugin/theme
-msgid "https://wordpress.org"
-msgstr "https://en-gb.wordpress.org"
-
 #: classic-editor.php:441
 msgid "Schedule"
 msgstr "Schedule"
@@ -490,3 +486,7 @@ msgstr "Edit (Classic Editor)"
 #: classic-editor.php:274
 msgid "(Classic)"
 msgstr "(Classic Edit)"
+
+#. Plugin URI of the plugin/theme
+msgid "https://wordpress.org"
+msgstr "https://en-gb.wordpress.org/"

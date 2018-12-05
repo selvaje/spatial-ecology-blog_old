@@ -41,7 +41,7 @@ if( isset( $_POST['reset'] ) ) {
 		<input type='submit' name='reset' id='reset' class='button button-alt' value='<?php _e( "Reset list", "companion-auto-update" ); ?>'>
 	</p>
 
-	<table class="wp-list-table widefat autoupdate">
+	<table class="wp-list-table widefat autoupdate striped">
 		<thead>
 			<tr>
 				<td>&nbsp;</td>

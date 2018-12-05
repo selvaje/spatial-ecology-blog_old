@@ -93,7 +93,7 @@ class Mail_Bank_Zend_Mail_Part_File extends Mail_Bank_Zend_Mail_Part {
 		}
 
 		if ( ! is_resource( $params['file'] ) ) {
-			$this->fh = fopen( $params['file'], 'r' ); // @codingStandardsIgnoreLine
+			$this->fh = fopen( $params['file'], 'r' );// @codingStandardsIgnoreLine.
 		} else {
 			$this->fh = $params['file'];
 		}
@@ -202,7 +202,7 @@ class Mail_Bank_Zend_Mail_Part_File extends Mail_Bank_Zend_Mail_Part {
 			return stream_copy_to_stream( $this->fh, $stream, $this->content_pos[1] - $this->content_pos[0] );
 		}
 		$length = $this->content_pos[1] - $this->content_pos[0];
-		return $length < 1 ? '' : fread( $this->fh, $length ); // @codingStandardsIgnoreLine
+		return $length < 1 ? '' : fread( $this->fh, $length );// @codingStandardsIgnoreLine 
 	}
 	/**
 	 * Return size of part

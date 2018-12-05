@@ -199,7 +199,6 @@ class Mail_Bank_Zend_Mail_Transport_Smtp extends Mail_Bank_Zend_Mail_Transport_A
 		}
 		// Set sender email address.
 		$this->_connection->mail( $this->_mail->getReturnPath() );
-
 		// Set recipient forward paths.
 		foreach ( $this->_mail->getRecipients() as $recipient ) {
 			$this->_connection->rcpt( $recipient );

@@ -1,42 +1,159 @@
 <?php
 /**
- * This file is used for displaying dashboard widget.
+ * This file is used for widget.
  *
- * @author   Tech Banker
- * @package  mail-bank/lib
- * @version  3.0.12
+ * @author  Tech Banker
+ * @package wp-mail-bank/lib
+ * @version 2.0.0
  */
 
 	/**
 	 * This file is used for displaying dashboard widget.
 	 *
-	 * @param  string $type passes as type.
+	 * @param string $type .
 	 */
 function get_mail_configuration_data_mail_bank( $type ) {
 	global $wpdb;
 	$meta_value = $wpdb->get_var(
 		$wpdb->prepare(
-			'SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta  WHERE meta_key=%s', $type
+			'SELECT meta_value FROM ' . $wpdb->prefix . 'mail_bank_meta WHERE meta_key=%s', $type
 		)
-	); // db call ok; no-cache ok.
+	);// WPCS: db call ok; no-cache ok.
 	return maybe_unserialize( $meta_value );
 }
 $unserialized_mail_configuration_data = get_mail_configuration_data_mail_bank( 'email_configuration' );
-
-$email_logs_data              = $wpdb->get_results(
-	'SELECT email_data FROM ' . $wpdb->prefix . 'mail_bank_email_logs ORDER BY id DESC'
-); // WPCS: db call ok; no-cache ok.
-$mb_status_sent               = 0;
-$mb_status_not_sent           = 0;
-$email_logs_unserialized_data = array();
-foreach ( $email_logs_data as $data ) {
-	$email_logs_unserialized_data = maybe_unserialize( $data->email_data );
-	if ( 'Sent' === $email_logs_unserialized_data['status'] ) {
-		$mb_status_sent++;
-	} else {
-		$mb_status_not_sent++;
-	}
+/**
+ * This is used for displaying today's data.
+ *
+ * @param string $current_date .
+ * @param string $status .
+ */
+function get_mail_bank_today_logs_data( $current_date, $status ) {
+	global $wpdb;
+	// Get current week data.
+	$current_date          = strtotime( date( 'y-m-d' ) );
+	$email_logs_today_data = $wpdb->get_var(
+		$wpdb->prepare(
+			'SELECT count( status ) FROM ' . $wpdb->prefix . 'mail_bank_logs WHERE timestamp >= %d AND status = %s', $current_date, $status
+		)
+	);// WPCS: db call ok; no-cache ok.
+	return $email_logs_today_data;
 }
+$email_logs_today_sent_data     = get_mail_bank_today_logs_data( strtotime( date( 'y-m-d' ) ), 'Sent' );
+$email_logs_today_not_sent_data = get_mail_bank_today_logs_data( strtotime( date( 'y-m-d' ) ), 'Not Sent' );
+
+/**
+ * This is used for displaying current week data.
+ *
+ * @param string $start_date .
+ * @param string $end_date .
+ * @param string $status .
+ */
+function get_mail_bank_logs_data( $start_date, $end_date, $status ) {
+	global $wpdb;
+	// Get current week data.
+	$end_date        = MAIL_BANK_LOCAL_TIME;
+	$start_date      = strtotime( 'monday this week', $end_date );
+	$email_logs_data = $wpdb->get_var(
+		$wpdb->prepare(
+			'SELECT count( status ) FROM ' . $wpdb->prefix . 'mail_bank_logs WHERE timestamp BETWEEN %d AND %d AND status = %s', $start_date, $end_date, $status
+		)
+	);// WPCS: db call ok; no-cache ok.
+	return $email_logs_data;
+}
+$email_logs_sent_data     = get_mail_bank_logs_data( strtotime( 'last monday', MAIL_BANK_LOCAL_TIME ), MAIL_BANK_LOCAL_TIME, 'Sent' );
+$email_logs_not_sent_data = get_mail_bank_logs_data( strtotime( 'last monday', MAIL_BANK_LOCAL_TIME ), MAIL_BANK_LOCAL_TIME, 'Not Sent' );
+
+/**
+ * This is used for displaying last week data.
+ *
+ * @param string $start_week .
+ * @param string $end_week .
+ * @param string $status .
+ */
+function get_mail_bank_last_week_logs_data( $start_week, $end_week, $status ) {
+	global $wpdb;
+	// Get last week data.
+	$previous_week = strtotime( '-1 week +1 day' );
+	$start_week    = strtotime( 'last monday', $previous_week );
+	$end_week      = strtotime( 'next sunday', $start_week );
+
+	$email_logs_last_week_data = $wpdb->get_var(
+		$wpdb->prepare(
+			'SELECT count( status ) FROM ' . $wpdb->prefix . 'mail_bank_logs WHERE timestamp BETWEEN %d AND %d AND status = %s', $start_week, $end_week, $status
+		)
+	);// WPCS: db call ok; no-cache ok.
+	return $email_logs_last_week_data;
+}
+$email_logs_last_week_sent_data     = get_mail_bank_last_week_logs_data( strtotime( 'last sunday midnight', strtotime( '-1 week +1 day' ) ), strtotime( 'next saturday', strtotime( 'last sunday midnight', strtotime( '-1 week +1 day' ) ) ), 'Sent' );
+$email_logs_last_week_not_sent_data = get_mail_bank_last_week_logs_data( strtotime( 'last sunday midnight', strtotime( '-1 week +1 day' ) ), strtotime( 'next saturday', strtotime( 'last sunday midnight', strtotime( '-1 week +1 day' ) ) ), 'Not Sent' );
+
+/**
+ * This is used for displaying current month data.
+ *
+ * @param string $first_day_this_month .
+ * @param string $end_date .
+ * @param string $status .
+ */
+function get_mail_bank_this_month_logs_data( $first_day_this_month, $end_date, $status ) {
+	global $wpdb;
+	// Get this month data.
+	$end_date                   = MAIL_BANK_LOCAL_TIME;
+	$first_day_this_month       = strtotime( date( '01-m-Y' ) );
+	$email_logs_this_month_data = $wpdb->get_var(
+		$wpdb->prepare(
+			'SELECT count( status ) FROM ' . $wpdb->prefix . 'mail_bank_logs WHERE timestamp BETWEEN %d AND %d AND status = %s', $first_day_this_month, $end_date, $status
+		)
+	);// WPCS: db call ok; no-cache ok.
+	return $email_logs_this_month_data;
+}
+$email_logs_this_month_sent_data     = get_mail_bank_this_month_logs_data( strtotime( date( 'm-01-Y' ) ), MAIL_BANK_LOCAL_TIME, 'Sent' );
+$email_logs_this_month_not_sent_data = get_mail_bank_this_month_logs_data( strtotime( date( 'm-01-Y' ) ), MAIL_BANK_LOCAL_TIME, 'Not Sent' );
+
+/**
+ * This is used for displaying last month data.
+ *
+ * @param string $last_month_start_date .
+ * @param string $last_month_end_date .
+ * @param string $status .
+ */
+function get_mail_bank_last_month_logs_data( $last_month_start_date, $last_month_end_date, $status ) {
+	global $wpdb;
+	// Get last month data.
+	$last_month_start_date      = strtotime( 'first day of previous month' );
+	$end_date                   = strtotime( 'first day of this month' );
+	$last_month_end_date        = strtotime( '-1 day', $end_date );
+	$email_logs_last_month_data = $wpdb->get_var(
+		$wpdb->prepare(
+			'SELECT count( status ) FROM ' . $wpdb->prefix . 'mail_bank_logs WHERE timestamp BETWEEN %d AND %d AND status = %s', $last_month_start_date, $last_month_end_date, $status
+		)
+	);// WPCS: db call ok; no-cache ok.
+	return $email_logs_last_month_data;
+}
+$email_logs_last_month_sent_data     = get_mail_bank_last_month_logs_data( strtotime( 'first day of previous month' ), strtotime( 'last day of previous month' ), 'Sent' );
+$email_logs_last_month_not_sent_data = get_mail_bank_last_month_logs_data( strtotime( 'first day of previous month' ), strtotime( 'last day of previous month' ), 'Not Sent' );
+
+/**
+ * This is used for displaying last month data.
+ *
+ * @param string $start_date_year .
+ * @param string $end_date_year .
+ * @param string $status .
+ */
+function get_mail_bank_this_year_logs_data( $start_date_year, $end_date_year, $status ) {
+	global $wpdb;
+	// Get this month data.
+	$start_date_year           = strtotime( 'first day of january ' . date( 'Y' ) );
+	$end_date_year             = strtotime( 'last day of december ' . date( 'Y' ) );
+	$email_logs_this_year_data = $wpdb->get_var(
+		$wpdb->prepare(
+			'SELECT count( status ) FROM ' . $wpdb->prefix . 'mail_bank_logs WHERE timestamp BETWEEN %d AND %d AND status = %s', $start_date_year, $end_date_year, $status
+		)
+	);// WPCS: db call ok; no-cache ok.
+	return $email_logs_this_year_data;
+}
+$email_logs_this_year_sent_data     = get_mail_bank_this_year_logs_data( strtotime( 'first day of january ' . date( 'Y' ) ), strtotime( 'last day of december ' . date( 'Y' ) ), 'Sent' );
+$email_logs_this_year_not_sent_data = get_mail_bank_this_year_logs_data( strtotime( 'first day of january ' . date( 'Y' ) ), strtotime( 'last day of december ' . date( 'Y' ) ), 'Not Sent' );
 
 $mb_encryption = '';
 switch ( $unserialized_mail_configuration_data['enc_type'] ) {
@@ -68,7 +185,14 @@ switch ( esc_attr( $unserialized_mail_configuration_data['auth_type'] ) ) {
 		$mb_authentication = 'No';
 		break;
 }
-$mb_mailer_type          = esc_attr( $unserialized_mail_configuration_data['mailer_type'] ) === 'smtp' ? 'SMTP' : 'PHP Mailer';
+switch ( esc_attr( $unserialized_mail_configuration_data['mailer_type'] ) ) {
+	case 'smtp':
+		$mb_mailer_type = 'SMTP';
+		break;
+	default:
+		$mb_mailer_type = 'PHP Mailer';
+		break;
+}
 $mb_encryption_type      = esc_attr( $unserialized_mail_configuration_data['mailer_type'] ) === 'smtp' ? ' - ' . $mb_encryption : '';
 $mb_host_name            = esc_attr( $unserialized_mail_configuration_data['hostname'] );
 $mb_port_number          = esc_attr( $unserialized_mail_configuration_data['port'] );
@@ -79,108 +203,121 @@ $mb_smtp_to              = esc_attr( $unserialized_mail_configuration_data['mail
 $mb_smtp_using           = esc_attr( $unserialized_mail_configuration_data['mailer_type'] ) === 'smtp' ? ' ' . __( 'using', 'wp-mail-bank' ) : '';
 ?>
 <style>
-	.mb-dashicons-email:before {
-		content: "\f465";
-	}
-	.mb-statistics-list {
-		overflow: hidden;
-		margin: 0;
-		margin-top: -12px !important;
-	}
-	.mb-statistics-list li.mb-upgrade-now {
+	.mb-stats-table{
+		border: 1px solid #ececec;
 		width: 100%;
-		margin-bottom: -10px;
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
 	}
-	.mb-emails-not-sent,.mb-emails-sent{
-		margin-top:5px !important;
+	.mb-stats-table th {
+		padding: 12px 0px 0px 10px;
+		padding-bottom: 12px;
+		text-align: left;
+		background-color: #4CAF50;
+		color: white;
 	}
-	.mb-statistics-list li a:hover {
-		color: #2ea2cc;
+	.mb-stats-table td, .mb-stats-table th {
+		border: 1px solid #ddd;
+		padding: 8px;
 	}
-	.mb-statistics-list li a {
-		display: block;
-		color: #aaa;
-		padding: 9px 9px;
-		-webkit-transition: all ease .5s;
-		transition: all ease .5s;
-		position: relative;
-		font-size: 12px;
+	.mb-stats-table tr:nth-child(even) {
+		background-color: #f2f2f2;
 	}
-	.mb-statistics-list li {
-		width: 50%;
-		float: left;
-		padding: 0;
-		box-sizing: border-box;
-		margin: 0;
-		border-top: 1px solid #ececec;
-		color: #aaa;
-	}
-	.mb-statistics-list li.mb-emails-sent {
-		border-right: 1px solid #ececec;
-	}
-	.mb-statistics-list li a strong {
-		font-size: 18px;
-		line-height: 1.2em;
-		font-weight: 400;
-		display: block;
-		color: #21759b;
-	}
-	.mb-statistics-list li.mb-upgrade-now a::before {
-		font-family: Dashicons;
-		content: "\f132";
-	}
-	.mb-statistics-list li a::before {
-		font-family: WooCommerce;
-		speak: none;
-		font-weight: 400;
-		font-variant: normal;
-		text-transform: none;
-		line-height: 1;
-		-webkit-font-smoothing: antialiased;
-		margin: 0;
-		text-indent: 0;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		text-align: center;
-		content: "�?";
-		font-size: 2em;
-		position: relative;
-		width: auto;
-		line-height: 1.2em;
-		color: #464646;
-		float: left;
-		margin-right: 12px;
-		margin-bottom: 12px;
-	}
-	.mb-statistics-list li.mb-emails-sent a::before {
-		font-family: Dashicons;
-		content: "\f147";
-	}
-	.mb-statistics-list li.mb-emails-not-sent a::before {
-		font-family: Dashicons;
-		content: "\f158";
+	.mb-stats-table tr:hover {
+		background-color: #ddd;
 	}
 </style>
 <p class="dashicons-before mb-dashicons-email"> <span style="color:green">Mail Bank <?php echo esc_attr( __( 'is configured', 'wp-mail-bank' ) ); ?></span></p>
-<p>Mail Bank <?php echo esc_attr( __( 'will send mail through ', 'wp-mail-bank' ) ); ?><b> <?php echo esc_attr( $mb_mailer_type ) . esc_attr( $mb_encryption_type ); ?></b><?php echo esc_attr( $mb_smtp_to ); ?><b><?php echo esc_attr( $mb_hostname_port ); ?></b><?php echo esc_attr( $mb_smtp_using ); ?><b><?php echo esc_attr( $password_authentication ); ?></b><?php echo esc_attr( $mb_authentication ); ?>.</p>
+<p>Mail Bank <?php echo esc_attr( __( 'will send mail through ', 'wp-mail-bank' ) ); ?><b><?php echo esc_attr( $mb_mailer_type ) . esc_attr( $mb_encryption_type ); ?></b><?php echo esc_attr( $mb_smtp_to ); ?><b><?php echo esc_attr( $mb_hostname_port ); ?></b><?php echo esc_attr( $mb_smtp_using ); ?><b><?php echo esc_attr( $password_authentication ); ?></b><?php echo esc_attr( $mb_authentication ); ?>.</p>
 <p><a href="admin.php?page=mb_email_logs"><?php echo esc_attr( __( 'Email Logs', 'wp-mail-bank' ) ); ?></a> | <a href="admin.php?page=mb_email_configuration"><?php echo esc_attr( __( 'Email Configuration', 'wp-mail-bank' ) ); ?></a></p>
-<ul class="mb-statistics-list">
-	<li class="mb-emails-sent">
-		<a href="admin.php?page=mb_email_logs">
-			<strong><?php echo esc_attr( $mb_status_sent ); ?> <?php echo esc_attr( __( 'Email Sent', 'wp-mail-bank' ) ); ?></strong>
-		</a>
-	</li>
-	<li class="mb-emails-not-sent">
-		<a href="admin.php?page=mb_email_logs">
-			<strong><?php echo esc_attr( $mb_status_not_sent ); ?> <?php echo esc_attr( __( 'Email Not Sent', 'wp-mail-bank' ) ); ?></strong>
-		</a>
-	</li>
-	<li class="mb-upgrade-now">
-		<a href="http://mail-bank.tech-banker.com/">
-			<strong><?php echo esc_attr( __( 'Upgrade Now to Premium Editions' ) ); ?></strong>
-		</a>
-	</li>
-</ul>
+<table class="mb-stats-table">
+	<tr>
+		<th></th>
+		<th><?php echo esc_attr( __( 'Sent', 'wp-mail-bank' ) ); ?></th>
+		<th><?php echo esc_attr( __( 'Not Sent', 'wp-mail-bank' ) ); ?></th>
+	</tr>
+	<tr>
+		<td><?php echo esc_attr( __( 'Today', 'wp-mail-bank' ) ); ?></td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_today_sent_data ); ?></strong>
+			</a>
+		</td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_today_not_sent_data ); ?></strong>
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td><?php echo esc_attr( __( 'This Week', 'wp-mail-bank' ) ); ?></td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_sent_data ); ?></strong>
+			</a>
+		</td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_not_sent_data ); ?></strong>
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td><?php echo esc_attr( __( 'Last Week', 'wp-mail-bank' ) ); ?></td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_last_week_sent_data ); ?></strong>
+			</a>
+		</td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_last_week_not_sent_data ); ?></strong>
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td><?php echo esc_attr( __( 'This Month', 'wp-mail-bank' ) ); ?></td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_this_month_sent_data ); ?></strong>
+			</a>
+		</td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_this_month_not_sent_data ); ?></strong>
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td><?php echo esc_attr( __( 'Last Month', 'wp-mail-bank' ) ); ?></td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_last_month_sent_data ); ?></strong>
+			</a>
+		</td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_last_month_not_sent_data ); ?></strong>
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td><?php echo esc_attr( __( 'This Year', 'wp-mail-bank' ) ); ?></td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_this_year_sent_data ); ?></strong>
+			</a></td>
+		<td>
+			<a href="admin.php?page=mb_email_logs">
+				<strong><?php echo esc_attr( $email_logs_this_year_not_sent_data ); ?></strong>
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3" style="text-align: center;">
+			<a href="https://tech-banker.com/wp-mail-bank/">
+				<strong><?php echo esc_attr( __( 'Upgrade Now to Premium Editions', 'wp-mail-bank'  ) ); ?></strong>
+			</a>
+		</td>
+	</tr>
+</table>
