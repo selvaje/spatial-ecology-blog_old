@@ -2,7 +2,7 @@
 **Contributors:** [themeisle](https://profiles.wordpress.org/themeisle), [codeinwp](https://profiles.wordpress.org/codeinwp), [rodicaelena](https://profiles.wordpress.org/rodicaelena), [baicusandrei](https://profiles.wordpress.org/baicusandrei), [hardeepasrani](https://profiles.wordpress.org/hardeepasrani)  
 **Tags:** widget, admin, widgets, sharing, sections, themes, stock photos, custom icons, icons, menu icons, stock, templates  
 **Requires at least:** 4.7  
-**Tested up to:** 4.9  
+**Tested up to:** 5.0  
 **Requires PHP:** 5.4  
 **Stable tag:** trunk  
 **License:** GPLv2 or later  
@@ -110,6 +110,33 @@ Activating the Orbit Fox plugin is just like any other plugin. If you've uploade
 5. Social Sharing Module
 
 ## Changelog ##
+### 2.7.5 - 2019-02-02  ###
+
+* Improve compatibility with Image CDN module by disabling the feature if Optimole exits already
+
+
+### 2.7.4 - 2019-02-01  ###
+
+* update Gutenberg blocks library to the latest version
+* fix dashicons issue with Neve theme
+* load fontawesome locally if is not already loaded
+
+
+### 2.7.3 - 2018-12-12  ###
+
+* Revert Font Awesome 5 integration
+
+
+### 2.7.2 - 2018-12-10  ###
+
+* Tested with WP 5.0
+
+
+### 2.7.1 - 2018-12-07  ###
+
+* - Fix for Gutenberg blocks module loading
+
+
 ### 2.7.0 - 2018-11-26  ###
 
 * Fix small typo on the module activation button.

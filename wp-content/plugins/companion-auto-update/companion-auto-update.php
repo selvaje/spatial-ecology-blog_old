@@ -3,7 +3,7 @@
  * Plugin Name: Companion Auto Update
  * Plugin URI: http://codeermeneer.nl/portfolio/companion-auto-update/
  * Description: This plugin auto updates all plugins, all themes and the wordpress core.
- * Version: 3.3.1
+ * Version: 3.3.8
  * Author: Papin Schipper
  * Author URI: http://codeermeneer.nl/
  * Contributors: papin
@@ -33,13 +33,34 @@ add_action('cau_set_schedule_mail', 'cau_check_updates_mail');
 add_action('cau_custom_hooks_plugins', 'cau_run_custom_hooks_p');
 add_action('cau_custom_hooks_themes', 'cau_run_custom_hooks_t');
 
+// Redirect to welcome screen on activation of plugin
+function cau_pluginActivateWelcome() {
+    add_option( 'cau_redirectToWelcomeScreen', true );
+}
+register_activation_hook(__FILE__, 'cau_pluginActivateWelcome');
+
+function cau_pluginRedirectWelcomeScreen() {
+    if ( get_option( 'cau_redirectToWelcomeScreen', false ) ) {
+        delete_option( 'cau_redirectToWelcomeScreen' );
+        if( !isset( $_GET['activate-multi'] ) ) {
+            wp_redirect( admin_url( cau_menloc().'?page=cau-settings&welcome=1' ) );
+        }
+    }
+}
+add_action('admin_init', 'cau_pluginRedirectWelcomeScreen');
+
+// Donate url
+function cau_donateUrl() {
+	return 'https://www.paypal.me/dakel/5/';
+}
+
 // Create database
 function cau_database_creation() {
 
 	global $wpdb;
 	global $cau_db_version;
 
-	$cau_db_version = '1.4.4';
+	$cau_db_version = '1.4.5';
 
 	// Create db table
 	$table_name = $wpdb->prefix . "auto_updates"; 
@@ -47,7 +68,7 @@ function cau_database_creation() {
 	$sql = "CREATE TABLE $table_name (
 		id INT(9) NOT NULL AUTO_INCREMENT,
 		name VARCHAR(255) NOT NULL,
-		onoroff VARCHAR(99999) NOT NULL,
+		onoroff VARCHAR(255) NOT NULL,
 		UNIQUE KEY id (id)
 	)";
 
@@ -72,7 +93,7 @@ function cau_check_if_exists( $whattocheck ) {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "auto_updates"; 
 
-	$rows 	= $wpdb->get_col( "SELECT COUNT(*) as num_rows FROM $table_name WHERE name = '$whattocheck'" );
+	$rows 	= $wpdb->get_col( "SELECT COUNT(*) as num_rows FROM {$table_name} WHERE name = '$whattocheck'" );
 	$check 	= $rows[0];
 
 	if( $check > 0) {
@@ -141,35 +162,22 @@ function cau_frontend() { ?>
 	
 	<div class='wrap cau_content_wrap'>
 
-		<h1 class="wp-heading-inline"><?php _e('Auto Updater', 'companion-auto-update'); ?></h1>
+		<h1 class="wp-heading-inline"><?php _e('Companion Auto Update', 'companion-auto-update'); ?></h1>
 
 		<div class='cau_support_buttons'>
-	 		<a href="https://www.paypal.me/dakel/1/" target="_blank" class="donate-button page-title-action"><?php _e('Donate to help development', 'companion-auto-update'); ?></a>
+	 		<a href="<?php echo cau_donateUrl(); ?>" target="_blank" class="donate-button page-title-action cau_hide_on_mobile"><?php _e('Donate to help development', 'companion-auto-update'); ?></a>
 	 	</div>
 
 		<hr class="wp-header-end">
 
 		<h2 class="nav-tab-wrapper wp-clearfix">
-			<a href="<?php echo cau_menloc(); ?>?page=cau-settings" class="nav-tab <?php active_tab(''); ?>"><?php _e('Dashboard', 'companion-auto-update'); ?></a>
+			<a href="<?php echo cau_menloc(); ?>?page=cau-settings" class="nav-tab <?php active_tab(''); ?>"><?php _e('Dashboard' ); ?></a>
 			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=schedule&cau_page=advanced" class="nav-tab <?php active_tab('schedule', 'tab'); ?>"><?php _e('Advanced settings', 'companion-auto-update'); ?></a>
 			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=pluginlist&cau_page=advanced" class="nav-tab <?php active_tab('pluginlist', 'tab'); ?>"><?php _e('Select plugins', 'companion-auto-update'); ?></a>
-			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=log&amp;cau_page=system" class="nav-tab <?php active_tab('system', 'cau_page'); ?>"><?php _e('Systeminfo', 'companion-auto-update'); ?></a>
-			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=support" class="nav-tab <?php active_tab('support'); ?>"><?php _e('Support & Feedback', 'companion-auto-update'); ?></a>
+			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=log&amp;cau_page=log" class="systeminfoTab nav-tab <?php active_tab('log', 'cau_page'); ?>"><?php _e('Update log', 'companion-auto-update'); ?></a>
+			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=status&amp;cau_page=status" class="systeminfoTab nav-tab <?php active_tab('status', 'cau_page'); ?>"><?php _e('Status', 'companion-auto-update'); ?></a>
+			<a href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=support" class="nav-tab <?php active_tab('support'); ?>"><?php _e('Support', 'companion-auto-update'); ?></a>
 		</h2>
-
-		<?php 
-		$cau_page = ( isset($_GET['cau_page'] ) ? $_GET['cau_page'] : null );
-
-		if( $cau_page == 'system' ) { ?>
-
-			<ul class="subsubsub">
-				<li><a class="<?php active_subtab('log'); ?>" href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=log&amp;cau_page=system"><?php _e('Update log', 'companion-auto-update'); ?></a> | </li>
-				<li><a class="<?php active_subtab('status'); ?>" href="<?php echo cau_menloc(); ?>?page=cau-settings&amp;tab=status&amp;cau_page=system"><?php _e('Status', 'companion-auto-update'); ?></a></li>
-			</ul>
-
-			<br class="clear" />
-
-		<?php } ?>
 
 		<?php
 
@@ -206,9 +214,9 @@ function cau_widget() {
 	echo '<p>'.__('Below are the last 7 updates ran on this site. Includes plugins and themes, both automatically updated and manually updated.', 'companion-auto-update').'</p>';
 	cau_fetch_log( '7' );
 	echo '<p>
-		<a href="'.get_admin_url().''.cau_menloc().'?page=cau-settings&tab=log">'.__('View full changelog', 'companion-auto-update').'</a> 
+		<a href="'.admin_url( cau_menloc().'?page=cau-settings&tab=log&cau_page=log').'">'.__('View full changelog', 'companion-auto-update').'</a> 
 		<span class="cau_divide">|</span> 
-		<a href="'.get_admin_url().''.cau_menloc().'?page=cau-settings">'.__('Configure auto updating', 'companion-auto-update').'</a>
+		<a href="'.admin_url( cau_menloc().'?page=cau-settings').'">'.__( 'Settings' ).'</a>
 	</p>';
 	
 }
@@ -216,11 +224,19 @@ function cau_widget() {
 // Load admin styles
 function load_cau_sytyles( $hook ) {
 
+	// Only load on plugins' pages
     if( $hook != 'tools_page_cau-settings' && $hook != 'index_page_cau-settings' ) return;
+
+	// Plugin scripts
     wp_enqueue_style( 'cau_admin_styles', plugins_url( 'backend/style.css' , __FILE__ ) );
 
+    // WordPress scripts we need
+	wp_enqueue_style( 'thickbox' );
+	wp_enqueue_script( 'thickbox' );   
+	wp_enqueue_script( 'plugin-install' );    
+
 }
-add_action( 'admin_enqueue_scripts', 'load_cau_sytyles' );
+add_action( 'admin_enqueue_scripts', 'load_cau_sytyles', 100 );
 
 // Send e-mails
 require_once( plugin_dir_path( __FILE__ ) . 'cau_emails.php' );
@@ -228,14 +244,12 @@ require_once( plugin_dir_path( __FILE__ ) . 'cau_emails.php' );
 // Add settings link on plugin page
 function cau_settings_link( $links ) { 
 
-	$settings_link 	= '<a href="'.get_admin_url().''.cau_menloc().'?page=cau-settings">'.__('Settings', 'companion-auto-update' ).'</a>'; 
-	$settings_link2 = '<a href="https://translate.wordpress.org/projects/wp-plugins/companion-auto-update">'.__('Translate', 'companion-auto-update' ).'</a>'; 
-	$settings_link3 = '<a href="https://www.paypal.me/dakel/1/">'.__('Donate', 'companion-auto-update' ).'</a>'; 
-	$settings_link4 = '<a href="http://codeermeneer.nl/cau_poll/">'.__('Feedback', 'companion-auto-update' ).'</a>'; 
+	$settings_link 	= '<a href="'.get_admin_url().''.cau_menloc().'?page=cau-settings">'.__( 'Settings' ).'</a>'; 
+	$settings_link2 = '<a href="https://translate.wordpress.org/projects/wp-plugins/companion-auto-update">'.__( 'Help us translate', 'companion-auto-update' ).'</a>'; 
+	$settings_link3 = '<a href="'.cau_donateUrl().'">'.__( 'Donate to help development', 'companion-auto-update' ).'</a>'; 
 	
 	array_unshift( $links, $settings_link2 ); 
 	array_unshift( $links, $settings_link3 ); 
-	array_unshift( $links, $settings_link4 ); 
 	array_unshift( $links, $settings_link ); 
 
 	return $links; 
@@ -243,24 +257,6 @@ function cau_settings_link( $links ) {
 }
 $plugin = plugin_basename(__FILE__); 
 add_filter( "plugin_action_links_$plugin", "cau_settings_link" );
-
-// Check for critical errors
-function cau_critical_errors() {
-
-	if( checkAutomaticUpdaterDisabled() ) {
-		return true;
-	} else {
-		return false;
-	}
-
-}
-
-// Show the errors
-if( cau_critical_errors() ) {
-	if( is_admin() ) {
-		echo "<div class='error'><p><strong>".__( 'Critical Error', 'companion-auto-update' )."</strong> &dash; ".__( 'Companion Auto Update ran into a critical error. View the status log for more info.', 'companion-auto-update' )." <a href='".admin_url('tools.php?page=cau-settings&tab=status&cau_page=system')."'>Status log</a></p></div>";
-	}
-}
 
 // Auto Update Class
 class CAU_auto_update {
@@ -278,7 +274,7 @@ class CAU_auto_update {
 		$table_name = $wpdb->prefix . "auto_updates"; 
 
 		// Enable for major updates
-		$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'major'");
+		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'major'");
 		foreach ( $configs as $config ) {
 
 			if( $config->onoroff == 'on' ) add_filter( 'allow_major_auto_core_updates', '__return_true', 1 ); // Turn on
@@ -287,7 +283,7 @@ class CAU_auto_update {
 		}
 
 		// Enable for minor updates
-		$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'minor'");
+		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'minor'");
 		foreach ( $configs as $config ) {
 
 			if( $config->onoroff == 'on' ) add_filter( 'allow_minor_auto_core_updates', '__return_true', 1 ); // Turn on
@@ -296,7 +292,7 @@ class CAU_auto_update {
 		}
 
 		// Enable for plugins
-		$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'plugins'");
+		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'plugins'");
 		foreach ( $configs as $config ) {
 
 			if( $config->onoroff == 'on' ) add_filter( 'auto_update_plugin', 'cau_dont_update', 10, 2 ); // Turn on
@@ -305,24 +301,24 @@ class CAU_auto_update {
 		}
 
 		// Enable for themes
-		$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'themes'");
+		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'themes'");
 		foreach ( $configs as $config ) {
 			if( $config->onoroff == 'on' ) add_filter( 'auto_update_theme', '__return_true', 1 ); // Turn on
 			if( $config->onoroff != 'on' ) add_filter( 'auto_update_theme', '__return_false', 1 ); // Turn off
 		}
 
 		// Enable for translation files
-		$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'translations'");
+		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'translations'");
 		foreach ( $configs as $config ) {
-			if( $config->onoroff == 'on' ) add_filter( 'auto_update_translation', '__return_true' ); // Turn on
-			if( $config->onoroff != 'on' ) add_filter( 'auto_update_translation', '__return_false' ); // Turn off
+			if( $config->onoroff == 'on' ) add_filter( 'auto_update_translation', '__return_true', 1 ); // Turn on
+			if( $config->onoroff != 'on' ) add_filter( 'auto_update_translation', '__return_false', 1 ); // Turn off
 		}
 
 		// WP Email Config
-		$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'wpemail'");
+		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'wpemails'");
 		foreach ( $configs as $config ) {
-			if( $config->onoroff == 'on' ) add_filter( 'auto_core_update_send_email', '__return_true' );
-			if( $config->onoroff != 'on' ) add_filter( 'auto_core_update_send_email', '__return_false' );
+			if( $config->onoroff == 'on' ) add_filter( 'auto_core_update_send_email', '__return_true' ); // Turn on
+			if( $config->onoroff != 'on' ) add_filter( 'auto_core_update_send_email', '__return_false' ); // Turn off
 		}
 		
 
@@ -330,5 +326,38 @@ class CAU_auto_update {
 
 }
 new CAU_auto_update();
+
+// Check for issues
+function cau_checkForIssues( $admin_bar ) {
+
+	if( cau_pluginHasIssues() && is_admin() ) {
+
+		if( cau_pluginIssueLevels() == 'high' ) {
+			$cauWaningBarTitle = __( 'Companion Auto Update ran into a critical error. View the status log for more info.', 'companion-auto-update' );
+		} else {
+			$cauWaningBarTitle = '';
+		}
+
+		$admin_bar->add_menu( array(
+	        'id'    => 'cau-has-issues',
+	        'title' => '<span class="ab-icon"></span><span class="cau-level-'.cau_pluginIssueLevels().'">'.cau_pluginIssueCount().'</span>',
+	        'href'  => admin_url( cau_menloc().'?page=cau-settings&tab=status&cau_page=status' ),       
+	        'meta'   => array(
+	            'target'   => '_self',
+	            'title'    => $cauWaningBarTitle,
+	        ),
+	    ));
+
+	}
+
+}
+add_action( 'admin_bar_menu', 'cau_checkForIssues', 150 );
+
+function cau_checkForIssuesStyle() {
+
+    wp_enqueue_style( 'cau_warning_styles', plugins_url( 'backend/warningbar.css' , __FILE__ ) );
+
+}
+add_action( 'admin_enqueue_scripts', 'cau_checkForIssuesStyle', 100 );
 
 ?>

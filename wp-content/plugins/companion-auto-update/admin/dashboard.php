@@ -17,31 +17,52 @@
 		global $wpdb;
 		$table_name = $wpdb->prefix . "auto_updates"; 
 
-		$plugins 		= $_POST['plugins'];
-		$themes 		= $_POST['themes'];
-		$minor 			= $_POST['minor'];
-		$major 			= $_POST['major'];
-		$translations 	= $_POST['translations'];
-		$send 			= $_POST['cau_send'];
-		$sendupdate 	= $_POST['cau_send_update'];
-		$wpemails 		= $_POST['wpemails'];
-		$menloc 		= $_POST['menloc'];
-
+		if( isset( $_POST['plugins'] ) ) $plugins = sanitize_text_field( $_POST['plugins'] ); else $plugins = '';
+		if( isset( $_POST['themes'] ) ) $themes = sanitize_text_field( $_POST['themes'] ); else $themes = '';
+		if( isset( $_POST['minor'] ) ) $minor = sanitize_text_field( $_POST['minor'] ); else $minor = '';
+		if( isset( $_POST['major'] ) ) $major = sanitize_text_field( $_POST['major'] ); else $major = '';
+		if( isset( $_POST['translations'] ) ) $translations = sanitize_text_field( $_POST['translations'] ); else $translations = '';
+		if( isset( $_POST['cau_send'] ) ) $send = sanitize_text_field( $_POST['cau_send'] ); else $send = '';
+		if( isset( $_POST['cau_send_update'] ) ) $sendupdate = sanitize_text_field( $_POST['cau_send_update'] ); else $sendupdate = '';
+		if( isset( $_POST['wpemails'] ) ) $wpemails = sanitize_text_field( $_POST['wpemails'] ); else $wpemails = '';
 		$email 			= sanitize_text_field( $_POST['cau_email'] );
 
-		$wpdb->query( " UPDATE $table_name SET onoroff = '$plugins' WHERE name = 'plugins' " );
-		$wpdb->query( " UPDATE $table_name SET onoroff = '$themes' WHERE name = 'themes' " );
-		$wpdb->query( " UPDATE $table_name SET onoroff = '$minor' WHERE name = 'minor' " );
-		$wpdb->query( " UPDATE $table_name SET onoroff = '$major' WHERE name = 'major' " );
-		$wpdb->query( " UPDATE $table_name SET onoroff = '$translations' WHERE name = 'translations' " );
-		$wpdb->query( " UPDATE $table_name SET onoroff = '$email' WHERE name = 'email' " );
-		$wpdb->query( " UPDATE $table_name SET onoroff = '$send' WHERE name = 'send' " );
-		$wpdb->query( " UPDATE $table_name SET onoroff = '$sendupdate' WHERE name = 'sendupdate' " );
-		$wpdb->query( " UPDATE $table_name SET onoroff = '$wpemails' WHERE name = 'wpemails' " );
-		$wpdb->query( " UPDATE $table_name SET onoroff = '$menloc' WHERE name = 'menloc' " );
+		$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET onoroff = %s WHERE name = 'plugins'", $plugins ) );
+		$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET onoroff = %s WHERE name = 'themes'", $themes ) );
+		$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET onoroff = %s WHERE name = 'minor'", $minor ) );
+		$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET onoroff = %s WHERE name = 'major'", $major ) );
+		$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET onoroff = %s WHERE name = 'translations'", $translations ) );
+		$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET onoroff = %s WHERE name = 'email'", $email ) );
+		$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET onoroff = %s WHERE name = 'send'", $send ) );
+		$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET onoroff = %s WHERE name = 'sendupdate'", $sendupdate ) );
+		$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET onoroff = %s WHERE name = 'wpemails'", $wpemails ) );
 
-		echo '<div id="message" class="updated"><p><b>'.__('Settings saved', 'companion-auto-update').'.</b></p></div>';
+		echo '<div id="message" class="updated"><p><b>'.__( 'Settings saved.' ).'</b></p></div>';
 
+	}
+
+	if( isset( $_GET['welcome'] ) ) {
+
+		echo '<div class="welcome-to-cau welcome-bg">
+			<h2>'.__( 'Welcome to Companion Auto Update', 'companion-auto-update' ).'</h2>
+			<div class="welcome-column welcome-column-first welcome-column-half">
+				<h3>'.__( 'You\'re set and ready to go', 'companion-auto-update' ).'</h3>
+				<p>'.__( 'The plugin is all set and ready to go with the recommended settings, but if you\'d like you can change them below.' ).'</p>
+			</div><div class="welcome-column welcome-column-quarter">
+				<h3>'.__( 'Get Started' ).'</h3>
+				<ul>
+					<li><a href="'.admin_url( cau_menloc().'?page=cau-settings&tab=pluginlist&cau_page=advanced' ).'">'.__( 'Select plugins', 'companion-auto-update' ).'</a></li>
+					<li><a href="'.admin_url( cau_menloc().'?page=cau-settings&tab=schedule&cau_page=advanced' ).'">'.__( 'Advanced settings', 'companion-auto-update' ).'</a></li>
+				</ul>
+			</div><div class="welcome-column welcome-column-quarter">
+				<h3>'.__( 'More Actions' ).'</h3>
+				<ul>
+					<li><a href="http://codeermeneer.nl/cau_poll/" target="_blank">'.__('Give feedback', 'companion-auto-update').'</a></li>
+					<li><a href="https://translate.wordpress.org/projects/wp-plugins/companion-auto-update/" target="_blank">'.__( 'Help us translate', 'companion-auto-update' ).'</a></li>
+		
+				</ul>
+			</div>
+		</div>';
 	}
 
 	?>
@@ -72,12 +93,12 @@
 
 					echo '<p><input id="'.$cau_configs[2]->name.'" name="'.$cau_configs[2]->name.'" type="checkbox"';
 					if( $cau_configs[2]->onoroff == 'on' ) echo 'checked';
-					echo '/> <label for="'.$cau_configs[2]->name.'">'.__('Auto update minor core updates?', 'companion-auto-update').' <code>4.0.0 > 4.0.1</code></label></p>';
+					echo '/> <label for="'.$cau_configs[2]->name.'">'.__('Auto update minor core updates?', 'companion-auto-update').' <code class="majorMinorExplain">4.0.0 > 4.0.1</code></label></p>';
 
 
 					echo '<p><input id="'.$cau_configs[3]->name.'" name="'.$cau_configs[3]->name.'" type="checkbox"';
 					if( $cau_configs[3]->onoroff == 'on' ) echo 'checked';
-					echo '/> <label for="'.$cau_configs[3]->name.'">'.__('Auto update major core updates?', 'companion-auto-update').'<code>4.0.0 > 4.1.0</code></label></p>';
+					echo '/> <label for="'.$cau_configs[3]->name.'">'.__('Auto update major core updates?', 'companion-auto-update').' <code class="majorMinorExplain">4.0.0 > 4.1.0</code></label></p>';
 
 					echo '<p><input id="'.$cau_configs[8]->name.'" name="'.$cau_configs[8]->name.'" type="checkbox"';
 					if( $cau_configs[8]->onoroff == 'on' ) echo 'checked';
@@ -90,8 +111,10 @@
 		</tr>
 	</table>
 
-	<h2 class="title"><?php _e('Email Notifications', 'companion-auto-update');?></h2>
-	<p><?php _e('Email notifications are send once a day, you can choose what notifications to send below.', 'companion-auto-update');?></p>
+	<div class="cau_spacing"></div>
+
+	<h2 class="title"><?php _e( 'Email Notifications', 'companion-auto-update' );?></h2>
+	<p><?php _e( 'Email notifications are send once a day, you can choose what notifications to send below.', 'companion-auto-update' );?></p>
 
 	<?php
 	if( $cau_configs[4]->onoroff == '' ) $toemail = get_option('admin_email'); 
@@ -100,7 +123,7 @@
 
 	<table class="form-table">
 		<tr>
-			<th scope="row"><?php _e('Update available', 'companion-auto-update');?></th>
+			<th scope="row"><?php _e( 'Update available', 'companion-auto-update' );?></th>
 			<td>
 				<p>
 					<input id="cau_send" name="cau_send" type="checkbox" <?php if( $cau_configs[5]->onoroff == 'on' ) { echo 'checked'; } ?> />
@@ -109,7 +132,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th scope="row"><?php _e('Successful update', 'companion-auto-update');?></th>
+			<th scope="row"><?php _e( 'Successful update', 'companion-auto-update' );?></th>
 			<td>
 				<p>
 					<input id="cau_send_update" name="cau_send_update" type="checkbox" <?php if( $cau_configs[6]->onoroff == 'on' ) { echo 'checked'; } ?> />
@@ -118,7 +141,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th scope="row"><?php _e('Email address', 'companion-auto-update');?></th>
+			<th scope="row"><?php _e( 'Email Address' );?></th>
 			<td>
 				<p>
 					<label for="cau_email"><?php _e('To', 'companion-auto-update');?>:</label>
@@ -129,6 +152,8 @@
 			</td>
 		</tr>
 	</table>
+
+	<div class="cau_spacing"></div>
 
 	<h2 class="title"><?php _e('Core notifications', 'companion-auto-update');?></h2>
 	<p><?php _e('Core notifications are handled by WordPress and not by this plugin. You can only disable them, changing your email address in the settings above will not affect these notifications.', 'companion-auto-update');?></p>
@@ -148,3 +173,5 @@
 	<?php wp_nonce_field( 'cau_save_settings' ); ?>	
 
 	<?php submit_button(); ?>
+
+	</form>

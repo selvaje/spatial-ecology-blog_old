@@ -1,10 +1,11 @@
 === Companion Auto Update ===
 Contributors: Papin, qweb
-Donate link: https://www.paypal.me/dakel/2
+Donate link: https://www.paypal.me/dakel/5/
 Tags: auto, automatic, background, update, updates, updating, automatic updates, automatic background updates, easy update, wordpress update, theme update, plugin update, up-to-date, security, update latest version, update core, update wp, update wp core, major updates, minor updates, update to new version, update core, update plugin, update plugins, update plugins automatically, update theme, plugin, theme, advance, control, mail, notifations, enable
 Requires at least: 3.5.0
-Tested up to: 5.0
-Stable tag: 3.3.1
+Tested up to: 5.1
+Requires PHP: 5.1
+Stable tag: 3.3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +71,45 @@ For some reason this plugin seems to have trouble with updating themes by Elegan
 4. Keep track of updates with the update log
 
 == Changelog ==
+
+= 3.3.8 (March 1, 2019) =
+* Fix: Show correct timestamp in log
+* Fix: Fixed a few typos
+* New: Filter the log for Plugins, Themes or All
+* New: Click on a plugins' name to show the changelog
+* Improvement: Added more checks to the status log
+* Improvement: Added better documentation when issues show up
+
+= 3.3.7 (February 2, 2019) =
+* Fix: In some rare cases various errors showed up when saving settings, this is fixed now
+
+= 3.3.6 (January 14, 2019) =
+* Security improvements
+
+= 3.3.5 (January 5, 2019)  =
+* New: See WordPress & PHP version on the status page
+* New: WordPress core updates now show in status log
+* Improvement: Split Update log and Status tab
+* Improvement: Update log now shows new version (no old version yet, sorry)
+* Improvement: If major updates are disabled the update nag will no longer show
+* Fix: Error Notice: Undefined index: menloc
+
+= 3.3.4 (December 24, 2018) =
+* Improved: Few tweaks to the new warning icon
+* Improved: Changed a few strings to be clearer to understand
+
+= 3.3.3 (December 22, 2018) =
+* New: Set the time for Core updates
+* New: Welcome screen after plugin activation to help new users find their way
+* New: Warning icon in the top bar when something is wrong
+* Improvement: More logs have been added to the status page
+* Improvement: Redesigned support tab
+* Improvement: We've checked all the text in the plugin and made some changes to make translating this plugin a little bit easier
+* Improvement: The mobile design has been improved big time
+* Fix: Some sites still recieved core update emails even when disabled, this should not happen anymore.
+
+= 3.3.2 (December 20, 2018) =
+* Global error? No need to contact us anymore, let the plugin fix it for you!
 
 = 3.3.1 (November 15, 2018)  =
 * Fix: Can't Find constant error

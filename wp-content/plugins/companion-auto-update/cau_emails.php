@@ -5,7 +5,7 @@ function cau_check_updates_mail() {
 
 	global $wpdb;
 	$table_name 	= $wpdb->prefix . "auto_updates"; 
-	$cau_configs 	= $wpdb->get_results( "SELECT * FROM $table_name" );
+	$cau_configs 	= $wpdb->get_results( "SELECT * FROM {$table_name}" );
 
 	if( $cau_configs[5]->onoroff == 'on' ) { 
 		cau_list_theme_updates(); // Check for theme updates
@@ -20,7 +20,7 @@ function cau_set_email() {
 
 	global $wpdb;
 	$table_name 	= $wpdb->prefix . "auto_updates"; 
-	$cau_configs 	= $wpdb->get_results( "SELECT * FROM $table_name" );
+	$cau_configs 	= $wpdb->get_results( "SELECT * FROM {$table_name}" );
 	$emailArray 	= array();
 
 	if( $cau_configs[4]->onoroff == '' ) {
@@ -40,11 +40,10 @@ function cau_set_email() {
 // Set the content for the emails about pending updates
 function cau_pending_message( $single, $plural ) {
 
-	return sprintf( esc_html__( 
-		'Hodwy! There are one or more %1$s updates waiting on your WordPress site at %2$s but we\'ve noticed that you\'ve disabled auto-updating for %3$. 
+	return sprintf(  
+		esc_html__( 'Howdy! There are one or more %1$s updates waiting on your WordPress site at %2$s but we noticed that you disabled auto-updating for %3$s. 
 
-Outdated %3$ are a security risk so please consider manually updating them via your dashboard.', 'companion-auto-update' 
-	), $single, get_site_url(),  $plural );
+Outdated %3$s are a security risk so please consider manually updating them via your dashboard.', 'companion-auto-update' ), $single, get_site_url(), $plural );
 
 }
 
@@ -70,7 +69,7 @@ function cau_list_theme_updates() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "auto_updates"; 
 
-	$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'themes'");
+	$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'themes'");
 	foreach ( $configs as $config ) {
 
 		if( $config->onoroff != 'on' ) {
@@ -105,7 +104,7 @@ function cau_list_plugin_updates() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "auto_updates"; 
 
-	$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'plugins'");
+	$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'plugins'");
 	foreach ( $configs as $config ) {
 
 		if( $config->onoroff != 'on' ) {

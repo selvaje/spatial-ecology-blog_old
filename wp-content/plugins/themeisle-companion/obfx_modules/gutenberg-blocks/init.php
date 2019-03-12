@@ -21,9 +21,9 @@ class Gutenberg_Blocks_OBFX_Module extends Orbit_Fox_Module_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->name           = __( 'Gutenberg Blocks', 'themeisle-companion' );
-		$this->description    = __( 'A set of awesome Gutenberg Blocks!', 'themeisle-companion' );
-		$this->active_default = false;
+		$this->name           = __( 'Gutenberg Blocks <sup class="obfx-title-new">NEW</sup>', 'themeisle-companion' );
+		$this->description    =sprintf(  __(  'A set of awesome Gutenberg Blocks provided by %sOtter\'s%s plugin!', 'themeisle-companion' ),'<span class="dashicons dashicons-external"></span><a target="_blank" href="https://wordpress.org/plugins/otter-blocks/">','</a>');
+		$this->active_default = true;
 	}
 
 	/**
@@ -34,10 +34,20 @@ class Gutenberg_Blocks_OBFX_Module extends Orbit_Fox_Module_Abstract {
 	 * @return bool
 	 */
 	public function enable_module() {
+		global $wp_version;
 		require_once( ABSPATH . 'wp-admin' . '/includes/plugin.php' );
-		// TODO: Fix this check before gutenberg is merged into WordPress core.
-		// checking function_exists( 'register_block_type' ) returns false at first and true later in the code.
-		return is_plugin_active( 'gutenberg/gutenberg.php' );
+		if ( is_plugin_active( 'otter-blocks/otter-blocks.php' ) ) {
+			return false;
+		}
+		if ( version_compare( $wp_version, '5.0', '>=' ) ) {
+			return true;
+		}
+		if ( is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
+			return true;
+		}
+
+
+		return false;
 	}
 
 	/**
@@ -108,7 +118,7 @@ class Gutenberg_Blocks_OBFX_Module extends Orbit_Fox_Module_Abstract {
 	 */
 	function load_gutenberg_blocks() {
 		if ( class_exists( '\ThemeIsle\GutenbergBlocks' ) ) {
-			\ThemeIsle\GutenbergBlocks::instance( __( 'Orbit Fox', 'themeisle-companion' ) );
+			\ThemeIsle\GutenbergBlocks::instance( __( 'Blocks by OrbitFox and Otter', 'themeisle-companion' ) );
 		}
 	}
 

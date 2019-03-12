@@ -16,11 +16,12 @@ if( isset( $_POST['submit'] ) ) {
 	$noUpdateCount 	= 0;
 
 	foreach ( $_POST['post'] as $key ) {
-		$noUpdateList .= $key.', ';
+		$noUpdateList .= sanitize_text_field( $key ).', ';
 		$noUpdateCount++;
 	}
 
-	$wpdb->query( " UPDATE $table_name SET onoroff = '$noUpdateList' WHERE name = 'notUpdateList' " );
+	$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET onoroff = %s WHERE name = 'notUpdateList'", $noUpdateList ) );
+
 	echo '<div id="message" class="updated"><p><b>'.__('Succes', 'companion-auto-update').' &ndash;</b> '.sprintf( esc_html__( '%1$s plugins have been added to the no-update-list', 'companion-auto-update' ), $noUpdateCount ).'.</p></div>';
 }
 
@@ -36,10 +37,10 @@ if( isset( $_POST['reset'] ) ) {
 
 <form method="POST">
 
-	<p>
-		<input type='submit' name='submit' id='submit' class='button button-primary' value='<?php _e( "Save changes", "companion-auto-update" ); ?>'>
+	<div class='pluginListButtons'>
+		<?php submit_button(); ?>
 		<input type='submit' name='reset' id='reset' class='button button-alt' value='<?php _e( "Reset list", "companion-auto-update" ); ?>'>
-	</p>
+	</div>
 
 	<table class="wp-list-table widefat autoupdate striped">
 		<thead>
@@ -47,7 +48,7 @@ if( isset( $_POST['reset'] ) ) {
 				<td>&nbsp;</td>
 				<th class="head-plugin"><strong><?php _e('Plugin', 'companion-auto-update'); ?></strong></th>
 				<th class="head-status"><strong><?php _e('Status', 'companion-auto-update'); ?></strong></th>
-				<th class="head-description"><strong><?php _e('Description', 'companion-auto-update'); ?></strong></th>
+				<th class="head-description"><strong><?php _e('Description'); ?></strong></th>
 			</tr>
 		</thead>
 
@@ -73,14 +74,15 @@ if( isset( $_POST['reset'] ) ) {
 
 				$class 		= 'inactive';
 				$checked 	= 'CHECKED';
-				$status 	= __( 'Auto-updating: disabled' , 'companion-auto-update' );
+				$statusicon = 'no';
+				$statusName = 'disabled';
 
 			} else {
 				
 				$class 		= 'active';
 				$checked 	= '';
-				$status 	= __( 'Auto-updating: enabled' , 'companion-auto-update' );
-
+				$statusicon = 'yes';
+				$statusName = 'enabled';
 			}
 
 			echo '<tr id="post-'.$slug_hash.'" class="'.$class.'">
@@ -96,7 +98,7 @@ if( isset( $_POST['reset'] ) ) {
 				</td>
 
 				<td class="cau_hide_on_mobile column-status">
-					<p>'. $status .'</p>
+					<p><span class="nowrap">'.__( 'Auto Updater', 'companion-auto-update' ).': <span class="cau_'.$statusName.'"><span class="dashicons dashicons-'.$statusicon.'"></span></span></span></p>
 				</td>
 
 				<td class="cau_hide_on_mobile column-description">
@@ -113,9 +115,9 @@ if( isset( $_POST['reset'] ) ) {
 
 	<?php wp_nonce_field( 'cau_save_pluginlis' ); ?>
 
-	<p>
-		<input type='submit' name='submit' id='submit' class='button button-primary' value='<?php _e( "Save changes", "companion-auto-update" ); ?>'>
+	<div class='pluginListButtons'>
+		<?php submit_button(); ?>
 		<input type='submit' name='reset' id='reset' class='button button-alt' value='<?php _e( "Reset list", "companion-auto-update" ); ?>'>
-	</p>
+	</div>
 
 </form>

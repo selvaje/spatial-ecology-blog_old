@@ -6,7 +6,6 @@ if ( !defined( 'ABSPATH' ) ) exit;
     Class: ChildThemeConfiguratorAdmin
     Plugin URI: http://www.childthemeconfigurator.com/
     Description: Main Controller Class
-    Version: 2.3.0.4
     Author: Lilaea Media
     Author URI: http://www.lilaeamedia.com/
     Text Domain: child-theme-configurator
@@ -37,6 +36,8 @@ class ChildThemeConfiguratorAdmin {
     var $debug;
     var $is_debug;
     var $is_new;
+    var $copy_mods; // copy theme options from and to 
+    var $msg; // passed via 'updated' query var
     // memory checks
     var $max_sel;
     var $sel_limit;
@@ -195,6 +196,16 @@ class ChildThemeConfiguratorAdmin {
         endif;
         do_action( 'chld_thm_cfg_load' );
         if ( $this->is_get ):
+            /**
+             * using 'updated' get var to indicate theme mods should be copied and the to/from themes
+             * otherwise set msg id
+             */
+            if ( isset( $_GET[ 'updated' ] ) ):
+                $msgparts = explode( ',', $_GET[ 'updated' ] );
+                $this->msg = array_shift( $msgparts );
+                if ( count( $msgparts ) )
+                    $this->copy_mods = $msgparts;
+            endif;
             if ( $this->get( 'child' ) ):
                 // get filesystem credentials if available
                 $this->verify_creds();
@@ -245,7 +256,8 @@ class ChildThemeConfiguratorAdmin {
         $this->debug( 'ajax save ', __FUNCTION__, __CLASS__ );
         // security check
         if ( $this->validate_post( $action ) ):
-            if ( 'ctc_plugin' == $action ) do_action( 'chld_thm_cfg_pluginmode' );
+            if ( 'ctc_plugin' == $action ) 
+                do_action( 'chld_thm_cfg_pluginmode' );
             $this->verify_creds(); // initialize filesystem access
             add_action( 'chld_thm_cfg_cache_updates', array( $this, 'cache_debug' ) );
             // get configuration data from options API
@@ -254,15 +266,39 @@ class ChildThemeConfiguratorAdmin {
                     // toggle debug
                     $this->toggle_debug();
                 else:
+                    if( isset( $_POST[ 'ctc_copy_mods' ] ) ):
+                        // copy menus, widgets and other customizer options from parent to child if selected
+                        if ( isset( $_POST[ 'ctc_copy_from' ] ) && isset( $_POST[ 'ctc_copy_to' ] ) ):
+                            $this->debug( 'Copy Theme Mods on resubmit', __FUNCTION__, __CLASS__ );
+                            $from   = sanitize_text_field( $_POST[ 'ctc_copy_from' ] );
+                            $to     = sanitize_text_field( $_POST[ 'ctc_copy_to' ] );
+                            $this->copy_theme_mods( $from, $to );
+                        else:
+                            $this->debug( 'Copy Theme Mods passed but missing to and from values', __FUNCTION__, __CLASS__ );
+                        endif;
+                    endif;
+
+                    if ( isset( $_POST[ 'ctc_analysis' ] ) ): // process ANALYZER SIGNAL inputs
+
+                        if ( $this->cache_updates ):
+                            $this->updates[] = array(
+                                'obj'  => 'analysis',
+                                'data' => array(),
+                            );
+                        endif;
+
+                        $this->evaluate_signals();
+                    endif;
                     $this->css->parse_post_data(); // parse any passed values
                     // if child theme config has been set up, save new data
                     // return recent edits and selected stylesheets as cache updates
                     if ( $this->get( 'child' ) ):
                         // hook for add'l plugin files and subdirectories
                         do_action( 'chld_thm_cfg_addl_files' );
-        
-        
-                        $this->css->write_css();
+
+
+                        if ( !$this->css->write_css() )
+                            die( 0 );
                         /*
                         $this->updates[] = array(
                             'obj'   => 'addl_css',
@@ -271,13 +307,19 @@ class ChildThemeConfiguratorAdmin {
                         );
                         */
                     endif;
-                    
+
                     // update config data in options API
                     $this->save_config();
                 endif;
                 // add any additional updates to pass back to browser
                 do_action( 'chld_thm_cfg_cache_updates' );
             endif;
+            if ( count( $this->errors ) )
+                $this->updates[] = array(
+                    'obj'   => 'errors',
+                    'key'   => '',
+                    'data'  => $this->errors,
+                );
             // send all updates back to browser to update cache
             die( json_encode( $this->css->obj_to_utf8( $this->updates ) ) );
         endif;
@@ -391,7 +433,6 @@ class ChildThemeConfiguratorAdmin {
                 endif;
                 // now we need to check filesystem access 
                 $args = preg_grep( "/nonce/", array_keys( $_POST ), PREG_GREP_INVERT );
-                $msg = FALSE;
                 $this->verify_creds( $args );
                 if ( $this->fs ):
                     // we have filesystem access so proceed with specific actions
@@ -404,7 +445,7 @@ class ChildThemeConfiguratorAdmin {
                             break;
                         case 'load_styles':
                             // main child theme setup function
-                            $msg = $this->setup_child_theme();
+                            $this->setup_child_theme();
                             break;
                         
                         case 'parnt_templates_submit':
@@ -414,7 +455,7 @@ class ChildThemeConfiguratorAdmin {
                                     list( $path, $ext ) = $this->get_pathinfo( sanitize_text_field( $file ) );
                                     $this->copy_parent_file( $path, $ext );
                                 endforeach;
-                                $msg = '8&tab=file_options';
+                                $this->msg = '8&tab=file_options';
                             endif;
                             break;
                             
@@ -431,7 +472,7 @@ class ChildThemeConfiguratorAdmin {
                                         $this->delete_child_file( $path, $ext );
                                     endif;
                                 endforeach;
-                                $msg = '8&tab=file_options';
+                                $this->msg = '8&tab=file_options';
                             endif;
                             break;
                             
@@ -440,7 +481,7 @@ class ChildThemeConfiguratorAdmin {
                             if ( isset( $_POST[ 'ctc_img' ] ) ):
                                 foreach ( $_POST[ 'ctc_img' ] as $file )
                                     $this->delete_child_file( 'images/' . sanitize_text_field( $file ), 'img' );
-                                $msg = '8&tab=file_options';
+                                $this->msg = '8&tab=file_options';
                             endif;
                             break;
                             
@@ -451,7 +492,7 @@ class ChildThemeConfiguratorAdmin {
                                     list( $path, $ext ) = $this->get_pathinfo( sanitize_text_field( $file ) );
                                     $this->set_writable( $path, $ext );
                                 endforeach;
-                                $msg = '8&tab=file_options';
+                                $this->msg = '8&tab=file_options';
                             endif;
                             break;
                             
@@ -459,20 +500,20 @@ class ChildThemeConfiguratorAdmin {
                             // make child theme style.css and functions.php writable ( systems not running suExec )
                             $this->set_writable(); // no argument defaults to style.css
                             $this->set_writable( 'functions' );
-                            $msg = '8&tab=file_options';
+                            $this->msg = '8&tab=file_options';
                             break;
                         
                         case 'reset_permission':
                             // make child theme read-only ( systems not running suExec )
                             $this->unset_writable();
-                            $msg = '8&tab=file_options';
+                            $this->msg = '8&tab=file_options';
                             break;
                         
                         case 'theme_image_submit':
                             // move uploaded child theme images (now we have filesystem access)
                             if ( isset( $_POST[ 'movefile' ] ) ):
                                 $this->move_file_upload( 'images' );
-                                $msg = '8&tab=file_options';
+                                $this->msg = '8&tab=file_options';
                             endif;
                             break;
                         
@@ -485,7 +526,7 @@ class ChildThemeConfiguratorAdmin {
                                         $this->delete_child_file( 'screenshot', $ext );
                                 endforeach;
                                 $this->move_file_upload( '' );
-                                $msg = '8&tab=file_options';
+                                $this->msg = '8&tab=file_options';
                             endif;
                             break;
                         default:
@@ -502,7 +543,7 @@ class ChildThemeConfiguratorAdmin {
                 $this->processdone = TRUE;
                 //die( '<pre><code><small>' . print_r( $_POST, TRUE ) . '</small></code></pre>' );
                 // no errors so we redirect with confirmation message
-                $this->update_redirect( $msg );
+                $this->update_redirect();
             endif;
         endif; // end request method condition
         // if we are here, then this is either a get request or we need filesystem access
@@ -512,7 +553,7 @@ class ChildThemeConfiguratorAdmin {
      * Handle the creation or update of a child theme
      */
     function setup_child_theme() {
-        $msg = 1;
+        $this->msg = 1;
         $this->is_new = TRUE;
         // sanitize and extract config fields into local vars
         foreach ( $this->configfields as $configfield ):
@@ -556,11 +597,12 @@ class ChildThemeConfiguratorAdmin {
                     // clone existing child theme
                     $this->clone_child_theme( $child, $template_sanitized );
                     if ( !empty( $this->errors ) ) return FALSE;
-                    // if no errors, copy menus, widgets and customizer options
-                    $this->copy_theme_mods( $child, $template_sanitized );
-                    $msg = 3;
+                    /**
+                     * using 'updated' get var to indicate theme mods should be copied and the to/from themes
+                     */
+                    $this->msg = '3,' . $child . ',' . $template_sanitized;
                 else:
-                    $msg = 2;
+                    $this->msg = 2;
                 endif;
                 $child = $template_sanitized;
             endif;
@@ -579,7 +621,7 @@ class ChildThemeConfiguratorAdmin {
             $this->debug( 'resetting child theme', __FUNCTION__, __CLASS__ );
             $this->reset_child_theme();
             $this->enqueue_parent_css();
-            $msg = 4;
+            $this->msg = 4;
         else:
 
             // if any errors, bail before we create css object
@@ -634,13 +676,15 @@ class ChildThemeConfiguratorAdmin {
                 $this->evaluate_signals();
             endif;
             
-            // v2.1.3 - force dependency for specific stylesheets
+            // v2.1.3 - remove dependency for specific stylesheets
             $this->css->forcedep = array();
             if ( isset( $_POST[ 'ctc_forcedep' ] ) && is_array( $_POST[ 'ctc_forcedep' ] ) ): 
-                foreach ( $_POST[ 'ctc_forcedep' ] as $handle )
+                foreach ( $_POST[ 'ctc_forcedep' ] as $handle ):
                     $this->css->forcedep[ sanitize_text_field( $handle ) ] = 1;
+                    $this->debug( 'Removing dependency: ' . $handle, __FUNCTION__, __CLASS__ );
+                endforeach;
             endif;
-
+        
             // roll back CTC Pro Genesis handling option
             if ( $this->genesis ):
                 $handling       = 'separate';
@@ -711,9 +755,11 @@ class ChildThemeConfiguratorAdmin {
                 
             // plugin hook to parse additional or non-standard files
             do_action( 'chld_thm_cfg_parse_stylesheets' );
-            // copy menus, widgets and other customizer options from parent to child if selected
             if ( isset( $_POST[ 'ctc_parent_mods' ] ) && 'duplicate' != $type )
-                $this->copy_theme_mods( $parnt, $child );
+                /**
+                 * using 'updated' get var to indicate theme mods should be copied and the to/from themes
+                 */
+                $this->msg .= ',' . $parnt . ',' . $child;
             // run code generation function in read-only mode to add existing external stylesheet links to config data
             $this->enqueue_parent_css( TRUE );
             // hook for add'l plugin files and subdirectories. Must run after stylesheets are parsed to apply latest options
@@ -746,7 +792,6 @@ class ChildThemeConfiguratorAdmin {
         do_action( 'chld_thm_cfg_addl_options' );
         //$this->dump_configs();
         // return message id 1, which says new child theme created successfully;
-        return $msg;
     }
 
     /*
@@ -763,14 +808,14 @@ class ChildThemeConfiguratorAdmin {
         return preg_replace( "/[^\w\-]/", '', $slug );
     }
     
-    function update_redirect( $msg = 1 ) {
+    function update_redirect() {
         $this->log_debug();
         if ( empty( $this->is_ajax ) ):
             $ctcpage = apply_filters( 'chld_thm_cfg_admin_page', CHLD_THM_CFG_MENU );
             $screen = get_current_screen()->id;
             wp_safe_redirect(
                 ( strstr( $screen, '-network' ) ? network_admin_url( 'themes.php' ) : admin_url( 'tools.php' ) ) 
-                    . '?page=' . $ctcpage . ( $msg ? '&updated=' . $msg : ( $this->errors ? '&error=' . implode( ',', $this->errors ) : '' ) ) );
+                    . '?page=' . $ctcpage . ( $this->errors ? '&error=' . implode( ',', $this->errors ) : ( $this->msg ? '&updated=' . $this->msg : '' ) ) );
             die();
         endif;
     }
@@ -879,10 +924,22 @@ if ( !defined( 'ABSPATH' ) ) exit;
         $cssnotheme     = $this->get( 'cssnotheme' );
         $ignoreparnt    = $this->get( 'ignoreparnt' );
         $priority       = $this->get( 'qpriority' );
+        $maxpriority    = $this->get( 'mpriority' );
         $reorder        = $this->get( 'reorder' );
         $this->debug( 'forcedep: ' . print_r( $this->get( 'forcedep' ), TRUE ) . ' deps: ' . print_r( $deps, TRUE ) . ' enq: ' . $enq . ' handling: ' . $handling
             . ' hasstyles: ' . $hasstyles . ' parntloaded: ' . $parntloaded . ' childloaded: ' . $childloaded . ' reorder: ' . $reorder
             . ' ignoreparnt: ' . $ignoreparnt . ' priority: ' . $priority . ' childtype: ' . $this->childtype, __FUNCTION__, __CLASS__ );
+        // add RTL handler
+        $code .= "
+if ( !function_exists( 'chld_thm_cfg_locale_css' ) ):
+    function chld_thm_cfg_locale_css( \$uri ){
+        if ( empty( \$uri ) && is_rtl() && file_exists( get_template_directory() . '/rtl.css' ) )
+            \$uri = get_template_directory_uri() . '/rtl.css';
+        return \$uri;
+    }
+endif;
+add_filter( 'locale_stylesheet_uri', 'chld_thm_cfg_locale_css' );
+";
          // enqueue parent stylesheet 
         if ( 'enqueue' == $enq && $hasstyles && !$parntloaded && !$ignoreparnt ):
             // Sanity check: remove dependency to parent css handle to avoid loop v2.3.0
@@ -925,7 +982,17 @@ add_action( 'wp_head', 'chld_thm_cfg_add_parent_dep', 2 );
             endforeach;
         endif;
         
+        // deregister and re-register swaps
+        foreach ( $this->get( 'swappath' ) as $sphandle => $sppath ):
+            if ( file_exists( trailingslashit( get_template_directory() ) . $sppath ) ):
+                $enqueues[] = "        if ( !file_exists( trailingslashit( get_stylesheet_directory() ) . '" . $sppath . "' ) ):";
+                $enqueues[] = "            wp_deregister_style( '" . $sphandle . "' );";
+                $enqueues[] = "            wp_register_style( '" . $sphandle . "', trailingslashit( get_template_directory_uri() ) . '" . $sppath . "' );";
+                $enqueues[] = "        endif;";
+            endif;
+        endforeach;
         
+        //die( print_r( $enqueues, TRUE ) );
         // if child not loaded, enqueue it and add it to dependencies
         if ( 'separate' != $handling && ( ( $csswphead || $cssunreg || $cssnotheme ) 
             || ( 'new' != $this->childtype && !$childloaded ) 
@@ -951,7 +1018,7 @@ if ( !function_exists( 'child_theme_configurator_css' ) ):
             $code .= "
     }
 endif;
-add_action( 'wp_enqueue_scripts', 'child_theme_configurator_css', " . ( $priority + 10 ) . " );" . LF;
+add_action( 'wp_enqueue_scripts', 'child_theme_configurator_css', " . $maxpriority . " );" . LF;
         endif;
         if ( $ignoreparnt )
             $code .= "
@@ -990,7 +1057,7 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
         if ( $this->is_ajax && is_readable( $filename ) && is_writable( $filename ) ):
             // ok to proceed
             $this->debug( 'Ajax update, bypassing wp filesystem.', __FUNCTION__, __CLASS__ );
-            $markerdata = explode( "\n", @file_get_contents( $filename ) );
+            $markerdata = @file_get_contents( $filename );
         elseif ( !$this->fs ): 
             $this->debug( 'No filesystem access.', __FUNCTION__, __CLASS__ );
             return FALSE; // return if no filesystem access
@@ -1007,13 +1074,20 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
                 endif;
             endif;
             // get_contents_array returns extra linefeeds so just split it ourself
-            $markerdata = explode( "\n", $wp_filesystem->get_contents( $this->fspath( $filename ) ) );
+            $markerdata = $wp_filesystem->get_contents( $this->fspath( $filename ) );
         endif;
+        // remove closing php tag
+        $markerdata = preg_replace( "/\?>\s*\$/s", '', $markerdata );
+        // divide into lines
+        $markerdata = explode( "\n", $markerdata );
         $newfile = '';
         $externals  = array();
         $phpopen    = 0;
         $in_comment = 0;
         $foundit = FALSE;
+        if ( $getexternals ):
+            $this->debug( 'Read only, returning.', __FUNCTION__, __CLASS__ );
+        endif;
         if ( $markerdata ):
             $state = TRUE;
             foreach ( $markerdata as $n => $markerline ):
@@ -1045,6 +1119,14 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
                     if ( preg_match( "/wp_enqueue_style.+?'chld_thm_cfg_ext\d+'.+?'(.+?)'/", $markerline, $matches ) ):
                         $this->debug( 'external link found : ' . $matches[ 1 ] );
                         $this->convert_enqueue_to_import( $matches[ 1 ] );
+                    // look for deregister/register link paths for swapping parent/child
+                    elseif ( preg_match( "/wp_register_style[^']+'(.+?)'[^']+'(.+?)'/", $markerline, $matches ) ):
+                        $this->debug( 'link swap found : ' . $matches[ 1 ] . ' => ' . $matches[ 2 ] );
+                        
+                        $handle = sanitize_text_field( $matches[ 1 ] );
+                        $path   = sanitize_text_field( $matches[ 2 ] );
+                        $this->css->swappath[ $handle ] = $path;
+                        
                     endif;
                 endif;
                 if ( strpos( $markerline, '// END ' . $marker ) !== FALSE ):
@@ -1070,9 +1152,9 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
                 // verify there is no PHP close tag at end of file
                 if ( ! $phpopen ):
                     $this->debug( 'PHP not open', __FUNCTION__, __CLASS__ );
-                    //$this->errors[] = 12 //__( 'A closing PHP tag was detected in Child theme functions file so "Parent Stylesheet Handling" option was not configured. Closing PHP at the end of the file is discouraged as it can cause premature HTTP headers. Please edit <code>functions.php</code> to remove the final <code>?&gt;</code> tag and click "Generate/Rebuild Child Theme Files" again.', 'child-theme-configurator' );
-                    //return FALSE;
-                    $newfile .= '<?php' . LF;
+                    $this->errors[] = 12; //__( 'A closing PHP tag was detected in Child theme functions file so "Parent Stylesheet Handling" option was not configured. Closing PHP at the end of the file is discouraged as it can cause premature HTTP headers. Please edit <code>functions.php</code> to remove the final <code>?&gt;</code> tag and click "Generate/Rebuild Child Theme Files" again.', 'child-theme-configurator' );
+                    return FALSE;
+                    //$newfile .= '<?php' . LF;
                 endif;
                 $newfile .= "\n// BEGIN {$marker}\n";
                 foreach ( $insertion as $insertline )
@@ -1790,7 +1872,36 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
     // so we need cases for active parent, active child or neither
     function copy_theme_mods( $from, $to ) {
         if ( strlen( $from ) && strlen( $to ) ):
-            $this->set_theme_mods( $to, $this->get_theme_mods( $from ) );
+            $this->debug( 'copying theme fomds from ' . $from . ' to ' . $to, __FUNCTION__, __CLASS__ );
+        
+            // get parent theme settings
+            $mods = $this->get_theme_mods( $from );
+        
+            // handle custom css
+            $css = wp_get_custom_css( $from );
+            $r = wp_update_custom_css_post( $css, array(
+                'stylesheet' => $to
+            ) );
+        
+            // if ok, set id in child theme mods
+            if ( !( $r instanceof WP_Error ) ):
+                $post_id = $r->ID;
+                $mods[ 'custom_css_post_id' ] = $post_id;
+            endif;
+        
+            // set new mods based on parent
+            $this->set_theme_mods( $to, $mods );
+        
+            // handle randomized custom headers
+            $headers = get_posts( array( 
+                'post_type'     => 'attachment', 
+                'meta_key'      => '_wp_attachment_is_custom_header', 
+                'meta_value'    => $from, 
+                'orderby'       => 'none', 
+                'nopaging'      => true ) );
+            foreach ( $headers as $header )
+                add_post_meta( $header->ID, '_wp_attachment_is_custom_header', $to );
+            
             do_action( 'chld_thm_cfg_copy_theme_mods', $from, $to );
         endif;
     }
@@ -1799,14 +1910,15 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
     function get_theme_mods( $theme ){
         // get active theme
         $active_theme = get_stylesheet();
+        $this->debug( 'active theme is ' . $active_theme, __FUNCTION__, __CLASS__ );
         // create temp array from parent settings
         $mods = get_option( 'theme_mods_' . $theme );
         if ( $active_theme == $theme ):
-            $this->debug( 'from is active, using active widgets', __FUNCTION__, __CLASS__ );
+            $this->debug( $theme . ' is active, using active widgets', __FUNCTION__, __CLASS__ );
             // if parent theme is active, get widgets from active sidebars_widgets array
             $mods[ 'sidebars_widgets' ][ 'data' ] = retrieve_widgets();
         else:
-            $this->debug( 'from not active, using theme mods widgets', __FUNCTION__, __CLASS__ );
+            $this->debug( $theme . ' not active, using theme mods widgets', __FUNCTION__, __CLASS__ );
             // otherwise get widgets from parent theme mods
             $mods[ 'sidebars_widgets' ][ 'data' ] = empty( $mods[ 'sidebars_widgets' ][ 'data' ] ) ?
                 array( 'wp_inactive_widgets' => array() ) : $mods[ 'sidebars_widgets' ][ 'data' ];
@@ -1816,15 +1928,16 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
     
     function set_theme_mods( $theme, $mods ){
         $active_theme = get_stylesheet();
+        $this->debug( 'active theme is ' . $active_theme, __FUNCTION__, __CLASS__ );
         $widgets = $mods[ 'sidebars_widgets' ][ 'data' ];
         if ( $active_theme == $theme ):
-            $this->debug( 'to active, setting active widgets', __FUNCTION__, __CLASS__ );
+            $this->debug( $theme . ' active, setting active widgets', __FUNCTION__, __CLASS__ );
             // copy widgets to active sidebars_widgets array
             wp_set_sidebars_widgets( $mods[ 'sidebars_widgets' ][ 'data' ] );
             // if child theme is active, remove widgets from temp array
             unset( $mods[ 'sidebars_widgets' ] );
         else:
-            $this->debug( 'child not active, saving widgets in theme mods', __FUNCTION__, __CLASS__ );
+            $this->debug( $theme . ' not active, saving widgets in theme mods', __FUNCTION__, __CLASS__ );
             // otherwise copy widgets to temp array with time stamp
             // array value is already set
             //$mods[ 'sidebars_widgets' ][ 'data' ] = $widgets;
@@ -2066,10 +2179,9 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
     function evaluate_signals() {
         if ( !isset( $_POST[ 'ctc_analysis' ] ) ) return;
         $analysis   = json_decode( urldecode( $_POST[ 'ctc_analysis' ] ) );
-        //die( print_r( $analysis, TRUE ) );
+        //die( '<pre><code><small>' . print_r( $analysis, TRUE ) . '</small></code></pre>' );
         // stylesheets loaded outside wp_styles queue
         $unregs     = array( 'thm_past_wphead', 'thm_unregistered', 'dep_unregistered', 'css_past_wphead', 'dep_past_wphead' );
-        //echo '<pre><code>' . print_r( $analysis, TRUE ) . "</code></pre>\n";
         
         // if this is a self-contained child theme ( e.g., Genesis ) use child as baseline
         $baseline = $this->get( 'ignoreparnt' ) ? 'child' : 'parnt';
@@ -2087,7 +2199,15 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
                 $this->css->addl_css[] = sanitize_text_field( $import );
             endforeach;
         endif;
-
+        
+        // store any detected swaps
+        foreach ( $analysis->parnt->swaps as $swap ):
+            if ( ( $handle = sanitize_text_field( $swap[ 0 ] ) ) && ( $path = sanitize_text_field( $swap[ 1 ] ) ) ):
+                $this->css->swappath[ $handle ] = $path;
+                $this->debug( 'Setting link swap: ' . $handle . ' => ' . $path, __FUNCTION__, __CLASS__ );
+            endif;
+        endforeach;
+        
         // store stylesheet dependencies
         if ( isset( $analysis->{ $baseline } ) ):
             if ( isset( $analysis->{ $baseline }->deps ) ):
@@ -2099,9 +2219,7 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
                           $this->css->parnt_deps[] = $deparray[ 0 ];
                     endif;
                     if ( !preg_match( "/^style.*?\.css$/", $deparray[ 1 ] ) ):
-                        // bootstrap wastes memory among other resources
-                        //if ( !preg_match( "/bootstrap/i", $deparray[ 0 ] ) && !preg_match( "/bootstrap/i", $deparray[ 1 ] ) )
-                            $this->css->addl_css[] = sanitize_text_field( $deparray[ 1 ] );
+                        $this->css->addl_css[] = sanitize_text_field( $deparray[ 1 ] );
                     endif;
                 endforeach;
                 foreach ( $analysis->{ $baseline }->deps[ 1 ] as $deparray ):
@@ -2113,8 +2231,7 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
                     endif;
                     if ( 'separate' == $this->get( 'handling' ) || !empty( $analysis->{ $baseline }->signals->ctc_child_loaded ) ):
                         if ( !preg_match( "/^style.*?\.css$/", $deparray[ 1 ] ) ):
-                            //if ( !preg_match( "/bootstrap/", $deparray[ 0 ] ) && !preg_match( "/bootstrap/", $deparray[ 1 ] ) )
-                                $this->css->addl_css[] = sanitize_text_field( $deparray[ 1 ] );
+                            $this->css->addl_css[] = sanitize_text_field( $deparray[ 1 ] );
                         endif;
                     endif;
                 endforeach;
@@ -2162,6 +2279,9 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
         // roll back CTC Pro Genesis handling option
         if ( isset( $analysis->child->signals->ctc_gen_loaded ) )
             $this->genesis = TRUE;
+
+        add_action( 'chld_thm_cfg_addl_files',   array( $this, 'enqueue_parent_css' ), 15, 2 );
+
     }
     
     /**
@@ -2171,16 +2291,25 @@ defined( 'CHLD_THM_CFG_IGNORE_PARENT' ) or define( 'CHLD_THM_CFG_IGNORE_PARENT',
      * This allows the stylesheets to be enqueued in the correct order.
      */
     function set_enqueue_priority( $analysis, $baseline ){
+        $maxpriority = 10;
         foreach ( $analysis->{ $baseline }->irreg as $irreg ):
             $handles = explode( ',', $irreg );
             $priority = array_shift( $handles );
-            $handle = $analysis->{ $baseline }->signals->{ 'thm_' . $baseline . '_loaded' };
-            if ( in_array( $handle, $handles ) ):
+            if ( isset( $analysis->{ $baseline }->signals->{ 'thm_' . $baseline . '_loaded' } ) 
+                && ( $handle = $analysis->{ $baseline }->signals->{ 'thm_' . $baseline . '_loaded' } )
+                && in_array( $handle, $handles ) ): // override priority if this is theme stylesheet
                 $this->debug( '(baseline: ' . $baseline . ') match: ' . $handle . ' setting priority: ' . $priority, __FUNCTION__, __CLASS__ );
                 $this->css->set_prop( 'qpriority', $priority );
-                break;
+            elseif ( preg_match( '/chld_thm_cfg/', $irreg ) ): // skip if this is ctc handle
+                continue;
             endif;
+            // update max priority if this is higher
+            if ( $priority >= $maxpriority )
+                $maxpriority = $priority;
         endforeach;
+        // set max priority property
+        $this->css->set_prop( 'mpriority', $maxpriority );
+
     }
 
 }

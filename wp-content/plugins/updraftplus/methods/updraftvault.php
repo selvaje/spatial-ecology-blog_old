@@ -76,20 +76,25 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 	/**
 	 * Gets the UpdraftVault configuration and credentials
 	 *
+	 * @param Boolean $force_refresh - if set, and if relevant, don't use cached credentials, but get them afresh
+	 *
 	 * @return array An array containing the Amazon S3 credentials (accesskey, secretkey, etc.)
 	 *				 along with some configuration values.
 	 */
-	public function get_config() {
+	public function get_config($force_refresh = false) {
 
 		global $updraftplus;
-		// Have we already done this?
-		if (!empty($this->vault_config)) return $this->vault_config;
+		
+		if (!$force_refresh) {
+			// Have we already done this?
+			if (!empty($this->vault_config)) return $this->vault_config;
 
-		// Stored in the job?
-		if ($job_config = $this->jobdata_get('config', null, 'updraftvault_config')) {
-			if (!empty($job_config) && is_array($job_config)) {
-				$this->vault_config = $job_config;
-				return $job_config;
+			// Stored in the job?
+			if ($job_config = $this->jobdata_get('config', null, 'updraftvault_config')) {
+				if (!empty($job_config) && is_array($job_config)) {
+					$this->vault_config = $job_config;
+					return $job_config;
+				}
 			}
 		}
 
@@ -104,7 +109,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 
 		if (!is_array($opts) || empty($opts['token']) || empty($opts['email'])) {
 			// Not connected
-			$updraftplus->log("UpdraftPlus Vault: this site has not been connected - check your settings");
+			$this->log("this site has not been connected - check your settings");
 			$config['error'] = array('message' => 'site_not_connected', 'values' => array());
 			
 			$this->vault_config = $config;
@@ -114,7 +119,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 
 		$site_id = $updraftplus->siteid();
 
-		$updraftplus->log("UpdraftPlus Vault: requesting access details (sid=$site_id, email=".$opts['email'].")");
+		$this->log("requesting access details (sid=$site_id, email=".$opts['email'].")");
 
 		// Request the credentials using our token
 		$post_body = array(
@@ -147,7 +152,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 					foreach ($response['user_messages'] as $message) {
 						if (!is_array($message)) continue;
 						$msg_txt = $this->vault_translate_remote_message($message['message'], $message['code']);
-						$updraftplus->log($msg_txt, $message['level'], $message['code']);
+						$this->log($msg_txt, $message['level'], $message['code']);
 					}
 				}
 
@@ -174,7 +179,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 					$config['path'] = $response['path'];
 					$config['sessiontoken'] = (isset($response['sessiontoken']) ? $response['sessiontoken'] : '');
 				} elseif (is_array($response) && isset($response['result']) && ('token_unknown' == $response['result'] || 'site_duplicated' == $response['result'])) {
-					$updraftplus->log("This site appears to not be connected to UpdraftPlus Vault (".$response['result'].")");
+					$this->log("This site appears to not be connected to UpdraftPlus Vault (".$response['result'].")");
 					$config['error'] = array('message' => 'site_not_connected', 'values' => array($response['result']));
 					
 					$config['accesskey'] = '';
@@ -186,19 +191,19 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 					$details_retrieved = true;
 				} else {
 					if (is_array($response) && !empty($response['result'])) {
-						$msg = "UpdraftVault response code: ".$response['result'];
+						$msg = "response code: ".$response['result'];
 						if (!empty($response['code'])) $msg .= " (".$response['code'].")";
 						if (!empty($response['message'])) $msg .= " (".$response['message'].")";
 						if (!empty($response['data'])) $msg .= " (".json_encode($response['data']).")";
-						$updraftplus->log($msg);
+						$this->log($msg);
 						$config['error'] = array('message' => 'general_error_response', 'values' => array($msg));
 					} else {
-						$updraftplus->log("Received response, but it was not in the expected format: ".substr(wp_remote_retrieve_body($getconfig), 0, 100).' ...');
+						$this->log("Received response, but it was not in the expected format: ".substr(wp_remote_retrieve_body($getconfig), 0, 100).' ...');
 						$config['error'] = array('message' => 'unexpected_format', 'values' => array(substr(wp_remote_retrieve_body($getconfig), 0, 100).' ...'));
 					}
 				}
 			} else {
-				$updraftplus->log("Unexpected HTTP response code (please try again later): ".$response_code);
+				$this->log("Unexpected HTTP response code (please try again later): ".$response_code);
 				$config['error'] = array('message' => 'unexpected_http_response', 'values' => array($response_code));
 			}
 		} elseif (is_wp_error($getconfig)) {
@@ -206,7 +211,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 			$config['error'] = array('message' => 'general_error_response', 'values' => array($getconfig));
 		} else {
 			if (!isset($getconfig['accesskey'])) {
-				$updraftplus->log("Vault: wp_remote_post returned a result that was not understood (".gettype($getconfig).")");
+				$this->log("wp_remote_post returned a result that was not understood (".gettype($getconfig).")");
 				$config['error'] = array('message' => 'result_not_understood', 'values' => array(gettype($getconfig)));
 			}
 		}
@@ -216,13 +221,13 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 			if (!empty($opts['last_config']) && is_array($opts['last_config'])) {
 				$last_config = $opts['last_config'];
 				if (!empty($last_config['time']) && is_numeric($last_config['time']) && $last_config['time'] > time() - 86400*15) {
-					if ($updraftplus->backup_time) $updraftplus->log("UpdraftPlus Vault: failed to retrieve access details from updraftplus.com: will attempt to use most recently stored configuration");
+					if ($updraftplus->backup_time) $this->log("failed to retrieve access details from updraftplus.com: will attempt to use most recently stored configuration");
 					if (!empty($last_config['accesskey'])) $config['accesskey'] = $last_config['accesskey'];
 					if (!empty($last_config['secretkey'])) $config['secretkey'] = $last_config['secretkey'];
 					if (isset($last_config['path'])) $config['path'] = $last_config['path'];
 					if (isset($opts['quota'])) $config['quota'] = $opts['quota'];
 				} else {
-					if ($updraftplus->backup_time) $updraftplus->log("UpdraftPlus Vault: failed to retrieve access details from updraftplus.com: no recently stored configuration was found to use instead");
+					if ($updraftplus->backup_time) $this->log("failed to retrieve access details from updraftplus.com: no recently stored configuration was found to use instead");
 				}
 			}
 		}
@@ -311,11 +316,11 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 							'.__('UpdraftPlus Vault brings you storage that is <strong>reliable, easy to use and a great price</strong>.', 'updraftplus').' '.__('Press a button to get started.', 'updraftplus').'
 						</p>
 						<div class="vault_primary_option clear-left">
-							<div><strong>'.__('First time user?', 'updraftplus').'</strong></div>
+							<div><strong>'.__('Need to get space?', 'updraftplus').'</strong></div>
 							<button id="updraftvault_showoptions" class="button-primary">'.__('Show the options', 'updraftplus').'</button>
 						</div>
 						<div class="vault_primary_option">
-							<div><strong>'.__('Already purchased space?', 'updraftplus').'</strong></div>
+							<div><strong>'.__('Already got space?', 'updraftplus').'</strong></div>
 							<button id="updraftvault_connect" class="button-primary">'.__('Connect', 'updraftplus').'</button>
 						</div>
 						<p>
@@ -415,6 +420,18 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 	}
 	
 	/**
+	 * Check whether options have been set up by the user, or not
+	 *
+	 * @param Array $opts - the potential options
+	 *
+	 * @return Boolean
+	 */
+	public function options_exist($opts) {
+		if (is_array($opts) && isset($opts['email'])) return true;
+		return false;
+	}
+	
+	/**
 	 * Gives settings keys which values should not passed to handlebarsjs context.
 	 * The settings stored in UD in the database sometimes also include internal information that it would be best not to send to the front-end (so that it can't be stolen by a man-in-the-middle attacker)
 	 *
@@ -454,8 +471,8 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 
 	protected function s3_out_of_quota($total, $used, $needed) {
 		global $updraftplus;
-		$updraftplus->log("UpdraftPlus Vault Error: Quota exhausted (used=$used, total=$total, needed=$needed)");
-		$updraftplus->log(sprintf(__('%s Error: you have insufficient storage quota available (%s) to upload this archive (%s).', 'updraftplus'), 'UpdraftPlus Vault', round(($total-$used)/1048576, 2).' MB', round($needed/1048576, 2).' MB').' '.__('You can get more quota here', 'updraftplus').': '.$this->get_url('get_more_quota'), 'error');
+		$this->log("Error: Quota exhausted (used=$used, total=$total, needed=$needed)");
+		$this->log(sprintf(__('Error: you have insufficient storage quota available (%s) to upload this archive (%s).', 'updraftplus'), round(($total-$used)/1048576, 2).' MB', round($needed/1048576, 2).' MB').' '.__('You can get more quota here', 'updraftplus').': '.$this->get_url('get_more_quota'), 'error');
 	}
 
 	protected function s3_record_quota_info($quota_used, $quota) {
@@ -465,7 +482,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 
 		$ret .= ' - <a href="'.esc_attr($this->get_url('get_more_quota')).'">'.__('Get more quota', 'updraftplus').'</a>';
 
-		$ret_dashboard = $ret . ' - <a href="'.UpdraftPlus::get_current_clean_url().'" id="updraftvault_recountquota">'.__('Refresh current status', 'updraftplus').'</a>';
+		$ret_dashboard = $ret . ' - <a href="#" id="updraftvault_recountquota">'.__('Refresh current status', 'updraftplus').'</a>';
 
 		set_transient('updraftvault_quota_text', $ret_dashboard, 86400*3);
 
@@ -516,7 +533,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 
 			} catch (Exception $e) {
 				global $updraftplus;
-				$updraftplus->log("Listfiles failed during quota calculation: ".$e->getMessage());
+				$this->log("Listfiles failed during quota calculation: ".$e->getMessage());
 				$current_files = new WP_Error('listfiles_exception', $e->getMessage().' ('.get_class($e).')');
 			}
 

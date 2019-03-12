@@ -58,18 +58,7 @@ class Rop_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-
-		$general_settings = new Rop_Settings_Model;
-
-		$post_types = wp_list_pluck( $general_settings->get_selected_post_types(), 'value' );
-		$attachment_post_type = array_search( 'attachment', $post_types );
-		unset( $post_types[ $attachment_post_type ] );
-
-		$this->allowed_screens = array(
-			'dashboard'   => 'TweetOldPost',
-			'exclude'     => 'rop_content_filters',
-			'publish_now' => $post_types,
-		);
+		$this->set_allowed_screens();
 
 	}
 
@@ -92,6 +81,76 @@ class Rop_Admin {
 		}
 		wp_enqueue_style( $this->plugin_name, ROP_LITE_URL . 'assets/css/rop.css', $deps, $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . '_fa', ROP_LITE_URL . 'assets/css/font-awesome.min.css', array(), $this->version );
+
+	}
+
+	/**
+	 * Check if a shortener is in use.
+	 *
+	 * @since    8.1.5
+	 *
+	 * @param string $shortener The shortener to check.
+	 *
+	 * @return bool If shortener is in use.
+	 */
+	public function check_shortener_service( $shortener ) {
+
+		$model = new Rop_Post_Format_Model;
+		$post_format = $model->get_post_format();
+
+		$shorteners = array();
+
+		foreach ( $post_format as $account_id => $option ) {
+			$shorteners[] = $option['short_url_service'];
+		}
+
+		return ( in_array( $shortener, $shorteners ) ) ? true : false;
+	}
+
+	/**
+	 * Show notice to upgrade bitly.
+	 *
+	 * @since    8.1.5
+	 */
+	public function bitly_shortener_upgrade_notice() {
+
+		if ( ! $this->check_shortener_service( 'bit.ly' ) ) {
+			return;
+		}
+
+		$bitly = get_option( 'rop_shortners_bitly' );
+
+		if ( array_key_exists( 'generic_access_token', $bitly['bitly_credentials'] ) ) {
+			return;
+		}
+		?>
+			<div class="notice notice-error is-dismissible">
+				<?php echo sprintf( __( '%1$s%2$sRevive Old Posts:%3$s Please upgrade your Bit.ly keys. See this %4$sarticle for instructions.%5$s%6$s', 'tweet-old-post' ), '<p>', '<b>', '</b>', '<a href="https://docs.revive.social/article/976-how-to-connect-bit-ly-to-revive-old-posts" target="_blank">', '</a>', '</p>' ); ?>
+			</div>
+			<?php
+	}
+
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since    8.1.5
+	 */
+	private function set_allowed_screens() {
+
+		$general_settings = new Rop_Settings_Model;
+
+		$post_types = wp_list_pluck( $general_settings->get_selected_post_types(), 'value' );
+		$attachment_post_type = array_search( 'attachment', $post_types );
+
+		if ( ! empty( $attachment_post_type ) ) {
+			unset( $post_types[ $attachment_post_type ] );
+		}
+
+		$this->allowed_screens = array(
+			'dashboard'   => 'TweetOldPost',
+			'exclude'     => 'rop_content_filters',
+			'publish_now' => $post_types,
+		);
 
 	}
 
@@ -167,7 +226,7 @@ class Rop_Admin {
 			'accounts' => $active_accounts,
 		);
 
-		if ( 'publish_now' === $page && $global_settings->license_type() > 0 ) {
+		if ( 'publish_now' === $page ) {
 			$array_nonce['publish_now'] = apply_filters( 'rop_publish_now_attributes', $array_nonce['publish_now'] );
 			wp_register_script( $this->plugin_name . '-publish_now', ROP_LITE_URL . 'assets/js/build/publish_now' . ( ( ROP_DEBUG ) ? '' : '.min' ) . '.js', array(), ( ROP_DEBUG ) ? time() : $this->version, false );
 		}
@@ -394,24 +453,110 @@ class Rop_Admin {
 	 * @access  public
 	 */
 	public function publish_now_upsell() {
-
 		$page = $this->get_current_page();
 		if ( empty( $page ) ) {
 			return;
 		}
-
 		$global_settings = new Rop_Global_Settings;
 		$settings = new Rop_Settings_Model;
 
-		if ( $global_settings->license_type() <= 0 && $settings->get_instant_sharing() ) {
+		$services        = new Rop_Services_Model();
+		$active_accounts = $services->get_active_accounts();
+
+		if ( $settings->get_instant_sharing() && count( $active_accounts ) >= 2 && ! defined( 'ROP_PRO_VERSION' ) ) {
 			echo '<div class="misc-pub-section  " style="font-size: 13px;text-align: center;line-height: 1.7em;color: #888;"><span class="dashicons dashicons-lock"></span>' .
 				__(
-					'Instant social sharing is available on the extended version for ',
+					'Share to more accounts by upgrading to the extended version for ',
 					'tweet-old-post'
 				) . '<a href="' . ROP_PRO_URL . '" target="_blank">Revive Old Posts </a>
 						</div>';
 		}
 	}
+
+	/**
+	 * Adds the publish now buttons.
+	 */
+	public function add_publish_actions() {
+		global $post, $pagenow;
+
+		$settings_model  = new Rop_Settings_Model();
+		$global_settings = new Rop_Global_Settings();
+
+		$post_types = wp_list_pluck( $settings_model->get_selected_post_types(), 'value' );
+		if ( in_array( $post->post_type, $post_types ) && in_array(
+			$pagenow,
+			array(
+				'post.php',
+				'post-new.php',
+			)
+		) && ( ( method_exists( $settings_model, 'get_instant_sharing' ) && $settings_model->get_instant_sharing() ) || ! method_exists( $settings_model, 'get_instant_sharing' ) )
+		) {
+			wp_nonce_field( 'rop_publish_now_nonce', 'rop_publish_now_nonce' );
+			include_once ROP_LITE_PATH . '/includes/admin/views/publish_now.php';
+		}
+	}
+
+		/**
+		 * Publish now attributes to be provided to the javascript.
+		 *
+		 * @param   array $default The default attributes.
+		 */
+	public function publish_now_attributes( $default ) {
+		global $post;
+
+		if ( 'publish' === $post->post_status ) {
+			$default['action'] = 'yes' === get_post_meta( $post->ID, 'rop_publish_now', true );
+		}
+		$default['active'] = get_post_meta( $post->ID, 'rop_publish_now_accounts', true );
+
+		return $default;
+	}
+
+		/**
+		 * Publish now, if enabled.
+		 *
+		 * @param   int $post_id The post ID.
+		 */
+	public function maybe_publish_now( $post_id ) {
+		if ( ! isset( $_POST['rop_publish_now_nonce'] ) || ! wp_verify_nonce( $_POST['rop_publish_now_nonce'], 'rop_publish_now_nonce' ) ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['publish_now'] ) || empty( $_POST['publish_now'] ) ) {
+			delete_post_meta( $post_id, 'rop_publish_now' );
+			delete_post_meta( $post_id, 'rop_publish_now_accounts' );
+
+			return;
+		}
+
+		$enabled = $_POST['publish_now_accounts'];
+
+		$services = new Rop_Services_Model();
+		$active   = array_keys( $services->get_active_accounts() );
+		// has something been added extra?
+		$extra = array_diff( $enabled, $active );
+		// reject the extra.
+		$enabled = array_diff( $enabled, $extra );
+
+		update_post_meta( $post_id, 'rop_publish_now', 'yes' );
+		update_post_meta( $post_id, 'rop_publish_now_accounts', $enabled );
+
+		if ( ! $enabled ) {
+			return;
+		}
+
+		$cron = new Rop_Cron_Helper();
+		$cron->manage_cron( array( 'action' => 'publish-now' ) );
+	}
+
 
 	/**
 	 * The publish now Cron Job for the plugin.
@@ -444,6 +589,32 @@ class Rop_Admin {
 					$logger->alert_error( $error_message . ' Error: ' . $exception->getTrace() );
 				}
 			}
+		}
+	}
+
+	/**
+	 * The publish now feature notice message
+	 *
+	 * @since   8.2.0
+	 * @access  public
+	 */
+	public function publish_now_notice() {
+		$user_id = get_current_user_id();
+		if ( ! get_user_meta( $user_id, 'rop_publish_now_notice_dismissed' ) ) {
+			echo '<div class="notice notice-info"><p>' . sprintf( __( '%1$sRevive Old Posts Update:%2$s You can now share posts on publish to your social networks in the free version of %1$sRevive Old Posts%2$s! This can help with Facebook App reviews. %3$sLearn more here.%4$s', 'tweet-old-post' ), '<strong>', '</strong>', '<a href="https://docs.revive.social/article/926-how-to-go-through-the-facebook-review-process" target="_blank">', '</a>' ) . '</p><p><a href="?publish_now_notice_dismissed">' . __( 'Dismiss', 'tweet-old-post' ) . '</a></p></div>';
+		}
+	}
+
+	/**
+	 * The publish now feature notice dismissal
+	 *
+	 * @since   8.2.0
+	 * @access  public
+	 */
+	public function publish_now_notice_dismissed() {
+		$user_id = get_current_user_id();
+		if ( isset( $_GET['publish_now_notice_dismissed'] ) ) {
+			add_user_meta( $user_id, 'rop_publish_now_notice_dismissed', 'true', true );
 		}
 	}
 

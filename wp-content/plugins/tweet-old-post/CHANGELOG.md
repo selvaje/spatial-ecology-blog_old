@@ -1,4 +1,35 @@
 
+ ### v8.2.1 - 2019-03-01 
+ **Changes:** 
+ * Fix: Sharing queue issue with sites running WPML plugin
+ 
+ ### v8.2.0 - 2019-02-09 
+ **Changes:** 
+ * New: The share post on publish feature is now in the lite version of the plugin. This should help with Facebook app review process (see revive.social docs)
+ 
+ ### v8.1.8 - 2019-01-29 
+ **Changes:** 
+ * Fix: Minor bugs
+ 
+ ### v8.1.7 - 2019-01-18 
+ **Changes:** 
+ * New: Adds basic support for WPML content sharing(see revive.social docs)
+* Fix: Low PHP version notice was not showing the right text
+* Fix: Minor bugs
+ 
+ ### v8.1.6 - 2018-12-13 
+ **Changes:** 
+ * Fixed undefined variable error
+ 
+ ### v8.1.5 - 2018-12-13 
+ **Changes:** 
+ * New: Made post share content filterable, you can now use post excerpt field (see docs)
+* New: Pinterest shares will now link to the post on your website
+* Changed: Bit.ly authentication method, old method will be deprecated in the future
+* Changed: Custom message labels
+* Fix: Pointer JavaScript error
+* PRO Fix: Publish now feature not always showing
+ 
  ### v8.1.4 - 2018-12-03 
  **Changes:** 
  * New: Admin pointers for new plugin installs

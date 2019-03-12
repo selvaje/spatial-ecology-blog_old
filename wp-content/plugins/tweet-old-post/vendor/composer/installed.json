@@ -1,45 +1,5 @@
 [
     {
-        "name": "codeinwp/themeisle-sdk",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Codeinwp/themeisle-sdk.git",
-            "reference": "951cde6e799e00d46a52416b62221fd771ddc326"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/Codeinwp/themeisle-sdk/zipball/951cde6e799e00d46a52416b62221fd771ddc326",
-            "reference": "951cde6e799e00d46a52416b62221fd771ddc326",
-            "shasum": ""
-        },
-        "time": "2018-11-26 14:24:47",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "load.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "ThemeIsle team",
-                "email": "friends@themeisle.com",
-                "homepage": "https://themeisle.com"
-            }
-        ],
-        "description": "ThemeIsle SDK ",
-        "homepage": "https://github.com/Codeinwp/themeisle-sdk",
-        "keywords": [
-            "wordpress"
-        ]
-    },
-    {
         "name": "abraham/twitteroauth",
         "version": "0.9.2",
         "version_normalized": "0.9.2.0",
@@ -97,17 +57,17 @@
     },
     {
         "name": "facebook/graph-sdk",
-        "version": "5.6.3",
-        "version_normalized": "5.6.3.0",
+        "version": "5.7.0",
+        "version_normalized": "5.7.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/facebook/php-graph-sdk.git",
-            "reference": "90e92bd1816fe718e55184ab85910dfcf488432c"
+            "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/90e92bd1816fe718e55184ab85910dfcf488432c",
-            "reference": "90e92bd1816fe718e55184ab85910dfcf488432c",
+            "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/2d8250638b33d73e7a87add65f47fabf91f8ad9b",
+            "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b",
             "shasum": ""
         },
         "require": {
@@ -122,7 +82,7 @@
             "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
             "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
         },
-        "time": "2018-07-03 02:25:00",
+        "time": "2018-12-11 22:56:31",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -282,6 +242,46 @@
             "log",
             "logging",
             "psr-3"
+        ]
+    },
+    {
+        "name": "codeinwp/themeisle-sdk",
+        "version": "3.0.4",
+        "version_normalized": "3.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Codeinwp/themeisle-sdk.git",
+            "reference": "cf03ee5b93c6ca66f0c1a4916309f1270fe12319"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Codeinwp/themeisle-sdk/zipball/cf03ee5b93c6ca66f0c1a4916309f1270fe12319",
+            "reference": "cf03ee5b93c6ca66f0c1a4916309f1270fe12319",
+            "shasum": ""
+        },
+        "require-dev": {
+            "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
+            "squizlabs/php_codesniffer": "^3.1",
+            "wp-coding-standards/wpcs": "^1.0.0"
+        },
+        "time": "2019-01-28 12:17:14",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "ThemeIsle team",
+                "email": "friends@themeisle.com",
+                "homepage": "https://themeisle.com"
+            }
+        ],
+        "description": "ThemeIsle SDK.",
+        "homepage": "https://github.com/Codeinwp/themeisle-sdk",
+        "keywords": [
+            "wordpress"
         ]
     }
 ]

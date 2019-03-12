@@ -1,17 +1,9 @@
-<div class="wrap about-wrap full-width-layout">
+<div class="wrap wps-wrap about-wrap full-width-layout">
     <div class="wp-statistics-welcome">
         <h1><?php printf( __( 'Welcome to WP-Statistics&nbsp;%s', 'wp-statistics' ), WP_Statistics::$reg['version'] ); ?></h1>
 
         <p class="about-text">
-			<?php printf(
-				__(
-					'Thank you for updating to the latest version! We encourage you to submit a %srating and review%s over at WordPress.org. Your feedback is greatly appreciated!',
-					'wp-statistics'
-				),
-				'<a href="https://wordpress.org/support/plugin/wp-statistics/reviews/?rate=5#new-post" target="_blank">',
-				'</a>'
-			); ?>
-
+			<?php printf( __( 'Thank you for updating to the latest version! We encourage you to submit a %srating and review%s over at WordPress.org. Your feedback is greatly appreciated!', 'wp-statistics' ), '<a href="https://wordpress.org/support/plugin/wp-statistics/reviews/?rate=5#new-post" target="_blank">', '</a>' ); ?>
 			<?php _e( 'Submit your rating:', 'wp-statistics' ); ?>
             <a href="https://wordpress.org/support/plugin/wp-statistics/reviews/?rate=5#new-post" target="_blank"><img src="<?php echo plugins_url( 'wp-statistics/assets/images/stars.png' ); ?>"/></a>
         </p>
@@ -19,124 +11,117 @@
         <div class="wp-badge"><?php printf( __( 'Version %s', 'wp-statistics' ), WP_Statistics::$reg['version'] ); ?></div>
 
         <h2 class="nav-tab-wrapper wp-clearfix">
-            <a href="#" class="nav-tab nav-tab-active"
-               data-tab="whats-news"><?php _e( 'What&#8217;s New', 'wp-statistics' ); ?></a>
+            <a href="#" class="nav-tab nav-tab-active" data-tab="whats-news"><?php _e( 'What&#8217;s New', 'wp-statistics' ); ?></a>
+            <a href="#" class="nav-tab" data-tab="addons"><?php _e( 'Add-Ons', 'wp-statistics' ); ?></a>
             <a href="#" class="nav-tab" data-tab="credit"><?php _e( 'Credits', 'wp-statistics' ); ?></a>
             <a href="#" class="nav-tab" data-tab="changelog"><?php _e( 'Changelog', 'wp-statistics' ); ?></a>
+            <a href="https://wp-statistics.com/donate/" class="nav-tab donate" data-tab="link" target="_blank"><?php _e( 'Donate', 'wp-statistics' ); ?></a>
         </h2>
 
         <div data-content="whats-news" class="tab-content current">
-            <section class="normal-section">
-                <div class="right">
+            <section class="center-section">
+                <div class="left">
                     <div class="content-padding">
-                        <h2><?php _e( 'Showing the cities of your website visitors', 'wp-statistics' ); ?></h2>
-                        <h4><?php _e( 'Enable this feature to know the cities of the people who visit your website.', 'wp-statistics' ); ?></h4>
+                        <h2><?php _e( 'Great update for WP-Statistics', 'wp-statistics' ); ?></h2>
                     </div>
-                </div>
-
-                <div class="left text-center">
-                    <img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/country.png' ); ?>"/>
                 </div>
             </section>
 
             <section class="normal-section">
                 <div class="left">
                     <div class="content-padding">
-                        <h2><?php _e( 'The plugin’s Short Codes in the editor', 'wp-statistics' ); ?></h2>
-                        <h4><?php _e( 'All the plugin’s shortcodes are readily available.', 'wp-statistics' ); ?></h4>
+                        <h2><?php _e( 'Online Users Widget', 'wp-statistics' ); ?></h2>
+                        <p><?php _e( 'A cool widget to show current online users!', 'wp-statistics' ); ?></p>
                     </div>
                 </div>
 
                 <div class="right text-center">
-                    <img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/shortcode.png' ); ?>"/>
+                    <img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/usersonline-widget.png' ); ?>"/>
                 </div>
             </section>
 
             <section class="normal-section">
                 <div class="right">
                     <div class="content-padding">
-                        <h2><?php _e( 'Support Cache, Updated!', 'wp-statistics' ); ?></h2>
-                        <h4><?php _e( 'If your WordPress cache is enabled, you should enable the cache in the plugin\'s setting, too.', 'wp-statistics' ); ?></h4>
+                        <h2><?php _e( 'Top Referring Sites', 'wp-statistics' ); ?></h2>
+                        <p><?php _e( 'Site icon, Server IP and minor improvements.', 'wp-statistics' ); ?></p>
                     </div>
                 </div>
 
                 <div class="left text-center">
-                    <img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/cache.png' ); ?>"/>
+                    <img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/topreferring-widget.png' ); ?>"/>
                 </div>
             </section>
 
             <section class="normal-section">
                 <div class="left">
                     <div class="content-padding">
-                        <h2><?php _e( 'Improved recognition of crawlers', 'wp-statistics' ); ?></h2>
-                        <h4><?php _e( 'To better recognize crawlers, we used WhichBrowser to make your website’s statistics more accurate.', 'wp-statistics' ); ?></h4>
+                        <h2><?php _e( 'Top 10 Counties', 'wp-statistics' ); ?></h2>
+                        <p><?php _e( 'You can see all visitor of a country!', 'wp-statistics' ); ?></p>
                     </div>
                 </div>
 
                 <div class="right text-center">
-                    <img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/whichbrowser.png' ); ?>"/>
+                    <img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/topcountry-widget.png' ); ?>"/>
                 </div>
             </section>
 
-            <section class="normal-section">
-                <div class="right">
+            <section class="normal-section" style="border-bottom: 0px none;">
+                <div class="left">
                     <div class="content-padding">
-                        <h2><?php _e( 'Add-Ons!', 'wp-statistics' ); ?></h2>
-                        <h4><?php _e( 'These extensions add more functionality to your WP-Statistics Plugin.', 'wp-statistics' ); ?></h4>
+                        <h2><?php _e( 'Other changes', 'wp-statistics' ); ?></h2>
                     </div>
                 </div>
 
-                <div class="right text-center addons-item">
-                    <a href="https://wp-statistics.com/downloads/wp-statistics-widgets/" title="Widgets" target="_blank"><img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/add-on-widgets.png' ); ?>"/></a>
-                    <a href="https://wp-statistics.com/downloads/wp-statistics-mini-chart/" title="Mini Chart" target="_blank"><img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/add-on-mini-chart.png' ); ?>"/></a>
-                    <a href="https://wp-statistics.com/downloads/wp-statistics-advanced-reporting/" title="Advanced Reporting" target="_blank"><img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/add-on-advanced-reporting.png' ); ?>"/></a>
-                    <a href="https://wp-statistics.com/downloads/wp-statistics-realtime-stats/" title="Realtime stats" target="_blank"><img src="<?php echo plugins_url( 'wp-statistics/assets/images/welcome/add-on-realtime-stats.png' ); ?>"/></a>
+                <div class="right">
+                    <ul>
+                        <li>Added new table `visitor_relationship` for saving visitors logs.</li>
+                        <li>Update database version.</li>
+                        <li>Improvement MySQL time query in all functions.</li>
+                        <li>Improvement CSV exporter.</li>
+                        <li>Improvement pagination in admin pages.</li>
+                        <li>Improvement time filter in admin pages stats.</li>
+                    </ul>
                 </div>
             </section>
+        </div>
 
-            <section class="center-section logo">
-                <a href="https://veronalabs.com" target="_blank" title="WordPress Solutions and Services"><img src="http://bit.ly/2FsmZlq"/></a>
-                <p><?php echo __( 'WP-Statistics is one of the VeronaLabs.com projects.', 'wp-statistics' ); ?></p>
-                <h4><?php echo sprintf( __( 'To help us, you can make <a href="%s" target="_blank">donate</a> or <a href="%s" target="_blank">purchase</a> Add-Ons. 😊', 'wp-statistics' ), 'https://wp-statistics.com/donate/', 'https://wp-statistics.com/add-ons/' ); ?></h4>
+        <div data-content="addons" class="tab-content">
+            <section class="center-section">
+                <?php include( WP_Statistics::$reg['plugin-dir'] . "includes/templates/add-ons.php" ); ?>
             </section>
         </div>
 
         <div data-content="credit" class="tab-content">
             <div class="about-wrap-content">
-                <p class="about-description"><?php echo sprintf( __( 'WP-Statistics is created by some people and is one of the <a href="%s" target="_blank">VeronaLabs.com</a> projects.', 'wp-statistics' ), 'http://veronalabs.com' ); ?></p>
+                <p class="about-description"><?php echo sprintf( __( 'WP-Statistics is created by some people and is one of the <a href="%s" target="_blank">VeronaLabs.com</a> projects.', 'wp-statistics' ), 'https://veronalabs.com' ); ?></p>
                 <h3 class="wp-people-group"><?php _e( 'Project Leaders', 'wp-statistics' ); ?></h3>
                 <ul class="wp-people-group ">
                     <li class="wp-person">
-                        <a href="https://profiles.wordpress.org/mostafas1990"
-                           class="web"><?php echo get_avatar( 'mst404@gmail.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Mostafa Soufi', 'wp-statistics' ); ?></a>
+                        <a href="https://profiles.wordpress.org/mostafas1990" class="web"><?php echo get_avatar( 'mst404@gmail.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Mostafa Soufi', 'wp-statistics' ); ?></a>
                         <span class="title"><?php _e( 'Original Author', 'wp-statistics' ); ?></span>
                     </li>
                 </ul>
                 <h3 class="wp-people-group"><?php _e( 'Other Contributors', 'wp-statistics' ); ?></h3>
                 <ul class="wp-people-group">
                     <li class="wp-person">
-                        <a href="https://profiles.wordpress.org/mehrshaddarzi"
-                           class="web"><?php echo get_avatar( 'mehrshad198@gmail.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Mehrshad Darzi', 'wp-statistics' ); ?></a>
+                        <a href="https://profiles.wordpress.org/mehrshaddarzi" class="web"><?php echo get_avatar( 'mehrshad198@gmail.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Mehrshad Darzi', 'wp-statistics' ); ?></a>
                         <span class="title"><?php _e( 'Core Contributor', 'wp-statistics' ); ?></span>
                     </li>
                     <li class="wp-person">
-                        <a href="https://profiles.wordpress.org/ghasemi71ir"
-                           class="web"><?php echo get_avatar( 'ghasemi71ir@gmail.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Mohammad Ghasemi', 'wp-statistics' ); ?></a>
+                        <a href="https://profiles.wordpress.org/ghasemi71ir" class="web"><?php echo get_avatar( 'ghasemi71ir@gmail.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Mohammad Ghasemi', 'wp-statistics' ); ?></a>
                         <span class="title"><?php _e( 'Core Contributor', 'wp-statistics' ); ?></span>
                     </li>
                     <li class="wp-person">
-                        <a href="https://profiles.wordpress.org/gregross"
-                           class="web"><?php echo get_avatar( 'greg@toolstack.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Greg Ross', 'wp-statistics' ); ?></a>
+                        <a href="https://profiles.wordpress.org/gregross" class="web"><?php echo get_avatar( 'greg@toolstack.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Greg Ross', 'wp-statistics' ); ?></a>
                         <span class="title"><?php _e( 'Core Contributor', 'wp-statistics' ); ?></span>
                     </li>
                     <li class="wp-person">
-                        <a href="https://profiles.wordpress.org/dedidata"
-                           class="web"><?php echo get_avatar( 'dedidata.com@gmail.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Farhad Sakhaei', 'wp-statistics' ); ?></a>
+                        <a href="https://profiles.wordpress.org/dedidata" class="web"><?php echo get_avatar( 'dedidata.com@gmail.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Farhad Sakhaei', 'wp-statistics' ); ?></a>
                         <span class="title"><?php _e( 'Core Contributor', 'wp-statistics' ); ?></span>
                     </li>
                     <li class="wp-person">
-                        <a href="https://profiles.wordpress.org/pedromendonca"
-                           class="web"><?php echo get_avatar( 'ped.gaspar@gmail.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Pedro Mendonça', 'wp-statistics' ); ?></a>
+                        <a href="https://profiles.wordpress.org/pedromendonca" class="web"><?php echo get_avatar( 'ped.gaspar@gmail.com', 62, '', '', array( 'class' => 'gravatar' ) ); ?><?php _e( 'Pedro Mendonça', 'wp-statistics' ); ?></a>
                         <span class="title"><?php _e( 'Language Contributor', 'wp-statistics' ); ?></span>
                     </li>
                 </ul>
@@ -150,14 +135,12 @@
             </div>
         </div>
 
-        <div data-content="changelog" class="one-col tab-content">
-			<?php WP_Statistics_Welcome::show_change_log(); ?>
+        <div data-content="changelog" class="tab-content">
+            <?php WP_Statistics_Welcome::show_change_log(); ?>
         </div>
-
-        <hr>
-
-        <div class="return-to-dashboard">
-            <a href="<?php echo admin_url( 'admin.php?page=wps_overview_page' ); ?>"><?php _e( 'Go to Statistics &rarr; Overview', 'wp-statistics' ); ?></a>
+        <hr style="clear: both;">
+        <div class="wps-return-to-dashboard">
+            <a href="<?php echo WP_Statistics_Admin_Pages::admin_url( 'overview' ); ?>"><?php _e( 'Go to Statistics &rarr; Overview', 'wp-statistics' ); ?></a>
         </div>
     </div>
 </div>

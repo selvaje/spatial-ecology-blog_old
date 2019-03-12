@@ -1,25 +1,41 @@
 <?php
-
-/*
-Plugin Name: FancyBox for WordPress
-Plugin URI: https://wordpress.org/plugins/fancybox-for-wordpress/
-Description: Integrates <a href="http://fancyapps.com/fancybox/3/">FancyBox 3</a> into WordPress.
-Version: 3.1.5
-Author: Colorlib
-Author URI: https://colorlib.com/wp/
-
- * FancyBox is Copyright (c) 2008 - 2010 Janis Skarnelis
- * Dual licensed under the MIT and GPL licenses:
- * http://www.opensource.org/licenses/mit-license.php
- * http://www.gnu.org/licenses/gpl.html
-
- */
+/**
+* Plugin Name: FancyBox for WordPress
+* Plugin URI: https://wordpress.org/plugins/fancybox-for-wordpress/
+* Description: Integrates <a href="http://fancyapps.com/fancybox/3/">FancyBox 3</a> into WordPress.
+* Version: 3.1.9
+* Author: Colorlib
+* Author URI: https://colorlib.com/wp/
+* Tested up to: 5.0.3
+* Requires: 4.6 or higher
+* License: GPLv3 or later
+* License URI: http://www.gnu.org/licenses/gpl-3.0.html
+* Requires PHP: 5.6
+* Text Domain: colorlib-login-customizer
+* Domain Path: /languages
+*
+* Copyright 2008-2016 	Janis Skarnelis 	http://twitter.com/moskis/
+* Copyright 2016-2019 	Colorlib 			support@colorlib.com
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License, version 3, as
+* published by the Free Software Foundation.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 /**
  * Plugin Init
  */
 // Constants
-define( 'FBFW_VERSION', '3.1.5' );
+define( 'FBFW_VERSION', '3.1.9' );
 define( 'FBFW_PATH', plugin_dir_path( __FILE__ ) );
 define( 'FBFW_URL', plugin_dir_url( __FILE__ ) );
 define( 'FBFW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
@@ -275,46 +291,65 @@ function mfbfw_init() {
 		}
 
 		// Supported file extensions
-		var thumbnails = jQuery("a:has(img)").not(".nolightbox").filter( function() { return /\.(jpe?g|png|gif|mp4|webp|bmp|pdf)(\?[^/]*)*$/i.test(jQuery(this).attr('href')) });
+		var thumbnails = jQuery("a:has(img)").not(".nolightbox").not('.envira-gallery-link').not('.ngg-simplelightbox').filter( function() { return /\.(jpe?g|png|gif|mp4|webp|bmp|pdf)(\?[^/]*)*$/i.test(jQuery(this).attr('href')) });
+
+		// Add data-type iframe for links that are not images or videos.
+        var iframeLinks = jQuery('.fancyboxforwp').filter( function() { return ! /\.(jpe?g|png|gif|mp4|webp|bmp|pdf)(\?[^/]*)*$/i.test(jQuery(this).attr('href')) }).filter( function() { return ! /vimeo|youtube/i.test(jQuery(this).attr('href')) });
+        iframeLinks.attr({ "data-type" : "iframe" }).getTitle();
+
 		<?php if ( $mfbfw['galleryType'] == 'post' ) { ?>
 
 			// Gallery type BY POST and on post or page (so only one post or page is visible)
 			<?php if ( is_singular() ) { ?>
 			// Gallery by post
-			thumbnails.addClass("fancybox").attr("data-fancybox","gallery").getTitle();
+			thumbnails.addClass("fancyboxforwp").attr("data-fancybox","gallery").getTitle();
+            iframeLinks.attr({ "data-fancybox":"gallery" }).getTitle();
 
-			<?php } else { ?>
+    <?php } else { ?>
 			// Gallery by post
 			var posts = jQuery(".post");
 			posts.each(function() {
-				jQuery(this).find(thumbnails).addClass("fancybox").attr("data-fancybox","gallery"+posts.index(this)).attr("rel","fancybox"+posts.index(this)).getTitle()
+				jQuery(this).find(thumbnails).addClass("fancyboxforwp").attr("data-fancybox","gallery"+posts.index(this)).attr("rel","fancybox"+posts.index(this)).getTitle();
+
+                jQuery(this).find(iframeLinks).attr({ "data-fancybox":"gallery"+posts.index(this) }).attr("rel","fancybox"+posts.index(this)).getTitle();
+
 			});
 
 			<?php } ?>
 
-// Gallery type ALL
+		// Gallery type ALL
 		<?php } elseif ( $mfbfw['galleryType'] == 'all' ) { ?>
 		// Gallery All
-		thumbnails.addClass("fancybox").attr("data-fancybox","gallery").getTitle();
+		thumbnails.addClass("fancyboxforwp").attr("data-fancybox","gallery").getTitle();
+        iframeLinks.attr({ "data-fancybox":"gallery" }).getTitle();
 
-// Gallery type NONE
+		// Gallery type NONE
 		<?php } elseif ( $mfbfw['galleryType'] == 'none' ) { ?>
 		// No Galleries
 		thumbnails.each(function(){
 			var rel = jQuery(this).attr("rel");
 			var imgTitle = jQuery(this).children("img").attr("title");
-			jQuery(this).addClass("fancybox").attr("data-fancybox",rel);
+			jQuery(this).addClass("fancyboxforwp").attr("data-fancybox",rel);
 			jQuery(this).attr("title",imgTitle);
 		});
 
-// Else, gallery type is custom, so just print the custom expression
+        iframeLinks.each(function(){
+            var rel = jQuery(this).attr("rel");
+            var imgTitle = jQuery(this).children("img").attr("title");
+            jQuery(this).attr({"data-fancybox":rel});
+            jQuery(this).attr("title",imgTitle);
+        });
+
+		// Else, gallery type is custom, so just print the custom expression
 		<?php } else { ?>
 			/* Custom Expression */
 			<?php echo $mfbfw['customExpression']; ?>
 		<?php } ?>
 
+
+
 		// Call fancybox and apply it on any link with a rel atribute that starts with "fancybox", with the options set on the admin panel
-		jQuery("a.fancybox").fancybox({
+		jQuery("a.fancyboxforwp").fancyboxforwp({
 			loop: <?php echo ( isset( $mfbfw['cyclic'] ) && $mfbfw['cyclic'] ? 'true' : 'false' ) ?>,
 			smallBtn: <?php echo ( isset( $mfbfw['showCloseButton'] ) && $mfbfw['showCloseButton'] ? 'true' : 'false' ) ?>,
 			zoomOpacity: <?php echo ( isset( $mfbfw['zoomOpacity'] ) && $mfbfw['zoomOpacity'] ? '"auto"' : 'false' ) ?>,
@@ -330,7 +365,7 @@ function mfbfw_init() {
 			showCloseButton: <?php echo ( isset( $mfbfw['showCloseButton'] ) && $mfbfw['showCloseButton'] ? 'true' : 'false' ) ?>,
 			arrows: <?php echo ( isset( $mfbfw['showNavArrows'] ) && $mfbfw['showNavArrows'] ? 'true' : 'false' ) ?>,
 			clickContent: <?php echo ( isset( $mfbfw['hideOnContentClick'] ) && $mfbfw['hideOnContentClick'] ? '"close"' : 'false' ) ?>,
-			clickSlide: <?php echo ( isset( $mfbfw['hideOnOverlayClick'] ) && $mfbfw['hideOnOverlayClick'] ? 'function(current, event) {return current.type === "image" ? "close" : false;}' : 'false' ) ?>,
+            clickSlide: <?php echo ( isset( $mfbfw['hideOnOverlayClick'] ) && $mfbfw['hideOnOverlayClick'] ? '"close"' : 'false' ) ?>,
 			wheel: <?php echo ( isset( $mfbfw['mouseWheel'] ) && $mfbfw['mouseWheel'] ? 'true' : 'false' ) ?>,
 			toolbar: <?php echo ( isset( $mfbfw['showToolbar'] ) && $mfbfw['showToolbar'] ? 'true' : 'false' ) ?>,
 			preventCaptionOverlap: true,
@@ -373,23 +408,6 @@ function mfbfw_textdomain() {
 }
 
 add_action( 'init', 'mfbfw_textdomain' );
-
-
-/**
- * Insert Rollback link for plugin in plugins page
- */
-
-function extra_settings_links( $links ) {
-
-	if ( apply_filters( 'fbfw_show_rollback_link', true ) ) {
-		$links['rollback'] = sprintf( '<a href="%s" class="fbfw-rollback-button">%s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=fbfw_rollback' ), 'fbfw_rollback' ), __( 'Rollback version', 'mfbfw' ) );
-	}
-
-	return $links;
-}
-
-add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'extra_settings_links' );
-
 
 /**
  * Register options
@@ -449,11 +467,6 @@ function mfbfw_admin_scripts() {
 /**
  * Settings Button on Plugins Panel
  */
-
-
-require FBFW_PATH . '/lib/class-fbfw-plugin-rollback.php';
-require FBFW_PATH . '/lib/class-fbfw-rollback.php';
-
 function mfbfw_plugin_action_links(
 	$links,
 	$file

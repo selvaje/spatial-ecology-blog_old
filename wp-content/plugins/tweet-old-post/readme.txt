@@ -2,7 +2,7 @@
 Contributors: codeinwp,marius2012,marius_codeinwp,hardeepasrani,Madalin_Themeisle, rsocial, uriahs-victor
 Tags:twitter, facebook, linkedin, automatic, tweet, share, wordpress, marketing, sharing, Tweet old post, Tweets,evergreen
 Requires at least: 4.7
-Tested up to: 4.9
+Tested up to: 5.1
 Requires PHP: 5.6
 Stable tag: trunk
 
@@ -133,7 +133,44 @@ http://revive.social/plugins/revive-old-post
 
 
 == Changelog ==
-= 8.1.4 - 2018-12-03  = 
+= 8.2.1 - 2019-03-01  = 
+
+* Fix: Sharing queue issue with sites running WPML plugin
+
+
+= 8.2.0 - 2019-02-09  =
+
+* New: The share post on publish feature is now in the lite version of the plugin. This should help with Facebook app review process (see revive.social docs)
+
+
+= 8.1.8 - 2019-01-29  =
+
+* Fix: Minor bugs
+
+
+= 8.1.7 - 2019-01-18  =
+
+* New: Adds basic support for WPML content sharing(see revive.social docs)
+* Fix: Low PHP version notice was not showing the right text
+* Fix: Minor bugs
+
+
+= 8.1.6 - 2018-12-13  =
+
+* Fixed undefined variable error
+
+
+= 8.1.5 - 2018-12-13  =
+
+* New: Made post share content filterable, you can now use post excerpt field (see docs)
+* New: Pinterest shares will now link to the post on your website
+* Changed: Bit.ly authentication method, old method will be deprecated in the future
+* Changed: Custom message labels
+* Fix: Pointer JavaScript error
+* PRO Fix: Publish now feature not always showing
+
+
+= 8.1.4 - 2018-12-03  =
 
 * New: Admin pointers for new plugin installs
 * Change: Rename custom messages to "Share Variations"
@@ -142,7 +179,7 @@ http://revive.social/plugins/revive-old-post
 * PRO Fix: Publish now not showing on custom post types edit screens
 
 
-= 8.1.3 - 2018-11-01  = 
+= 8.1.3 - 2018-11-01  =
 
 * - Adds: Option to delete plugin settings on uninstall
 * - Fix: Change twitter credential labels to match that on developer.twitter.com apps

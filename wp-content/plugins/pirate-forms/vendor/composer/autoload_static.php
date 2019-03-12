@@ -4,12 +4,8 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit275d1bc8ce2462badb681a97c749a1a6
+class ComposerStaticInit1dfb675b6cb6c3fcf8a1e1fdb658055e
 {
-    public static $files = array (
-        '957c51f8f334b5ea3be310bfb8b3492c' => __DIR__ . '/..' . '/codeinwp/themeisle-sdk/load.php',
-    );
-
     public static $prefixesPsr0 = array (
         'x' => 
         array (
@@ -18,19 +14,12 @@ class ComposerStaticInit275d1bc8ce2462badb681a97c749a1a6
                 0 => __DIR__ . '/..' . '/xrstf/composer-php52/lib',
             ),
         ),
-        'S' => 
-        array (
-            'Sendinblue' => 
-            array (
-                0 => __DIR__ . '/..' . '/mailin-api/mailin-api-php/src',
-            ),
-        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixesPsr0 = ComposerStaticInit275d1bc8ce2462badb681a97c749a1a6::$prefixesPsr0;
+            $loader->prefixesPsr0 = ComposerStaticInit1dfb675b6cb6c3fcf8a1e1fdb658055e::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

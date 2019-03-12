@@ -143,10 +143,13 @@ Syed Balkhi
 4. Screenshot 4. Enabling SMTP
 
 == Changelog ==
+= 2.5.1 - 2019-01-17  =
+* Remove third party library not needed, from composer (mailin-api).
+
 = 2.5.0 - 2018-09-18  =
 * <a href="https://wpforms.com/wpforms-has-acquired-pirate-forms/" rel="friend">Pirate Forms was acquired by WPForms</a>.
 * We're retiring Pirate Forms in favor of the modern form builder by WPForms, so users can have access to best user experience and more powerful WordPress form features.
-* Added migration wizard to move forms WPForms.
+* Added migration wizard to move forms to WPForms.
 
 = 2.4.4 - 2018-07-13  =
 

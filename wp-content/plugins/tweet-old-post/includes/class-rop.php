@@ -68,7 +68,7 @@ class Rop {
 	public function __construct() {
 
 		$this->plugin_name = 'rop';
-		$this->version     = '8.1.4';
+		$this->version     = '8.2.1';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -128,6 +128,7 @@ class Rop {
 		$tutorial_pointers = new Rop_Pointers();
 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'legacy_auth', 2 );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'bitly_shortener_upgrade_notice' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_head', $tutorial_pointers, 'rop_pointer_button_css' );
@@ -135,19 +136,78 @@ class Rop {
 		$this->loader->add_action( 'admin_print_footer_scripts', $tutorial_pointers, 'rop_enqueue_pointers' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'menu_pages' );
 		$this->loader->add_action( 'rop_cron_job', $plugin_admin, 'rop_cron_job' );
+
 		$this->loader->add_action( 'rop_cron_job_publish_now', $plugin_admin, 'rop_cron_job_publish_now' );
+		$this->loader->add_action( 'post_submitbox_misc_actions', $plugin_admin, 'add_publish_actions' );
+		$this->loader->add_action( 'post_submitbox_misc_actions', $plugin_admin, 'publish_now_upsell' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'maybe_publish_now' );
+		$this->loader->add_filter( 'rop_publish_now_attributes', $plugin_admin, 'publish_now_attributes' );
+
 		$this->loader->add_action( 'wp_loaded', $this, 'register_service_api_endpoints', 1 );
 
 		$this->loader->add_action( 'wp_loaded', $this, 'upgrade', 2 );
+
+		// Themeisle SDK tweaks
+		$this->loader->add_filter( 'tweet_old_post_feedback_review_message', $this, 'change_review_message' );
+		$this->loader->add_filter( 'tweet_old_post_feedback_review_button_do', $this, 'change_review_do_message' );
+		$this->loader->add_filter( 'tweet_old_post_feedback_review_button_cancel', $this, 'change_review_cancel_message' );
+		$this->loader->add_filter( 'tweet-old-post_uninstall_feedback_icon', $this, 'add_icon' );
+		$this->loader->add_filter( 'tweet-old-post_themeisle_sdk_disclosure_content_labels', $this, 'change_labels_uf' );
 
 		$rop_cron_helper = new Rop_Cron_Helper();
 		/**
 		 * Use PHP_INT_MAX to make sure the schedule is added. Some plugins add their schedule by clearing the previous values.
 		 */
 		$this->loader->add_filter( 'cron_schedules', $rop_cron_helper, 'rop_cron_schedules', PHP_INT_MAX );
-		$this->loader->add_action( 'post_submitbox_misc_actions', $plugin_admin, 'publish_now_upsell' );
 	}
 
+	/**
+	 * Change uninstall feedback icon, add RS one.
+	 *
+	 * @return string New icon url.
+	 */
+	public function add_icon() {
+		return ROP_LITE_URL . 'assets/img/logo_rop.png';
+	}
+
+	/**
+	 * Change disclosure policy labels from uninstall feedback.
+	 *
+	 * @return array New labels.
+	 */
+	public function change_labels_uf() {
+
+		return [
+			'title' => __( 'Below is a detailed view of all data that ReviveSocial will receive if you fill in this survey. No domain name, email address or IP addresses are transmited after you submit the survey.', 'tweet-old-post' ),
+		];
+	}
+	/**
+	 * Change review confirm text.
+	 *
+	 * @return string New text.
+	 */
+	public function change_review_do_message() {
+		return __( 'Sure!', 'tweet-old-post' );
+	}
+
+	/**
+	 * Change cancel button text.
+	 *
+	 * @return string New message.
+	 */
+	public function change_review_cancel_message() {
+		return __( 'No, thanks', 'tweet-old-post' );
+	}
+	/**
+	 * Change old message asking for review.
+	 *
+	 * @param string $old_message Old message.
+	 *
+	 * @return string New message.
+	 */
+	public function change_review_message( $old_message ) {
+		return __( 'Hi there, <br/><strong>Revive Social</strong> team here, we noticed you\'ve been using our plugin for a while now, has it been a great help? If so, would you mind leaving us a review? It would help a ton, thanks!<br/>', 'tweet-old-post' );
+	}
 	/**
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.

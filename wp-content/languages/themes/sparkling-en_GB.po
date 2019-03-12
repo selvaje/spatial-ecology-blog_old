@@ -1,0 +1,963 @@
+# Translation of Themes - Sparkling in English (UK)
+# This file is distributed under the same license as the Themes - Sparkling package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2019-02-24 17:15:26+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/2.4.0-alpha\n"
+"Language: en_GB\n"
+"Project-Id-Version: Themes - Sparkling\n"
+
+#. Description of the plugin/theme
+msgid "Sparkling is a clean minimal and responsive WordPress theme well suited for travel, health, business, finance, portfolio, design, art, photography, personal, ecommerce and any other creative websites and blogs. Developed using Bootstrap 3 that makes it mobile and tablets friendly. Theme comes with full-screen slider, social icon integration, author bio, popular posts widget and improved category widget. Sparkling incorporates latest web standards such as HTML5 and CSS3 and is SEO friendly thanks to its clean structure and codebase. It has dozens of Theme Options based on WordPress Customizer to change theme layout, colors, fonts, slider settings and much more. Theme is also translation and multilingual ready, compatible with WPML and is available in Spanish, French, Dutch, Polish, Russian, German, Brazilian Portuguese, Portuguese (Portugal), Persian (Iranian language), Romanian, Turkish, Bulgarian, Japanese, Lithuanian, Czech, Ukrainian, Traditional Chinese, Simplified Chinese, Indonesian, Estonian, Spanish (Argentina), Hungarian and Italian. Sparkling is a free WordPress theme with premium functionality and design. Theme is ecommerce ready thanks to its WooCommerce integration. Now theme is optimized to work with bbPress, Contact Form 7, Jetpack, WooCommerce and other popular free and premium plugins. Lately we introduced a sticky/fixed navigation that you can enable or disable via WordPress Customizer."
+msgstr "Sparkling is a clean, minimal and responsive WordPress theme, well suited for travel, health, business, finance, portfolio, design, art, photography, personal, eCommerce and any other creative websites and blogs. Developed using Bootstrap 3 that makes it mobile and tablet friendly. The theme comes with full screen slider, social icon integration, author bio, popular posts widget and improved category widget. Sparkling incorporates the latest web standards such as HTML5 and CSS3 and is SEO friendly thanks to its clean structure and codebase. It has dozens of theme options based on WordPress Customiser to change theme layout, colours, fonts, slider settings and much more. The theme is also translation and multilingual ready, compatible with WPML and is available in Spanish, French, Dutch, Polish, Russian, German, Brazilian Portuguese, Portuguese (Portugal), Persian (Iranian language), Romanian, Turkish, Bulgarian, Japanese, Lithuanian, Czech, Ukrainian, Traditional Chinese, Simplified Chinese, Indonesian, Estonian, Spanish (Argentina), Hungarian and Italian. Sparkling is a free WordPress theme with premium functionality and design. The theme is eCommerce ready thanks to its WooCommerce integration. Now the theme is optimised to work with bbPress, Contact Form 7, Jetpack, WooCommerce and other popular free and premium plugins. Recently we introduced a sticky/fixed navigation that you can enable or disable via WordPress Customiser."
+
+#. #-#-#-#-#  sparkling.pot (Sparkling 2.4.4)  #-#-#-#-#
+#. Theme Name of the plugin/theme
+#: inc/welcome-screen/welcome-page-setup.php:43
+msgid "Sparkling"
+msgstr "Sparkling"
+
+#: inc/customizer.php:924
+msgid "The headline for your day pages. You can use %s as a placeholder for the day. Leave empty for default."
+msgstr "The headline for your day pages. You can use %s as a placeholder for the day. Leave empty for default."
+
+#: inc/customizer.php:922
+msgid "Day Page Title"
+msgstr "Day Page Title"
+
+#: inc/customizer.php:907
+msgid "The headline for your month pages. You can use %s as a placeholder for the month. Leave empty for default."
+msgstr "The headline for your month pages. You can use %s as a placeholder for the month. Leave empty for default."
+
+#: inc/customizer.php:905
+msgid "Month Page Title"
+msgstr "Month Page Title"
+
+#: inc/customizer.php:890
+msgid "The headline for your year pages. You can use %s as a placeholder for the year. Leave empty for default."
+msgstr "The headline for your year pages. You can use %s as a placeholder for the year. Leave empty for default."
+
+#: inc/customizer.php:888
+msgid "Year Page Title"
+msgstr "Year Page Title"
+
+#: inc/customizer.php:873
+msgid "The headline for your author pages. You can use %s as a placeholder for the author's name. Leave empty for default."
+msgstr "The headline for your author pages. You can use %s as a placeholder for the author's name. Leave empty for default."
+
+#: inc/customizer.php:871
+msgid "Author Page Title"
+msgstr "Author Page Title"
+
+#: inc/customizer.php:856
+msgid "The headline for your category pages. You can use %s as a placeholder for the category. Leave empty for default."
+msgstr "The headline for your category pages. You can use %s as a placeholder for the category. Leave empty for default."
+
+#: inc/customizer.php:854
+msgid "Category Page Title"
+msgstr "Category Page Title"
+
+#: inc/customizer.php:839
+msgid "The headline for your tag pages. You can use %s as a placeholder for the tag. Leave empty for default."
+msgstr "The headline for your tag pages. You can use %s as a placeholder for the tag. Leave empty for default."
+
+#: inc/customizer.php:837
+msgid "Tag Page Title"
+msgstr "Tag Page Title"
+
+#: inc/customizer.php:821
+msgid "Archive Pages"
+msgstr "Archive Pages"
+
+#: inc/customizer.php:449
+msgid "Font Subset"
+msgstr "Font Subset"
+
+#: functions.php:288
+msgctxt "daily archives date format"
+msgid "F j, Y"
+msgstr "F j, Y"
+
+#: inc/customizer.php:811
+msgid "Toggle this to ON to enable the usage of Academicons"
+msgstr "Toggle this to ON to enable the usage of Academicons"
+
+#: inc/customizer.php:810
+msgid "Enable Academicons"
+msgstr "Enable Academicons"
+
+#. translators: %s: post title
+#: comments.php:32
+msgctxt "comments title"
+msgid "One thought to &ldquo;%s&rdquo;"
+msgstr "One thought to &ldquo;%s&rdquo;"
+
+#: inc/widgets/class-sparkling-popular-posts.php:167
+msgctxt "label for button in the media widget; should preferably not be longer than ~13 characters long"
+msgid "Remove Media"
+msgstr "Remove Media"
+
+#: inc/widgets/class-sparkling-popular-posts.php:164
+msgctxt "label for button in the media widget"
+msgid "Add Media"
+msgstr "Add Media"
+
+#: inc/widgets/class-sparkling-popular-posts.php:156
+msgid "No media selected"
+msgstr "No media selected"
+
+#: inc/widgets/class-sparkling-popular-posts.php:148
+msgid "Default Image"
+msgstr "Default Image"
+
+#: inc/welcome-screen/welcome-page-setup.php:25
+msgid "Recommended Plugins :"
+msgstr "Recommended Plugins :"
+
+#: inc/welcome-screen/welcome-page-setup.php:24
+msgid "We are social :"
+msgstr "We are social :"
+
+#: inc/welcome-screen/welcome-page-setup.php:23
+msgid "Recommended Actions"
+msgstr "Recommended Actions"
+
+#: inc/welcome-screen/sections/support.php:30
+msgid "See changelog"
+msgstr "See change log"
+
+#: inc/welcome-screen/sections/support.php:27
+msgid "Want to get the gist on the latest theme changes? Just consult our changelog below to get a taste of the recent fixes and features implemented."
+msgstr "Want to get the gist on the latest theme changes? Just consult our change log below to get a taste of the recent fixes and features implemented."
+
+#: inc/welcome-screen/sections/support.php:25
+msgid "Changelog"
+msgstr "Change Log"
+
+#: inc/welcome-screen/sections/support.php:20
+msgid "See our full documentation"
+msgstr "See our full documentation"
+
+#: inc/welcome-screen/sections/support.php:17
+msgid "This is the place to go to reference different aspects of the theme. Our online documentation is an incredible resource for learning the ins and outs of using Sparkling."
+msgstr "This is the place to go to reference different aspects of the theme. Our online documentation is an incredible resource for learning the ins and outs of using Sparkling."
+
+#: inc/welcome-screen/sections/support.php:15
+#: inc/welcome-screen/welcome-page-setup.php:44
+msgid "Documentation"
+msgstr "Documentation"
+
+#: inc/welcome-screen/sections/support.php:7
+msgid "We offer excellent support through our advanced ticketing system. Make sure to register your purchase before contacting support!"
+msgstr "We offer excellent support through our advanced ticketing system. Make sure to register your purchase before contacting support!"
+
+#: inc/welcome-screen/sections/support.php:5
+#: inc/welcome-screen/sections/support.php:10
+msgid "Contact Support"
+msgstr "Contact Support"
+
+#: inc/welcome-screen/sections/getting-started.php:38
+msgid "Go to Customizer"
+msgstr "Go to Customiser"
+
+#: inc/welcome-screen/sections/getting-started.php:36
+msgid "Using the WordPress Customizer you can easily customize every aspect of the theme."
+msgstr "Using the WordPress Customiser you can easily customise every aspect of the theme."
+
+#: inc/welcome-screen/sections/getting-started.php:35
+msgid "Step 3 - Customize everything"
+msgstr "Step 3 - Customise everything"
+
+#: inc/welcome-screen/sections/getting-started.php:30
+msgid "Full documentation"
+msgstr "Full documentation"
+
+#: inc/welcome-screen/sections/getting-started.php:27
+msgid "Even if you're a long-time WordPress user, we still believe you should give our documentation a very quick Read."
+msgstr "Even if you're a long-time WordPress user, we still believe you should give our documentation a very quick read."
+
+#: inc/welcome-screen/sections/getting-started.php:26
+msgid "Step 2 - Check our documentation"
+msgstr "Step 2 - Check our documentation"
+
+#: inc/welcome-screen/sections/getting-started.php:18
+msgid "Check recommended actions"
+msgstr "Check recommended actions"
+
+#: inc/welcome-screen/sections/getting-started.php:15
+msgid "No recommended actions left to perform"
+msgstr "No recommended actions left to perform"
+
+#: inc/welcome-screen/sections/getting-started.php:12
+msgid "We've compiled a list of steps for you, to take make sure the experience you'll have using one of our products is very easy to follow."
+msgstr "We've compiled a list of steps for you, to take make sure the experience you'll have using one of our products is very easy to follow."
+
+#: inc/welcome-screen/sections/getting-started.php:11
+msgid "Step 1 - Implement recommended actions"
+msgstr "Step 1 - Implement recommended actions"
+
+#: inc/welcome-screen/sections/actions-required.php:106
+msgid "Hooray! There are no required actions for you right now. But you can make your theme more powerful with next actions: "
+msgstr "Hooray! There are no required actions for you right now. But you can make your theme more powerful with next actions: "
+
+#: inc/welcome-screen/class-sparkling-welcome.php:400
+msgid "Support"
+msgstr "Support"
+
+#: inc/welcome-screen/class-sparkling-welcome.php:398
+msgid "Recommended Plugins"
+msgstr "Recommended Plugins"
+
+#: inc/welcome-screen/class-sparkling-welcome.php:396
+msgid "Getting Started"
+msgstr "Getting Started"
+
+#: inc/welcome-screen/class-sparkling-welcome.php:389
+msgid "Sparkling is now installed and ready to use! Get ready to build something beautiful. We hope you enjoy it! We want to make sure you have the best experience using Sparkling and that is why we gathered here all the necessary information for you. We hope you will enjoy using Sparkling, as much as we enjoy creating great products."
+msgstr "Sparkling is now installed and ready to use! Get ready to build something beautiful. We hope you enjoy it! We want to make sure you have the best experience using Sparkling and that is why we gathered here all the necessary information for you. We hope you will enjoy using Sparkling, as much as we enjoy creating great products."
+
+#: inc/welcome-screen/class-sparkling-welcome.php:386
+msgid "Welcome to Sparkling! - Version "
+msgstr "Welcome to Sparkling! - Version "
+
+#: inc/welcome-screen/class-sparkling-welcome.php:165
+#: inc/welcome-screen/sections/actions-required.php:160
+msgid "Hooray! There are no required actions for you right now."
+msgstr "Hooray! There are no required actions for you right now."
+
+#: inc/welcome-screen/class-sparkling-welcome.php:141
+msgid "Get started with Sparkling"
+msgstr "Get started with Sparkling"
+
+#: inc/welcome-screen/class-sparkling-welcome.php:139
+msgid "Welcome! Thank you for choosing Sparkling! To fully take advantage of the best our theme can offer please make sure you visit our %1$swelcome page%2$s."
+msgstr "Welcome! Thank you for choosing Sparkling! To fully take advantage of the best our theme can offer, please make sure you visit our %1$swelcome page%2$s."
+
+#: inc/welcome-screen/class-sparkling-notify-system.php:250
+msgid "Please activate the WordPress Widget Importer to create the demo content."
+msgstr "Please activate the WordPress Widget Importer to create the demo content."
+
+#: inc/welcome-screen/class-sparkling-notify-system.php:245
+#: inc/welcome-screen/class-sparkling-notify-system.php:253
+msgid "Please install the WordPress widget importer to create the demo content"
+msgstr "Please install the WordPress widget importer to create the demo content"
+
+#: inc/welcome-screen/class-sparkling-notify-system.php:236
+msgid "Please activate the WordPress Importer to create the demo content."
+msgstr "Please activate the WordPress Importer to create the demo content."
+
+#: inc/welcome-screen/class-sparkling-notify-system.php:231
+#: inc/welcome-screen/class-sparkling-notify-system.php:239
+msgid "Please install the WordPress Importer to create the demo content."
+msgstr "Please install the WordPress Importer to create the demo content."
+
+#: inc/welcome-screen/class-sparkling-notify-system.php:219
+msgid "Activate: WordPress Importer"
+msgstr "Activate: WordPress Importer"
+
+#: inc/welcome-screen/class-sparkling-notify-system.php:214
+#: inc/welcome-screen/class-sparkling-notify-system.php:222
+msgid "Install: WordPress Importer"
+msgstr "Install: WordPress Importer"
+
+#: inc/welcome-screen/class-sparkling-notify-system.php:205
+msgid "Activate: Widget Importer Exporter Plugin"
+msgstr "Activate: Widget Importer Exporter Plugin"
+
+#: inc/welcome-screen/class-sparkling-notify-system.php:200
+#: inc/welcome-screen/class-sparkling-notify-system.php:208
+msgid "Install: Widget Importer Exporter Plugin"
+msgstr "Install: Widget Importer Exporter Plugin"
+
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:289
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:355
+#: inc/welcome-screen/sections/actions-required.php:76
+#: inc/welcome-screen/sections/actions-required.php:138
+#: inc/welcome-screen/sections/recommended-plugins.php:32
+msgid "Deactivate"
+msgstr "Deactivate"
+
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:117
+msgid "Review this theme on w.org"
+msgstr "Review this theme on w.org"
+
+#: inc/libraries/epsilon-framework/controls/class-epsilon-control-upsell.php:64
+msgid "Pro"
+msgstr "Pro"
+
+#: inc/libraries/epsilon-framework/controls/class-epsilon-control-typography.php:232
+msgid "Letter Spacing"
+msgstr "Letter Spacing"
+
+#: inc/libraries/epsilon-framework/controls/class-epsilon-control-typography.php:223
+msgid "Line Height"
+msgstr "Line Height"
+
+#: inc/libraries/epsilon-framework/controls/class-epsilon-control-typography.php:214
+msgid "Font Size"
+msgstr "Font Size"
+
+#: inc/libraries/epsilon-framework/controls/class-epsilon-control-typography.php:184
+msgid "Theme default"
+msgstr "Theme default"
+
+#: inc/customizer.php:451
+msgid "Enter the Google fonts subset"
+msgstr "Enter the Google fonts subset"
+
+#: inc/customizer.php:118
+msgid "Uncheck this option to remove the link from the slides"
+msgstr "Uncheck this option to remove the link from the slides"
+
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:281
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:347
+#: inc/welcome-screen/sections/actions-required.php:72
+#: inc/welcome-screen/sections/actions-required.php:134
+#: inc/welcome-screen/sections/recommended-plugins.php:28
+msgid "Activate"
+msgstr "Activate"
+
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:285
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:351
+msgid "Update"
+msgstr "Update"
+
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:277
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:343
+#: inc/welcome-screen/sections/actions-required.php:68
+#: inc/welcome-screen/sections/actions-required.php:130
+#: inc/welcome-screen/sections/recommended-plugins.php:24
+msgid "Install"
+msgstr "Install"
+
+#: inc/welcome-screen/sections/recommended-plugins.php:39
+msgid "Version:"
+msgstr "Version:"
+
+#: inc/class-wp-bootstrap-navwalker.php:206
+msgid "Add a menu"
+msgstr "Add a menu"
+
+#. translators: %s: Name of current post
+#: template-parts/content-page.php:56 template-parts/content-single.php:34
+#: template-parts/content-video.php:49 template-parts/content.php:42
+msgid "Edit %s"
+msgstr "Edit %s"
+
+#: comments.php:56 comments.php:80
+msgid "Newer Comments"
+msgstr "Newer Comments"
+
+#: comments.php:55 comments.php:79
+msgid "Older Comments"
+msgstr "Older Comments"
+
+#: archive.php:43 inc/extras.php:517 index.php:47 search.php:38
+msgid "Older posts"
+msgstr "Older posts"
+
+#: archive.php:42 inc/extras.php:516 index.php:46 search.php:37
+msgid "Newer posts"
+msgstr "Newer posts"
+
+#: inc/metaboxes.php:30
+msgid "Select layout for this specific Product only"
+msgstr "Select layout for this specific Product only"
+
+#: inc/customizer.php:525
+msgid "Check to show fixed header"
+msgstr "Check to show fixed header"
+
+#: inc/customizer.php:524
+msgid "Sticky Header"
+msgstr "Sticky Header"
+
+#: inc/customizer.php:198
+msgid "WooCommerce Page Layout Options"
+msgstr "WooCommerce Page Layout Options"
+
+#: inc/customizer.php:201
+msgid "Choose between different layout options to be used as default for all woocommerce pages"
+msgstr "Choose between different layout options to be used as default for all WooCommerce pages"
+
+#: inc/metaboxes.php:22
+msgid "Select layout for this specific Post only"
+msgstr "Select layout for this specific Post only"
+
+#: inc/metaboxes.php:16
+msgid "Select layout for this specific Page only ( Note: This setting only reflects if page Template is set as Default Template and Blog Type Templates.)"
+msgstr "Select layout for this specific Page only ( Note: This setting only reflects if page Template is set as Default Template and Blog Type Templates.)"
+
+#: inc/customizer.php:791
+msgid "Check to show social icons in footer"
+msgstr "Check to show social icons in footer"
+
+#: inc/customizer.php:392
+msgid "Used in p tags"
+msgstr "Used in p tags"
+
+#: inc/customizer.php:217
+msgid "Element Color"
+msgstr "Element Colour"
+
+#: inc/customizer.php:183
+msgid "Choose between different layout options to be used as default"
+msgstr "Choose between different layout options to be used as default"
+
+#: inc/customizer.php:164
+msgid "Layout Options"
+msgstr "Layout Options"
+
+#: inc/customizer.php:86
+msgid "Slider Options"
+msgstr "Slider Options"
+
+#: inc/customizer.php:32
+msgid "Panel to update sparkling theme options"
+msgstr "Panel to update Sparkling theme options"
+
+#: inc/customizer.php:31
+msgid "Sparkling Options"
+msgstr "Sparkling Options"
+
+#: functions.php:417
+msgid "Full Width"
+msgstr "Full Width"
+
+#: functions.php:416
+msgid "No Sidebar"
+msgstr "No Sidebar"
+
+#: functions.php:401
+msgctxt "nav menu location"
+msgid "Social Menu"
+msgstr "Social Menu"
+
+#: searchform.php:12
+msgctxt "label"
+msgid "Search for:"
+msgstr "Search for:"
+
+#: searchform.php:12
+msgctxt "placeholder"
+msgid "Search&hellip;"
+msgstr "Search&hellip;"
+
+#: searchform.php:11
+msgid "Search for:"
+msgstr "Search for:"
+
+#: inc/customizer.php:790
+msgid "Footer Social Icons"
+msgstr "Footer Social Icons"
+
+#. Template Name of the plugin/theme
+msgid "Full-width(no sidebar)"
+msgstr "Full width (no sidebar)"
+
+#: sidebar.php:24
+msgid "Meta"
+msgstr "Meta"
+
+#: searchform.php:14
+msgctxt "submit button"
+msgid "Search"
+msgstr "Search"
+
+#: search.php:18
+msgid "Search Results for: %s"
+msgstr "Search Results for: %s"
+
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:115
+msgid "Twitter"
+msgstr "Twitter"
+
+#: inc/libraries/epsilon-framework/sections/class-epsilon-section-recommended-actions.php:113
+msgid "Facebook"
+msgstr "Facebook"
+
+#: inc/customizer.php:773
+msgid "Footer social icon color"
+msgstr "Footer social icon colour"
+
+#: inc/customizer.php:756
+msgid "Social icon color"
+msgstr "Social icon colour"
+
+#: inc/customizer.php:741
+msgid "Social"
+msgstr "Social"
+
+#: inc/customizer.php:732
+msgid "Copyright text in footer"
+msgstr "Copyright text in footer"
+
+#: inc/customizer.php:731
+msgid "Footer information"
+msgstr "Footer information"
+
+#: inc/customizer.php:716
+msgid "Footer link color"
+msgstr "Footer link colour"
+
+#: inc/customizer.php:700
+msgid "Footer text color"
+msgstr "Footer text colour"
+
+#: inc/customizer.php:684
+msgid "Footer background color"
+msgstr "Footer background colour"
+
+#: inc/customizer.php:668
+msgid "Footer widget area background color"
+msgstr "Footer widget area background colour"
+
+#: inc/customizer.php:653
+msgid "Footer"
+msgstr "Footer"
+
+#: inc/customizer.php:643
+msgid "Top nav dropdown item background hover color"
+msgstr "Top nav drop-down item background hover colour"
+
+#: inc/customizer.php:627
+msgid "Dropdown item hover color"
+msgstr "Drop-down item hover colour"
+
+#: inc/customizer.php:626
+msgid "Top nav dropdown item hover color"
+msgstr "Top nav drop-down item hover colour"
+
+#: inc/customizer.php:610
+msgid "Dropdown item color"
+msgstr "Drop-down item colour"
+
+#: inc/customizer.php:609
+msgid "Top nav dropdown item color"
+msgstr "Top nav drop-down item colour"
+
+#: inc/customizer.php:593 inc/customizer.php:644
+msgid "Background of dropdown item hover color"
+msgstr "Background of drop-down item hover colour"
+
+#: inc/customizer.php:592
+msgid "Top nav dropdown background color"
+msgstr "Top nav drop-down background colour"
+
+#: inc/customizer.php:576
+msgid "Link:hover color"
+msgstr "Link:hover colour"
+
+#: inc/customizer.php:575
+msgid "Top nav item hover color"
+msgstr "Top nav item hover colour"
+
+#: inc/customizer.php:559
+msgid "Link color"
+msgstr "Link Colour"
+
+#: inc/customizer.php:558
+msgid "Top nav item color"
+msgstr "Top nav item colour"
+
+#: inc/customizer.php:542
+msgid "Top nav background color"
+msgstr "Top nav background colour"
+
+#: inc/customizer.php:508
+msgid "Header"
+msgstr "Header"
+
+#: inc/customizer.php:498
+msgid "Link:hover Color"
+msgstr "Link:hover Colour"
+
+#: inc/customizer.php:482
+msgid "Link Color"
+msgstr "Link Colour"
+
+#: inc/customizer.php:467
+msgid "Color for all headings (h1-h6)"
+msgstr "Colour for all headings (h1-h6)"
+
+#: inc/customizer.php:466
+msgid "Heading Color"
+msgstr "Heading Colour"
+
+#: inc/customizer.php:391
+msgid "Main Body Text"
+msgstr "Main Body Text"
+
+#: inc/customizer.php:367
+msgid "Typography"
+msgstr "Typography"
+
+#: inc/customizer.php:357
+msgid "Call For Action Button Text Color"
+msgstr "Call For Action Button Text Colour"
+
+#: inc/customizer.php:341
+msgid "Call For Action Button Border Color"
+msgstr "Call For Action Button Border Colour"
+
+#: inc/customizer.php:325
+msgid "Call For Action Background Color"
+msgstr "Call For Action Background Colour"
+
+#: inc/customizer.php:309
+msgid "Call For Action Text Color"
+msgstr "Call For Action Text Colour"
+
+#: inc/customizer.php:294
+msgid "Enter the link for Call For Action button"
+msgstr "Enter the link for Call For Action button"
+
+#: inc/customizer.php:292
+msgid "CFA button link"
+msgstr "CFA button link"
+
+#: inc/customizer.php:278
+msgid "Enter the title for Call For Action button"
+msgstr "Enter the title for Call For Action button"
+
+#: inc/customizer.php:276
+msgid "Call For Action Button Title"
+msgstr "Call For Action Button Title"
+
+#: inc/customizer.php:261
+msgid "Enter the text for call for action section"
+msgstr "Enter the text for call for action section"
+
+#: inc/customizer.php:260
+msgid "Call For Action Text"
+msgstr "Call For Action Text"
+
+#: inc/customizer.php:246
+msgid "Action Button"
+msgstr "Action Button"
+
+#: inc/customizer.php:235
+msgid "Element color on hover"
+msgstr "Element colour on hover"
+
+#: inc/customizer.php:218 inc/customizer.php:236 inc/customizer.php:310
+#: inc/customizer.php:326 inc/customizer.php:342 inc/customizer.php:358
+#: inc/customizer.php:483 inc/customizer.php:499 inc/customizer.php:543
+#: inc/customizer.php:757 inc/customizer.php:774
+msgid "Default used if no color is selected"
+msgstr "Default used if no colour is selected"
+
+#: inc/customizer.php:180
+msgid "Website Layout Options"
+msgstr "Website Layout Options"
+
+#: inc/customizer.php:157
+msgid "Enter the number of slide items"
+msgstr "Enter the number of slide items"
+
+#: inc/customizer.php:155
+msgid "Number of slide items"
+msgstr "Number of slide items"
+
+#: inc/customizer.php:141
+msgid "Select a category for the featured post slider"
+msgstr "Select a category for the featured post slider"
+
+#: inc/customizer.php:138
+msgid "Slider Category"
+msgstr "Slider Category"
+
+#: inc/customizer.php:101
+msgid "Check if you want to enable slider"
+msgstr "Check if you want to enable slider"
+
+#: functions.php:415
+msgid "Left Sidebar"
+msgstr "Left Sidebar"
+
+#: functions.php:414
+msgid "Right Sidebar"
+msgstr "Right Sidebar"
+
+#: inc/widgets/class-sparkling-social-widget.php:20
+#: inc/widgets/class-sparkling-social-widget.php:44
+msgid "Follow us"
+msgstr "Follow us"
+
+#: inc/widgets/class-sparkling-social-widget.php:13
+#: inc/widgets/class-sparkling-social-widget.php:15
+msgid "Sparkling Social Widget"
+msgstr "Sparkling Social Widget"
+
+#: inc/widgets/class-sparkling-popular-posts.php:139
+msgid "Limit Posts Number"
+msgstr "Limit Posts Number"
+
+#: inc/widgets/class-sparkling-popular-posts.php:131
+msgid "Title"
+msgstr "Title"
+
+#: inc/widgets/class-sparkling-popular-posts.php:31
+#: inc/widgets/class-sparkling-popular-posts.php:118
+msgid "Popular Posts"
+msgstr "Popular Posts"
+
+#: inc/widgets/class-sparkling-popular-posts.php:13
+#: inc/widgets/class-sparkling-popular-posts.php:15
+msgid "Sparkling Popular Posts Widget"
+msgstr "Sparkling Popular Posts Widget"
+
+#: inc/widgets/class-sparkling-categories.php:117
+msgid "Enable Posts Count"
+msgstr "Enable Posts Count"
+
+#: inc/widgets/class-sparkling-categories.php:100
+msgid "Limit Categories "
+msgstr "Limit Categories "
+
+#: inc/widgets/class-sparkling-categories.php:92
+#: inc/widgets/class-sparkling-social-widget.php:48
+msgid "Title "
+msgstr "Title"
+
+#: inc/widgets/class-sparkling-categories.php:19
+#: inc/widgets/class-sparkling-categories.php:81
+msgid "Categories"
+msgstr "Categories"
+
+#: inc/widgets/class-sparkling-categories.php:13
+#: inc/widgets/class-sparkling-categories.php:15
+msgid "Sparkling Categories"
+msgstr "Sparkling Categories"
+
+#: inc/extras.php:425
+msgid "Follow on Twitter"
+msgstr "Follow on Twitter"
+
+#: inc/extras.php:422
+msgid "Like on Facebook"
+msgstr "Like on Facebook"
+
+#: inc/extras.php:418 inc/extras.php:419
+msgid "Rate this Theme"
+msgstr "Rate this Theme"
+
+#: inc/extras.php:414
+msgid "If you like this theme, I'd appreciate any of the following:"
+msgstr "If you like this theme, I'd appreciate any of the following:"
+
+#: inc/extras.php:412
+msgid "Colorlib support forum"
+msgstr "Colorlib support forum"
+
+#: inc/extras.php:411
+msgid "The best way to contact us with <b>support questions</b> and <b>bug reports</b> is via"
+msgstr "The best way to contact us with <b>support questions</b> and <b>bug reports</b> is via"
+
+#: inc/extras.php:409
+msgid "Sparkling Documentation"
+msgstr "Sparkling Documentation"
+
+#: inc/extras.php:400
+msgid "Support and Documentation"
+msgstr "Support and Documentation"
+
+#: inc/extras.php:248
+msgid "Theme by %1$s Powered by %2$s"
+msgstr "Theme by %1$s Powered by %2$s"
+
+#: inc/extras.php:70
+msgid "Submit"
+msgstr "Submit"
+
+#: inc/extras.php:67
+msgid "Password:"
+msgstr "Password:"
+
+#: inc/extras.php:66
+msgid "This post is password protected. To view it please enter your password below:"
+msgstr "This post is password protected. To view it please enter your password below:"
+
+#: inc/customizer.php:75
+msgid "Display Comments on Static Pages?"
+msgstr "Display Comments on Static Pages?"
+
+#: inc/customizer.php:58
+msgid "Show post excerpts?"
+msgstr "Show post excerpts?"
+
+#: inc/customizer.php:42
+msgid "Content Options"
+msgstr "Content Options"
+
+#: image.php:26
+msgid "Next <i class=\"fa fa-chevron-right\"></i>"
+msgstr "Next <i class=\"fa fa-chevron-right\"></i>"
+
+#: image.php:25
+msgid "<i class=\"fa fa-chevron-left\"></i> Previous"
+msgstr "<i class=\"fa fa-chevron-left\"></i> Previous"
+
+#: functions.php:211
+msgid "Footer Widget 3"
+msgstr "Footer Widget 3"
+
+#: functions.php:199
+msgid "Footer Widget 2"
+msgstr "Footer Widget 2"
+
+#: functions.php:188 functions.php:200 functions.php:212
+msgid "Used for footer widget area"
+msgstr "Used for footer widget area"
+
+#: functions.php:187
+msgid "Footer Widget 1"
+msgstr "Footer Widget 1"
+
+#: functions.php:175
+msgid "Homepage Widget 3"
+msgstr "Home Page Widget 3"
+
+#: functions.php:163
+msgid "Homepage Widget 2"
+msgstr "Home Page Widget 2"
+
+#: functions.php:152 functions.php:164 functions.php:176
+msgid "Displays on the Home Page"
+msgstr "Displays on the Home Page"
+
+#: functions.php:151
+msgid "Homepage Widget 1"
+msgstr "Home Page Widget 1"
+
+#: functions.php:139
+msgid "Sidebar"
+msgstr "Sidebar"
+
+#: functions.php:74 inc/extras.php:144
+msgid "Footer Links"
+msgstr "Footer Links"
+
+#: functions.php:73
+msgid "Primary Menu"
+msgstr "Primary Menu"
+
+#: template-parts/content-video.php:65 template-parts/content-video.php:74
+#: template-parts/content-video.php:77 template-parts/content.php:58
+#: template-parts/content.php:67 template-parts/content.php:70
+msgid "Read More"
+msgstr "Read More"
+
+#: template-parts/content-video.php:41 template-parts/content.php:34
+msgid "% Comments"
+msgstr "% Comments"
+
+#: template-parts/content-video.php:41 template-parts/content.php:34
+msgid "1 Comment"
+msgstr "1 Comment"
+
+#: template-parts/content-video.php:41 template-parts/content.php:34
+msgid "Leave a comment"
+msgstr "Leave a comment"
+
+#: template-parts/content-single.php:26
+msgid " %1$s"
+msgstr " %1$s"
+
+#. translators: used between list items, there is a space after the comma
+#: template-parts/content-single.php:22
+msgid ", "
+msgstr ", "
+
+#: image.php:90 template-parts/content-page.php:36
+#: template-parts/content-single.php:51 template-parts/content-video.php:84
+#: template-parts/content.php:77
+msgid "Pages:"
+msgstr "Pages:"
+
+#: template-parts/content-none.php:40
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+
+#: template-parts/content-none.php:34
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+
+#: template-parts/content-none.php:27
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+
+#: template-parts/content-none.php:12
+msgid "Nothing Found"
+msgstr "Nothing Found"
+
+#: comments.php:94
+msgid "Comments are closed."
+msgstr "Comments are closed."
+
+#: comments.php:52 comments.php:76
+msgid "Comment navigation"
+msgstr "Comment navigation"
+
+#. translators: 1: number of comments, 2: post title
+#: comments.php:36
+msgctxt "comments title"
+msgid "%1$s thought to &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts to &ldquo;%2$s&rdquo;"
+msgstr[0] "%1$s thought to &ldquo;%2$s&rdquo;"
+msgstr[1] "%1$s thoughts to &ldquo;%2$s&rdquo;"
+
+#: functions.php:274
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr "Y"
+
+#: functions.php:281
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "F Y"
+
+#: 404.php:60
+msgid "Tags"
+msgstr "Tags"
+
+#: 404.php:55 sidebar.php:12
+msgid "Archives"
+msgstr "Archives"
+
+#. translators: %1$s: smiley
+#: 404.php:54
+msgid "Try looking in the monthly archives. %1$s"
+msgstr "Try looking in the monthly archives. %1$s"
+
+#: 404.php:31
+msgid "Most Used Categories"
+msgstr "Most Used Categories"
+
+#: 404.php:25
+msgid "Recent Posts"
+msgstr "Recent Posts"
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+msgstr "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "Oops! That page can&rsquo;t be found."
+
+#. Author URI of the plugin/theme
+msgid "http://colorlib.com/"
+msgstr "http://colorlib.com/"
+
+#. Author of the plugin/theme
+msgid "Colorlib"
+msgstr "Colorlib"
+
+#. Theme URI of the plugin/theme
+msgid "http://colorlib.com/wp/themes/sparkling"
+msgstr "http://colorlib.com/wp/themes/sparkling"

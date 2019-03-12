@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Contact Form &amp; SMTP Plugin for WordPress by PirateForms - Development (trunk) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2018-10-17 20:10:20+0000\n"
+"PO-Revision-Date: 2019-01-29 19:29:55+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11,11 +11,15 @@ msgstr ""
 "Language: en_GB\n"
 "Project-Id-Version: Plugins - Contact Form &amp; SMTP Plugin for WordPress by PirateForms - Development (trunk)\n"
 
-#. Author URI of the plugin/theme
+#: gutenberg/js/block.js:50 gutenberg/js/block.build.js:116
+msgid "Loading Form"
+msgstr "Loading Form"
+
+#. Author URI of the plugin
 msgid "https://wpforms.com"
 msgstr "https://wpforms.com"
 
-#. Author of the plugin/theme
+#. Author of the plugin
 msgid "WPForms"
 msgstr "WPForms"
 
@@ -260,20 +264,20 @@ msgstr "Uploaded file type is not allowed for %s"
 msgid "Submission blocked!"
 msgstr "Submission blocked!"
 
-#: includes/class-pirateforms-util.php:273
-#: includes/class-pirateforms-util.php:328
 #: public/class-pirateforms-public.php:614
 #: public/class-pirateforms-public.php:617
+#: includes/class-pirateforms-util.php:273
+#: includes/class-pirateforms-util.php:328
 msgid "Came from"
 msgstr "Came from"
 
-#: gutenberg/class-pirateforms-gutenberg.php:90
 #: public/class-pirateforms-public.php:161
+#: gutenberg/class-pirateforms-gutenberg.php:90
 msgid "I'm human!"
 msgstr "I'm human!"
 
-#: includes/class-pirateforms-html.php:208
 #: public/class-pirateforms-public.php:383
+#: includes/class-pirateforms-html.php:208
 msgid "Upload file"
 msgstr "Upload file"
 
@@ -470,27 +474,27 @@ msgstr "Fields Labels"
 msgid "Fields Settings"
 msgstr "Fields Settings"
 
-#. Plugin Name of the plugin/theme
+#. Plugin Name of the plugin
 msgid "Free & Simple Contact Form Plugin - Pirateforms"
 msgstr "Free & Simple Contact Form Plugin - PirateForms"
 
-#: includes/class-pirateforms-util.php:274
-#: includes/class-pirateforms-util.php:329
 #: public/class-pirateforms-public.php:622
 #: public/class-pirateforms-public.php:625
+#: includes/class-pirateforms-util.php:274
+#: includes/class-pirateforms-util.php:329
 msgid "Sent from page"
 msgstr "Sent from page"
 
-#: includes/class-pirateforms-util.php:272
 #: public/class-pirateforms-public.php:604
 #: public/class-pirateforms-public.php:608
+#: includes/class-pirateforms-util.php:272
 msgid "IP search"
 msgstr "IP search"
 
-#: includes/class-pirateforms-util.php:269
-#: includes/class-pirateforms-util.php:323
 #: public/class-pirateforms-public.php:603
 #: public/class-pirateforms-public.php:607
+#: includes/class-pirateforms-util.php:269
+#: includes/class-pirateforms-util.php:323
 msgid "IP address"
 msgstr "IP address"
 
@@ -498,11 +502,11 @@ msgstr "IP address"
 msgid "Insert [email] to use the contact form submitter's email."
 msgstr "Insert [email] to use the contact form submitter's email."
 
-#. Description of the plugin/theme
+#. Description of the plugin
 msgid "Easily creates a nice looking, simple contact form on your WP site."
 msgstr "Easily creates a nice looking, simple contact form on your WP site."
 
-#. Plugin URI of the plugin/theme
+#. Plugin URI of the plugin
 msgid "http://themeisle.com/plugins/pirate-forms/"
 msgstr "http://themeisle.com/plugins/pirate-forms/"
 
@@ -541,8 +545,8 @@ msgstr "Form submission blocked!"
 msgid "Please enter one or more Contact submission recipients"
 msgstr "Please enter one or more Contact submission recipients"
 
-#: includes/class-pirateforms-util.php:248
 #: public/class-pirateforms-public.php:576
+#: includes/class-pirateforms-util.php:248
 msgid "Contact form submission from %s"
 msgstr "Contact form submission from %s"
 

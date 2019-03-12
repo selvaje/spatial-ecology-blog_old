@@ -4102,8 +4102,8 @@
 	pointer-events: auto;
 }
 
-.toplevel_page_TweetOldPost #wpbody-content > *,
-.revive-old-posts_page_rop_content_filters #wpbody-content > * {
+.toplevel_page_TweetOldPost #wpbody-content > *:not(.themeisle-sdk-notice),
+.revive-old-posts_page_rop_content_filters #wpbody-content > *:not(.themeisle-sdk-notice) {
 	display: none !important;
 }
 
@@ -4323,28 +4323,4 @@
 .modal-footer a,
 .rop-post-type-badge a {
 	text-decoration: underline;
-}
-
-#rop_core .rop-steps{
-	background: #1d466b;
-	border-radius: 3px;
-	margin-bottom: 3px;
-	padding: 10px;
-	text-align: center;
-}
-
-#rop_core .rop-step{
-	margin-right: 5px;
-}
-
-#rop_core .rop-step-incomplete{
-	color: #ff0000;
-	font-weight: bold;
-	margin-bottom: 0px;
-}
-
-#rop_core .rop-step-complete{
-	color: #8bc34a;
-	font-weight: bold;
-	margin-bottom: 0px;
 }

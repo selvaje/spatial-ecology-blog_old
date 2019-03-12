@@ -6,22 +6,22 @@
         "source": {
             "type": "git",
             "url": "https://github.com/Codeinwp/themeisle-sdk.git",
-            "reference": "caa9bf2b2c48c12a0ac745b6e2880c94339a777d"
+            "reference": "2aa73079ca7523b23637caf90efb80af46df6aa0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Codeinwp/themeisle-sdk/zipball/caa9bf2b2c48c12a0ac745b6e2880c94339a777d",
-            "reference": "caa9bf2b2c48c12a0ac745b6e2880c94339a777d",
+            "url": "https://api.github.com/repos/Codeinwp/themeisle-sdk/zipball/2aa73079ca7523b23637caf90efb80af46df6aa0",
+            "reference": "2aa73079ca7523b23637caf90efb80af46df6aa0",
             "shasum": ""
         },
-        "time": "2018-07-19 07:48:21",
+        "require-dev": {
+            "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
+            "squizlabs/php_codesniffer": "^3.1",
+            "wp-coding-standards/wpcs": "^1.0.0"
+        },
+        "time": "2019-01-07T10:33:38+00:00",
         "type": "library",
         "installation-source": "source",
-        "autoload": {
-            "files": [
-                "load.php"
-            ]
-        },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
             "GPL-2.0+"
@@ -33,7 +33,7 @@
                 "homepage": "https://themeisle.com"
             }
         ],
-        "description": "ThemeIsle SDK ",
+        "description": "ThemeIsle SDK.",
         "homepage": "https://github.com/Codeinwp/themeisle-sdk",
         "keywords": [
             "wordpress"
@@ -54,7 +54,7 @@
             "reference": "bd41459d5e27df8d33057842b32377c39e97a5a8",
             "shasum": ""
         },
-        "time": "2016-04-16 21:52:24",
+        "time": "2016-04-16T21:52:24+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -71,50 +71,5 @@
         "license": [
             "MIT"
         ]
-    },
-    {
-        "name": "mailin-api/mailin-api-php",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/mailin-api/mailin-api-php.git",
-            "reference": "a0a521a88ea41cee821f5d30215a1c19efe540df"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/mailin-api/mailin-api-php/zipball/a0a521a88ea41cee821f5d30215a1c19efe540df",
-            "reference": "a0a521a88ea41cee821f5d30215a1c19efe540df",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "php": ">=5.3"
-        },
-        "time": "2018-07-26 11:51:20",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Sendinblue": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "SendinBlue",
-                "homepage": "https://www.sendinblue.com/"
-            }
-        ],
-        "description": "Official SendinBlue provided API V2 wrapper",
-        "homepage": "https://github.com/mailin-api/mailin-api-php"
     }
 ]
