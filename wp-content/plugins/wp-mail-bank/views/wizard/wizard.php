@@ -31,9 +31,6 @@ if ( ! is_user_logged_in() ) {
 				<div>
 					<div class="page-container header-wizard">
 						<div class="page-content">
-							<div class="row row-custom row-bg">
-								<img src="<?php echo esc_attr( plugins_url( 'assets/global/img/wizard-image.png', dirname( dirname( __FILE__ ) ) ) ); ?>" style="width:100%; padding:15px;">
-							</div>
 							<div class="row row-custom">
 								<div class="col-md-12 textalign">
 									<p><?php echo esc_attr( $mb_wizard_welcome_message ); ?></p>

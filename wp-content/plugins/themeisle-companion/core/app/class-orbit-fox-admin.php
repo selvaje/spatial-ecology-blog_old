@@ -42,10 +42,10 @@ class Orbit_Fox_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
+	 * @param string $plugin_name The name of this plugin.
+	 * @param string $version The version of this plugin.
 	 *
-	 * @param      string $plugin_name The name of this plugin.
-	 * @param      string $version The version of this plugin.
+	 * @since    1.0.0
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -76,7 +76,7 @@ class Orbit_Fox_Admin {
 		if ( empty( $screen ) ) {
 			return;
 		}
-		if ( in_array( $screen->id, array( 'toplevel_page_obfx_companion' ) ) ) {
+		if ( in_array( $screen->id, array( 'toplevel_page_obfx_companion' ), true ) ) {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . '../assets/css/orbit-fox-admin.css', array(), $this->version, 'all' );
 		}
 		do_action( 'obfx_admin_enqueue_styles' );
@@ -105,7 +105,7 @@ class Orbit_Fox_Admin {
 		if ( empty( $screen ) ) {
 			return;
 		}
-		if ( in_array( $screen->id, array( 'toplevel_page_obfx_companion' ) ) ) {
+		if ( in_array( $screen->id, array( 'toplevel_page_obfx_companion' ), true ) ) {
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . '../assets/js/orbit-fox-admin.js', array( 'jquery' ), $this->version, false );
 		}
 		do_action( 'obfx_admin_enqueue_scripts' );
@@ -144,8 +144,16 @@ class Orbit_Fox_Admin {
 		$user_id = $current_user->ID;
 		if ( ! get_user_meta( $user_id, 'obfx_ignore_visit_dashboard_notice' ) ) { ?>
 			<div class="notice notice-info" style="position:relative;">
-				<p><?php echo sprintf( __( 'You have activated Orbit Fox plugin! Go to the %s to get started with the extra features.', 'themeisle-companion' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=obfx_companion&obfx_ignore_visit_dashboard_notice=0' ), __( 'Dashboard Page', 'themeisle-companion' ) ) ); ?></p>
-				<a href="?obfx_ignore_visit_dashboard_notice=0" class="notice-dismiss" style="text-decoration: none;">
+				<p>
+				<?php
+					/*
+					 * translators: Go to url.
+					 */
+					echo sprintf( esc_attr__( 'You have activated Orbit Fox plugin! Go to the %s to get started with the extra features.', 'themeisle-companion' ), sprintf( '<a href="%s">%s</a>', esc_url( add_query_arg( 'obfx_ignore_visit_dashboard_notice', '0', admin_url( 'admin.php?page=obfx_companion' ) ) ), esc_attr__( 'Dashboard Page', 'themeisle-companion' ) ) );
+				?>
+					</p>
+				<a href="<?php echo esc_url( add_query_arg( 'obfx_ignore_visit_dashboard_notice', '0', admin_url( 'admin.php?page=obfx_companion' ) ) ); ?>"
+				   class="notice-dismiss" style="text-decoration: none;">
 					<span class="screen-reader-text">Dismiss this notice.</span>
 				</a>
 			</div>
@@ -159,12 +167,32 @@ class Orbit_Fox_Admin {
 	 * @since   2.3.4
 	 * @access  public
 	 */
-	function visit_dashboard_notice_dismiss() {
+	public function visit_dashboard_notice_dismiss() {
 		global $current_user;
 		$user_id = $current_user->ID;
+		// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		if ( isset( $_GET['obfx_ignore_visit_dashboard_notice'] ) && '0' == $_GET['obfx_ignore_visit_dashboard_notice'] ) {
 			add_user_meta( $user_id, 'obfx_ignore_visit_dashboard_notice', 'true', true );
+			wp_safe_redirect( admin_url( 'admin.php?page=obfx_companion' ) );
+			exit;
 		}
+	}
+
+	/**
+	 * Define partners data.
+	 */
+	public function load_recommended_partners() {
+		add_filter(
+			'wpforms_upgrade_link',
+			function ( $url ) {
+				return 'http://www.shareasale.com/r.cfm?B=837827&U=848264&M=64312&urllink=' . rawurlencode( $url );
+			}
+		);
+
+		if ( get_option( 'translatepress_avg_affiliate_id', false ) === false ) {
+			update_option( 'translatepress_avg_affiliate_id', '91096' );
+		}
+
 	}
 
 	/**
@@ -187,7 +215,7 @@ class Orbit_Fox_Admin {
 	 * @access  public
 	 */
 	public function obfx_update_module_options() {
-		$json                = stripslashes( str_replace( '&quot;', '"', $_POST['data'] ) );
+		$json                = stripslashes( str_replace( '&quot;', '"', $_POST['data'] ) ); //phpcs:ignore WordPress.VIP.ValidatedSanitizedInput.InputNotValidated, WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
 		$data                = json_decode( $json, true );
 		$response['type']    = 'error';
 		$response['message'] = __( 'Could not process the request!', 'themeisle-companion' );
@@ -204,12 +232,11 @@ class Orbit_Fox_Admin {
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @since   1.0.0
-	 * @access  public
-	 *
-	 * @param   array $data The options data to try and save via the module model.
+	 * @param array $data The options data to try and save via the module model.
 	 *
 	 * @return array
+	 * @since   1.0.0
+	 * @access  public
 	 */
 	public function try_module_save( $data ) {
 		$response            = array();
@@ -234,6 +261,111 @@ class Orbit_Fox_Admin {
 	}
 
 	/**
+	 * Define render function for recommended tab.
+	 */
+	public function load_recommended_plugins() {
+		$plugins = [
+			'optimole-wp',
+			'feedzy-rss-feeds',
+			'wpforms-lite',
+			'translatepress-multilingual',
+			'autoptimize',
+			'wordpress-seo',
+		];
+		shuffle( $plugins );
+		add_thickbox();
+		echo sprintf( '<div class="obfx-recommended-title-wrapper"><span class="obfx-recommended-title"><span class="dashicons dashicons-megaphone"></span> &nbsp; %s</span><span class="obfx-recommended-disclosure"><i> <span class="dashicons dashicons-editor-help obfx-show-disclosure"></span>Some of these plugins are developed by us and from some others if you use them and upgrade to pro, we might earn a comission.</i></span><div class="clearfix"></div> </div>', 'Orbit Fox recommends' );
+		foreach ( $plugins as $plugin ) {
+			$current_plugin = $this->call_plugin_api( $plugin );
+			if ( ! isset( $current_plugin->name ) ) {
+				continue;
+			}
+			$image = $current_plugin->icons['1x'];
+			$name  = $current_plugin->name;
+			$desc  = $current_plugin->short_description;
+			$url   = add_query_arg(
+				array(
+					'tab'       => 'plugin-information',
+					'plugin'    => $plugin,
+					'TB_iframe' => true,
+					'width'     => 800,
+					'height'    => 800,
+				),
+				network_admin_url( 'plugin-install.php' )
+			);
+			echo sprintf(
+				'<div class="tile obfx-recommended ">
+					<div class="tile-icon">
+						<div class="obfx-icon-recommended">
+							<img  width="100" src="%s"/>
+						</div>
+					</div>
+					<div class="tile-content">
+						<p class="tile-title">%s</p>
+						<p class="tile-subtitle">%s</p>
+					</div>
+					<div class="tile-action">
+						<div class="form-group">
+							<label class="form-switch activated">
+								 <a class="button button-primary thickbox " href="%s"><span class="dashicons dashicons-download"></span>%s</a>
+							</label>
+						</div>
+					</div>
+				</div>',
+				esc_url( $image ),
+				esc_attr( $name ),
+				esc_attr( $desc ),
+				esc_url( $url ),
+				esc_attr__( 'Install', 'themeisle-companion' )
+			);
+		}
+
+	}
+
+	/**
+	 * Get info from wporg api.
+	 *
+	 * @param string $slug Plugin slug.
+	 *
+	 * @return array|mixed|object|WP_Error
+	 */
+	public function call_plugin_api( $slug ) {
+		include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+
+		$call_api = get_transient( 'ti_plugin_info_' . $slug );
+
+		if ( false === $call_api ) {
+			$call_api = plugins_api(
+				'plugin_information',
+				array(
+					'slug'   => $slug,
+					'fields' => array(
+						'downloaded'        => false,
+						'rating'            => false,
+						'description'       => false,
+						'short_description' => true,
+						'donate_link'       => false,
+						'tags'              => false,
+						'sections'          => true,
+						'homepage'          => true,
+						'added'             => false,
+						'last_updated'      => false,
+						'compatibility'     => false,
+						'tested'            => false,
+						'requires'          => false,
+						'downloadlink'      => false,
+						'icons'             => true,
+						'banners'           => true,
+					),
+				)
+			);
+			set_transient( 'ti_plugin_info_' . $slug, $call_api, 1 * DAY_IN_SECONDS );
+		}
+
+		return $call_api;
+	}
+
+	/**
 	 * This method is called via AJAX and processes the
 	 * request for updating module options.
 	 *
@@ -243,7 +375,7 @@ class Orbit_Fox_Admin {
 	 * @access  public
 	 */
 	public function obfx_update_module_active_status() {
-		$json                = stripslashes( str_replace( '&quot;', '"', $_POST['data'] ) );
+		$json                = stripslashes( str_replace( '&quot;', '"', $_POST['data'] ) ); //phpcs:ignore WordPress.VIP.ValidatedSanitizedInput.InputNotValidated, WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
 		$data                = json_decode( $json, true );
 		$response['type']    = 'error';
 		$response['message'] = __( 'Could not process the request!', 'themeisle-companion' );
@@ -260,12 +392,11 @@ class Orbit_Fox_Admin {
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @since   1.0.0
-	 * @access  public
-	 *
-	 * @param   array $data The data to try and update status via the module model.
+	 * @param array $data The data to try and update status via the module model.
 	 *
 	 * @return array
+	 * @since   1.0.0
+	 * @access  public
 	 */
 	public function try_module_activate( $data ) {
 		$response            = array();
@@ -294,13 +425,14 @@ class Orbit_Fox_Admin {
 	 *
 	 * @codeCoverageIgnore
 	 *
+	 * @param boolean                   $active_status The active status.
+	 * @param Orbit_Fox_Module_Abstract $module The module referenced.
+	 *
 	 * @since   2.3.3
 	 * @access  public
-	 * @param   boolean                   $active_status The active status.
-	 * @param   Orbit_Fox_Module_Abstract $module The module referenced.
 	 */
 	public function trigger_activate_deactivate( $active_status, Orbit_Fox_Module_Abstract $module ) {
-		if ( $active_status == true ) {
+		if ( $active_status === true ) {
 			do_action( $module->get_slug() . '_activate' );
 		} else {
 			do_action( $module->get_slug() . '_deactivate' );
@@ -338,8 +470,10 @@ class Orbit_Fox_Admin {
 						$data = array(
 							'notice' => $notice,
 						);
-						if ( $notice['display_always'] == false && ! in_array( $hash, $showed_notices ) ) {
+						// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+						if ( $notice['display_always'] == false && ! in_array( $hash, $showed_notices, true ) ) {
 							$toasts .= $rdh->get_partial( 'module-toast', $data );
+							// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 						} elseif ( $notice['display_always'] == true ) {
 							$toasts .= $rdh->get_partial( 'module-toast', $data );
 						}
@@ -347,14 +481,14 @@ class Orbit_Fox_Admin {
 				}
 
 				$module->update_showed_notices();
-				if ( $module->auto == false ) {
+				if ( $module->auto === false ) {
 					$count_modules ++;
 					$checked = '';
 					if ( $module->get_is_active() ) {
 						$checked = 'checked';
 					}
 
-					$data  = array(
+					$data   = array(
 						'slug'           => $slug,
 						'name'           => $module->name,
 						'description'    => $module->description,
@@ -391,7 +525,7 @@ class Orbit_Fox_Admin {
 
 		$no_modules = false;
 		$empty_tpl  = '';
-		if ( $count_modules == 0 ) {
+		if ( $count_modules === 0 ) {
 			$no_modules = true;
 			$empty_tpl  = $rdh->get_partial(
 				'empty',
@@ -420,7 +554,7 @@ class Orbit_Fox_Admin {
 			'panels'        => $panels,
 		);
 		$output = $rdh->get_view( 'modules', $data );
-		echo $output;
+		echo $output; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 }

@@ -1,12 +1,5 @@
 <?php
 
-$plugin_schedule 	= wp_get_schedule( 'wp_update_plugins' );
-$theme_schedule 	= wp_get_schedule( 'wp_update_themes' );
-$core_schedule 		= wp_get_schedule( 'wp_version_check' );
-$mail_sc 			= wp_get_schedule( 'cau_set_schedule_mail' );
-$cs_hooks_p 		= wp_get_schedule( 'cau_custom_hooks_plugins' );
-$cs_hooks_t 		= wp_get_schedule( 'cau_custom_hooks_themes' );
-
 if( isset( $_POST['submit'] ) ) {
 
 	check_admin_referer( 'cau_save_schedule' );
@@ -16,7 +9,6 @@ if( isset( $_POST['submit'] ) ) {
 	$theme_sc 		= sanitize_text_field( $_POST['theme_schedule'] );
 	$core_sc 		= sanitize_text_field( $_POST['core_schedule'] );
 	$schedule_mail 	= sanitize_text_field( $_POST['schedule_mail'] );
-
 
 	// First clear schedules
 	wp_clear_scheduled_hook('wp_update_plugins');
@@ -86,17 +78,35 @@ if( isset( $_POST['submit'] ) ) {
 
 	}
 
-	wp_schedule_event( time(), $schedule_mail, 'cau_set_schedule_mail' );
+	// Emails
+	if( $schedule_mail == 'daily' ) {
 
-	header( "Location: ".cau_menloc()."?page=cau-settings&tab=schedule&showmessage=true" );
+		$dateT 				= date( 'Y-m-d' );
+		$hoursT 			= sanitize_text_field( $_POST['timeScheduleEmailTimeH'] );
+		$minutesT 			= sanitize_text_field( $_POST['timeScheduleEmailTimeM'] );
+		$secondsT 			= date( 's' );
+		$fullDateT 			= $dateT.' '.$hoursT.':'.$minutesT.':'.$secondsT;
+		$emailSetTime 		= strtotime( $fullDateT );
 
-}
+		wp_schedule_event( $emailSetTime, $schedule_mail, 'cau_set_schedule_mail' );
 
-if( isset( $_GET['showmessage'] ) ) {
+	} else {
+
+		wp_schedule_event( time(), $schedule_mail, 'cau_set_schedule_mail' );
+
+	}
 
 	echo '<div id="message" class="updated"><p>'.__( 'Settings saved.' ).'</p></div>';
 
-} 
+}
+
+$plugin_schedule 	= wp_get_schedule( 'wp_update_plugins' );
+$theme_schedule 	= wp_get_schedule( 'wp_update_themes' );
+$core_schedule 		= wp_get_schedule( 'wp_version_check' );
+$schedule_mail		= wp_get_schedule( 'cau_set_schedule_mail' );
+$cs_hooks_p 		= wp_get_schedule( 'cau_custom_hooks_plugins' );
+$cs_hooks_t 		= wp_get_schedule( 'cau_custom_hooks_themes' );
+$availableIntervals = wp_get_schedules();
 
 ?>
 <div style="clear: both;"></div>
@@ -113,10 +123,14 @@ if( isset( $_GET['showmessage'] ) ) {
 				<th scope="row"><?php _e( 'Plugin update interval', 'companion-auto-update' );?></th>
 				<td>
 					<p>
-						<select name='plugin_schedule' id='plugin_schedule'>
-							<option value='hourly' <?php if( $plugin_schedule == 'hourly' ) { echo "SELECTED"; } ?> ><?php _e('Hourly', 'companion-auto-update');?></option>
-							<option value='twicedaily' <?php if( $plugin_schedule == 'twicedaily' ) { echo "SELECTED"; } ?> ><?php _e('Twice Daily', 'companion-auto-update');?></option>
-							<option value='daily' <?php if( $plugin_schedule == 'daily' ) { echo "SELECTED"; } ?> ><?php _e('Daily', 'companion-auto-update');?></option>
+						<select name='plugin_schedule' id='plugin_schedule' class='schedule_interval'>
+							<?php foreach ( $availableIntervals as $key => $value ) {
+								foreach ( $value as $display => $interval ) {
+									if( $display == 'display' ) {
+										echo "<option "; if( $plugin_schedule == $key ) { echo "selected "; } echo "value='".$key."'>".$interval."</option>"; 
+									}
+								}
+							} ?>
 						</select>
 					</p>
 					<div class='timeSchedulePlugins' <?php if( $plugin_schedule != 'daily' ) { echo "style='display: none;'"; } ?> >
@@ -130,11 +144,11 @@ if( isset( $_GET['showmessage'] ) ) {
 						?>
 
 						<div class='cau_schedule_input'>
-							<input type='text' name='pluginScheduleTimeH' value='<?php echo $setTimePluginsHour; ?>' maxlength='2' >
+							<input type='number' max='23' name='pluginScheduleTimeH' value='<?php echo $setTimePluginsHour; ?>' maxlength='2' >
 						</div><div class='cau_schedule_input_div'>
 							:
 						</div><div class='cau_schedule_input'>
-							<input type='text' name='pluginScheduleTimeM' value='<?php echo $setTimePluginsMin; ?>' maxlength='2' > 
+							<input type='number' max='59' name='pluginScheduleTimeM' value='<?php echo $setTimePluginsMin; ?>' maxlength='2' > 
 						</div><div class='cau_shedule_notation'>
 							<b><?php _e('Time notation: 24H', 'companion-auto-update'); ?></b>
 						</div>
@@ -149,10 +163,14 @@ if( isset( $_GET['showmessage'] ) ) {
 				<td>
 					<p>
 
-						<select name='theme_schedule' id='theme_schedule'>
-							<option value='hourly' <?php if( $theme_schedule == 'hourly' ) { echo "SELECTED"; } ?> ><?php _e('Hourly', 'companion-auto-update');?></option>
-							<option value='twicedaily' <?php if( $theme_schedule == 'twicedaily' ) { echo "SELECTED"; } ?> ><?php _e('Twice Daily', 'companion-auto-update');?></option>
-							<option value='daily' <?php if( $theme_schedule == 'daily' ) { echo "SELECTED"; } ?> ><?php _e('Daily', 'companion-auto-update');?></option>
+						<select name='theme_schedule' id='theme_schedule' class='schedule_interval'>
+							<?php foreach ( $availableIntervals as $key => $value ) {
+								foreach ( $value as $display => $interval ) {
+									if( $display == 'display' ) {
+										echo "<option "; if( $theme_schedule == $key ) { echo "selected "; } echo "value='".$key."'>".$interval."</option>"; 
+									}
+								}
+							} ?>
 						</select>
 					</p>
 					<div class='timeScheduleThemes' <?php if( $theme_schedule != 'daily' ) { echo "style='display: none;'"; } ?> >
@@ -166,11 +184,11 @@ if( isset( $_GET['showmessage'] ) ) {
 						?>
 
 						<div class='cau_schedule_input'>
-							<input type='text' name='ThemeScheduleTimeH' value='<?php echo $setTimeThemesHour; ?>' maxlength='2' >
+							<input type='number' max='23' name='ThemeScheduleTimeH' value='<?php echo $setTimeThemesHour; ?>' maxlength='2' >
 						</div><div class='cau_schedule_input_div'>
 							:
 						</div><div class='cau_schedule_input'>
-							<input type='text' name='ThemeScheduleTimeM' value='<?php echo $setTimeThemesMins; ?>' maxlength='2' > 
+							<input type='number' max='59' name='ThemeScheduleTimeM' value='<?php echo $setTimeThemesMins; ?>' maxlength='2' > 
 						</div><div class='cau_shedule_notation'>
 							<b><?php _e('Time notation: 24H', 'companion-auto-update'); ?></b>
 						</div>
@@ -183,10 +201,14 @@ if( isset( $_GET['showmessage'] ) ) {
 				<th scope="row"><?php _e( 'Core update interval', 'companion-auto-update' );?></th>
 				<td>
 					<p>
-						<select name='core_schedule' id='core_schedule'>
-							<option value='hourly' <?php if( $core_schedule == 'hourly' ) { echo "SELECTED"; } ?> ><?php _e('Hourly', 'companion-auto-update');?></option>
-							<option value='twicedaily' <?php if( $core_schedule == 'twicedaily' ) { echo "SELECTED"; } ?> ><?php _e('Twice Daily', 'companion-auto-update');?></option>
-							<option value='daily' <?php if( $core_schedule == 'daily' ) { echo "SELECTED"; } ?> ><?php _e('Daily', 'companion-auto-update');?></option>
+						<select name='core_schedule' id='core_schedule' class='schedule_interval'>
+							<?php foreach ( $availableIntervals as $key => $value ) {
+								foreach ( $value as $display => $interval ) {
+									if( $display == 'display' ) {
+										echo "<option "; if( $core_schedule == $key ) { echo "selected "; } echo "value='".$key."'>".$interval."</option>"; 
+									}
+								}
+							} ?>
 						</select>
 					</p>
 					<div class='timeScheduleCore' <?php if( $core_schedule != 'daily' ) { echo "style='display: none;'"; } ?> >
@@ -200,11 +222,11 @@ if( isset( $_GET['showmessage'] ) ) {
 						?>
 
 						<div class='cau_schedule_input'>
-							<input type='text' name='CoreScheduleTimeH' value='<?php echo $setTimeCoreHour; ?>' maxlength='2' >
+							<input type='number' max='23' name='CoreScheduleTimeH' value='<?php echo $setTimeCoreHour; ?>' maxlength='2' >
 						</div><div class='cau_schedule_input_div'>
 							:
 						</div><div class='cau_schedule_input'>
-							<input type='text' name='CoreScheduleTimeM' value='<?php echo $setTimeCoreMins; ?>' maxlength='2' > 
+							<input type='number' max='59' name='CoreScheduleTimeM' value='<?php echo $setTimeCoreMins; ?>' maxlength='2' > 
 						</div><div class='cau_shedule_notation'>
 							<b><?php _e('Time notation: 24H', 'companion-auto-update'); ?></b>
 						</div>
@@ -224,12 +246,38 @@ if( isset( $_GET['showmessage'] ) ) {
 				<th scope="row"><?php _e( 'Email Notifications', 'companion-auto-update' );?></th>
 				<td>
 					<p>
-						<select name='schedule_mail'>
-							<option value='hourly' <?php if( $mail_sc == 'hourly' ) { echo "SELECTED"; } ?> ><?php _e('Hourly', 'companion-auto-update');?></option>
-							<option value='twicedaily' <?php if( $mail_sc == 'twicedaily' ) { echo "SELECTED"; } ?> ><?php _e('Twice Daily', 'companion-auto-update');?></option>
-							<option value='daily' <?php if( $mail_sc == 'daily' ) { echo "SELECTED"; } ?> ><?php _e('Daily', 'companion-auto-update');?></option>
+						<select id='schedule_mail' name='schedule_mail'>
+							<?php foreach ( $availableIntervals as $key => $value ) {
+								foreach ( $value as $display => $interval ) {
+									if( $display == 'display' ) {
+										echo "<option "; if( $schedule_mail == $key ) { echo "selected "; } echo "value='".$key."'>".$interval."</option>"; 
+									}
+								}
+							} ?>
 						</select>
 					</p>
+					<div class='timeScheduleEmail' <?php if( $schedule_mail != 'daily' ) { echo "style='display: none;'"; } ?> >
+
+						<?php 
+
+						$setTimeEmails 		= wp_next_scheduled( 'cau_set_schedule_mail' );
+						$setTimeEmailHour 	= date( 'H' , $setTimeEmails );
+						$setTimeEmailMins 	= date( 'i' , $setTimeEmails );
+
+						?>
+
+						<div class='cau_schedule_input'>
+							<input type='number' max='23' name='timeScheduleEmailTimeH' value='<?php echo $setTimeEmailHour; ?>' maxlength='2' >
+						</div><div class='cau_schedule_input_div'>
+							:
+						</div><div class='cau_schedule_input'>
+							<input type='number' max='59' name='timeScheduleEmailTimeM' value='<?php echo $setTimeEmailMins; ?>' maxlength='2' > 
+						</div><div class='cau_shedule_notation'>
+							<b><?php _e('Time notation: 24H', 'companion-auto-update'); ?></b>
+						</div>
+						
+						<p class='description'><?php _e( 'At what time should the updater run? Only works when set to <u>daily</u>.', 'companion-auto-update' ); ?></p>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -251,17 +299,18 @@ if( isset( $_GET['showmessage'] ) ) {
 
 </div><div class="cau-column-small">
 
-	<div class="welcome-to-cau love-bg cau-show-love cau-dashboard-box">
+	<div class="welcome-to-cau love-bg cau-show-love cau-dashboard-box welcome-panel">
 		<h3><?php _e( 'Like our plugin?', 'companion-auto-update' ); ?></h3>
 		<p><?php _e('Companion Auto Update is free to use. It has required a great deal of time and effort to develop and you can help support this development by making a small donation.<br />You get useful software and we get to carry on making it better.', 'companion-auto-update'); ?></p>
-		<a href="<?php echo cau_donateUrl(); ?>" target="_blank" class="cau-button donate-button">
-			<span class="dashicons dashicons-heart"></span> 
-			<?php _e('Donate to help development', 'companion-auto-update'); ?>
-		</a>
 		<a href="https://wordpress.org/support/plugin/companion-auto-update/reviews/#new-post" target="_blank" class="cau-button rate-button">
 			<span class="dashicons dashicons-star-filled"></span> 
 			<?php _e('Rate us (5 stars?)', 'companion-auto-update'); ?>
 		</a>
+		<a href="<?php echo cau_donateUrl(); ?>" target="_blank" class="cau-button donate-button">
+			<span class="dashicons dashicons-heart"></span> 
+			<?php _e('Donate to help development', 'companion-auto-update'); ?>
+		</a>
+		<p style="font-size: 12px; color: #BDBDBD;">Donations via PayPal. Amount can be changed.</p>
 	</div>
 
 </div>
@@ -300,6 +349,18 @@ if( isset( $_GET['showmessage'] ) ) {
 			jQuery('.timeScheduleCore').show();
 		} else {
 			jQuery('.timeScheduleCore').hide();
+		}
+
+	});
+	
+	jQuery( '#schedule_mail' ).change( function() {
+
+		var selected = jQuery(this).val();
+
+		if( selected == 'daily' ) {
+			jQuery('.timeScheduleEmail').show();
+		} else {
+			jQuery('.timeScheduleEmail').hide();
 		}
 
 	});

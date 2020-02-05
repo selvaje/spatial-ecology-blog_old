@@ -1,10 +1,10 @@
-=== Google Analytics Dashboard for WP by ExactMetrics (formerly GADWP) ===
+﻿=== Google Analytics Dashboard for WP by ExactMetrics (formerly GADWP) ===
 Contributors: chriscct7, smub
 Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.5
-Tested up to: 5.0
-Stable tag: 5.3.7
+Tested up to: 5.3
+Stable tag: 5.3.10
 Requires PHP: 5.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -164,10 +164,22 @@ Google Analytics Dashboard for WP it's released under the GPLv2, you can use it 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.3.10 =
+* Enhancements:
+	* Adds ability for users to apply to be the first to try new features
 
-[GADWP v5.3 release notes](https://exactmetrics.com/adding-gtag-js-to-your-site/)
+* Bug Fixes:
+	* Compatibility fixes for the newly released PHP 7.4 version.
 
-= 5.3.6 =
+= 5.3.9 =
+* Enhancements:
+	* Fixes conflict with WordFence
+
+= 5.3.8 =
+* Enhancements:
+	* Updates dependency libraries.
+	* Confirms compatibility with WordPress 5.1 and 5.2.
+
 * Enhancements:
 	* Updates dependency libraries.
 	* Confirms compatibility with WordPress 5.0.

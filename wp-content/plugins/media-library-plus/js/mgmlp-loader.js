@@ -1,5 +1,5 @@
 jQuery(document).ready(function(){
-	        			        
+  
     jQuery("#mgmlp-create-new-folder").click(function(){
                 
 			jQuery("#folder-message").html('');			
@@ -11,6 +11,8 @@ jQuery(document).ready(function(){
 
       var new_folder_name = jQuery('#new-folder-name').val();
       
+      new_folder_name = new_folder_name.trim();
+            
       if(new_folder_name.indexOf(' ') >= 0) {
         alert(mgmlp_ajax.no_spaces);
         return false;
@@ -25,7 +27,12 @@ jQuery(document).ready(function(){
         alert(mgmlp_ajax.no_quotes);
         return false;
       } 
-						
+      
+      if(new_folder_name == "") {
+        alert(mgmlp_ajax.no_blank);
+        return false;
+      } 
+      						
       jQuery("#ajaxloader").show();
       
       jQuery.ajax({
@@ -347,12 +354,20 @@ jQuery(document).ready(function(){
       //var current_folder = jQuery("#current-folder-id").val();      
       var image_id = 0;
       var new_file_name = jQuery('#new-file-name').val();
+      
+      new_file_name = new_file_name.trim();
+      
       jQuery('input[type=checkbox].mgmlp-media:checked').each(function() {  
         // only get the first one
         //if(image_id === 0)
           image_id = jQuery(this).attr("id");
       });
       
+      if(new_file_name == "") {
+        alert(mgmlp_ajax.no_blank_filename);
+        return false;
+      }                 
+                  
       if(new_file_name.indexOf(' ') >= 0 || new_file_name === '' ) {
         alert(mgmlp_ajax.valid_file_name);
         return false;
@@ -385,18 +400,22 @@ jQuery(document).ready(function(){
     jQuery("#mgmlp-sort-order").change(function() {
       var sort_order = jQuery('#mgmlp-sort-order').val();
       
+			if(jQuery("#current-folder-id").val() === undefined) 
+				var current_folder = sessionStorage.getItem('folder_id');
+			else
+				var current_folder = jQuery('#current-folder-id').val();
+            
       jQuery("#ajaxloader").show();
       
       jQuery.ajax({
         type: "POST",
         async: true,
-        data: { action: "sort_contents", sort_order: sort_order, nonce: mgmlp_ajax.nonce },
+        data: { action: "sort_contents", sort_order: sort_order, folder: current_folder, nonce: mgmlp_ajax.nonce },        
         url : mgmlp_ajax.ajaxurl,
         dataType: "html",
         success: function (data) {
           jQuery("#ajaxloader").hide();
-          jQuery("#folder-message").html(data);
-          window.location.reload(true);          
+				  jQuery("#mgmlp-file-container").html(data); 
         },
         error: function (err) { 
           jQuery("#ajaxloader").hide();
@@ -659,7 +678,11 @@ jQuery(document).ready(function(){
 function slideonlyone(thechosenone) {
   jQuery('.input-area').each(function(index) {
     if (jQuery(this).attr("id") == thechosenone) {
-       jQuery(this).slideDown(200);
+			 if(jQuery(this).is(":visible")) {
+         jQuery(this).slideUp(600);
+       } else {
+         jQuery(this).slideDown(200);
+       }  
 			 if(thechosenone == 'new-folder-area')
 				 jQuery("#new-folder-name").focus();
 			 if(thechosenone == 'rename-area')

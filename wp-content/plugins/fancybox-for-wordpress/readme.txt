@@ -2,14 +2,12 @@
 Contributors: silkalns
 Tags: fancybox, lightbox, jquery, gallery, image, images, photo, photos, picture, pictures, zoom
 Requires at least: 4.6
-Tested up to: 5.0.3
-Stable tag: 3.1.9
-Requires PHP: 5.6
+Tested up to: 5.3
+Stable tag: 3.2.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Seamlessly integrates FancyBox lightbox into your WordPress blog: Upload, activate, and you're done. Additional configuration optional.
-
 
 == Description ==
 
@@ -32,6 +30,35 @@ If you are new to WordPress and want to lear more we have got you covered. Color
 If you enjoy using FancyBox lightbox for WordPress please leave a [positive feedback](https://wordpress.org/support/plugin/fancybox-for-wordpress/reviews/?filter=5). We are committed to make it the best lightbox plugin for WordPress.
 
 == Changelog ==
+
+= 3.2.6 =
+* Admin bar overfloat fix
+* Tooltip description bug fix
+* Add option for caption hide/show
+
+= 3.2.5 =
+* Fix title hide/show option
+* Fix extra height on lightbox image wrapper
+
+= 3.2.4 = 
+* Removed dashboard news widget
+
+= 3.2.3 =
+* Fix for mobile close on content click
+* Fix for mobile close on overlay click
+
+= 3.2.2 =
+* Fix for padding issue when title inside position
+* Fix for title color when title is set to inside position
+
+= 3.2.1 =
+* Update toggles
+* Added new option to make a gallery for each gutenberg gallery block
+
+= 3.2.0 =
+* Admin UI minor update
+* Removed unneeded ie css file
+* Added option in Behaviour tab to exclude links that target .pdf files from being displayed in the lightbox
 
 = 3.1.9 =
 * Replace $.fancebox with $.fancyboxforwp.

@@ -64,31 +64,23 @@ class Epsilon_Typography {
 		/**
 		 * Add the actions for the customizer previewer
 		 */
-		add_action(
-			'wp_ajax_epsilon_generate_typography_css', array(
-				$this,
-				'epsilon_generate_typography_css',
-			)
-		);
-		add_action(
-			'wp_ajax_nopriv_epsilon_generate_typography_css', array(
-				$this,
-				'epsilon_generate_typography_css',
-			)
-		);
+		add_action( 'wp_ajax_epsilon_generate_typography_css', array(
+			$this,
+			'epsilon_generate_typography_css',
+		) );
+		add_action( 'wp_ajax_nopriv_epsilon_generate_typography_css', array(
+			$this,
+			'epsilon_generate_typography_css',
+		) );
 
-		add_action(
-			'wp_ajax_epsilon_retrieve_font_weights', array(
-				$this,
-				'epsilon_retrieve_font_weights',
-			)
-		);
-		add_action(
-			'wp_ajax_nopriv_epsilon_retrieve_font_weights', array(
-				$this,
-				'epsilon_retrieve_font_weights',
-			)
-		);
+		add_action( 'wp_ajax_epsilon_retrieve_font_weights', array(
+			$this,
+			'epsilon_retrieve_font_weights',
+		) );
+		add_action( 'wp_ajax_nopriv_epsilon_retrieve_font_weights', array(
+			$this,
+			'epsilon_retrieve_font_weights',
+		) );
 	}
 
 	/**
@@ -199,7 +191,7 @@ class Epsilon_Typography {
 	public function generate_css( $options ) {
 		$css      = '';
 		$defaults = array( 'Select font', 'Theme default', 'initial', 'default_font' );
-		$css     .= $options['selectors'] . '{' . "\n";
+		$css      .= $options['selectors'] . '{' . "\n";
 
 		foreach ( $options['json'] as $property => $value ) {
 			$extra = '';
@@ -228,7 +220,7 @@ class Epsilon_Typography {
 						$css .= $property . ': italic;' . "\n";
 					}
 					break;
-				default:
+				default :
 					$css .= $property . ':' . $value . ';' . "\n";
 					break;
 			}

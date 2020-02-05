@@ -415,6 +415,8 @@ class Rop_Settings_Model extends Rop_Model_Abstract {
 	/**
 	 * Getter for remote check option.
 	 *
+	 * Not being used in plugin currently.
+	 *
 	 * @since   8.0.0
 	 * @access  public
 	 * @return mixed
@@ -435,7 +437,7 @@ class Rop_Settings_Model extends Rop_Model_Abstract {
 	}
 
 	/**
-	 * Getter for custom messages option.
+	 * Getter for custom messages(share variations) option.
 	 *
 	 * @since   8.0.0
 	 * @access  public
@@ -443,6 +445,17 @@ class Rop_Settings_Model extends Rop_Model_Abstract {
 	 */
 	public function get_custom_messages() {
 		return isset( $this->settings['custom_messages'] ) ? $this->settings['custom_messages'] : false;
+	}
+
+	/**
+	 * Getter for custom messages order.
+	 *
+	 * @since   8.2.2
+	 * @access  public
+	 * @return mixed
+	 */
+	public function get_custom_messages_share_order() {
+		return isset( $this->settings['custom_messages_share_order'] ) ? $this->settings['custom_messages_share_order'] : false;
 	}
 
 	/**
@@ -465,6 +478,21 @@ class Rop_Settings_Model extends Rop_Model_Abstract {
 	 */
 	public function get_instant_sharing_by_default() {
 		return isset( $this->settings['instant_share_default'] ) ? $this->settings['instant_share_default'] : false;
+	}
+
+	/**
+	 * Getter for instant sharing on scheduled post publish.
+	 *
+	 * Getting for checking if the option to share scheduled posts after their post status has changed from future to publish.
+	 *
+	 * @see Rop::define_admin_hooks For the function being called on 'future_to_publish' hook.
+	 *
+	 * @since   8.5.2
+	 * @access  public
+	 * @return bool
+	 */
+	public function get_instant_share_future_scheduled() {
+		return isset( $this->settings['instant_share_future_scheduled'] ) ? $this->settings['instant_share_future_scheduled'] : false;
 	}
 
 }

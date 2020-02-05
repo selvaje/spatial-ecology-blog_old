@@ -13,7 +13,7 @@ class ccchildpages {
 	const plugin_name = 'CC Child Pages';
 
 	// Plugin version
-	const plugin_version = '1.36';
+	const plugin_version = '1.37';
 
 	// ID Count
 	protected static $cc_id_counter;
@@ -1139,19 +1139,25 @@ class ccchildpages {
 	 * Show plugin links
 	 */
 	public static function plugin_action_links( $links ) {
-		$links[] = '<a href="https://wordpress.org/support/view/plugin-reviews/cc-child-pages" target="_blank">Rate this plugin...</a>';
-//		$links[] = '<a href="http://www.ccplugins.co.uk" target="_blank">More from CC Plugins</a>';
+		$cc_links = array( '<a href="https://wordpress.org/support/view/plugin-reviews/cc-child-pages" target="_blank"><strong>' . __('Rate this plugin...', 'cc-child-pages') . '</strong></a>' );
+
+		$links = array_merge((array)$links, $cc_links);
+
 		return $links;
 	}
 	
 	public static function plugin_row_meta( $links, $file ) {
 		$current_plugin = basename(dirname($file));
+
+		$cc_links = array();
 		
 		if ( $current_plugin =='cc-child-pages' ) {
-			$links[] = '<a href="options-general.php?page=cc-child-pages">' . __('Settings...', 'cc-child-pages') . '</a>';
-			$links[] = '<a href="https://wordpress.org/support/view/plugin-reviews/cc-child-pages" target="_blank">' . __('Rate this plugin...', 'cc-child-pages') . '</a>';
-			$links[] = '<a href="http://ccchildpages.ccplugins.co.uk/donate/" target="_blank">' . __('Donate...', 'cc-child-pages') . '</a> ' . __('(Your donations keep this plugin free &amp; supported)', 'cc-child-pages');
+			$cc_links[] = '<a href="options-general.php?page=cc-child-pages">' . __('Settings...', 'cc-child-pages') . '</a>';
+			$cc_links[] = '<a href="https://wordpress.org/support/view/plugin-reviews/cc-child-pages" target="_blank"><strong>' . __('Rate this plugin...', 'cc-child-pages') . '</strong></a>';
+			$cc_links[] = '<a href="http://ccchildpages.ccplugins.co.uk/donate/" target="_blank"><strong>' . __('Please donate...', 'cc-child-pages') . '</strong></a> ' . __('(Your donations keep this plugin free &amp; supported)', 'cc-child-pages');
 		}
+
+		$links = array_merge((array)$links, $cc_links);
 
 		return $links;
 	}

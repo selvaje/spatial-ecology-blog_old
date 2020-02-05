@@ -3,7 +3,7 @@
  * Front-facing functionality.
  *
  * @package SCCSS
- * @since   2.0
+ * @since   2.0.0
  * @author  John Regan <john@johnregan3.com>
  */
 
@@ -19,7 +19,7 @@ if ( ! defined( 'SCCSS_FILE' ) ) {
  * This query var is passed to the URL, and when it is detected by scss_maybe_print_css(),
  * it writes its PHP/CSS to the browser.
  *
- * @since  1.0
+ * @since  1.0.0
  *
  * @action wp_enqueue_scripts, 99
  */
@@ -30,9 +30,15 @@ function sccss_register_style() {
 		$url = home_url( '/', 'https' );
 	}
 
-	wp_register_style( 'sccss_style', add_query_arg( array(
-		'sccss' => 1,
-	), $url ) );
+	wp_register_style( // phpcs:ignore WordPress.WP.EnqueuedResourceParameters
+		'sccss_style',
+		add_query_arg(
+			array(
+				'sccss' => 1,
+			),
+			$url
+		)
+	);
 
 	wp_enqueue_style( 'sccss_style' );
 }
@@ -42,14 +48,14 @@ add_action( 'wp_enqueue_scripts', 'sccss_register_style', 99 );
 /**
  * If the query var is set, print the Simple Custom CSS rules.
  *
- * @since  1.0
+ * @since  1.0.0
  *
  * @action plugins_loaded
  */
 function sccss_maybe_print_css() {
 
 	// Only print CSS if this is a stylesheet request.
-	if ( ! isset( $_GET['sccss'] ) || intval( $_GET['sccss'] ) !== 1 ) {
+	if ( ! isset( $_GET['sccss'] ) || intval( $_GET['sccss'] ) !== 1 ) {  // phpcs:ignore WordPress.Security.NonceVerification
 		return;
 	}
 
@@ -65,12 +71,12 @@ add_action( 'plugins_loaded', 'sccss_maybe_print_css' );
 /**
  * Echo the CSS.
  *
- * @since 4.0
+ * @since 4.0.0
  */
 function sccss_the_css() {
 	$options     = get_option( 'sccss_settings' );
 	$raw_content = isset( $options['sccss-content'] ) ? $options['sccss-content'] : '';
 	$content     = wp_kses( $raw_content, array( '\'', '\"' ) );
 	$content     = str_replace( '&gt;', '>', $content );
-	echo $content; // WPCS: xss okay.
+	echo $content; // phpcs:ignore WordPress.Security.EscapeOutput
 }

@@ -26,7 +26,13 @@ jQuery( function ( $ ) {
 				updateProp = isRTL ? 'margin-right' : 'margin-left';
 	
 			var updatePosition = function () {
-				if ( position < 0 ) position = 0;
+				if (position < 0) {
+					position = numItems ? numItems - 1 : 0;
+				}
+				if (position === numItems) {
+					position = 0;
+				}
+
 				var numVisibleItems = Math.ceil( $$.outerWidth() / itemWidth );
 				// Offset position by numVisibleItems to trigger the next fetch before the view is empty.
 				if ( position + numVisibleItems >= $$.find( '.sow-carousel-item' ).length - 1 ) {
@@ -43,7 +49,7 @@ jQuery( function ( $ ) {
 								query: $$.data( 'query' ),
 								action: 'sow_carousel_load',
 								paged: page,
-								instance_hash: instanceHash,
+								instance_hash: instanceHash
 							},
 							function ( data, status ) {
 								var $items = $( data.html );
@@ -53,7 +59,7 @@ jQuery( function ( $ ) {
 								complete = numItems === totalPosts;
 								fetching = false;
 							}
-						)
+						);
 					}
 				}
 				$itemsContainer.css( 'transition-duration', "0.45s" );
@@ -125,7 +131,9 @@ jQuery( function ( $ ) {
 							clearInterval( posInterval );
 						}
 						else if ( phase === "move" ) {
-							if ( direction === negativeDirection ) distance *= -1;
+							if ( direction === negativeDirection ) {
+								distance *= -1;
+							}
 							setNewPosition( startPosition + distance );
 							var newTime = new Date().getTime();
 							var timeDelta = (newTime - prevTime) / 1000;
@@ -135,7 +143,9 @@ jQuery( function ( $ ) {
 						}
 						else if ( phase === "end" ) {
 							validSwipe = true;
-							if ( direction === negativeDirection ) distance *= -1;
+							if ( direction === negativeDirection ) {
+								distance *= -1;
+							}
 							if ( Math.abs( velocity ) > 400 ) {
 								velocity *= 0.1;
 								var startTime = new Date().getTime();

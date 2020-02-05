@@ -10,11 +10,11 @@ class Woo_Featured_Products extends EAW_WP_Widget {
 	public function __construct() {
 		$widget_ops = array(
 			'classname'                   => 'woo_featured_products',
-			'description'                 => __( 'Woo Featured Products - designed for use with the Elementor Page Builder plugin', 'themeisle-companion' ),
+			'description'                 => __( 'Woo Featured Products - designed for use with the Elementor Page Builder plugin', 'textdomain' ),
 			'customize_selective_refresh' => true,
 		);
 
-		parent::__construct( 'woo-featured-products', __( 'Woo Featured Products', 'themeisle-companion' ), $widget_ops );
+		parent::__construct( 'woo-featured-products', __( 'Woo Featured Products', 'textdomain' ), $widget_ops );
 		$this->alt_option_name = 'woo_featured_products';
 
 		add_action( 'save_post', array( $this, 'flush_widget_cache' ) );
@@ -52,7 +52,7 @@ class Woo_Featured_Products extends EAW_WP_Widget {
 		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
 		if ( '' == $title ) {
-			$title = __( 'Recommended For You', 'themeisle-companion' );
+			$title = __( 'Recommended For You', 'textdomain' );
 		}
 
 		$limit = ( ! empty( $instance['limit'] ) ) ? absint( $instance['limit'] ) : 4;
@@ -66,16 +66,23 @@ class Woo_Featured_Products extends EAW_WP_Widget {
 		}
 
 		$args = apply_filters(
-			'elementor-addon-widgets_product_categories_args', array(
-				'limit'   => $limit,
-				'columns' => $columns,
-				'title'   => $title,
-				'orderby' => 'date',
-				'order'   => 'desc',
+			'elementor-addon-widgets_product_categories_args',
+			array_merge(
+				array(
+					'limit'   => $limit,
+					'columns' => $columns,
+					'title'   => $title,
+					'orderby' => 'date',
+					'order'   => 'desc',
+				),
+				$args
 			)
 		);
 
-		echo $args['before_widget'];
+		if ( isset( $args['before_widget'] ) ) {
+			echo $args['before_widget'];
+		}
+
 		echo '<section class="eaw-product-section woo-featured-products">';
 
 		do_action( 'storepage_homepage_before_featured_products' );
@@ -97,7 +104,9 @@ class Woo_Featured_Products extends EAW_WP_Widget {
 
 		echo '</section>';
 
-		echo $args['after_widget'];
+		if ( isset( $args['after_widget'] ) ) {
+			echo $args['after_widget'];
+		}
 
 		if ( ! $this->is_preview() ) {
 			$cache[ $args['widget_id'] ] = ob_get_flush();
@@ -137,19 +146,19 @@ class Woo_Featured_Products extends EAW_WP_Widget {
 		$limit   = isset( $instance['limit'] ) ? absint( $instance['limit'] ) : 4;
 		$columns = isset( $instance['columns '] ) ? absint( $instance['columns '] ) : 4; ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'themeisle-companion' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'textdomain' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
 			       name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>"/>
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><?php _e( 'Number of products to show:', 'themeisle-companion' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><?php _e( 'Number of products to show:', 'textdomain' ); ?></label>
 			<input id="<?php echo $this->get_field_id( 'limit' ); ?>"
 			       name="<?php echo $this->get_field_name( 'limit' ); ?>" type="text" value="<?php echo $limit; ?>"
 			       size="3"/></p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'columns' ); ?>"><?php _e( 'Number of Columns:', 'themeisle-companion' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'columns' ); ?>"><?php _e( 'Number of Columns:', 'textdomain' ); ?></label>
 			<input id="<?php echo $this->get_field_id( 'columns' ); ?>"
 			       name="<?php echo $this->get_field_name( 'columns' ); ?>" type="text" value="<?php echo $columns; ?>"
 			       size="3"/></p>

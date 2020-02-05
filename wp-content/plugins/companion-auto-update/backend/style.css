@@ -12,8 +12,6 @@
 /* Welcome screen */
 .welcome-to-cau {
     background: #FFF;
-    border: 1px solid #E5E5E5;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
     margin: 25px 0;
     padding: 30px;
     background-size: 140px;
@@ -38,6 +36,7 @@
 }
 .welcome-to-cau h3 {
     font-size: 16px;
+    margin-top: 0;
 }
 .welcome-to-cau a {
 	text-decoration: none;
@@ -45,16 +44,17 @@
 .welcome-to-cau .welcome-column {
 	display: inline-block;
 	vertical-align: top;
+	box-sizing: border-box;
 }
 .welcome-to-cau.cau-show-love .welcome-column {
 	vertical-align: middle;
 }
 .welcome-to-cau .welcome-column.welcome-column-first {
-	padding-left: 140px;
-	box-sizing: border-box;
+	display: block;
+	width: 100%;
 }
-.welcome-to-cau.cau-show-love .welcome-column.welcome-column-half:not(.welcome-column-first) {
-	text-align: right;
+.first-column {
+	padding-left: 140px;
 }
 .welcome-to-cau .welcome-column.welcome-column-half {
 	width: 50%;
@@ -87,6 +87,27 @@
 .cau-dashboard-box a {
 	margin-left: 0px;
 	margin-top: 10px;
+}
+.nav-tab {
+	position: relative;
+}
+.nav-tab .cau_melding {
+	display: inline-block;
+	width: 11px;
+	height: 11px;
+	border-radius: 10px;
+	margin-left: 5px;
+	position: relative;
+	bottom: -1px;
+}
+.nav-tab .cau_melding.level-okay {
+	background: #7AD03A;
+}
+.nav-tab .cau_melding.level-low {
+	background: #FFBA00;
+}
+.nav-tab .cau_melding.level-high {
+	background: #FF0000;
 }
 
 /* Table Styling */
@@ -228,7 +249,8 @@ table.rollbacklist td a.versionselectbutton {
 .cau_schedule_input {
 	display: inline-block;
 	vertical-align: middle;
-	width: 40px;
+	width: 50px;
+	padding-top: 5px;
 }
 .cau_schedule_input input {
 	max-width: 100%;

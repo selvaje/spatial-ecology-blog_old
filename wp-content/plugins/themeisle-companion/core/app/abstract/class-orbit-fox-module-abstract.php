@@ -207,13 +207,15 @@ abstract class Orbit_Fox_Module_Abstract {
 	 */
 	public function update_showed_notices() {
 		$showed_notices = $this->get_status( 'showed_notices' );
+		// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		if ( $showed_notices == false ) {
 			$showed_notices = array();
 		}
 		foreach ( $this->notices as $notice ) {
+			// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 			if ( $notice['display_always'] == false ) {
 				$hash = md5( serialize( $notice ) );
-				if ( ! in_array( $hash, $showed_notices ) ) {
+				if ( ! in_array( $hash, $showed_notices, true ) ) {
 					$showed_notices[] = $hash;
 				}
 			}
@@ -263,7 +265,7 @@ abstract class Orbit_Fox_Module_Abstract {
 	 * @access  public
 	 * @return bool
 	 */
-	public abstract function enable_module();
+	abstract public function enable_module();
 
 	/**
 	 * The method for the module load logic.
@@ -272,7 +274,7 @@ abstract class Orbit_Fox_Module_Abstract {
 	 * @access  public
 	 * @return mixed
 	 */
-	public abstract function load();
+	abstract public function load();
 
 	/**
 	 * Method to define actions and filters needed for the module.
@@ -282,7 +284,7 @@ abstract class Orbit_Fox_Module_Abstract {
 	 * @since   1.0.0
 	 * @access  public
 	 */
-	public abstract function hooks();
+	abstract public function hooks();
 
 	/**
 	 * Method to check if module status is active.
@@ -294,7 +296,7 @@ abstract class Orbit_Fox_Module_Abstract {
 	 * @return bool
 	 */
 	final public function get_is_active() {
-		if ( $this->auto == true ) {
+		if ( $this->auto === true ) {
 			return true;
 		}
 		if ( ! isset( $this->model ) ) {
@@ -393,7 +395,7 @@ abstract class Orbit_Fox_Module_Abstract {
 	 * @access  public
 	 * @return array
 	 */
-	public abstract function options();
+	abstract public function options();
 
 	/**
 	 * Method to retrieve an option value from model.
@@ -490,7 +492,7 @@ abstract class Orbit_Fox_Module_Abstract {
 				$order = 0;
 				$map   = array();
 				foreach ( $enqueue['css'] as $file_name => $dependencies ) {
-					if ( $dependencies == false ) {
+					if ( $dependencies === false ) {
 						$dependencies = array();
 					} else {
 						// check if any dependency has been loaded by us. If yes, then use that id as the dependency.
@@ -529,7 +531,7 @@ abstract class Orbit_Fox_Module_Abstract {
 	 * @access  public
 	 * @return array
 	 */
-	public abstract function admin_enqueue();
+	abstract public function admin_enqueue();
 
 	/**
 	 * Sets the scripts for admin from the module array.
@@ -564,7 +566,7 @@ abstract class Orbit_Fox_Module_Abstract {
 				$order = 0;
 				$map   = array();
 				foreach ( $enqueue['js'] as $file_name => $dependencies ) {
-					if ( $dependencies == false ) {
+					if ( $dependencies === false ) {
 						$dependencies = array();
 					} else {
 						// check if any dependency has been loaded by us. If yes, then use that id as the dependency.
@@ -588,7 +590,7 @@ abstract class Orbit_Fox_Module_Abstract {
 						$resource,
 						$dependencies,
 						$this->version,
-						false
+						true
 					);
 
 					// check if we need to enqueue or localize.
@@ -625,7 +627,7 @@ abstract class Orbit_Fox_Module_Abstract {
 	 * @access  public
 	 * @return array
 	 */
-	public abstract function public_enqueue();
+	abstract public function public_enqueue();
 
 	/**
 	 * Sets the scripts for public from the module array.

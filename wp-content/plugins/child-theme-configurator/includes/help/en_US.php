@@ -4,9 +4,16 @@ if ( !defined( 'ABSPATH' ) ) exit;
 ?>
 <!-- BEGIN tab -->
 <h3 id="ctc_tutorial">Start Here: Tutorial Videos</h3>
-<!--p><iframe width="560" height="315" src="https://www.youtube.com/embed/xL0YmieF6d0?rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe></p>
-<p><iframe width="560" height="315" src="https://www.youtube.com/embed/vhQ5oi20rYE?rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe></p -->
-<p><a href="<?php echo CHLD_THM_CFG_DOCS_URL; ?>/tutorial-videos" target="_blank">Click here to view videos.</a></p><!-- END tab --> 
+<h3><a href="<?php echo CHLD_THM_CFG_DOCS_URL; ?>/tutorial-videos" target="_blank">Click here to view videos. <i class="dashicons dashicons-external" style="text-decoration:none"></i></a></h3>
+<hr/>
+<a target="_blank" href="<?php echo LILAEAMEDIA_URL; ?>/product/hook-highlighter/" title="<?php _e( 'Learn more about Hook Highlighter', 'child-theme-configurator' ); ?>">
+    <img src="<?php echo CHLD_THM_CFG_URL . 'css/hook-highlighter-box.png'; ?>" width="430" height="430" style="width:50%;height:auto;max-width:250px;float:left;margin-right:2rem" /></a>
+<p><?php _e( '<strong>Now with time and memory benchmarks!</strong>', 'child-theme-configurator' ); ?></p>
+<p><?php _e( 'Hook Highlighter provides insight into the internal program flow of WordPress when activated on any front-facing page of a website.', 'child-theme-configurator' ); ?></p>
+<p><?php _e( 'Display action and filter hooks, program files and backtrace information inline for the current page.', 'child-theme-configurator' ); ?></p>
+<p><a target="_blank" href="<?php echo LILAEAMEDIA_URL; ?>/product/hook-highlighter/" title="<?php _e( 'Learn more about Hook Highlighter', 'child-theme-configurator' ); ?>">
+<?php _e( 'Learn more', 'child-theme-configurator'); ?><i class="dashicons dashicons-external" style="text-decoration:none"></i></a></p>
+<!-- END tab --> 
 <!-- BEGIN tab -->
 <h3 id="ctc_getting_started">Parent/Child Tab</h3>
 <ol><li><strong>Select an action:</strong>

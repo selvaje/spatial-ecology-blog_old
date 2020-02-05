@@ -67,7 +67,7 @@ if ( ! is_user_logged_in() ) {
 
 		if ( '1' === $flag ) {
 			global $wp_version;
-			$icon = '<img style="vertical-align:middle; margin-right:3px;" src=' . plugins_url( 'assets/global/img/icon.png', dirname( __FILE__ ) ) . '>';
+			$icon = '<img style="vertical-align:middle; margin-right:3px; display:inline-block;" src=' . plugins_url( 'assets/global/img/icon.png', dirname( __FILE__ ) ) . '>';
 			$wp_admin_bar->add_menu(
 				array(
 					'id'    => 'wp_mail_bank',

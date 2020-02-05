@@ -7,14 +7,16 @@
 
 class Woo_Best_Products extends EAW_WP_Widget {
 
+    private static $cache = array();
+
 	public function __construct() {
 		$widget_ops = array(
 			'classname'                   => 'woo_best_products',
-			'description'                 => __( 'Woo Best Selling Products - designed for use with the Elementor Page Builder plugin', 'themeisle-companion' ),
+			'description'                 => __( 'Woo Best Selling Products - designed for use with the Elementor Page Builder plugin', 'textdomain' ),
 			'customize_selective_refresh' => true,
 		);
 
-		parent::__construct( 'woo-best-products', __( 'Woo Best Selling Products', 'themeisle-companion' ), $widget_ops );
+		parent::__construct( 'woo-best-products', __( 'Woo Best Selling Products', 'textdomain' ), $widget_ops );
 		$this->alt_option_name = 'woo_best_products';
 
 		add_action( 'save_post', array( $this, 'flush_widget_cache' ) );
@@ -27,32 +29,25 @@ class Woo_Best_Products extends EAW_WP_Widget {
 	 * @param array $instance
 	 */
 	public function widget( $args, $instance ) {
-		$cache = array();
 		if ( ! $this->is_preview() ) {
-			$cache = wp_cache_get( 'woo_best_products', 'widget' );
-		}
-
-		if ( ! is_array( $cache ) ) {
-			$cache = array();
+			self::$cache = wp_cache_get( 'woo_best_products', 'widget' );
 		}
 
 		if ( ! isset( $args['widget_id'] ) ) {
 			$args['widget_id'] = $this->id;
 		}
 
-		if ( isset( $cache[ $args['widget_id'] ] ) ) {
-			echo $cache[ $args['widget_id'] ];
+		if ( isset( self::$cache[ $args['widget_id'] ] ) ) {
+			echo self::$cache[ $args['widget_id'] ];
 
 			return;
 		}
-
-		ob_start();
 
 		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : '';
 		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
 		if ( '' == $title ) {
-			$title = __( 'Best Sellers', 'themeisle-companion' );
+			$title = __( 'Best Sellers', 'textdomain' );
 		}
 
 		$limit = ( ! empty( $instance['limit'] ) ) ? absint( $instance['limit'] ) : 4;
@@ -66,15 +61,25 @@ class Woo_Best_Products extends EAW_WP_Widget {
 		}
 
 		$args = apply_filters(
-			'elementor-addon-widgets_product_categories_args', array(
-				'limit'   => $limit,
-				'columns' => $columns,
-				'title'   => $title,
-				'orderby' => 'date',
-				'order'   => 'desc',
+			'elementor-addon-widgets_product_categories_args',
+			array_merge(
+				array(
+					'limit'   => $limit,
+					'columns' => $columns,
+					'title'   => $title,
+					'orderby' => 'date',
+					'order'   => 'desc',
+				),
+				$args
 			)
 		);
-		echo $args['before_widget'];
+
+		ob_start();
+
+		if ( isset( $args['before_widget'] ) ) {
+			echo $args['before_widget'];
+		}
+
 		echo '<section class="eaw-product-section woo-best-products">';
 
 		do_action( 'storepage_homepage_before_best_selling_products' );
@@ -90,11 +95,14 @@ class Woo_Best_Products extends EAW_WP_Widget {
 		do_action( 'storepage_homepage_after_best_selling_products' );
 
 		echo '</section>';
-		echo $args['after_widget'];
+
+		if ( isset( $args['after_widget'] ) ) {
+			echo $args['after_widget'];
+		}
 
 		if ( ! $this->is_preview() ) {
-			$cache[ $args['widget_id'] ] = ob_get_flush();
-			wp_cache_set( 'woo_best_products', $cache, 'widget' );
+			self::$cache[ $args['widget_id'] ] = ob_get_flush();
+			wp_cache_set( 'woo_best_products', self::$cache, 'widget' );
 		} else {
 			ob_end_flush();
 		}
@@ -130,19 +138,19 @@ class Woo_Best_Products extends EAW_WP_Widget {
 		$limit   = isset( $instance['limit'] ) ? absint( $instance['limit'] ) : 4;
 		$columns = isset( $instance['columns '] ) ? absint( $instance['columns '] ) : 4; ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'themeisle-companion' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'textdomain' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
 			       name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>"/>
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><?php _e( 'Number of products to show:', 'themeisle-companion' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><?php _e( 'Number of products to show:', 'textdomain' ); ?></label>
 			<input id="<?php echo $this->get_field_id( 'limit' ); ?>"
 			       name="<?php echo $this->get_field_name( 'limit' ); ?>" type="text" value="<?php echo $limit; ?>"
 			       size="3"/></p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'columns' ); ?>"><?php _e( 'Number of Columns:', 'themeisle-companion' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'columns' ); ?>"><?php _e( 'Number of Columns:', 'textdomain' ); ?></label>
 			<input id="<?php echo $this->get_field_id( 'columns' ); ?>"
 			       name="<?php echo $this->get_field_name( 'columns' ); ?>" type="text" value="<?php echo $columns; ?>"
 			       size="3"/>

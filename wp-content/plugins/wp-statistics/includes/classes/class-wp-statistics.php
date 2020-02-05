@@ -158,6 +158,32 @@ class WP_Statistics {
 	}
 
 	/**
+	 * List of $_SERVER
+	 *
+	 * @return array
+	 */
+	public static function list_of_server_ip_variable() {
+		return array( 'REMOTE_ADDR', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'HTTP_X_REAL_IP', 'HTTP_X_CLUSTER_CLIENT_IP' );
+	}
+
+	/**
+	 * Get Basis For Get User IP
+	 */
+	public static function getIPMethod() {
+
+		// Set Default Method
+		$method = 'REMOTE_ADDR';
+
+		// Get Option
+		$wp_statistics = get_option( 'wp_statistics' );
+		if ( isset( $wp_statistics ) and is_array( $wp_statistics ) and isset( $wp_statistics['ip_method'] ) and trim( $wp_statistics['ip_method'] ) != "" ) {
+			$method = $wp_statistics['ip_method'];
+		}
+
+		return $method;
+	}
+
+	/**
 	 * Run when plugin loads
 	 */
 	public function run() {
@@ -182,6 +208,9 @@ class WP_Statistics {
 
 		//Set Options
 		$this->load_options();
+
+		//Set coefficient
+		$this->set_coefficient();
 
 		// Check the cache option is enabled.
 		if ( $this->get_option( 'use_cache_plugin' ) == true ) {
@@ -341,13 +370,11 @@ class WP_Statistics {
 	 * Generate hash string
 	 */
 	public function get_hash_string() {
-		// Check If Rest Request
-		if ( $this->restapi->is_rest() ) {
-			return $this->restapi->params( 'hash_ip' );
-		}
 
 		// Check the user agent has exist.
-		if ( array_key_exists( 'HTTP_USER_AGENT', $_SERVER ) ) {
+		if ( $this->restapi->is_rest() and trim( $this->restapi->params( 'ua' ) ) != "" ) {
+			$key = $this->restapi->params( 'ua' );
+		} else if ( array_key_exists( 'HTTP_USER_AGENT', $_SERVER ) ) {
 			$key = $_SERVER['HTTP_USER_AGENT'];
 		} else {
 			$key = 'Unknown';
@@ -616,7 +643,7 @@ class WP_Statistics {
 			$wpdb->insert(
 				$wpdb->prefix . "statistics_useronline",
 				array(
-					'ip'        => $this->get_IP(),
+					'ip'        => $this->store_ip_to_db(),
 					'timestamp' => $this->Current_Date( 'U' ),
 					'date'      => $this->Current_Date(),
 					'referred'  => $this->get_Referred(),
@@ -653,7 +680,7 @@ class WP_Statistics {
 					'agent'        => $this->agent['browser'],
 					'platform'     => $this->agent['platform'],
 					'version'      => $this->agent['version'],
-					'ip'           => $this->get_IP(),
+					'ip'           => $this->store_ip_to_db(),
 					'location'     => '000',
 				)
 			);
@@ -704,6 +731,7 @@ class WP_Statistics {
 		$options['disable_se_baidu']      = true;
 		$options['disable_se_ask']        = true;
 		$options['map_type']              = 'jqvmap';
+		$options['ip_method']             = 'REMOTE_ADDR';
 
 		$options['force_robot_update'] = true;
 
@@ -760,7 +788,6 @@ class WP_Statistics {
 
 		// We're got a real IP address, return it.
 		return $ip;
-
 	}
 
 	/**
@@ -772,9 +799,10 @@ class WP_Statistics {
 
 		//Check If Rest Api Request
 		if ( $this->restapi->is_rest() ) {
-			$this->ip = $this->restapi->params( 'ip' );
-
-			return $this->ip;
+			$this->ip = sanitize_text_field( $this->restapi->params( 'ip' ) );
+			if ( filter_var( $this->ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) !== false ) {
+				return $this->ip;
+			}
 		}
 
 		// Check to see if we've already retrieved the IP address and if so return the last result.
@@ -782,44 +810,67 @@ class WP_Statistics {
 			return $this->ip;
 		}
 
-		/* Check to see if any of the HTTP headers are set to identify the remote user.
-		 * These often give better results as they can identify the remote user even through firewalls etc,
-		 * but are sometimes used in SQL injection attacks.
-		 *
-		 * We only want to take the first one we find, so search them in order and break when we find the first
-		 * one.
-		 *
+		// Get User Set $_SERVER HEADER
+		$ip_method = self::getIPMethod();
+
+		// Get User IP
+		if ( isset( $_SERVER[ $ip_method ] ) ) {
+			$this->ip = esc_html( $_SERVER[ $ip_method ] );
+		}
+
+		/**
+		 * This Filter Used For Custom $_SERVER String
 		 */
-		$envs = array(
-			'REMOTE_ADDR',
-			'HTTP_CLIENT_IP',
-			'HTTP_X_FORWARDED_FOR',
-			'HTTP_X_FORWARDED',
-			'HTTP_FORWARDED_FOR',
-			'HTTP_FORWARDED',
-			'HTTP_X_REAL_IP',
-		);
-		foreach ( $envs as $env ) {
-			if ( array_key_exists( $env, $_SERVER ) ) {
-				$check_ip = $this->get_ip_value( getenv( $env ) );
-				if ( $check_ip != false ) {
-					$this->ip = $check_ip;
-					break;
-				}
+		$user_ip = apply_filters( 'wp_statistics_sanitize_user_ip', $this->ip );
+
+		// Check If X_FORWARDED_FOR
+		foreach ( explode( ',', $user_ip ) as $ip ) {
+			$ip = trim( $ip );
+			if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) !== false ) {
+				$user_ip = $ip;
 			}
 		}
 
 		// If no valid ip address has been found, use 127.0.0.1 (aka localhost).
-		if ( false === $this->ip ) {
+		if ( false === $user_ip ) {
 			$this->ip = '127.0.0.1';
+		} else {
+			$this->ip = $user_ip;
+		}
+
+		return $this->ip;
+	}
+
+	/**
+	 * Store User IP To Database
+	 */
+	public function store_ip_to_db() {
+
+		//Get User ip
+		$user_ip = $this->ip;
+
+		// use 127.0.0.1 If no valid ip address has been found.
+		if ( false === $user_ip ) {
+			return '127.0.0.1';
 		}
 
 		// If the anonymize IP enabled for GDPR.
 		if ( $this->get_option( 'anonymize_ips' ) == true ) {
-			$this->ip = substr( $this->ip, 0, strrpos( $this->ip, '.' ) ) . '.0';
+			$user_ip = substr( $user_ip, 0, strrpos( $user_ip, '.' ) ) . '.0';
 		}
 
-		return $this->ip;
+		return $user_ip;
+	}
+
+	/**
+	 * Check IP contain Special Character
+	 *
+	 * @param $ip
+	 * @return bool
+	 */
+	public function check_sanitize_ip( $ip ) {
+		$preg = preg_replace( '/[^0-9- .:]/', '', $ip );
+		return $preg == $ip;
 	}
 
 	/**
@@ -1474,7 +1525,7 @@ class WP_Statistics {
 		$first_day = '';
 
 		//First Check Visitor Table , if not exist Web check Pages Table
-		$list_tbl  = array(
+		$list_tbl = array(
 			'visitor' => array( 'order_by' => 'ID', 'column' => 'last_counter' ),
 			'pages'   => array( 'order_by' => 'page_id', 'column' => 'date' ),
 		);

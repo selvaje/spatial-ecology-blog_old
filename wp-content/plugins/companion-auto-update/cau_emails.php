@@ -3,30 +3,23 @@
 // Check if emails should be send or not
 function cau_check_updates_mail() {
 
-	global $wpdb;
-	$table_name 	= $wpdb->prefix . "auto_updates"; 
-	$cau_configs 	= $wpdb->get_results( "SELECT * FROM {$table_name}" );
-
-	if( $cau_configs[5]->onoroff == 'on' ) { 
+	if( cau_get_db_value( 'send' ) == 'on' ) { 
 		cau_list_theme_updates(); // Check for theme updates
 		cau_list_plugin_updates(); // Check for plugin updates
 	}
 
-	if( $cau_configs[6]->onoroff == 'on' ) if( $cau_configs[0]->onoroff == 'on' ) cau_plugin_updated(); // Check for updated plugins
+	if( cau_get_db_value( 'sendupdate' ) == 'on' && cau_get_db_value( 'plugins' ) == 'on' ) cau_plugin_updated(); // Check for updated plugins
 }
 
 // Ge the emailadresses it should be send to
 function cau_set_email() {
 
-	global $wpdb;
-	$table_name 	= $wpdb->prefix . "auto_updates"; 
-	$cau_configs 	= $wpdb->get_results( "SELECT * FROM {$table_name}" );
 	$emailArray 	= array();
 
-	if( $cau_configs[4]->onoroff == '' ) {
+	if( cau_get_db_value( 'email' ) == '' ) {
 		array_push( $emailArray, get_option('admin_email') );
 	} else {
-		$emailAdresses 	= $cau_configs[4]->onoroff;
+		$emailAdresses 	= cau_get_db_value( 'email' );
 		$list 			= explode( ", ", $emailAdresses );
 		foreach ( $list as $key ) {
 			array_push( $emailArray, $list );	
@@ -40,10 +33,9 @@ function cau_set_email() {
 // Set the content for the emails about pending updates
 function cau_pending_message( $single, $plural ) {
 
-	return sprintf(  
-		esc_html__( 'Howdy! There are one or more %1$s updates waiting on your WordPress site at %2$s but we noticed that you disabled auto-updating for %3$s. 
+	return sprintf( esc_html__( 'There are one or more %1$s updates waiting on your WordPress site at %2$s but we noticed that you disabled auto-updating for %3$s. 
 
-Outdated %3$s are a security risk so please consider manually updating them via your dashboard.', 'companion-auto-update' ), $single, get_site_url(), $plural );
+Leaving your site outdated is a security risk so please consider manually updating them via your dashboard.', 'companion-auto-update' ), $single, get_site_url(), $plural );
 
 }
 
@@ -51,13 +43,20 @@ Outdated %3$s are a security risk so please consider manually updating them via 
 function cau_updated_message( $type, $updatedList ) {
 
 	$text = sprintf( esc_html__( 
-		'Howdy! One or more %1$s on your WordPress site at %2$s have been updated by Companion Auto Update. No further action is needed on your part. 
-For more info on what is new visit your dashboard and check the changelog.
-
-The following %1$s have been updated:', 'companion-auto-update'
+		'One or more %1$s on your WordPress site at %2$s have been updated by Companion Auto Update. No further action is needed on your part. 
+		For more info on what is new visit your dashboard and check the changelog.', 'companion-auto-update'
 	), $type, get_site_url() );
 
+	$text .= '<br /><br />';
+	$text .= sprintf( esc_html__( 
+		'The following %1$s have been updated:', 'companion-auto-update'
+	), $type );
+
+	$text .= '<br />';
 	$text .= $updatedList;
+
+	$text .= '<br />';
+	$text .= __( "(You'll also recieve this email if you manually updated a plugin or theme)", "companion-auto-update"  );
 
 	return $text;
 
@@ -69,7 +68,7 @@ function cau_list_theme_updates() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "auto_updates"; 
 
-	$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'themes'");
+	$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'themes'");
 	foreach ( $configs as $config ) {
 
 		if( $config->onoroff != 'on' ) {
@@ -86,7 +85,7 @@ function cau_list_theme_updates() {
 				
 				foreach ( cau_set_email() as $key => $value) {
 					foreach ($value as $k => $v) {
-						wp_mail( $v, $subject, $message, $headers );
+						wp_mail( $v, $subject, $message );
 					}
 					break;
 				}
@@ -104,7 +103,7 @@ function cau_list_plugin_updates() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "auto_updates"; 
 
-	$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'plugins'");
+	$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'plugins'");
 	foreach ( $configs as $config ) {
 
 		if( $config->onoroff != 'on' ) {
@@ -121,7 +120,7 @@ function cau_list_plugin_updates() {
 
 				foreach ( cau_set_email() as $key => $value) {
 					foreach ($value as $k => $v) {
-						wp_mail( $v, $subject, $message, $headers );
+						wp_mail( $v, $subject, $message );
 					}
 					break;
 				}
@@ -139,34 +138,42 @@ function cau_plugin_updated() {
 	$pluginNames 	= array();
 	$pluginDates 	= array();
 	$pluginVersion 	= array();
+	$pluginSlug  	= array();
 	$themeNames 	= array();
 	$themeDates 	= array();
 
 	// Where to look for plugins
-	$plugdir    = plugin_dir_path( __DIR__ );
-	$allPlugins = get_plugins();
+	$plugdir    	= plugin_dir_path( __DIR__ );
+	if ( !function_exists( 'get_plugins' ) ) require_once( ABSPATH . 'wp-admin/includes/plugin.php' );  // Check if get_plugins() function exists.
+	$allPlugins 	= get_plugins();
 
 	// Where to look for themes
-	$themedir   = get_theme_root();
-	$allThemes 	= wp_get_themes();
+	$themedir   	= get_theme_root();
+	$allThemes 		= wp_get_themes();
+
+	// Mail schedule
+	$schedule_mail 	= wp_get_schedule( 'cau_set_schedule_mail' );
 
 	// Loop trough all plugins
-	foreach ( $allPlugins as $key => $value) {
+	foreach ( $allPlugins as $key => $value ) {
 
 		// Get plugin data
 		$fullPath 	= $plugdir.'/'.$key;
 		$getFile 	= $path_parts = pathinfo( $fullPath );
 		$pluginData = get_plugin_data( $fullPath );
 
+		// Get the slug
+		$explosion 		= explode( '/', $key );
+		$actualSlug 	= array_shift( $explosion );
+
 		// Get last update date
 		$fileDate 	= date ( 'YmdHi', filemtime( $fullPath ) );
-		$mailSched 	= wp_get_schedule( 'cau_set_schedule_mail' );
 
-		if( $mailSched == 'hourly' ) {
+		if( $schedule_mail == 'hourly' ) {
 			$lastday = date( 'YmdHi', strtotime( '-1 hour' ) );
-		} elseif( $mailSched == 'twicedaily' ) {
+		} elseif( $schedule_mail == 'twicedaily' ) {
 			$lastday = date( 'YmdHi', strtotime( '-12 hours' ) );
-		} elseif( $mailSched == 'daily' ) {
+		} elseif( $schedule_mail == 'daily' ) {
 			$lastday = date( 'YmdHi', strtotime( '-1 day' ) );
 		}
 
@@ -183,12 +190,13 @@ function cau_plugin_updated() {
 			}
 
 			array_push( $pluginDates, $fileDate );
+			array_push( $pluginSlug, $actualSlug );
 		}
 
 	}
 
 	// Loop trough all themes
-	foreach ( $allThemes as $key => $value) {
+	foreach ( $allThemes as $key => $value ) {
 
 		// Get theme data
 		$fullPath 	= $themedir.'/'.$key;
@@ -197,13 +205,12 @@ function cau_plugin_updated() {
 		// Get last update date
 		$dateFormat = get_option( 'date_format' );
 		$fileDate 	= date ( 'YmdHi', filemtime( $fullPath ) );
-		$mailSched 	= wp_get_schedule( 'cau_set_schedule_mail' );
 
-		if( $mailSched == 'hourly' ) {
+		if( $schedule_mail == 'hourly' ) {
 			$lastday = date( 'YmdHi', strtotime( '-1 hour' ) );
-		} elseif( $mailSched == 'twicedaily' ) {
+		} elseif( $schedule_mail == 'twicedaily' ) {
 			$lastday = date( 'YmdHi', strtotime( '-12 hours' ) );
-		} elseif( $mailSched == 'daily' ) {
+		} elseif( $schedule_mail == 'daily' ) {
 			$lastday = date( 'YmdHi', strtotime( '-1 day' ) );
 		}
 
@@ -220,33 +227,40 @@ function cau_plugin_updated() {
 	
 	$totalNumP 		= 0;
 	$totalNumT		= 0;
-	$updatedListP 	= '';
-	$updatedListT 	= '';
+	$updatedListP 	= '<ol>';
+	$updatedListT 	= '<ol>';
 
 	foreach ( $pluginDates as $key => $value ) {
-
-		$updatedListP .= "- ".$pluginNames[$key]." to version ".$pluginVersion[$key]."\n";
+		$updatedListP .= "<li><strong>".$pluginNames[$key]."</strong><br />
+						to version ".$pluginVersion[$key]." <a href='https://wordpress.org/plugins/".$pluginSlug[$key]."/#developers'>".__( "Release notes", "companion-auto-update" )."</a></li>";
 		$totalNumP++;
-
 	}
 	foreach ( $themeNames as $key => $value ) {
-
-		$updatedListT .= "- ".$themeNames[$key]."\n";
+		$updatedListT .= "<li>".$themeNames[$key]."</li>";
 		$totalNumT++;
-
 	}
 
+	$updatedListP 	.= '</ol>';
+	$updatedListT 	.= '</ol>';
+
+	// Set the email content type
+	function cau_mail_content_type() {
+	    return 'text/html';
+	}
+	add_filter( 'wp_mail_content_type', 'cau_mail_content_type' );
 
 	// If plugins have been updated, send email
 	if( $totalNumP > 0 ) {
 
+		// E-mail content
 		$subject 		= '[' . get_bloginfo( 'name' ) . '] ' . __('One or more plugins have been updated.', 'companion-auto-update');
 		$type 			= __('plugins', 'companion-auto-update');
-		$message 		= cau_updated_message( $type, "\n".$updatedListP );
+		$message 		= cau_updated_message( $type, $updatedListP );
 
+		// Send to all addresses
 		foreach ( cau_set_email() as $key => $value) {
 			foreach ($value as $k => $v) {
-				wp_mail( $v, $subject, $message, $headers );
+				wp_mail( $v, $subject, $message );
 			}
 			break;
 		}
@@ -256,19 +270,29 @@ function cau_plugin_updated() {
 	// If themes have been updated, send email
 	if( $totalNumT > 0 ) {
 
+		// E-mail content
 		$subject 		= '[' . get_bloginfo( 'name' ) . '] ' . __('One or more themes have been updated.', 'companion-auto-update');
 		$type 			= __('themes', 'companion-auto-update');
-		$message 		= cau_updated_message( $type, "\n".$updatedListT );
+		$message 		= cau_updated_message( $type, $updatedListT );
 
+		// Send to all addresses
 		foreach ( cau_set_email() as $key => $value) {
 			foreach ($value as $k => $v) {
-				wp_mail( $v, $subject, $message, $headers );
+				wp_mail( $v, $subject, $message );
 			}
 			break;
 		}
 
 	}
 
-}
+	remove_filter( 'wp_mail_content_type', 'cau_mail_content_type' );
+	
+	// Prevent duplicate emails by setting the event again
+	if( $totalNumT > 0 OR $totalNumP > 0 ) {
+		if( $schedule_mail == 'hourly' ) {
+			wp_clear_scheduled_hook('cau_set_schedule_mail');
+			wp_schedule_event( strtotime( '+1 hour', time() ) , 'hourly', 'cau_set_schedule_mail' );
+		}
+	}
 
-?>
+}

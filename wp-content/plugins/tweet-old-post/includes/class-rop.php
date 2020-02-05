@@ -68,7 +68,7 @@ class Rop {
 	public function __construct() {
 
 		$this->plugin_name = 'rop';
-		$this->version     = '8.2.1';
+		$this->version     = '8.5.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -128,7 +128,16 @@ class Rop {
 		$tutorial_pointers = new Rop_Pointers();
 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'legacy_auth', 2 );
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'rop_roadmap_new_tab' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'rop_dismiss_rop_event_not_firing_notice' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'rop_cron_event_status_notice' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'rop_dismiss_buffer_addon_disabled_notice' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'rop_buffer_addon_notice' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'rop_dismiss_linkedin_api_v2_notice' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'rop_linkedin_api_v2_notice' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'bitly_shortener_upgrade_notice' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'rop_dismiss_cron_disabled_notice' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'rop_wp_cron_notice' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_head', $tutorial_pointers, 'rop_pointer_button_css' );
@@ -136,10 +145,15 @@ class Rop {
 		$this->loader->add_action( 'admin_print_footer_scripts', $tutorial_pointers, 'rop_enqueue_pointers' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'menu_pages' );
 		$this->loader->add_action( 'rop_cron_job', $plugin_admin, 'rop_cron_job' );
-
+		$this->loader->add_action( 'rop_cron_job_once', $plugin_admin, 'rop_cron_job_once' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'check_cron_status', 20 );
 		$this->loader->add_action( 'rop_cron_job_publish_now', $plugin_admin, 'rop_cron_job_publish_now' );
-		$this->loader->add_action( 'post_submitbox_misc_actions', $plugin_admin, 'add_publish_actions' );
-		$this->loader->add_action( 'post_submitbox_misc_actions', $plugin_admin, 'publish_now_upsell' );
+		$this->loader->add_action( 'future_to_publish', $plugin_admin, 'share_scheduled_future_post', 10, 1 );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'rop_publish_now_metabox' );
+
+		// Not being used in as of v8.5.0. Feature moved to metabox until proper Gutenberg support
+		// $this->loader->add_action( 'post_submitbox_misc_actions', $plugin_admin, 'add_publish_actions' );
+		// $this->loader->add_action( 'post_submitbox_misc_actions', $plugin_admin, 'publish_now_upsell' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'maybe_publish_now' );
 		$this->loader->add_filter( 'rop_publish_now_attributes', $plugin_admin, 'publish_now_attributes' );
 
@@ -177,10 +191,11 @@ class Rop {
 	 */
 	public function change_labels_uf() {
 
-		return [
+		return array(
 			'title' => __( 'Below is a detailed view of all data that ReviveSocial will receive if you fill in this survey. No domain name, email address or IP addresses are transmited after you submit the survey.', 'tweet-old-post' ),
-		];
+		);
 	}
+
 	/**
 	 * Change review confirm text.
 	 *
@@ -198,6 +213,7 @@ class Rop {
 	public function change_review_cancel_message() {
 		return __( 'No, thanks', 'tweet-old-post' );
 	}
+
 	/**
 	 * Change old message asking for review.
 	 *
@@ -208,6 +224,7 @@ class Rop {
 	public function change_review_message( $old_message ) {
 		return __( 'Hi there, <br/><strong>Revive Social</strong> team here, we noticed you\'ve been using our plugin for a while now, has it been a great help? If so, would you mind leaving us a review? It would help a ton, thanks!<br/>', 'tweet-old-post' );
 	}
+
 	/**
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
@@ -244,6 +261,12 @@ class Rop {
 		$factory         = new Rop_Services_Factory();
 		$global_settings = new Rop_Global_Settings();
 		foreach ( $global_settings->get_all_services_handle() as $service ) {
+
+			// Skip if the buffer addon is not active.
+			if ( ! class_exists( 'Rop_Buffer_Service' ) && $service === 'buffer' ) {
+				continue;
+			}
+
 			try {
 				${$service . '_service'} = $factory->build( $service );
 				${$service . '_service'}->expose_endpoints();

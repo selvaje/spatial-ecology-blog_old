@@ -75,7 +75,7 @@ class Epsilon_Section_Pro extends WP_Customize_Section {
 	 */
 	protected function render_template() {
 	?>
-		<?php if ( $this->allowed ) : //@formatter:off ?>
+		<?php if ( $this->allowed ) : //@formatter:off  ?>
 			<li id="accordion-section-{{ data.id }}"
 				class="accordion-section control-section control-section-{{ data.type }} cannot-expand">
 				<h3 class="accordion-section-title epsilon-pro-section-title"> {{ data.title }}
@@ -86,6 +86,5 @@ class Epsilon_Section_Pro extends WP_Customize_Section {
 			</li>
 		<?php //@formatter:on ?>
 		<?php endif; ?>
-	<?php
-	}
+	<?php }
 }

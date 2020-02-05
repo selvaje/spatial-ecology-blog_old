@@ -5,26 +5,33 @@ Plugin URI: http://maxgalleria.com
 Description: Plugin for reseting WordPress Media Library Folders
 Author: Max Foundry
 Author URI: http://maxfoundry.com
-Version: 4.3.7
-Copyright 2015 Max Foundry, LLC (http://maxfoundry.com)
-
+Version: 5.1.6
+Copyright 2015-2020 Max Foundry, LLC (http://maxfoundry.com)
+Text Domain: mlp-reset
 */
 
 if(!defined("MAXGALLERIA_MEDIA_LIBRARY_FOLDER_TABLE"))
   define("MAXGALLERIA_MEDIA_LIBRARY_FOLDER_TABLE", "mgmlp_folders");
 
 function mlp_reset_menu() {
-  add_menu_page('Media Library Folders Reset', 'Media Library Folders Reset', 'manage_options', 'mlp-reset', 'mlp_reset' );
-  add_submenu_page('mlp-reset', 'Display Attachment URLs', 'Display Attachment URLs', 'manage_options', 'mlpr-show-attachments', 'mlpr_show_attachments');
-  add_submenu_page('mlp-reset', 'Display Folder Data', 'Display Folder Data', 'manage_options', 'mlpr-show-folders', 'mlpr_show_folders');
-  add_submenu_page('mlp-reset', 'Reset Database', 'Reset Database', 'manage_options', 'clean_database', 'clean_database');
+  add_menu_page(__('Media Library Folders Reset','mlp-reset'), __('Media Library Folders Reset','mlp-reset'), 'manage_options', 'mlp-reset', 'mlp_reset' );
+  add_submenu_page('mlp-reset', __('Display Attachment URLs','mlp-reset'), __('Display Attachment URLs','mlp-reset'), 'manage_options', 'mlpr-show-attachments', 'mlpr_show_attachments');
+  add_submenu_page('mlp-reset', __('Display Folder Data','mlp-reset'), __('Display Folder Data','mlp-reset'), 'manage_options', 'mlpr-show-folders', 'mlpr_show_folders');
+  add_submenu_page('mlp-reset', __('Check for Folders Without Parent IDs','mlp-reset'), __('Check for Folders Without Parent IDs','mlp-reset'), 'manage_options', 'mlpr-folders-no-ids', 'mlpr_folders_no_ids');
+  add_submenu_page('mlp-reset', __('Reset Database','mlp-reset'), __('Reset Database','mlp-reset'), 'manage_options', 'clean_database', 'clean_database');
 }
 add_action('admin_menu', 'mlp_reset_menu');
 
+function load_mlfr_textdomain() {
+  load_plugin_textdomain('mlp-reset', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+}
+
+add_action('plugins_loaded', 'load_mlfr_textdomain');
+
 function mlp_reset() {
 
-	echo "<h3>WordPress Media Library Folders Reset Instructions</h3>";
-  echo "<h4>If you need to rescan your database, please deactivate the WordPress Media Library Folders plugin and then click WordPress Media Library Folders Reset->Reset Database to erase the folder data. Then deactivate WordPress Media Library Folders Reset and reactivate WordPress Media Library Folders which will perform a fresh scan of your database.</h4>";
+	echo "<h3>" . __('WordPress Media Library Folders Reset Instructions','mlp-reset') . "</h3>";
+  echo "<h4>" . __('If you need to rescan your database, please deactivate the WordPress Media Library Folders plugin and then click WordPress Media Library Folders Reset->Reset Database to erase the folder data. Then deactivate WordPress Media Library Folders Reset and reactivate WordPress Media Library Folders which will perform a fresh scan of your database.','mlp-reset') . "</h4>";
   
 }
 
@@ -60,11 +67,11 @@ function clean_database() {
 			}
 		}
 				    
-    echo "Removing mgmlp_media_folder posts<br>";
+    echo __('Removing mgmlp_media_folder posts','mlp-reset') . '<br>';
     $sql = "delete from $wpdb->prefix" . "posts where post_type = 'mgmlp_media_folder'";
     $wpdb->query($sql);
     
-    echo "Done. You can now reactivate WordPress Media Library Folders.<br>";
+    echo __('Done. You can now reactivate WordPress Media Library Folders.','mlp-reset') . '<br>';
   
 }
 
@@ -88,17 +95,17 @@ ORDER by folder_id";
 	
   //echo $sql;
 	
-	echo "<h2>Attachment URLs</h2>";
+	echo '<h2>' . __('Attachment URLs','mlp-reset') . '</h2>';
 
-  echo "<p>Number of attachments: $count</p>";
+  echo '<p>' . __('Number of attachments','mlp-reset') . " $count </p>";
 
   $rows = $wpdb->get_results($sql);
 	?>
 	<table>
 		<tr>
-			<th>Attachment ID</th>
-			<th>Attachment URL</th>
-			<th>Folder ID</th>
+			<th><?php _e('Attachment ID','mlp-reset'); ?></th>
+			<th><?php _e('Attachment URL','mlp-reset'); ?></th>
+			<th><?php _e('Folder ID','mlp-reset'); ?></th>
 		</tr>	
     
   <?php  
@@ -125,17 +132,17 @@ function mlpr_show_folders() {
   
   $count = $wpdb->get_var($sql);    
 	
-	echo "<h2>Folder URLs</h2>";
+	echo '<h2>' . __('Folder URLs','mlp-reset') . '</h2>';
   
   $upload_dir = wp_upload_dir();  
   
   $upload_dir1 = $upload_dir['basedir'];
   
-  echo "Uploads folder: " . $upload_dir1 . "<br>";
+  echo __('Uploads folder: ','mlp-reset') . $upload_dir1 . '<br>';
         
-  echo "Uploads URL " . $upload_dir['baseurl'] . "<br>";
+  echo __('Uploads URL: ','mlp-reset') . $upload_dir['baseurl'] . '<br>';
   
-  echo "Number of folders: $count<br><br>";
+  echo __('Number of folders: ','mlp-reset') . $count . '<br><br>';
 
   $folder_table = $wpdb->prefix . MAXGALLERIA_MEDIA_LIBRARY_FOLDER_TABLE;
             	
@@ -153,10 +160,10 @@ order by ID";
 	?>
 	<table>
 		<tr>
-			<th>Folder ID</th>
-			<th>Folder Name</th>
-			<th>Folder URL</th>
-			<th>Parent ID</th>
+			<th><?php _e('Folder ID','mlp-reset'); ?></th>
+			<th><?php _e('Folder Name','mlp-reset'); ?></th>
+			<th><?php _e('Folder URL','mlp-reset'); ?></th>
+			<th><?php _e('Parent ID','mlp-reset'); ?></th>
 		</tr>	
     
   <?php  
@@ -188,3 +195,67 @@ order by ID";
   		  
 }
 
+function get_parent_by_name($sub_folder) {
+
+  global $wpdb;
+
+  $sql = "SELECT post_id FROM {$wpdb->prefix}postmeta where meta_key = '_wp_attached_file' and `meta_value` = '$sub_folder'";
+
+  return $wpdb->get_var($sql);
+}
+
+function add_new_folder_parent($record_id, $parent_folder) {
+
+  global $wpdb;    
+  $table = $wpdb->prefix . MAXGALLERIA_MEDIA_LIBRARY_FOLDER_TABLE;
+
+  $new_record = array( 
+    'post_id'   => $record_id, 
+    'folder_id' => $parent_folder 
+  );
+
+  $wpdb->insert( $table, $new_record );
+
+}
+
+function mlpr_folders_no_ids() {
+  
+  global $wpdb;
+  
+  echo '<h3>' . __('Checking for files without folder IDs','mlp-reset') . '</h3>' . PHP_EOL;
+  
+  $uploads_folder_id = get_option(MAXGALLERIA_MEDIA_LIBRARY_UPLOAD_FOLDER_ID );
+
+  $folders = $wpdb->prefix . MAXGALLERIA_MEDIA_LIBRARY_FOLDER_TABLE;
+  
+  $sql = "SELECT ID, pm.meta_value AS attached_file FROM {$wpdb->prefix}posts
+ LEFT JOIN $folders ON {$wpdb->prefix}posts.ID = {$folders}.post_id
+ JOIN {$wpdb->prefix}postmeta AS pm ON pm.post_id = {$wpdb->prefix}posts.ID
+ WHERE post_type = 'attachment' 
+ AND folder_id IS NULL
+ AND pm.meta_key = '_wp_attached_file'";
+  
+  $rows = $wpdb->get_results($sql);
+  if($rows) {
+    echo '<p>' . __('The following files with missing folder IDs were found','mlp-reset') . ':</p>' . PHP_EOL;
+    echo "<ul>" . PHP_EOL;
+    foreach($rows as $row) {
+      // get the parent ID
+      $folder_path = dirname($row->attached_file);
+      if($folder_path != "")
+        $folder_id = get_parent_by_name($folder_path);
+      else
+        $folder_id = $uploads_folder_id;
+      if($folder_id !== NULL) {
+        // if parent ID is found
+        add_new_folder_parent($row->ID, $folder_id);
+        echo "<li>{$row->attached_file} " . __('Fixed','mlp-reset') . "</li>" . PHP_EOL;
+      } else {
+        echo "<li>{$row->attached_file} " . __(' Parent folder not found.','mlp-reset') . "</li>" . PHP_EOL;        
+      }  
+    }
+    echo "</ul>" . PHP_EOL;
+  } else {
+    echo "<p>" . __('No files with missing folder IDs were found.','mlp-reset') . "</p>" . PHP_EOL;
+  }  
+}

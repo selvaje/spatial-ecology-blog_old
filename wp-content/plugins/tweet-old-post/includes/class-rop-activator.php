@@ -18,7 +18,7 @@
  * @since      8.0.0
  * @package    Rop
  * @subpackage Rop/includes
- * @author     ThemeIsle <friends@themeisle.com>
+ * @author     ThemeIsle <friends@revive.social>
  */
 class Rop_Activator {
 
@@ -30,6 +30,42 @@ class Rop_Activator {
 	 * @since   8.0.0
 	 * @access  public
 	 */
-	public static function activate() {}
+	public static function activate() {
+
+		// Add version when ROP was first installed on site to DB.
+		$rop_first_install_version = get_option( 'rop_first_install_version' );
+
+		if ( class_exists( 'Rop' ) ) {
+			$rop = new Rop();
+			$version = $rop->get_version();
+		}
+
+		if ( empty( $rop_first_install_version ) && ! empty( $version ) ) {
+			add_option( 'rop_first_install_version', $version );
+		}
+
+		self::rop_create_install_token();
+
+	}
+
+	/**
+	 * ROP installation tasks
+	 *
+	 * Creates unique ID for website used during authentication requests
+	 *
+	 * @since      8.3.0
+	 * @package    Rop
+	 * @subpackage Rop/includes
+	 * @author     Revive Social <friends@revive.social>
+	 */
+	private static function rop_create_install_token() {
+
+		$url = get_site_url();
+
+		$token = hash( 'ripemd160', $url . date( 'Y-m-d H:i:s' ) );
+
+		update_option( ROP_APP_TOKEN_OPTION, $token, false );
+
+	}
 
 }

@@ -2,8 +2,8 @@
 **Contributors:** [themeisle](https://profiles.wordpress.org/themeisle), [codeinwp](https://profiles.wordpress.org/codeinwp), [rodicaelena](https://profiles.wordpress.org/rodicaelena), [baicusandrei](https://profiles.wordpress.org/baicusandrei), [hardeepasrani](https://profiles.wordpress.org/hardeepasrani)  
 **Tags:** widget, admin, widgets, sharing, sections, themes, stock photos, custom icons, icons, menu icons, stock, templates  
 **Requires at least:** 4.7  
-**Tested up to:** 5.0  
-**Requires PHP:** 5.4  
+**Tested up to:** 5.3  
+**Requires PHP:** 5.6  
 **Stable tag:** trunk  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
@@ -17,8 +17,6 @@ Extend your theme functionality with <a href="https://orbitfox.com/" rel="nofoll
 https://www.youtube.com/watch?v=YHhK_twfYB8
 
 **Features:**
-- Beta: Image CDN & Optimization
-- Beta: Themes Safe updates feedback
 - Privacy policy notice ( GDPR friendly )
 - Uptime Monitor
 - Google Analytics Integration
@@ -110,6 +108,98 @@ Activating the Orbit Fox plugin is just like any other plugin. If you've uploade
 5. Social Sharing Module
 
 ## Changelog ##
+
+#### [Version 2.9.0](https://github.com/Codeinwp/themeisle-companion/compare/v2.8.14...v2.9.0) (2020-02-03)
+
+* Update dependencies 
+* Remove legacy modules
+
+
+
+### 2.8.14 - 2019-12-02  ###
+
+* Fix fatal error with Membership Pro
+* Various bug fixes to forms and Elementor widgets
+
+
+### 2.8.13 - 2019-11-18  ###
+
+* Fix dependency issues on content forms module
+
+
+### 2.8.12 - 2019-11-18  ###
+
+* sync dependencies
+
+
+### 2.8.11 - 2019-11-18  ###
+
+* Various improvements for Beaver and Elementor form widgets.
+* Improvements to the post grid Elementor module.
+* Compatibility with WordPress 5.3
+
+
+### 2.8.10 - 2019-09-13  ###
+
+* Development
+
+
+### 2.8.8 - 2019-09-11  ###
+
+* Fixes Constant Warning for Beaver Widgets Module
+
+
+### 2.8.7 - 2019-08-13  ###
+
+* Fix error notice in menu icons
+
+
+### 2.8.6 - 2019-08-12  ###
+
+* Improve script loading performance
+* Fix issue with mystock import
+
+
+### 2.8.5 - 2019-07-26  ###
+
+* Update Elementor content forms widgets compatiblity with the latest version.
+* Various fixes for the gutenberg blocks module.
+
+
+### 2.8.4 - 2019-05-23  ###
+
+* minor adjustments to the dashboard UI
+* various updates to the Gutenberg blocks available
+* adds compatibility with WordPress 5.2
+
+
+### 2.8.3 - 2019-04-20  ###
+
+* Fixed issue with constant not being checked in Otter
+* Added error handling in Backbone functions
+
+
+### 2.8.2 - 2019-04-18  ###
+
+* Fix PHP notice
+
+
+### 2.8.1 - 2019-04-18  ###
+
+* Fix issues with newsletter form
+
+
+### 2.8.0 - 2019-04-02  ###
+
+* Fix font awesome menu icons issue in the menu builder
+* Fix issue on dismiss nag info for OrbitFox post install
+* Fix menu icon possible conflicts report info
+* FIx undefined error on new installs for image module
+* Fix issues with mystock import on certain use cases
+* Remove image CDN module for new users, service will be migrated to optimole plugin
+* Adds recommended plugins tab into Orbitfox settings page.
+
+
 ### 2.7.5 - 2019-02-02  ###
 
 * Improve compatibility with Image CDN module by disabling the feature if Optimole exits already
@@ -225,7 +315,7 @@ Activating the Orbit Fox plugin is just like any other plugin. If you've uploade
 
 ### 2.5.1 - 2018-07-02  ###
 
-* Fix social icons saving bug. 
+* Fix social icons saving bug.
 * Fix z-index issue on policy notice.
 
 
@@ -288,7 +378,7 @@ Activating the Orbit Fox plugin is just like any other plugin. If you've uploade
 
 ### 2.4.0 - 2018-02-16  ###
 
-* Adds a new module for uptime monitor of your website. 
+* Adds a new module for uptime monitor of your website.
 * Adds 4 more hooks for modules related actions.
 
 
@@ -300,7 +390,7 @@ Activating the Orbit Fox plugin is just like any other plugin. If you've uploade
 ### 2.3.0 - 2018-01-15  ###
 
 * Adds 3 forms widgets for Elementor (Contact form, Newsletter, and Registration form).
-* Improve menu icons copyright. 
+* Improve menu icons copyright.
 * Allows social icons on pages.
 * Adds beaver widgets module active by default.
 
@@ -412,7 +502,7 @@ Activating the Orbit Fox plugin is just like any other plugin. If you've uploade
 
 ### 2.0.4 - 2017-09-11  ###
 
-* Adds PHP minimum requirement. 
+* Adds PHP minimum requirement.
 * Fix for admin styles loading screen.
 
 

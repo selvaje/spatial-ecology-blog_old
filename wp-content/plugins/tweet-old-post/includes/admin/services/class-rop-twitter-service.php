@@ -103,9 +103,9 @@ class Rop_Twitter_Service extends Rop_Services_Abstract {
 
 		$request_token = $_SESSION['rop_twitter_request_token'];
 
-		$api           = $this->get_api( $request_token['oauth_token'], $request_token['oauth_token_secret'] );
+		$api = $this->get_api( $request_token['oauth_token'], $request_token['oauth_token_secret'] );
 
-		$access_token = $api->oauth( 'oauth/access_token', [ 'oauth_verifier' => $_GET['oauth_verifier'] ] );
+		$access_token = $api->oauth( 'oauth/access_token', array( 'oauth_verifier' => $_GET['oauth_verifier'] ) );
 
 		$_SESSION['rop_twitter_oauth_token'] = $access_token;
 
@@ -281,6 +281,7 @@ class Rop_Twitter_Service extends Rop_Services_Abstract {
 	 * @return array
 	 */
 	private function get_users( $data = null ) {
+		// assign default values to variable
 		$user = $this->user_default;
 		if ( $data == null ) {
 			$this->set_api( $this->credentials['oauth_token'], $this->credentials['oauth_token_secret'], $this->consumer_key, $this->consumer_secret );
@@ -360,10 +361,10 @@ class Rop_Twitter_Service extends Rop_Services_Abstract {
 
 		$url = $api->url(
 			'oauth/authorize',
-			[
+			array(
 				'oauth_token' => $request_token['oauth_token'],
 				'force_login' => false,
-			]
+			)
 		);
 		if ( empty( $url ) ) {
 			return $this->get_legacy_url();
@@ -430,9 +431,20 @@ class Rop_Twitter_Service extends Rop_Services_Abstract {
 
 		if ( ! empty( $post_details['post_image'] ) ) {
 
-			$upload_args  = [
+			if ( class_exists( 'Jetpack_Photon' ) ) {
+				// Disable Jetpack Photon filter.
+				$photon_bypass = remove_filter( 'image_downsize', array( Jetpack_Photon::instance(), 'filter_image_downsize' ) );
+			}
+
+			$upload_args = array(
 				'media' => $this->get_path_by_url( $post_details['post_image'], $post_details['mimetype'] ),
-			];
+			);
+
+			if ( $photon_bypass && class_exists( 'Jetpack_Photon' ) ) {
+				// Re-enable Jetpack Photon filter.
+				add_filter( 'image_downsize', array( Jetpack_Photon::instance(), 'filter_image_downsize' ), 10, 3 );
+			}
+
 			$status_check = false;
 
 			if ( strpos( $post_details['mimetype']['type'], 'video' ) !== false ) {
@@ -475,6 +487,7 @@ class Rop_Twitter_Service extends Rop_Services_Abstract {
 				}
 			} else {
 				$this->logger->alert_error( sprintf( 'Can not upload media to twitter. Error: %s', json_encode( $media_response ) ) );
+				$this->rop_get_error_docs( $media_response );
 			}
 		}
 
@@ -496,95 +509,78 @@ class Rop_Twitter_Service extends Rop_Services_Abstract {
 			return true;
 		} else {
 			$this->logger->alert_error( sprintf( 'Error posting on twitter. Error: %s', json_encode( $response ) ) );
+			$this->rop_get_error_docs( $response );
 		}
 
 		return false;
 	}
 
 	/**
-	 * Get Image file path if exists, return default image_url if not.
+	 * This method will load and prepare the account data for Twitter user.
+	 * Used in Rest Api.
 	 *
-	 * Used where file_get_contents might not work with urls, we provide the file path.
+	 * @since   8.4.0
+	 * @access  public
 	 *
-	 * @param string $image_url Image url.
+	 * @param   array $account_data Twitter pages data.
 	 *
-	 * @return string Image path.
+	 * @return  bool
 	 */
-	private function get_path_by_url( $image_url, $mimetype ) {
-
-		$dir = wp_upload_dir();
-
-		if ( false === strpos( $image_url, $dir['baseurl'] . '/' ) ) {
-			return $image_url;
+	public function add_account_with_app( $account_data ) {
+		if ( ! $this->is_set_not_empty( $account_data, array( 'id' ) ) ) {
+			return false;
 		}
+		$the_id       = $account_data['id'];
+		$account_data = $account_data['pages'];
 
-		$file     = basename( $image_url );
-		$query    = array(
-			'post_type'      => 'attachment',
-			'fields'         => 'ids',
-			'posts_per_page' => '20',
-			'no_found_rows'  => true,
-			'meta_query'     => array(
+		$this->set_api( $account_data['credentials']['oauth_token'], $account_data['credentials']['oauth_token_secret'], $account_data['credentials']['consumer_key'], $account_data['credentials']['consumer_secret'] );
+		$api = $this->get_api();
+
+		$args = array(
+			'oauth_token'        => $account_data['credentials']['oauth_token'],
+			'oauth_token_secret' => $account_data['credentials']['oauth_token_secret'],
+			'consumer_key'       => $account_data['credentials']['consumer_key'],
+			'consumer_secret'    => $account_data['credentials']['consumer_secret'],
+		);
+
+		$this->set_credentials(
+			array_intersect_key(
+				$args,
 				array(
-					'key'     => '_wp_attached_file',
-					'value'   => $file,
-					'compare' => 'LIKE',
+					'oauth_token'        => '',
+					'oauth_token_secret' => '',
+					'consumer_key'       => '',
+					'consumer_secret'    => '',
+				)
+			)
+		);
+
+		$response = $api->get( 'account/verify_credentials' );
+
+		if ( ! isset( $response->id ) ) {
+			return false;
+		}
+		// Prepare the data that will be saved as new account added.
+		$this->service = array(
+			'id'                 => $response->id,
+			'service'            => $this->service_name,
+			'credentials'        => $this->credentials,
+			'public_credentials' => array(
+				'consumer_key'    => array(
+					'name'    => 'API Key',
+					'value'   => $account_data['credentials']['consumer_key'],
+					'private' => false,
+				),
+				'consumer_secret' => array(
+					'name'    => 'API secret key',
+					'value'   => $account_data['credentials']['consumer_secret'],
+					'private' => true,
 				),
 			),
+			'available_accounts' => $this->get_users( $response ),
 		);
-		$ids      = get_posts( $query );
-		$id_found = false;
-		if ( strpos( $mimetype['type'], 'video' ) !== false ) {
-			if ( empty( $ids ) ) {
-				return $image_url;
-			}
 
-			return get_attached_file( reset( $ids ) );
-		}
-		if ( ! empty( $ids ) ) {
-
-			foreach ( $ids as $id ) {
-				if ( $image_url === array_shift( wp_get_attachment_image_src( $id, 'full' ) ) ) {
-					$id_found = $id;
-					break;
-				}
-			}
-		}
-		if ( $id_found === false ) {
-			$query['meta_query'][0]['key'] = '_wp_attachment_metadata';
-
-			// query attachments again
-			$ids = get_posts( $query );
-
-			if ( empty( $ids ) ) {
-				return $image_url;
-			}
-
-			foreach ( $ids as $id ) {
-
-				$meta = wp_get_attachment_metadata( $id );
-
-				foreach ( $meta['sizes'] as $size => $values ) {
-
-					if ( $values['file'] === $file && $image_url === array_shift( wp_get_attachment_image_src( $id, $size ) ) ) {
-						$id_found = $id;
-						break;
-					}
-				}
-				if ( $id_found === false ) {
-					break;
-				}
-			}
-		}
-		if ( $id_found === false ) {
-			return $image_url;
-		}
-		$path = get_attached_file( $id_found );
-		if ( empty( $path ) ) {
-			return $image_url;
-		}
-
-		return $path;
+		return true;
 	}
 
 }

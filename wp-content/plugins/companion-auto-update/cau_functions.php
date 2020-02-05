@@ -1,5 +1,51 @@
 <?php
 
+// Get database value
+function cau_get_db_value( $name ) {
+
+	global $wpdb;
+	$table_name 	= $wpdb->prefix . "auto_updates"; 
+	$cau_configs 	= $wpdb->get_results( "SELECT * FROM $table_name WHERE name = '$name'" );
+
+	return $cau_configs[0]->onoroff;
+
+}
+
+// Get the set timezone
+function cau_get_proper_timezone() {
+
+	// WP 5.3 adds the wp_timezone_string function
+	if ( !function_exists( 'wp_timezone_string' ) ) {
+		return get_option( 'timezone_string' ); 
+	} else {
+		return wp_timezone_string(); 
+	}
+
+
+}
+
+// Copy of the wp_timezone_string for < 5.3 compat
+if ( !function_exists( 'wp_timezone_string' ) ) {
+	function wp_timezone_string() {
+	    $timezone_string = get_option( 'timezone_string' );
+	 
+	    if ( $timezone_string ) {
+	        return $timezone_string;
+	    }
+	 
+	    $offset  = (float) get_option( 'gmt_offset' );
+	    $hours   = (int) $offset;
+	    $minutes = ( $offset - $hours );
+	 
+	    $sign      = ( $offset < 0 ) ? '-' : '+';
+	    $abs_hour  = abs( $hours );
+	    $abs_mins  = abs( $minutes * 60 );
+	    $tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
+	 
+	    return $tz_offset;
+	}
+}
+
 // List of incompatible plugins
 function cau_incompatiblePluginlist() {
 
@@ -43,16 +89,18 @@ function cau_pluginHasIssues() {
 		$return 	= true;
 	}
 
+	if( cau_incorrectDatabaseVersion() ) {
+		$return 	= true;
+	}
+
 	return $return;
 }
 function cau_pluginIssueLevels() {
 	
-	if( cau_incompatiblePlugins() OR get_option( 'blog_public' ) == 0 ) {
-		$level 		= 'low';
-	}
-
-	if( checkAutomaticUpdaterDisabled() OR checkCronjobsDisabled() ) {
-		$level 		= 'high';
+	if( checkAutomaticUpdaterDisabled() ) {
+		$level = 'high';
+	} else {
+		$level = 'low';
 	}
 
 	return $level;
@@ -79,6 +127,13 @@ function cau_pluginIssueCount() {
 	}
 
 	return $count;
+}
+function cau_incorrectDatabaseVersion() {
+	if( get_option( "cau_db_version" ) != cau_db_version() ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 // Run custom hooks on plugin update
@@ -232,12 +287,18 @@ function checkCronjobsDisabled() {
 }
 
 // Menu location
-function cau_menloc() {
-	return 'tools.php';
+function cau_menloc( $after = '' ) {
+	return 'tools.php'.$after;
+}
+function cau_url( $tab = '' ) {
+	return admin_url( cau_menloc( '?page=cau-settings&tab='.$tab ) );
 }
 
 // Get the active tab
 function active_tab( $page, $identifier = 'tab' ) {
+	echo _active_tab( $page, $identifier );
+}
+function _active_tab( $page, $identifier = 'tab' ) {
 
 	if( !isset( $_GET[ $identifier ] ) ) {
 		$cur_page = '';
@@ -246,7 +307,7 @@ function active_tab( $page, $identifier = 'tab' ) {
 	}
 
 	if( $page == $cur_page ) {
-		echo 'nav-tab-active';
+		return 'nav-tab-active';
 	}
 
 }
@@ -267,11 +328,25 @@ function active_subtab( $page, $identifier = 'tab' ) {
 }
 
 // List of plugins that should not be updated
-function donotupdatelist() {
+function donotupdatelist( $filter = 'plugins' ) {
 
+	// Select correct database row
+	switch ( $filter ) {
+		case 'themes':
+			$db_table 		= 'notUpdateListTh';
+			break;
+		case 'plugins':
+			$db_table 		= 'notUpdateList';
+			break;
+		default:
+			$db_table 		= 'notUpdateList';
+			break;
+	}
+
+	// Create list
 	global $wpdb;
-	$table_name 	= $wpdb->prefix . "auto_updates"; 
-	$config 		= $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'notUpdateList'");
+	$table_name 	= $wpdb->prefix."auto_updates"; 
+	$config 		= $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = '{$db_table}'");
 
 	$list 			= $config[0]->onoroff;
 	$list 			= explode( ", ", $list );
@@ -282,9 +357,20 @@ function donotupdatelist() {
 	return $returnList;
 
 }
+function plugins_donotupdatelist() {
+	return donotupdatelist( 'plugins' );
+}
+function themes_donotupdatelist() {
+	return donotupdatelist( 'themes' );
+}
 
 // Show the update log
 function cau_fetch_log( $limit, $format = 'simple' ) {
+
+	// Database
+	global $wpdb;
+	$updateLog 		= "update_log"; 
+	$updateLogDB 	= $wpdb->prefix.$updateLog;
 
 	// Filter log
 	if( isset( $_GET['filter'] ) ) {
@@ -321,12 +407,10 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 	$pluginDatesF 	= array();
 	$plugslug 		= array();
 	$type 			= array();
+	$method 		= array();
 
 	// Date format
 	$dateFormat = get_option( 'date_format' );
-
-	// Make sure it shows the correct time
-	date_default_timezone_set( get_option('timezone_string') );
 
 	// PLUGINS
 	if( $plugins ) {
@@ -346,6 +430,15 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 			$pluginSlug		= $pluginSlug[0];
 
 	        array_push( $plugslug , $pluginSlug );
+
+	        // Get info from database
+	        // if( cau_check_if_exists( $key, 'slug', $updateLog ) ) {
+	        // 	array_push( $method , 'Method found!' );
+	        // } else {
+	        // 	array_push( $method , 'New' );
+	        // }
+
+	        array_push( $method , '-' );
 
 			// Get plugin name
 			foreach ( $pluginData as $dataKey => $dataValue ) {
@@ -394,6 +487,8 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 			array_push( $pluginNames , $themeName ); 
 			array_push( $pluginVersion , $themeVersion );
 
+	        // Get info from database
+	        array_push( $method , '-' );
 
 			// Get last update date
 			$fileDate 	= date( 'YmdHi', filemtime( $fullPath ) );
@@ -421,8 +516,14 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 		$coreFile = get_home_path().'wp-admin/about.php';
 		if( file_exists( $coreFile ) ) {
 			$coreDate 	= date( 'YmdHi', filemtime( $coreFile ) );
-			$coreDateF 	= date_i18n( $dateFormat, filemtime( $coreFile ) );
-			$coreDateF .= ' &dash; '.date( 'H:i', filemtime( $coreFile ) );
+
+			if( $format == 'table' ) {
+				$coreDateF 	= date_i18n( $dateFormat, filemtime( $coreFile ) );
+				$coreDateF .= ' &dash; '.date ( 'H:i', filemtime( $coreFile ) );
+			} else {
+				$coreDateF 	= date_i18n( $dateFormat, filemtime( $coreFile ) );
+			}
+
 		} else {
 			$coreDate 	= date('YmdHi');
 			$coreDateF 	= 'Could not read core date.';
@@ -434,6 +535,9 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 		array_push( $pluginDates, $coreDate );
 		array_push( $pluginDatesF, $coreDateF );
 		array_push( $plugslug , '' );
+
+        // Get info from database
+        array_push( $method , '-' );
 
 	}
 
@@ -463,6 +567,7 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 				<th><strong>'.__( 'To', 'companion-auto-update' ).'</strong></th>
 				<th><strong>'.__( 'Type', 'companion-auto-update' ).'</strong></th>
 				<th><strong>'.__( 'Last updated on', 'companion-auto-update' ).'</strong></th>
+				<th style="display: none;"><strong>'.__( 'Update method', 'companion-auto-update' ).'</strong></th>
 			</tr>
 		</thead>';
 
@@ -506,6 +611,10 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 
 				echo '<td class="column-date" style="min-width: 100px;"><p>'. $pluginDatesF[$key] .'</p></td>';
 
+				if( $format == 'table' ) {
+					echo '<td class="column-method" style="display: none;"><p>'. $method[$key] .'</p></td>';
+				}
+
 			echo '</tr>';
 
 			$loopings++;
@@ -542,17 +651,28 @@ function cau_getChangelogUrl( $type, $name, $plugslug ) {
 }
 
 // Only update plugins which are enabled
-function cau_dont_update( $update, $item ) {
+function cau_dontUpdatePlugins( $update, $item ) {
 
-	$plugins = donotupdatelist();
+	$plugins = plugins_donotupdatelist();
 
     if ( in_array( $item->slug, $plugins ) ) {
-		// Use the normal API response to decide whether to update or not
-    	return $update; 
+    	return false; // Don't update these plugins
     } else {
-    	// Always update plugins
-    	return true; 
+    	return true; // Always update these plugins
     } 
+
+
+}
+function cau_dontUpdateThemes( $update, $item ) {
+
+	$themes = themes_donotupdatelist();
+
+    if ( in_array( $item->slug, $themes ) ) {
+    	return false; // Don't update these plugins
+    } else {
+    	return true; // Always update these plugins
+    } 
+
 
 }
 
@@ -622,4 +742,69 @@ function cau_hideUpdateNag() {
  
 add_action( 'admin_head', 'cau_hideUpdateNag', 100 );
 
-?>
+// Add more intervals to event schedules
+function cau_addMoreIntervals( $schedules ) {
+
+	// Add a weekly interval.
+	$schedules['weekly'] = array(
+		'interval' => 604800,
+		'display'  => __( 'Once Weekly' ),
+	);
+	
+	// Add a twice montly interval.
+	$schedules['twice_monthly'] = array(
+		'interval' => 1317600,
+		'display'  => __( 'Twice a month' ),
+	);
+	
+	// Add a montly interval.
+	$schedules['monthly'] = array(
+		'interval' => 2635200,
+		'display'  => __( 'Once a month' ),
+	);
+
+	return $schedules;
+
+}
+add_filter( 'cron_schedules', 'cau_addMoreIntervals' ); 
+
+// Plugin information to DB
+function cau_savePluginInformation() {
+
+	global $wpdb;
+	$updateDB 		= "update_log";
+	$updateLog 		= $wpdb->prefix.$updateDB; 
+	$allPlugins 	= get_plugins();
+
+	foreach ( $allPlugins as $key => $value ) {
+		foreach ( $value as $k => $v ) {
+			if( $k == 'Version' ) $version = $v;
+		}
+		$slug 		= $key;
+		$version 	= $version;
+
+		if( !cau_check_if_exists( $slug, 'slug', $updateDB ) ) $wpdb->insert( $updateLog, array( 'slug' => $slug, 'oldVersion' => $version ) );
+	}	
+}
+add_action( 'cau_custom_hooks_plugins', 'cau_savePluginInformation' );
+
+// Check for manual updates
+function manual_update_check_init() {
+
+	if( isset( $_GET['action'] ) && $_GET['action'] == 'upgrade-plugin' ) {
+
+		if( isset( $_GET['plugin'] ) ) {
+
+			global $wpdb;
+			$updateLog = $wpdb->prefix."update_log"; 
+
+			if( cau_check_if_exists( $_GET['plugin'], 'slug', 'update_log' ) ) $wpdb->query( $wpdb->prepare( "UPDATE $updateLog SET method = 'Manual' WHERE slug = '%s'", $_GET['plugin']  ) );
+
+			die();
+
+		}
+
+	}
+
+}
+add_action( 'admin_footer', 'manual_update_check_init', 1000 );

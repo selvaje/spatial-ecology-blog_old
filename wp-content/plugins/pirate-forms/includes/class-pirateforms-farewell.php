@@ -106,6 +106,8 @@ class PirateForms_Farewell {
 			return false;
 		}
 
+		return true;
+
 		$date_dismissed = DateTime::createFromFormat( 'U', $dismissed );
 
 		return $date_dismissed->modify( '+1 month' ) <= DateTime::createFromFormat( 'U', time() );
@@ -223,8 +225,9 @@ class PirateForms_Farewell {
 		echo '<div class="notice notice-error"><p>';
 		printf(
 			wp_kses(
-				'<strong>Important:</strong> Pirate Forms is being retired. We have created an easy migrator to move your forms + settings to WPForms, which is the most user-friendly WordPress form builder. Click here to <a href="%1$s">migrate to WPForms</a> | <a href="%2$s" target="_blank" rel="noopener noreferrer">See the full announcement</a>.',
+				'<strong>Important:</strong> Pirate Forms is being retired and is no longer supported. We have created an easy migrator to move your forms + settings to WPForms, which is the most user-friendly WordPress form builder. Please <a href="%1$s">migrate to WPForms</a> and discontinue using Pirate Forms.',
 				array(
+					'br' => array(),
 					'strong' => array(),
 					'a'      => array(
 						'href'   => array(),
@@ -233,8 +236,7 @@ class PirateForms_Farewell {
 					),
 				)
 			),
-			esc_url( $this->get_migration_page_url() ), // Migration.
-			'https://wpforms.com/#full-announcement' // Full announcement. TODO: change this URL.
+			esc_url( $this->get_migration_page_url() ) // Migration.
 		);
 		echo '</p></div>';
 	}

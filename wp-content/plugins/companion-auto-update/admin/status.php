@@ -1,5 +1,11 @@
 <?php
 
+	if( isset( $_GET['run'] ) && $_GET['run'] == 'db_update' ) {
+		cau_manual_update();
+		echo '<div id="message" class="updated"><p><b>'.__( 'Database update completed' ).'</b></p></div>';
+	}
+	
+	// Date format
 	$dateFormat = get_option( 'date_format' );
 	$dateFormat .= ' '.get_option( 'time_format' );
 
@@ -7,7 +13,7 @@
 	$table_name = $wpdb->prefix . "auto_updates"; 
 
 	// Minor updates
-	$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'minor'");
+	$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'minor'");
 	foreach ( $configs as $config ) {
 
 		if( $config->onoroff == 'on' && wp_get_schedule( 'wp_version_check' ) ) {
@@ -27,7 +33,7 @@
 	}
 
 	// Major updates
-	$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'major'");
+	$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'major'");
 	foreach ( $configs as $config ) {
 
 		if( $config->onoroff == 'on' && wp_get_schedule( 'wp_version_check' ) ) {
@@ -47,7 +53,7 @@
 	}
 
 	// Plugin updates
-	$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'plugins'");
+	$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'plugins'");
 	foreach ( $configs as $config ) {
 
 		if( $config->onoroff == 'on' && wp_get_schedule( 'wp_update_plugins' ) ) {
@@ -67,7 +73,7 @@
 	}
 
 	// Themes updates
-	$configs = $wpdb->get_results( "SELECT * FROM $table_name WHERE name = 'themes'");
+	$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'themes'");
 	foreach ( $configs as $config ) {
 
 		if( $config->onoroff == 'on' && wp_get_schedule( 'wp_update_plugins' ) ) {
@@ -86,16 +92,57 @@
 
 	}
 
+	// E-mail notifications
 	if ( wp_next_scheduled ( 'cau_set_schedule_mail' ) ) {
-		$setScheduleStatus  	= 'enabled';
-		$setScheduleIcon  		= 'yes';
-		$setScheduleInterval 	= wp_get_schedule( 'cau_set_schedule_mail' );
-		$setScheduleNext 		= date_i18n( $dateFormat, wp_next_scheduled( 'cau_set_schedule_mail' ) );
+
+		$emailCase = false;
+		
+		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'send'");
+		foreach ( $configs as $config ) {
+			if( $config->onoroff == 'on' ) {
+				$emailCase = true;
+			}
+		}
+		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'sendupdate'");
+		foreach ( $configs as $config ) {
+			if( $config->onoroff == 'on' ) {
+				$emailCase = true;
+			}
+		}
+
+		if( $emailCase ) {
+			$setScheduleStatus  	= 'enabled';
+			$setScheduleIcon  		= 'yes';
+			$setScheduleInterval 	= wp_get_schedule( 'cau_set_schedule_mail' );
+			$setScheduleNext 		= date_i18n( $dateFormat, wp_next_scheduled( 'cau_set_schedule_mail' ) );
+		} else {
+			$setScheduleStatus  	= 'disabled';
+			$setScheduleIcon  		= 'no';
+			$setScheduleInterval 	= '&dash;';
+			$setScheduleNext 		= '&dash;';
+		}
+
 	} else {
 		$setScheduleStatus  	= 'disabled';
 		$setScheduleIcon  		= 'no';
 		$setScheduleInterval 	= '&dash;';
 		$setScheduleNext 		= '&dash;';
+	}
+
+	// Core notifcations
+	$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'wpemails'");
+	foreach ( $configs as $config ) {
+		if( $config->onoroff == 'on' ) {
+			$setCoreStatus  	= 'enabled';
+			$setCoreIcon  		= 'yes';
+			$setCoreInterval 	= wp_get_schedule( 'cau_set_schedule_mail' );
+			$setCoreNext 		= date_i18n( $dateFormat, wp_next_scheduled( 'cau_set_schedule_mail' ) );
+		} else {
+			$setCoreStatus  	= 'disabled';
+			$setCoreIcon  		= 'no';
+			$setCoreInterval 	= '&dash;';
+			$setCoreNext 		= '&dash;';
+		}
 	}
 
 ?>
@@ -162,6 +209,12 @@
 			<td class="cau_status_interval"><?php echo $setScheduleInterval; ?></td>
 			<td class="cau_status_next"><span class="cau_mobile_prefix"><?php _e( 'Next', 'companion-auto-update' ); ?>: </span><?php echo $setScheduleNext; ?></td>
 		</tr>
+		<tr>
+			<td class="cau_status_name"><?php _e( 'Core notifications', 'companion-auto-update' ); ?></td>
+			<td class="cau_status_active_state"><span class='cau_<?php echo $setCoreStatus; ?>'><span class="dashicons dashicons-<?php echo $setCoreIcon; ?>"></span></span></td>
+			<td class="cau_status_interval"><?php echo $setCoreInterval; ?></td>
+			<td class="cau_status_next"><span class="cau_mobile_prefix"><?php _e( 'Next', 'companion-auto-update' ); ?>: </span><?php echo $setScheduleNext; ?></td>
+		</tr>
 	</tbody>
 
 </table>
@@ -204,6 +257,7 @@ if( checkAutomaticUpdaterDisabled() ) { ?>
 			<tr>
 				<th class="cau_plugin_issue_name"><strong><?php _e( 'Critical Error', 'companion-auto-update' ); ?></strong></th>
 				<th class="cau_plugin_issue_explain"> </th>
+				<th class="cau_plugin_issue_explain"> </th>
 				<th class="cau_plugin_issue_fixit"><strong><?php _e( 'How to fix', 'companion-auto-update' ); ?></strong></th>
 			</tr>
 		</thead>
@@ -214,10 +268,13 @@ if( checkAutomaticUpdaterDisabled() ) { ?>
 				<td class="cau_plugin_issue_explain">
 					<?php _e( 'Updating is globally disabled.', 'companion-auto-update' ); ?>
 				</td>
+				<td class="cau_plugin_issue_explain">
+					<code>AUTOMATIC_UPDATER_DISABLED true</code>
+				</td>
 				<td class="cau_plugin_issue_fixit">
 					<form method="POST">
 						<button type="submit" name="fixit" class="button button-primary"><?php _e( 'Fix it', 'companion-auto-update' ); ?></button>
-						<a href="<?php echo admin_url( cau_menloc().'?page=cau-settings&tab=support' ); ?>" class="button"><?php _e( 'Contact for support', 'companion-auto-update' ); ?></a>
+						<a href="<?php echo cau_url( 'support' ); ?>" class="button"><?php _e( 'Contact for support', 'companion-auto-update' ); ?></a>
 					</form>
 				</td>
 			</tr>
@@ -233,7 +290,8 @@ if( checkCronjobsDisabled() ) { ?>
 
 		<thead>
 			<tr>
-				<th class="cau_plugin_issue_name"><strong><?php _e( 'Critical Error', 'companion-auto-update' ); ?></strong></th>
+				<th class="cau_plugin_issue_name"><strong><?php _e( 'Warning', 'companion-auto-update' ); ?></strong></th>
+				<th class="cau_plugin_issue_explain"> </th>
 				<th class="cau_plugin_issue_explain"> </th>
 				<th class="cau_plugin_issue_fixit"><strong><?php _e( 'How to fix', 'companion-auto-update' ); ?></strong></th>
 			</tr>
@@ -241,12 +299,15 @@ if( checkCronjobsDisabled() ) { ?>
 
 		<tbody id="the-list">
 			<tr>
-				<td class="cau_plugin_issue_name"><span class='cau_disabled'><span class="dashicons dashicons-no"></span> <?php _e( 'Critical Error', 'companion-auto-update' ); ?></span></td>
+				<td class="cau_plugin_issue_name"><span class='cau_warning'><span class="dashicons dashicons-warning"></span> <?php _e( 'Warning', 'companion-auto-update' ); ?></span></td>
 				<td class="cau_plugin_issue_explain">
 					<?php _e( 'Cronjobs are disabled.', 'companion-auto-update' ); ?>
 				</td>
+				<td class="cau_plugin_issue_explain">
+					<code>DISABLE_WP_CRON true</code>
+				</td>
 				<td class="cau_plugin_issue_fixit">
-					<a href="<?php echo admin_url( cau_menloc().'?page=cau-settings&tab=support' ); ?>" class="button"><?php _e( 'Contact for support', 'companion-auto-update' ); ?></a>
+					<a href="<?php echo cau_url( 'support' ); ?>" class="button"><?php _e( 'Contact for support', 'companion-auto-update' ); ?></a>
 				</td>
 			</tr>
 		</tbody>
@@ -323,7 +384,7 @@ if( cau_incompatiblePlugins() ) { ?>
 					echo '<tr>
 						<td class="cau_plugin_issue_name">'.$key.'</td>
 						<td class="cau_plugin_issue_explain">'.$value.'</td>
-						<td class="cau_plugin_issue_fixit"><a href="https://codeermeneer.nl/documentation/possible-plugin-issues-fixes/" target="_blank" class="button">'.__( 'How to fix', 'companion-auto-update' ).'</a></td>
+						<td class="cau_plugin_issue_fixit"><a href="https://codeermeneer.nl/documentation/known-issues-fixes/#plugins" target="_blank" class="button">'.__( 'How to fix', 'companion-auto-update' ).'</a></td>
 					</tr>';
 				
 				}
@@ -335,7 +396,7 @@ if( cau_incompatiblePlugins() ) { ?>
 
 <?php } ?>
 
-	<table class="cau_status_list widefat striped cau_status_warnings">
+	<table class="autoupdate cau_status_list widefat striped cau_status_warnings">
 
 		<thead>
 			<tr>
@@ -351,6 +412,14 @@ if( cau_incompatiblePlugins() ) { ?>
 			<tr>
 				<td>PHP</td>
 				<td><?php echo phpversion(); ?></td>
+			</tr>
+			<tr <?php if( cau_incorrectDatabaseVersion() ) { echo "class='inactive'"; } ?>>
+				<td>Database</td>
+				<td><?php echo get_option( "cau_db_version" ); ?> <code>(Latest: <?php echo cau_db_version(); ?>)</code></td>
+			</tr>
+			<tr>
+				<td class="cau_status_name"><?php _e( 'Timezone' ); ?></td>
+				<td class="cau_status_active_state"><?php echo cau_get_proper_timezone(); ?> (GMT <?php echo get_option('gmt_offset'); ?>) - <?php echo date_default_timezone_get(); ?></td>
 			</tr>
 		</tbody>
 

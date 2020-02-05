@@ -3,15 +3,15 @@
 * Plugin Name: FancyBox for WordPress
 * Plugin URI: https://wordpress.org/plugins/fancybox-for-wordpress/
 * Description: Integrates <a href="http://fancyapps.com/fancybox/3/">FancyBox 3</a> into WordPress.
-* Version: 3.1.9
+* Version: 3.2.6
 * Author: Colorlib
 * Author URI: https://colorlib.com/wp/
-* Tested up to: 5.0.3
+* Tested up to: 5.3
 * Requires: 4.6 or higher
 * License: GPLv3 or later
 * License URI: http://www.gnu.org/licenses/gpl-3.0.html
 * Requires PHP: 5.6
-* Text Domain: colorlib-login-customizer
+* Text Domain: mfbfw
 * Domain Path: /languages
 *
 * Copyright 2008-2016 	Janis Skarnelis 	http://twitter.com/moskis/
@@ -31,11 +31,12 @@
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+
 /**
  * Plugin Init
  */
 // Constants
-define( 'FBFW_VERSION', '3.1.9' );
+define( 'FBFW_VERSION', '3.2.6' );
 define( 'FBFW_PATH', plugin_dir_path( __FILE__ ) );
 define( 'FBFW_URL', plugin_dir_url( __FILE__ ) );
 define( 'FBFW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
@@ -74,60 +75,61 @@ function mfbfw_defaults() {
 
 	$default_settings = array(
 		// Appearance
-		'border'                     => '',
-		'borderColor'                => '#BBBBBB',
-		'paddingColor'               => '#FFFFFF',
-		'padding'                    => '10',
-		'overlayShow'                => 'on',
-		'overlayColor'               => '#666666',
-		'overlayOpacity'             => '0.3',
-		'titleShow'                  => 'on',
-		'titlePosition'              => 'inside',
-		'titleColor'                 => '#333333',
-		'showNavArrows'              => 'on',
-		'titleSize'                  => '14',
-		'showCloseButton'            => '',
-		'showToolbar'                => 'on',
-		// Animations
-		'zoomOpacity'                => 'on',
-		'zoomSpeedIn'                => '500',
-		'zoomSpeedChange'            => '300',
-		'transitionIn'               => 'fade',
-		'transitionEffect'           => 'fade',
-		// Behaviour
-		'hideOnOverlayClick'         => 'function(current, event) {
+        'border'                     => '',
+        'borderColor'                => '#BBBBBB',
+        'paddingColor'               => '#FFFFFF',
+        'padding'                    => '10',
+        'overlayShow'                => 'on',
+        'overlayColor'               => '#666666',
+        'overlayOpacity'             => '0.3',
+        'titleShow'                  => 'on',
+        'captionShow'                => '',
+        'titlePosition'              => 'inside',
+        'titleColor'                 => '#333333',
+        'showNavArrows'              => 'on',
+        'titleSize'                  => '14',
+        'showCloseButton'            => '',
+        'showToolbar'                => 'on',
+        // Animations
+        'zoomOpacity'                => 'on',
+        'zoomSpeedIn'                => '500',
+        'zoomSpeedChange'            => '300',
+        'transitionIn'               => 'fade',
+        'transitionEffect'           => 'fade',
+        // Behaviour
+        'hideOnOverlayClick'         => 'function(current, event) {
 									return current.type === "image" ? "close" : false;
 								  },',
-		'hideOnContentClick'         => '',
-		'enableEscapeButton'         => 'on',
-		'cyclic'                     => '',
-		'mouseWheel'                 => '',
-		'disableWoocommercePages'    => '',
-		'disableWoocommerceProducts' => '',
-		// Gallery Type
-		'galleryType'                => 'all',
-		'customExpression'           => 'jQuery(thumbnails).attr("data-fancybox","gallery").getTitle();',
-		// Misc
-		'autoDimensions'             => 'on',
-		'frameWidth'                 => '560',
-		'frameHeight'                => '340',
-		'loadAtFooter'               => '',
-		'callbackEnable'             => '',
-		'callbackOnStart'            => 'function() { alert("Start!"); }',
-		'callbackOnCancel'           => 'function() { alert("Cancel!"); }',
-		'callbackOnComplete'         => 'function() { alert("Complete!"); }',
-		'callbackOnCleanup'          => 'function() { alert("CleanUp!"); }',
-		'callbackOnClose'            => 'function() { alert("Close!"); }',
-		'copyTitleFunction'          => 'var arr = jQuery("a[data-fancybox]");
+        'hideOnContentClick'         => '',
+        'enableEscapeButton'         => 'on',
+        'cyclic'                     => '',
+        'mouseWheel'                 => '',
+        'disableWoocommercePages'    => '',
+        'disableWoocommerceProducts' => '',
+        // Gallery Type
+        'galleryType'                => 'all',
+        'customExpression'           => 'jQuery(thumbnails).attr("data-fancybox","gallery").getTitle();',
+        // Misc
+        'autoDimensions'             => 'on',
+        'frameWidth'                 => '560',
+        'frameHeight'                => '340',
+        'loadAtFooter'               => '',
+        'callbackEnable'             => '',
+        'callbackOnStart'            => 'function() { alert("Start!"); }',
+        'callbackOnCancel'           => 'function() { alert("Cancel!"); }',
+        'callbackOnComplete'         => 'function() { alert("Complete!"); }',
+        'callbackOnCleanup'          => 'function() { alert("CleanUp!"); }',
+        'callbackOnClose'            => 'function() { alert("Close!"); }',
+        'copyTitleFunction'          => 'var arr = jQuery("a[data-fancybox]");
                                 jQuery.each(arr, function() {
                                     var title = jQuery(this).children("img").attr("title");
                                     var caption = jQuery(this).next("figcaption").html();
                                     if(caption.length){jQuery(this).attr("title",title+" " + caption)}else{ jQuery(this).attr("title",title);};
                                 });	',
-		'nojQuery'                   => '',
-		'extraCallsEnable'           => '',
-		'extraCallsData'             => '',
-		'uninstall'                  => '',
+        'nojQuery'                   => '',
+        'extraCallsEnable'           => '',
+        'extraCallsData'             => '',
+        'uninstall'                  => '',
 	);
 
 	return $default_settings;
@@ -171,6 +173,7 @@ function mfbfw_enqueue_scripts() {
 
 	// Register Scripts
 	wp_register_script( 'fancybox', FBFW_URL . 'assets/js/jquery.fancybox.js', $jquery, '1.3.4', $footer ); // Main Fancybox script
+
 	// Enqueue Scripts
 	wp_enqueue_script( 'fancybox' ); // Load fancybox
 
@@ -184,10 +187,8 @@ function mfbfw_enqueue_scripts() {
 
 	// Register Styles
 	wp_register_style( 'fancybox', FBFW_URL . 'assets/css/fancybox.css', false, '1.3.4' ); // Main Fancybox style
-	wp_register_style( 'fancybox-ie', FBFW_URL . 'assets/css/fancybox.ie.css', array( 'fancybox' ), '1.3.4' ); // Main Fancybox style fixes for IE6-8
 	// Enqueue Styles
 	wp_enqueue_style( 'fancybox' );
-	wp_enqueue_style( 'fancybox-ie' );
 
 	// Make IE specific styles load only on IE6-8
 	$wp_styles->add_data( 'fancybox-ie', 'conditional', 'lt IE 9' );
@@ -214,17 +215,27 @@ function mfbfw_init() {
 
 	// fix undefined index copyTitleFunction. $mfbfw array misses this index.
 
-	$mfbfw['copyTitleFunction'] = 'var arr = jQuery("a[data-fancybox]");
+    if (isset($mfbfw['captionShow']) && 'on' == $mfbfw['captionShow']) {
+        $mfbfw['copyTitleFunction'] = 'var arr = jQuery("a[data-fancybox]");
+									jQuery.each(arr, function() {
+										var title = jQuery(this).children("img").attr("title");
+                                        if(title){jQuery(this).attr("title",title)}
+									});	';
+    } else {
+        $mfbfw['copyTitleFunction'] = 'var arr = jQuery("a[data-fancybox]");
 									jQuery.each(arr, function() {
 										var title = jQuery(this).children("img").attr("title");
 										 var caption = jQuery(this).next("figcaption").html();
                                         if(caption && title){jQuery(this).attr("title",title+" " + caption)}else if(title){ jQuery(this).attr("title",title);}else if(caption){jQuery(this).attr("title",caption);}
 									});	';
+    }
 
 
+
+	$afterLoad = '';
 	if ( $mfbfw['titlePosition'] == 'inside' ) {
 		$afterLoad = 'function( instance, current ) {';
-		$afterLoad .= 'current.$content.append(\'<div class=\"fancybox-custom-caption\" style=\" position: absolute;left:0;right:0;color:#000;padding-top:10px;bottom:-50px;margin:0 auto;text-align:center; \">\' + current.opts.caption + \'</div>\');';
+		$afterLoad .= 'current.$content.append(\'<div class=\"fancybox-custom-caption inside-caption\" style=\" position: absolute;left:0;right:0;color:#000;margin:0 auto;bottom:0;text-align:center;background-color:'.$mfbfw['paddingColor'].' \">\' + current.opts.caption + \'</div>\');';
 		$afterLoad .= '}';
 		$hideCaption = 'div.fancybox-caption{display:none !important;}';
 	} else if ( $mfbfw['titlePosition'] == 'over' ) {
@@ -251,7 +262,7 @@ function mfbfw_init() {
 	//title position settings
 	if ( isset( $mfbfw['titlePosition'] ) ) {
 		if ( $mfbfw['titlePosition'] == 'inside' ) {
-			$captionPosition = 'div.fancybox-caption p.caption-title {background:#fff; width:auto;padding:10px 30px;}';
+			$captionPosition = 'div.fancybox-caption p.caption-title {background:#fff; width:auto;padding:10px 30px;}div.fancybox-content p.caption-title{color:'.$mfbfw['titleColor'].';margin: 0;padding: 5px 0;}';
 		} elseif ( $mfbfw['titlePosition'] == 'float' ) {
 			$captionPosition = 'div.fancybox-caption p.caption-title {background:#fff;color:#000;padding:10px 30px;width:auto;}';
 		} else {
@@ -267,7 +278,7 @@ function mfbfw_init() {
 		echo '
 <!-- Fancybox for WordPress v' . $mfbfw_version . ' -->
 <style type="text/css">
-	'.$hideCaption.'
+	.fancybox-slide--image .fancybox-content{background-color: ' . $mfbfw['paddingColor'] . '}'.$hideCaption.'
 	' . ( isset( $mfbfw['overlayShow'] ) ? '' : 'div.fancybox-bg{background:transparent !important;}' ) . '
 	' . 'img.fancybox-image{border-width:' . $mfbfw['padding'] . 'px;border-color:' . $mfbfw['paddingColor'] . ';border-style:solid;height:auto;}' . '
 	' . ( isset( $mfbfw['overlayColor'] ) && $mfbfw['overlayColor'] ? 'div.fancybox-bg{background-color:' . hexTorgba( $mfbfw['overlayColor'], $mfbfw['overlayOpacity'] ) . ';opacity:1 !important;}' : '' ) . ( isset( $mfbfw['paddingColor'] ) && $mfbfw['paddingColor'] ? 'div.fancybox-content{border-color:' . $mfbfw['paddingColor'] . '}' : '' ) . '
@@ -277,7 +288,7 @@ function mfbfw_init() {
 	' . ( isset( $mfbfw['borderRadius'] ) ? 'div.fancybox-content{border-radius:' . $mfbfw['borderRadius'] . 'px}' : '' ) . '
 	' . ( isset( $mfbfw['borderRadiusInner'] ) ? 'img#fancybox-img{border-radius:' . $mfbfw['borderRadiusInner'] . 'px}' : '' ) . '
 	' . ( isset( $mfbfw['shadowSize'] ) && $mfbfw['shadowOffset'] && $mfbfw['shadowOpacity'] ? 'div.fancybox-content{box-shadow:0 ' . $mfbfw['shadowOffset'] . 'px ' . $mfbfw['shadowSize'] . 'px rgba(0,0,0,' . $mfbfw['shadowOpacity'] . ')}' : '' ) . '
-	' . ( isset( $mfbfw['titleShow'] ) ? 'div.fancybox-caption p.caption-title{display:inline-block}' : 'div.fancybox-caption p.caption-title{display:none}div.fancybox-caption{display:none;}' ) . '
+	' . ( isset( $mfbfw['titleShow'] ) ? 'div.fancybox-caption p.caption-title{display:inline-block}' : 'div.fancybox-custom-caption p.caption-title{display:none}div.fancybox-caption{display:none;}' ) . '
 	' . ( isset( $mfbfw['titleSize'] ) ? 'div.fancybox-caption p.caption-title{font-size:' . $mfbfw['titleSize'] . 'px}' : 'div.fancybox-caption p.caption-title{font-size:14px}' ) . '
 	' . ( isset( $mfbfw['titleColor'] ) && $mfbfw['titlePosition'] == 'inside' ? 'div.fancybox-caption p.caption-title{color:' . $mfbfw['titleColor'] . '}' : 'div.fancybox-caption p.caption-title{color:#fff}' ) . '
 	' . ( isset( $mfbfw['titlePosition'] ) ? 'div.fancybox-caption {color:' . $mfbfw['titleColor'] . '}' : 'div.fancybox-caption p.caption-title{color:#333333}' ) . $captionPosition . '
@@ -291,7 +302,23 @@ function mfbfw_init() {
 		}
 
 		// Supported file extensions
-		var thumbnails = jQuery("a:has(img)").not(".nolightbox").not('.envira-gallery-link').not('.ngg-simplelightbox').filter( function() { return /\.(jpe?g|png|gif|mp4|webp|bmp|pdf)(\?[^/]*)*$/i.test(jQuery(this).attr('href')) });
+
+        <?php
+        if(isset($mfbfw['exclude_pdf']) && 'on' == $mfbfw['exclude_pdf']){
+        ?>
+        var thumbnails = jQuery("a:has(img)").not(".nolightbox").not('.envira-gallery-link').not('.ngg-simplelightbox').filter(function () {
+            return /\.(jpe?g|png|gif|mp4|webp|bmp)(\?[^/]*)*$/i.test(jQuery(this).attr('href'))
+        });
+        <?php
+        } else {
+        ?>
+        var thumbnails = jQuery("a:has(img)").not(".nolightbox").not('.envira-gallery-link').not('.ngg-simplelightbox').filter(function () {
+            return /\.(jpe?g|png|gif|mp4|webp|bmp|pdf)(\?[^/]*)*$/i.test(jQuery(this).attr('href'))
+        });
+        <?php
+        }
+        ?>
+
 
 		// Add data-type iframe for links that are not images or videos.
         var iframeLinks = jQuery('.fancyboxforwp').filter( function() { return ! /\.(jpe?g|png|gif|mp4|webp|bmp|pdf)(\?[^/]*)*$/i.test(jQuery(this).attr('href')) }).filter( function() { return ! /vimeo|youtube/i.test(jQuery(this).attr('href')) });
@@ -341,7 +368,18 @@ function mfbfw_init() {
         });
 
 		// Else, gallery type is custom, so just print the custom expression
-		<?php } else { ?>
+		<?php } else if( $mfbfw['galleryType'] == 'single_gutenberg_block'){
+		    ?>
+
+            var gallery_block = jQuery('ul.wp-block-gallery');
+            gallery_block.each(function() {
+                jQuery(this).find(thumbnails).addClass("fancyboxforwp").attr("data-fancybox","gallery"+gallery_block.index(this)).attr("rel","fancybox"+gallery_block.index(this)).getTitle();
+
+                jQuery(this).find(iframeLinks).attr({ "data-fancybox":"gallery"+gallery_block.index(this) }).attr("rel","fancybox"+gallery_block.index(this)).getTitle();
+
+            });
+            <?php
+		} else { ?>
 			/* Custom Expression */
 			<?php echo $mfbfw['customExpression']; ?>
 		<?php } ?>
@@ -366,6 +404,14 @@ function mfbfw_init() {
 			arrows: <?php echo ( isset( $mfbfw['showNavArrows'] ) && $mfbfw['showNavArrows'] ? 'true' : 'false' ) ?>,
 			clickContent: <?php echo ( isset( $mfbfw['hideOnContentClick'] ) && $mfbfw['hideOnContentClick'] ? '"close"' : 'false' ) ?>,
             clickSlide: <?php echo ( isset( $mfbfw['hideOnOverlayClick'] ) && $mfbfw['hideOnOverlayClick'] ? '"close"' : 'false' ) ?>,
+            mobile:{
+                clickContent: function(current, event) {
+                    return current.type === "image" ? <?php echo ( isset( $mfbfw['hideOnContentClick'] ) && $mfbfw['hideOnContentClick'] ? '"close"' : '"toggleControls"' ) ?> : false;
+                },
+                clickSlide: function(current, event) {
+                    return current.type === "image" ? <?php echo ( isset( $mfbfw['hideOnOverlayClick'] ) && $mfbfw['hideOnOverlayClick'] ? '"close"' : '"toggleControls"' ) ?> : "close";
+                },
+            },
 			wheel: <?php echo ( isset( $mfbfw['mouseWheel'] ) && $mfbfw['mouseWheel'] ? 'true' : 'false' ) ?>,
 			toolbar: <?php echo ( isset( $mfbfw['showToolbar'] ) && $mfbfw['showToolbar'] ? 'true' : 'false' ) ?>,
 			preventCaptionOverlap: true,

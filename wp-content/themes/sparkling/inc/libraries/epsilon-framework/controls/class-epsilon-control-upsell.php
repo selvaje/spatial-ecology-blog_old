@@ -134,8 +134,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) :
 				</div>
 			</div>
 			<# } #>
-<?php
-//@formatter:on
+<?php //@formatter:on
 		}
 	}
 endif;

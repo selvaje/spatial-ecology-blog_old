@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Orbit Fox by ThemeIsle - Development (trunk) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2019-02-26 22:00:11+0000\n"
+"PO-Revision-Date: 2019-05-14 22:16:59+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,18 @@ msgstr ""
 "X-Generator: GlotPress/2.4.0-alpha\n"
 "Language: en_GB\n"
 "Project-Id-Version: Plugins - Orbit Fox by ThemeIsle - Development (trunk)\n"
+
+#: core/app/class-orbit-fox-admin.php:307
+msgid "Install"
+msgstr "Install"
+
+#: core/app/views/modules-page.php:73
+msgid "Recommended Plugins"
+msgstr "Recommended Plugins"
+
+#: obfx_modules/image-cdn/init.php:43
+msgid "We are deprecating this module in favor of %sOptimole%s plugin for a more in depth integration and maintainability. You can safely disable this module and further use the dedicated plugin."
+msgstr "We are deprecating this module in favor of %sOptimole%s plugin for a more in depth integration and maintainability. You can safely disable this module and further use the dedicated plugin."
 
 #: obfx_modules/gutenberg-blocks/init.php:24
 msgid "Gutenberg Blocks <sup class=\"obfx-title-new\">NEW</sup>"
@@ -39,15 +51,11 @@ msgstr "OrbitFox<sup>&copy;</sup> is now running a visual report for your theme 
 msgid "%sTest your site%s"
 msgstr "%sTest your site%s"
 
-#: obfx_modules/image-cdn/init.php:43
-msgid "Let us take care of your images sizes. With this feature we'll compress and resize every image on your website. <i>This service is powered by <b>%sOptimole%s</b></i>. <br/> <strong>* Requires account on orbitfox.com</strong>"
-msgstr "Let us take care of your images sizes. With this feature we'll compress and resize every image on your website. <i>This service is powered by <b>%sOptimole%s</b></i>. <br/> <strong>* Requires account on orbitfox.com</strong>"
-
 #: obfx_modules/safe-updates/init.php:338
 msgid "Allow"
 msgstr "Allow"
 
-#: obfx_modules/image-cdn/init.php:216
+#: obfx_modules/image-cdn/init.php:219
 msgid "Connect with Orbitfox"
 msgstr "Connect with Orbitfox"
 
@@ -59,7 +67,7 @@ msgstr " Image Traffic"
 msgid "According to OrbitFox<sup>&copy;</sup> there is a visual difference of %1$s &#37; between your current version and the latest one. "
 msgstr "According to OrbitFox<sup>&copy;</sup> there is a visual difference of %1$s &#37; between your current version and the latest one. "
 
-#: obfx_modules/image-cdn/init.php:130
+#: obfx_modules/image-cdn/init.php:133
 msgid "Logged in as"
 msgstr "Logged in as"
 
@@ -104,11 +112,11 @@ msgstr "Policy Button Label"
 msgid "For the moment there is no update for your current theme. We will display a notice on the themes page as soon as there is one."
 msgstr "For the moment there is no update for your current theme. We will display a notice on the themes page as soon as there is one."
 
-#: obfx_modules/image-cdn/init.php:250
+#: obfx_modules/image-cdn/init.php:253
 msgid "Clear OrbitFox API key"
 msgstr "Clear OrbitFox API key"
 
-#: obfx_modules/image-cdn/init.php:215
+#: obfx_modules/image-cdn/init.php:218
 msgid "Your OrbitFox api key"
 msgstr "Your OrbitFox api key"
 
@@ -124,7 +132,7 @@ msgstr "Default Core Policy"
 msgid "Is very likely that the update is safe. "
 msgstr "Is very likely that the update is safe. "
 
-#: obfx_modules/image-cdn/init.php:133
+#: obfx_modules/image-cdn/init.php:136
 msgid "Your traffic quota"
 msgstr "Your traffic quota"
 
@@ -152,15 +160,15 @@ msgstr "Policy Notice"
 msgid "Image Optimization &amp; CDN Module"
 msgstr "Image Optimisation &amp; CDN Module"
 
-#: obfx_modules/image-cdn/init.php:236
+#: obfx_modules/image-cdn/init.php:239
 msgid "Connect to OrbitFox service"
 msgstr "Connect to OrbitFox service"
 
-#: obfx_modules/image-cdn/init.php:134
+#: obfx_modules/image-cdn/init.php:137
 msgid "You can use our image service and CDN in the limit of <span class=\"obfx-img-traffic-quota\">"
 msgstr "You can use our image service and CDN in the limit of <span class=\"obfx-img-traffic-quota\">"
 
-#: obfx_modules/image-cdn/init.php:132
+#: obfx_modules/image-cdn/init.php:135
 msgid "This month traffic usage"
 msgstr "This month traffic usage"
 
@@ -168,11 +176,11 @@ msgstr "This month traffic usage"
 msgid "OrbitFox will give you visual feedback on how your current theme updates will affect your site. For the moment this is available only for wordpress.org themes."
 msgstr "OrbitFox will give you visual feedback on how your current theme updates will affect your site. For the moment this is available only for wordpress.org themes."
 
-#: obfx_modules/image-cdn/init.php:131
+#: obfx_modules/image-cdn/init.php:134
 msgid "Your private CDN url"
 msgstr "Your private CDN URL"
 
-#: obfx_modules/menu-icons/init.php:274
+#: obfx_modules/menu-icons/init.php:273
 msgid "There appears to be a conflict with the %s %s. This module may not work as expected."
 msgstr "There appears to be a conflict with the %s %s. This module may not work as expected."
 
@@ -181,20 +189,16 @@ msgstr "There appears to be a conflict with the %s %s. This module may not work 
 msgid "An awesome way to introduce the members of your team."
 msgstr "An awesome way to introduce the members of your team."
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:195
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:195
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:195
 msgid "Add new testimonial"
 msgstr "Add new testimonial"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:122
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:122
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:122
 msgid "Team Background"
 msgstr "Team Background"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-team-section.php:9
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-services-section.php:8
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:44
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:107
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:300
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:305
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:310
@@ -203,10 +207,14 @@ msgstr "Team Background"
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:602
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:607
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:612
-#: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_our_services_section.php:4
 #: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_our_team_section.php:8
+#: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_our_services_section.php:4
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:44
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:107
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-team-section.php:9
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-services-section.php:8
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:44
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:107
 msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 
@@ -215,8 +223,8 @@ msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 msgid "Highly customizable"
 msgstr "Highly customisable"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:21
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-team-section.php:21
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:21
 msgid "Tonya Garcia"
 msgstr "Tonya Garcia"
 
@@ -231,17 +239,17 @@ msgstr "Ideas and concepts"
 msgid "Our advantages"
 msgstr "Our advantages"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:17
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:23
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:29
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-testimonials-section.php:18
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-testimonials-section.php:24
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-testimonials-section.php:30
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:17
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:23
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:29
 msgid "Lorem ipsum"
 msgstr "Lorem ipsum"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:26
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:26
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:26
 msgid "Disable the Services section?"
 msgstr "Disable the Services section?"
 
@@ -250,19 +258,19 @@ msgstr "Disable the Services section?"
 msgid "WooCommerce Theme"
 msgstr "WooCommerce Theme"
 
-#: obfx_modules/menu-icons/init.php:271
+#: obfx_modules/menu-icons/init.php:270
 msgid "plugin"
 msgstr "plugin"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:16
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-team-section.php:16
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:16
 msgid "Albert Jacobs"
 msgstr "Albert Jacobs"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/happy-customers-section.php:7
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:167
 #: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_happy_customers_section.php:6
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:167
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/happy-customers-section.php:7
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:167
 msgid "Happy Customers"
 msgstr "Happy Customers"
 
@@ -270,10 +278,10 @@ msgstr "Happy Customers"
 msgid "To customize the About us Page you need to first select the template \"About us page\" for the page you want to use for this purpose. Then open that page in the browser and press \"Customize\" in the top bar."
 msgstr "To customise the About us Page you need to first select the template \"About us page\" for the page you want to use for this purpose. Then open that page in the browser and press \"Customise\" in the top bar."
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-team-section.php:7
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:96
 #: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_our_team_section.php:6
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:96
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-team-section.php:7
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:96
 msgid "Our Team"
 msgstr "Our Team"
 
@@ -303,8 +311,8 @@ msgstr "About us page - our team"
 msgid "Team member"
 msgstr "Team member"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:76
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:76
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:76
 msgid "Team section"
 msgstr "Team section"
 
@@ -312,17 +320,17 @@ msgstr "Team section"
 msgid "You can replace the homepage slider with any plugin you like, just copy the shortcode generated and paste it here."
 msgstr "You can replace the homepage slider with any plugin you like, just copy the shortcode generated and paste it here."
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:18
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:24
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:30
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-testimonials-section.php:19
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-testimonials-section.php:25
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-testimonials-section.php:31
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:18
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:24
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:30
 msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel eros sit amet arcu vestibulum accumsan in in leo. Fusce malesuada vulputate faucibus. Integer in hendrerit nisi. Praesent a hendrerit urna. In non imperdiet elit, sed molestie odio. Fusce ac metus non purus sollicitudin laoreet."
 msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel eros sit amet arcu vestibulum accumsan in in leo. Fusce malesuada vulputate faucibus. Integer in hendrerit nisi. Praesent a hendrerit urna. In non imperdiet elit, sed molestie odio. Fusce ac metus non purus sollicitudin laoreet."
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:13
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:13
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:13
 msgid "Services section"
 msgstr "Services section"
 
@@ -331,18 +339,18 @@ msgstr "Services section"
 msgid "Add new slide"
 msgstr "Add new slide"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:147
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:147
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:147
 msgid "Testimonials section"
 msgstr "Testimonials section"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:61
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:61
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:61
 msgid "Add new service box"
 msgstr "Add new service box"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:89
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:89
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:89
 msgid "Disable the Team section?"
 msgstr "Disable the Team section?"
 
@@ -356,19 +364,19 @@ msgstr "High quality store"
 msgid "Easy to use"
 msgstr "Easy to use"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:19
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:25
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:31
+#: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-team-section.php:27
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:27
+msgid "Business Development"
+msgstr "Business Development"
+
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-services-section.php:17
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-services-section.php:22
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-services-section.php:27
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:19
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:25
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:31
 msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel eros sit amet arcu vestibulum accumsan in in leo."
 msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel eros sit amet arcu vestibulum accumsan in in leo."
-
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:27
-#: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-team-section.php:27
-msgid "Business Development"
-msgstr "Business Development"
 
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:304
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:601
@@ -379,12 +387,12 @@ msgstr "Designs & interfaces"
 msgid "Slider shortcode"
 msgstr "Slider shortcode"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:18
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:24
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:30
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-services-section.php:16
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-services-section.php:21
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-services-section.php:26
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:18
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:24
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-services-section.php:30
 msgid "Lorem Ipsum"
 msgstr "Lorem Ipsum"
 
@@ -396,29 +404,29 @@ msgstr "About us page - video"
 msgid "doc"
 msgstr "doc"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:22
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-team-section.php:22
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:22
 msgid "Account Manager"
 msgstr "Account Manager"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:26
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-team-section.php:26
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:26
 msgid "Linda Guthrie"
 msgstr "Linda Guthrie"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:134
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:180
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:192
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:134
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:134
 msgid "Add new team member"
 msgstr "Add new team member"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/happy-customers-section.php:77
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-team-section.php:72
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-team-section.php:77
-#: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_happy_customers_section.php:79
 #: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_our_team_section.php:63
 #: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_our_team_section.php:67
+#: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_happy_customers_section.php:79
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-team-section.php:72
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-team-section.php:77
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/happy-customers-section.php:77
 msgid "Avatar"
 msgstr "Avatar"
 
@@ -449,19 +457,19 @@ msgstr "Slider section"
 msgid "ShopIsle"
 msgstr "ShopIsle"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:37
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:100
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:171
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:37
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:100
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:171
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:37
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:100
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:171
 msgid "Main title"
 msgstr "Main title"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-services-section.php:7
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:33
 #: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_our_services_section.php:3
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:33
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-services-section.php:7
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:33
 msgid "Our Services"
 msgstr "Our Services"
 
@@ -478,17 +486,17 @@ msgstr "About us page"
 msgid "Our team"
 msgstr "Our team"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:16
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:22
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:28
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-testimonials-section.php:17
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-testimonials-section.php:23
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-testimonials-section.php:29
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:16
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:22
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-testimonials-section.php:28
 msgid "Happy Customer"
 msgstr "Happy Customer"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:160
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:160
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:160
 msgid "Disable the Testimonials section?"
 msgstr "Disable the Testimonials section?"
 
@@ -497,15 +505,15 @@ msgstr "Disable the Testimonials section?"
 msgid "Video"
 msgstr "Video"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:17
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/translations/translations-team-section.php:17
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/translations/translations-team-section.php:17
 msgid "Founder & CEO"
 msgstr "Founder & CEO"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/happy-customers-section.php:8
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:178
 #: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_happy_customers_section.php:7
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:178
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/happy-customers-section.php:8
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:178
 msgid "Cloud computing subscription model out of the box proactive solution."
 msgstr "Cloud computing subscription model out of the box proactive solution."
 
@@ -702,8 +710,8 @@ msgstr "3"
 msgid "Gradient"
 msgstr "Gradient"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:413
 #: obfx_modules/beaver-widgets/modules/services/services.php:244
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:413
 msgid "Icon color"
 msgstr "Icon colour"
 
@@ -760,11 +768,11 @@ msgstr "Title style"
 msgid "Align"
 msgstr "Align"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:565
 #: obfx_modules/beaver-widgets/modules/services/services.php:100
 #: obfx_modules/beaver-widgets/modules/services/services.php:150
 #: obfx_modules/beaver-widgets/modules/services/services.php:179
 #: obfx_modules/beaver-widgets/modules/services/services.php:223
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:565
 msgid "General"
 msgstr "General"
 
@@ -882,9 +890,9 @@ msgstr "ID"
 msgid "Text alignment"
 msgstr "Text alignment"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:33
 #: obfx_modules/beaver-widgets/modules/services/services.php:33
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:28
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:33
 msgid "Orbit Fox Modules"
 msgstr "Orbit Fox Modules"
 
@@ -937,7 +945,7 @@ msgid "Show post thumbnail"
 msgstr "Show post thumbnail"
 
 #. translators: %s: post title
-#: obfx_modules/beaver-widgets/modules/post-grid/includes/frontend.php:180
+#: obfx_modules/beaver-widgets/modules/post-grid/includes/frontend.php:181
 msgctxt "comments title"
 msgid "One comment"
 msgstr "One comment"
@@ -946,13 +954,13 @@ msgstr "One comment"
 msgid "Filter"
 msgstr "Filter"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:175
 #: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:200
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:175
 msgid "Appearance"
 msgstr "Appearance"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:439
 #: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:308
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:439
 msgid "Text color"
 msgstr "Text colour"
 
@@ -992,7 +1000,6 @@ msgstr "Show post title"
 msgid "Number of words"
 msgstr "Number of words"
 
-#: obfx_modules/beaver-widgets/modules/services/services.php:115
 #: obfx_modules/beaver-widgets/inc/common-functions.php:31
 #: obfx_modules/beaver-widgets/inc/common-functions.php:37
 #: obfx_modules/beaver-widgets/inc/common-functions.php:43
@@ -1000,11 +1007,12 @@ msgstr "Number of words"
 #: obfx_modules/beaver-widgets/inc/common-functions.php:73
 #: obfx_modules/beaver-widgets/inc/common-functions.php:108
 #: obfx_modules/beaver-widgets/inc/common-functions.php:113
+#: obfx_modules/beaver-widgets/modules/services/services.php:115
 msgid "px"
 msgstr "px"
 
 #. translators: 1: number of comments, 2: post title
-#: obfx_modules/beaver-widgets/modules/post-grid/includes/frontend.php:184
+#: obfx_modules/beaver-widgets/modules/post-grid/includes/frontend.php:185
 msgctxt "comments title"
 msgid "%1$s Comment"
 msgid_plural "%1$s Comments"
@@ -1024,9 +1032,9 @@ msgstr "Read more text"
 msgid "By %1$s"
 msgstr "By %1$s"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:179
 #: obfx_modules/beaver-widgets/modules/services/services.php:74
 #: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:240
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:179
 msgid "Card layout"
 msgstr "Card layout"
 
@@ -1104,8 +1112,8 @@ msgstr "Margin bottom"
 msgid "A method to display your posts."
 msgstr "A method to display your posts."
 
-#: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:214
 #: obfx_modules/beaver-widgets/inc/common-functions.php:36
+#: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:214
 msgid "Bottom"
 msgstr "Bottom"
 
@@ -1154,14 +1162,14 @@ msgstr "Enable thumbnail shadow"
 msgid "Vertical align"
 msgstr "Vertical align"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:66
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:147
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:66
 msgid "Title tag"
 msgstr "Title tag"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:282
 #: obfx_modules/beaver-widgets/modules/services/services.php:79
 #: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:274
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:282
 msgid "Background color"
 msgstr "Background colour"
 
@@ -1189,7 +1197,7 @@ msgstr "Yes"
 msgid "Capitalize"
 msgstr "Capitalise"
 
-#: obfx_modules/mystock-import/init.php:237
+#: obfx_modules/mystock-import/init.php:230
 msgid "Import & insert image"
 msgstr "Import & insert image"
 
@@ -1197,7 +1205,7 @@ msgstr "Import & insert image"
 msgid "Type"
 msgstr "Type"
 
-#: obfx_modules/mystock-import/init.php:236
+#: obfx_modules/mystock-import/init.php:229
 msgid "Import & set featured image"
 msgstr "Import & set featured image"
 
@@ -1210,8 +1218,8 @@ msgstr "h6"
 msgid "Template Directory Module"
 msgstr "Template Directory Module"
 
-#: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:212
 #: obfx_modules/beaver-widgets/inc/common-functions.php:30
+#: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:212
 msgid "Top"
 msgstr "Top"
 
@@ -1223,12 +1231,12 @@ msgstr "Orbit Fox General Options"
 msgid "Price"
 msgstr "Price"
 
-#: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:208
 #: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:61
+#: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:208
 msgid "Date"
 msgstr "Date"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:189
+#: obfx_modules/beaver-widgets/inc/common-functions.php:48
 #: obfx_modules/beaver-widgets/modules/services/services.php:109
 #: obfx_modules/beaver-widgets/modules/services/services.php:188
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:90
@@ -1236,7 +1244,7 @@ msgstr "Date"
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:222
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:289
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:334
-#: obfx_modules/beaver-widgets/inc/common-functions.php:48
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:189
 msgid "Right"
 msgstr "Right"
 
@@ -1268,7 +1276,7 @@ msgstr "Display"
 msgid "Tags"
 msgstr "Tags"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:188
+#: obfx_modules/beaver-widgets/inc/common-functions.php:42
 #: obfx_modules/beaver-widgets/modules/services/services.php:107
 #: obfx_modules/beaver-widgets/modules/services/services.php:186
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:89
@@ -1276,7 +1284,7 @@ msgstr "Tags"
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:221
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:288
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:333
-#: obfx_modules/beaver-widgets/inc/common-functions.php:42
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:188
 msgid "Left"
 msgstr "Left"
 
@@ -1294,14 +1302,14 @@ msgstr "h2"
 msgid "Typography"
 msgstr "Typography"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:264
 #: obfx_modules/beaver-widgets/modules/services/services.php:154
 #: obfx_modules/beaver-widgets/modules/services/services.php:193
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:264
 msgid "Color"
 msgstr "Colour"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:50
 #: obfx_modules/beaver-widgets/modules/services/services.php:48
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:50
 msgid "Content"
 msgstr "Content"
 
@@ -1309,8 +1317,8 @@ msgstr "Content"
 msgid "Category"
 msgstr "Category"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-services-section.php:24
 #: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_our_services_section.php:20
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-services-section.php:24
 #: obfx_modules/beaver-widgets/modules/services/services.php:31
 msgid "Services"
 msgstr "Services"
@@ -1411,13 +1419,12 @@ msgstr "Orbit Fox Template Directory"
 msgid "List"
 msgstr "List"
 
+#: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:157
 #: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:75
 #: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:98
-#: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:157
 msgid "p"
 msgstr "p"
 
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:187
 #: obfx_modules/beaver-widgets/modules/services/services.php:108
 #: obfx_modules/beaver-widgets/modules/services/services.php:187
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:88
@@ -1425,6 +1432,7 @@ msgstr "p"
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:220
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:287
 #: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:332
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:187
 msgid "Center"
 msgstr "Centre"
 
@@ -1432,8 +1440,7 @@ msgstr "Centre"
 msgid "Size"
 msgstr "Size"
 
-#: obfx_modules/mystock-import/init.php:187
-#: obfx_modules/mystock-import/inc/photos.php:28
+#: obfx_modules/mystock-import/inc/photo.php:23
 msgid "Deselect"
 msgstr "Deselect"
 
@@ -1441,11 +1448,11 @@ msgstr "Deselect"
 msgid "Menu Icons"
 msgstr "Menu Icons"
 
-#: obfx_modules/mystock-import/init.php:233
+#: obfx_modules/mystock-import/init.php:226
 msgid "Your image was imported. Go to Media Library tab to use it."
 msgstr "Your image was imported. Go to Media Library tab to use it."
 
-#: obfx_modules/mystock-import/init.php:235
+#: obfx_modules/mystock-import/init.php:228
 msgid "MyStock Library"
 msgstr "MyStock Library"
 
@@ -1457,15 +1464,15 @@ msgstr "Mystock Import"
 msgid "Module to import images directly from"
 msgstr "Module to import images directly from"
 
-#: obfx_modules/mystock-import/init.php:234
+#: obfx_modules/mystock-import/init.php:227
 msgid "Loading more photos..."
 msgstr "Loading more photos..."
 
-#: obfx_modules/mystock-import/init.php:232
+#: obfx_modules/mystock-import/init.php:225
 msgid "Downloading image. Please wait..."
 msgstr "Downloading image. Please wait..."
 
-#: obfx_modules/mystock-import/init.php:231
+#: obfx_modules/mystock-import/init.php:224
 msgid "Fetching data"
 msgstr "Fetching data"
 
@@ -1473,10 +1480,10 @@ msgstr "Fetching data"
 msgid "Module to define menu icons for navigation."
 msgstr "Module to define menu icons for navigation."
 
-#: obfx_modules/mystock-import/init.php:136
-#: obfx_modules/mystock-import/init.php:144
-#: obfx_modules/mystock-import/init.php:152
-#: obfx_modules/mystock-import/init.php:157
+#: obfx_modules/mystock-import/init.php:137
+#: obfx_modules/mystock-import/init.php:145
+#: obfx_modules/mystock-import/init.php:153
+#: obfx_modules/mystock-import/init.php:158
 msgid "Image failed to upload"
 msgstr "Image failed to upload"
 
@@ -1520,7 +1527,7 @@ msgstr "Subscribe"
 msgid "Clients"
 msgstr "Clients"
 
-#: core/app/class-orbit-fox-admin.php:225
+#: core/app/class-orbit-fox-admin.php:240
 msgid "Something went wrong, data might not be saved!"
 msgstr "Something went wrong, data might not be saved!"
 
@@ -1529,15 +1536,14 @@ msgid "Contact support"
 msgstr "Contact support"
 
 #. Plugin Name of the plugin
-#: core/app/views/modules-page.php:40
 msgid "Orbit Fox Companion"
 msgstr "Orbit Fox Companion"
 
-#: core/app/class-orbit-fox-admin.php:284
+#: core/app/class-orbit-fox-admin.php:403
 msgid "Module status changed!"
 msgstr "Module status changed!"
 
-#: core/app/class-orbit-fox-admin.php:408
+#: core/app/class-orbit-fox-admin.php:530
 msgid "Activate a module using the toggles above."
 msgstr "Activate a module using the toggles above."
 
@@ -1545,36 +1551,36 @@ msgstr "Activate a module using the toggles above."
 msgid "Module Name"
 msgstr "Module Name"
 
-#: core/app/class-orbit-fox-admin.php:407
+#: core/app/class-orbit-fox-admin.php:529
 msgid "No active modules."
 msgstr "No active modules."
 
-#: core/app/class-orbit-fox-admin.php:219
+#: core/app/class-orbit-fox-admin.php:234
 msgid "No module found! No data was updated."
 msgstr "No module found! No data was updated."
 
-#: core/app/views/modules-page.php:68
+#: core/app/views/modules-page.php:93
 msgid "Activated Modules Options"
 msgstr "Activated Modules Options"
 
-#: core/app/class-orbit-fox-admin.php:279
+#: core/app/class-orbit-fox-admin.php:398
 msgid "Something went wrong, can not change module status!"
 msgstr "Something went wrong, can not change module status!"
 
-#: core/app/class-orbit-fox-admin.php:122
+#: core/app/views/modules-page.php:46 core/app/class-orbit-fox-admin.php:122
 #: core/app/class-orbit-fox-admin.php:123
 msgid "Orbit Fox"
 msgstr "Orbit Fox"
 
-#: core/app/class-orbit-fox-admin.php:229
+#: core/app/class-orbit-fox-admin.php:244
 msgid "Options updated, successfully!"
 msgstr "Options updated, successfully!"
 
-#: core/app/class-orbit-fox-admin.php:399
+#: core/app/class-orbit-fox-admin.php:521
 msgid "No modules found."
 msgstr "No modules found."
 
-#: obfx_modules/social-sharing/views/hestia-social-sharing-tpl.php:36
+#: obfx_modules/social-sharing/views/hestia-social-sharing-tpl.php:38
 msgid "Share on "
 msgstr "Share on "
 
@@ -1590,11 +1596,11 @@ msgstr "No options provided."
 msgid "Module Description ..."
 msgstr "Module Description ..."
 
-#: core/app/views/modules-page.php:57
+#: core/app/views/modules-page.php:71
 msgid "Available Modules"
 msgstr "Available Modules"
 
-#: core/app/class-orbit-fox-admin.php:275
+#: core/app/class-orbit-fox-admin.php:394
 msgid "No module found!"
 msgstr "No module found!"
 
@@ -1610,7 +1616,7 @@ msgstr "No option found for provided type"
 msgid "Social Sharing Module"
 msgstr "Social Sharing Module"
 
-#: core/app/views/modules-page.php:70
+#: core/app/views/modules-page.php:95
 msgid "No modules activated."
 msgstr "No modules activated."
 
@@ -1618,12 +1624,12 @@ msgstr "No modules activated."
 msgid "Activate"
 msgstr "Activate"
 
-#: core/app/class-orbit-fox-admin.php:193
-#: core/app/class-orbit-fox-admin.php:249
+#: core/app/class-orbit-fox-admin.php:209
+#: core/app/class-orbit-fox-admin.php:369
 msgid "Could not process the request!"
 msgstr "Could not process the request!"
 
-#: core/app/class-orbit-fox-admin.php:400
+#: core/app/class-orbit-fox-admin.php:522
 msgid "Please contact support for more help."
 msgstr "Please contact support for more help."
 
@@ -1641,8 +1647,8 @@ msgstr "Logo"
 
 #: obfx_modules/companion-legacy/inc/rhea/widgets/icon-box.widget.php:72
 #: obfx_modules/companion-legacy/inc/rhea/widgets/features.widget.php:65
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:580
 #: obfx_modules/beaver-widgets/modules/services/services.php:239
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:580
 msgid "Icon"
 msgstr "Icon"
 
@@ -1650,15 +1656,15 @@ msgstr "Icon"
 msgid "[Rhea] - Progress Bar"
 msgstr "[Rhea] - Progress Bar"
 
-#: obfx_modules/companion-legacy/inc/rhea/widgets/icon-box.widget.php:91
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:48
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:111
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:182
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:142
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:240
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:48
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:111
 #: obfx_modules/companion-legacy/inc/azera-shop/inc/settings.php:182
+#: obfx_modules/companion-legacy/inc/rhea/widgets/icon-box.widget.php:91
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:48
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:111
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/inc/settings.php:182
 #: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:80
 msgid "Subtitle"
 msgstr "Subtitle"
@@ -1797,9 +1803,9 @@ msgstr "No icon selected :( ..."
 msgid "This widget is designed for Progress Bar Section"
 msgstr "This widget is designed for Progress Bar Section"
 
-#: obfx_modules/companion-legacy/inc/rhea/widgets/hours.widget.php:7
 #: obfx_modules/companion-legacy/inc/rhea/widgets/contact.widget.php:7
 #: obfx_modules/companion-legacy/inc/rhea/widgets/about.widget.php:7
+#: obfx_modules/companion-legacy/inc/rhea/widgets/hours.widget.php:7
 msgid "This widget is designed for footer area"
 msgstr "This widget is designed for footer area"
 
@@ -1824,8 +1830,8 @@ msgstr "E-mail"
 msgid "Themeisle"
 msgstr "Themeisle"
 
-#: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-testimonials-section.php:28
 #: obfx_modules/companion-legacy/inc/hestia/inc/customizer.php:47
+#: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-testimonials-section.php:28
 msgid "What clients say"
 msgstr "What clients say"
 
@@ -1842,19 +1848,19 @@ msgstr "Position"
 msgid "Small batch vexillologist 90's blue bottle stumptown bespoke. Pok pok tilde fixie chartreuse, VHS gluten-free selfies wolf hot."
 msgstr "Small batch vexillologist 90's blue bottle stumptown bespoke. Pok pok tilde fixie chartreuse, VHS gluten-free selfies wolf hot."
 
-#: obfx_modules/companion-legacy/inc/rhea/widgets/features.widget.php:84
-#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-ribbon-section.php:92
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-testimonial.php:195
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-focus.php:176
+#: obfx_modules/companion-legacy/inc/rhea/widgets/features.widget.php:84
+#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-ribbon-section.php:92
+#: obfx_modules/beaver-widgets/modules/services/services.php:234
 #: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:494
 #: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:576
-#: obfx_modules/beaver-widgets/modules/services/services.php:234
 msgid "Text"
 msgstr "Text"
 
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-testimonial.php:168
-#: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:207
 #: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:59
+#: obfx_modules/beaver-widgets/modules/post-grid/post-grid.php:207
 msgid "Author"
 msgstr "Author"
 
@@ -1915,10 +1921,10 @@ msgstr "Desmond Purpleson"
 msgid "Graphic Designer"
 msgstr "Graphic Designer"
 
-#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-team-section.php:52
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-clients-bar-section.php:52
-#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-features-section.php:52
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-ribbon-section.php:55
+#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-features-section.php:52
+#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-team-section.php:52
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-testimonials-section.php:52
 msgid "Disable section"
 msgstr "Disable section"
@@ -1979,10 +1985,10 @@ msgstr "Add new Feature"
 msgid "Feature"
 msgstr "Feature"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/happy-customers-section.php:23
+#: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_happy_customers_section.php:23
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-testimonials-section.php:24
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-testimonials-section.php:34
-#: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_happy_customers_section.php:23
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/happy-customers-section.php:23
 msgid "Testimonials"
 msgstr "Testimonials"
 
@@ -1990,8 +1996,8 @@ msgstr "Testimonials"
 msgid "Craft beer salvia celiac mlkshk. Pinterest celiac tumblr, portland salvia skateboard cliche thundercats. Tattooed chia austin hell."
 msgstr "Craft beer salvia celiac mlkshk. Pinterest celiac tumblr, portland salvia skateboard cliche thundercats. Tattooed chia austin hell."
 
-#: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-testimonial.php:202
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-clients.php:124
+#: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-testimonial.php:202
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-focus.php:192
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-team.php:348
 msgid "Image"
@@ -2001,26 +2007,26 @@ msgstr "Image"
 msgid "Parsley Pepperspray"
 msgstr "Parsley Pepperspray"
 
-#: obfx_modules/companion-legacy/inc/rhea/widgets/about.widget.php:100
-#: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-testimonial.php:237
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-clients.php:159
+#: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-testimonial.php:237
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-focus.php:227
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-team.php:383
+#: obfx_modules/companion-legacy/inc/rhea/widgets/about.widget.php:100
 msgid "Upload Image"
 msgstr "Upload Image"
 
-#: obfx_modules/companion-legacy/inc/rhea/widgets/hours.widget.php:202
-#: obfx_modules/companion-legacy/inc/rhea/widgets/icon-box.widget.php:87
-#: obfx_modules/companion-legacy/inc/rhea/widgets/features.widget.php:80
-#: obfx_modules/companion-legacy/inc/rhea/widgets/progress-bar.widget.php:62
-#: obfx_modules/companion-legacy/inc/rhea/widgets/contact.widget.php:65
-#: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-focus.php:167
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:130
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:228
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:287
-#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:57
+#: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-focus.php:167
+#: obfx_modules/companion-legacy/inc/rhea/widgets/icon-box.widget.php:87
+#: obfx_modules/companion-legacy/inc/rhea/widgets/features.widget.php:80
+#: obfx_modules/companion-legacy/inc/rhea/widgets/contact.widget.php:65
+#: obfx_modules/companion-legacy/inc/rhea/widgets/progress-bar.widget.php:62
+#: obfx_modules/companion-legacy/inc/rhea/widgets/hours.widget.php:202
 #: obfx_modules/beaver-widgets/modules/services/services.php:230
 #: obfx_modules/beaver-widgets/modules/post-grid/includes/loop-settings.php:68
+#: obfx_modules/beaver-widgets/modules/pricing-table/pricing-table.php:57
 msgid "Title"
 msgstr "Title"
 
@@ -2036,15 +2042,15 @@ msgstr "Facebook link"
 msgid "Features Content"
 msgstr "Features Content"
 
-#: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-team-section.php:32
-#: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-testimonials-section.php:29
+#: obfx_modules/companion-legacy/inc/hestia/inc/customizer.php:23
+#: obfx_modules/companion-legacy/inc/hestia/inc/customizer.php:38
+#: obfx_modules/companion-legacy/inc/hestia/inc/customizer.php:51
 #: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-features-section.php:29
 #: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-features-section.php:187
 #: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-features-section.php:194
 #: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-features-section.php:201
-#: obfx_modules/companion-legacy/inc/hestia/inc/customizer.php:23
-#: obfx_modules/companion-legacy/inc/hestia/inc/customizer.php:38
-#: obfx_modules/companion-legacy/inc/hestia/inc/customizer.php:51
+#: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-testimonials-section.php:29
+#: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-team-section.php:32
 msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
@@ -2080,17 +2086,17 @@ msgstr "Zerif - Team member widget"
 msgid "Team Member"
 msgstr "Team Member"
 
-#: obfx_modules/companion-legacy/inc/rhea/widgets/features.widget.php:88
-#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-ribbon-section.php:126
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-clients.php:115
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-focus.php:183
+#: obfx_modules/companion-legacy/inc/rhea/widgets/features.widget.php:88
+#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-ribbon-section.php:126
 msgid "Link"
 msgstr "Link"
 
-#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-team-section.php:27
+#: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_our_team_section.php:21
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-team-section.php:24
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-team-section.php:34
-#: obfx_modules/companion-legacy/inc/azera-shop/sections/azera_shop_our_team_section.php:21
+#: obfx_modules/companion-legacy/inc/llorix-one-companion/sections/our-team-section.php:27
 msgid "Team"
 msgstr "Team"
 
@@ -2110,22 +2116,22 @@ msgstr "Behance account of"
 msgid "Facebook account of"
 msgstr "Facebook account of"
 
-#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-team-section.php:82
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-features-section.php:82
+#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-team-section.php:82
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-testimonials-section.php:82
 msgid "Section Subtitle"
 msgstr "Section Subtitle"
 
-#: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-features-section.php:28
 #: obfx_modules/companion-legacy/inc/hestia/inc/customizer.php:18
+#: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-features-section.php:28
 msgid "Why our product is the best"
 msgstr "Why our product is the best"
 
-#: obfx_modules/companion-legacy/inc/rhea/widgets/about.widget.php:98
-#: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-testimonial.php:226
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-clients.php:148
+#: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-testimonial.php:226
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-focus.php:216
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-team.php:372
+#: obfx_modules/companion-legacy/inc/rhea/widgets/about.widget.php:98
 msgid "Uploaded image"
 msgstr "Uploaded image"
 
@@ -2137,8 +2143,8 @@ msgstr "Responsive"
 msgid "CEO"
 msgstr "CEO"
 
-#: obfx_modules/companion-legacy/inc/rhea/widgets/icon-box.widget.php:96
 #: obfx_modules/companion-legacy/inc/zerif-lite/widgets/widget-team.php:285
+#: obfx_modules/companion-legacy/inc/rhea/widgets/icon-box.widget.php:96
 msgid "Description"
 msgstr "Description"
 
@@ -2158,16 +2164,16 @@ msgstr "Independent Artist"
 msgid "Twitter link"
 msgstr "Twitter link"
 
-#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-team-section.php:67
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-features-section.php:67
+#: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-team-section.php:67
 #: obfx_modules/companion-legacy/inc/hestia/inc/features/feature-testimonials-section.php:67
 msgid "Section Title"
 msgstr "Section Title"
 
-#: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-team-section.php:31
-#: obfx_modules/companion-legacy/inc/hestia/inc/customizer.php:34
 #: obfx_modules/companion-legacy/inc/shop-isle/customizer.php:126
 #: obfx_modules/companion-legacy/inc/shop-isle/template-about.php:81
+#: obfx_modules/companion-legacy/inc/hestia/inc/customizer.php:34
+#: obfx_modules/companion-legacy/inc/hestia/inc/sections/hestia-team-section.php:31
 msgid "Meet our team"
 msgstr "Meet our team"
 

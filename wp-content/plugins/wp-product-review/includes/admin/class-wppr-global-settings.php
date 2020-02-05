@@ -66,6 +66,16 @@ class WPPR_Global_Settings {
 					'reset'        => __( 'Reset Statistics', 'wp-product-review' ),
 				)
 			);
+
+			$placement  = array(
+				'yes'    => __( 'After content', 'wp-product-review' ),
+				'no'     => __( 'Before content', 'wp-product-review' ),
+			);
+
+			if ( defined( 'WPPR_PRO_VERSION' ) ) {
+				$placement['manual']    = __( 'Manually placed', 'wp-product-review' );
+			}
+
 			self::$instance->fields   = apply_filters(
 				'wppr_settings_fields',
 				array(
@@ -75,11 +85,7 @@ class WPPR_Global_Settings {
 							'name'        => __( 'Position of the review box', 'wp-product-review' ),
 							'description' => '',
 							'type'        => 'select',
-							'options'     => array(
-								'yes'    => __( 'After content', 'wp-product-review' ),
-								'no'     => __( 'Before content', 'wp-product-review' ),
-								'manual' => __( 'Manually placed', 'wp-product-review' ),
-							),
+							'options'     => $placement,
 							'default'     => 'yes',
 						),
 						'cwppos_show_userreview' => array(
@@ -93,6 +99,29 @@ class WPPR_Global_Settings {
 							),
 							'disabled'    => ! self::enable_user_comments(),
 							'default'     => 'no',
+						),
+						'wppr_use_5_rating_scale' => array(
+							'id'          => 'use_5_rating_scale',
+							'name'        => __( 'Rating scale', 'wp-product-review' ),
+							'description' => __( 'On what scale should reviews be rated?', 'wp-product-review' ),
+							'type'        => 'select',
+							'default'         => '10',
+							'options'     => array(
+								'5' => __( 'On 5', 'wp-product-review' ),
+								'10'  => __( 'On 10', 'wp-product-review' ),
+							),
+						),
+						'wppr_comment_rating' => array(
+							'id'          => 'comment_rating',
+							'name'        => __( 'Comment rating style', 'wp-product-review' ),
+							'description' => __( 'What type of rating style would you like to use?', 'wp-product-review' ),
+							'type'        => 'select',
+							'default'         => 'slider',
+							'options'     => array(
+								'slider' => __( 'Slider', 'wp-product-review' ),
+								'star'  => __( 'Star', 'wp-product-review' ),
+							),
+							'disabled'    => ! self::enable_user_comments(),
 						),
 						'cwppos_infl_userreview' => array(
 							'id'          => 'comment_influence',
@@ -143,17 +172,6 @@ class WPPR_Global_Settings {
 							'name'        => __( 'Disable Lighbox images', 'wp-product-review' ),
 							'description' => __( 'Disable lightbox effect on product images (increase loading speed)', 'wp-product-review' ),
 							'id'          => 'use_lightbox',
-							'options'     => array(
-								'yes' => __( 'Yes', 'wp-product-review' ),
-								'no'  => __( 'No', 'wp-product-review' ),
-							),
-							'default'     => 'no',
-						),
-						'cwppos_fontawesome'     => array(
-							'type'        => 'select',
-							'name'        => __( 'Disable Font Awesome', 'wp-product-review' ),
-							'description' => __( 'Disable Font Awesome for websites that already are including it (increase loading speed)', 'wp-product-review' ),
-							'id'          => 'use_fontawesome',
 							'options'     => array(
 								'yes' => __( 'Yes', 'wp-product-review' ),
 								'no'  => __( 'No', 'wp-product-review' ),

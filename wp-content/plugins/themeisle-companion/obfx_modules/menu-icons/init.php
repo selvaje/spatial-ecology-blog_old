@@ -20,7 +20,7 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 	/**
 	 * The default icon to use.
 	 */
-	const DEFAULT_ICON	= 'dashicons-obfx-default-icon';
+	const DEFAULT_ICON = 'dashicons-obfx-default-icon';
 
 	/**
 	 * Menu_Icons_OBFX_Module constructor.
@@ -30,11 +30,11 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->name        = __( 'Menu Icons', 'themeisle-companion' );
-		$this->description = __( 'Module to define menu icons for navigation.', 'themeisle-companion' );
+		$this->name           = __( 'Menu Icons', 'themeisle-companion' );
+		$this->description    = __( 'Module to define menu icons for navigation.', 'themeisle-companion' );
 		$this->active_default = true;
 
-		add_action( 'admin_init', array( $this, 'check_conflict' ) , 99 );
+		add_action( 'admin_init', array( $this, 'check_conflict' ), 99 );
 	}
 
 
@@ -43,7 +43,7 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 	 *
 	 * @since   1.0.0
 	 * @access  public
-	 * @return bool	
+	 * @return bool
 	 */
 	public function enable_module() {
 		return true;
@@ -79,16 +79,16 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 	 * @return WP_Post $menu the menu object.
 	 */
 	public function show_menu( $menu ) {
-		$icon	= get_post_meta( $menu->ID, 'obfx_menu_icon', true );
+		$icon = get_post_meta( $menu->ID, 'obfx_menu_icon', true );
 		if ( ! empty( $icon ) ) {
 			$menu->icon = $icon;
 			if ( ! is_admin() ) {
 				// usually, icons are of the format fa-x or dashicons-x and when displayed they are displayed with classes 'fa fa-x' or 'dashicons dashicons-x'.
 				// so let's determine the prefix class.
-				$array			= explode( '-', $icon );
-				$prefix			= reset( $array );
-				$prefix			= apply_filters( 'obfx_menu_icons_icon_class', $prefix, $icon );
-				$menu->title	= sprintf( '<i class="obfx-menu-icon %s %s"></i>%s', $prefix, $icon, $menu->title );
+				$array       = explode( '-', $icon );
+				$prefix      = reset( $array );
+				$prefix      = apply_filters( 'obfx_menu_icons_icon_class', $prefix, $icon );
+				$menu->title = sprintf( '<i class="obfx-menu-icon %s %s"></i>%s', $prefix, $icon, $menu->title );
 			}
 		}
 		return $menu;
@@ -109,6 +109,35 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 	}
 
 	/**
+	 * Check if font awesome should load.
+	 *
+	 * @return bool
+	 */
+	private function should_load_fa() {
+
+		// Get all locations
+		$locations = get_nav_menu_locations();
+
+		if ( empty( $locations ) ) {
+			return false;
+		}
+		foreach ( $locations as $location => $menu_id ) {
+			$menu_items = wp_get_nav_menu_items( $menu_id );
+			if ( ! is_array( $menu_items ) ) {
+				continue;
+			}
+			foreach ( $menu_items as $menu_item ) {
+				$icon = get_post_meta( $menu_item->ID, 'obfx_menu_icon', true );
+				if ( ! empty( $icon ) ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Method that returns an array of scripts and styles to be loaded
 	 * for the front end part.
 	 *
@@ -117,6 +146,10 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 	 * @return array
 	 */
 	public function public_enqueue() {
+		if ( $this->should_load_fa() === false ) {
+			return array();
+		}
+
 		return array(
 			'css' => array(
 				'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' => array( 'dashicons' ),
@@ -148,19 +181,22 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 			return array();
 		}
 
-		$this->localized	= array(
-			'admin'		=> array(
-				'icons'	=> apply_filters( 'obfx_menu_icons_icon_list', $this->get_dashicons() ),
+		$this->localized = array(
+			'admin' => array(
+				'icons'        => apply_filters( 'obfx_menu_icons_icon_list', $this->get_dashicons() ),
 				'icon_default' => self::DEFAULT_ICON,
-				'i10n' => array(
+				'i10n'         => array(
+					/*
+					 * translators: %s Plugin name
+					 */
 					'powered_by' => sprintf( __( 'Powered by %s plugin', 'themeisle-companion' ), '<b>' . apply_filters( 'themeisle_companion_friendly_name', '' ) . '</b>' ),
 				),
 			),
 		);
 
 		$font_awesome = array(
-			'vendor/font-awesome.min.css' => false,
-			'vendor/fontawesome-iconpicker.min' => array( 'vendor/font-awesome.min.css' ),
+			'vendor/font-awesome.min'           => false,
+			'vendor/fontawesome-iconpicker.min' => array( 'vendor/font-awesome.min' ),
 		);
 		if ( wp_style_is( 'font-awesome', 'registered' ) || wp_style_is( 'font-awesome', 'enqueued' ) ) {
 			$font_awesome = array(
@@ -175,10 +211,10 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 					'admin' => array( 'vendor/fontawesome-iconpicker.min' ),
 				)
 			),
-			'js' => array(
-				'vendor/bootstrap.min' => array( 'jquery' ),
+			'js'  => array(
+				'vendor/bootstrap.min'              => array( 'jquery' ),
 				'vendor/fontawesome-iconpicker.min' => array( 'vendor/bootstrap.min' ),
-				'admin' => array( 'vendor/fontawesome-iconpicker.min', 'jquery' ),
+				'admin'                             => array( 'vendor/fontawesome-iconpicker.min', 'jquery' ),
 			),
 		);
 	}
@@ -219,8 +255,8 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 		}
 
 		if ( ! function_exists( 'get_current_screen' ) ) {
-		    return;
-        }
+			return;
+		}
 
 		$screen = get_current_screen();
 		if ( ! $screen instanceof WP_Screen || 'nav-menus' !== $screen->id ) {
@@ -230,9 +266,9 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 		check_admin_referer( 'update-nav_menu', 'update-nav-menu-nonce' );
 
 		if ( isset( $_POST['menu-item-icon'][ $menu_item_db_id ] ) ) {
-			$icon	= $_POST['menu-item-icon'][ $menu_item_db_id ];
+			$icon = sanitize_text_field( $_POST['menu-item-icon'][ $menu_item_db_id ] );
 			if ( self::DEFAULT_ICON === $icon ) {
-				$icon	= '';
+				$icon = '';
 			}
 			update_post_meta( $menu_item_db_id, 'obfx_menu_icon', $icon );
 		}
@@ -244,34 +280,35 @@ class Menu_Icons_OBFX_Module extends Orbit_Fox_Module_Abstract {
 	 */
 	public function check_conflict() {
 		// We need to include this so that the wp_edit_nav_menu_walker filter does not misbehave.
-		require_once( ABSPATH . 'wp-admin/includes/nav-menu.php' );
+		require_once ABSPATH . 'wp-admin/includes/nav-menu.php';
 
 		// Let's check if another walker has been defined.
-		$walker = apply_filters( 'wp_edit_nav_menu_walker', '' );
+		$walker = apply_filters( 'wp_edit_nav_menu_walker', '', '' );
 
 		// Yes, a conflict!
 		if ( ! empty( $walker ) && $walker !== 'Menu_Icons_OBFX_Walker' ) {
-			$reflector	= new ReflectionClass( $walker );
-			$path		= str_replace( '\\', '/', $reflector->getFileName() );
+			$reflector = new ReflectionClass( $walker );
+			$path      = str_replace( '\\', '/', $reflector->getFileName() );
 
-			$name		= '';
-			$type		= '';
+			$name = '';
+			$type = '';
 			if ( false !== strpos( $path, 'themes' ) ) {
-				$type	= __( 'theme', 'themeisle-companion' );
-				$theme	= wp_get_theme();
-				$name	= $theme->get( 'Name' );
+				$type  = __( 'theme', 'themeisle-companion' );
+				$theme = wp_get_theme();
+				$name  = $theme->get( 'Name' );
 			} else {
-				require_once( ABSPATH . 'wp-admin/includes/file.php' );
-				WP_Filesystem();
-				global $wp_filesystem;
-
-				$plugin_path	= str_replace( str_replace( '\\', '/', trailingslashit( dirname( OBX_PATH ) ) ), '', $path );
-				$array			= explode( '/', $path );
-				$name			= reset( $array );
-				$type			= __( 'plugin', 'themeisle-companion' );
+				$path = explode( 'plugins', $path );
+				$path = explode( DIRECTORY_SEPARATOR, isset( $path[1] ) ? $path[1] : '' );
+				$path = array_values( array_filter( $path ) );
+				if ( isset( $path[0] ) ) {
+					$name = '&nbsp; <b>' . esc_attr( $path[0] ) . '</b>';
+				}
+				$type = __( 'plugin', 'themeisle-companion' );
 			}
-
-			$this->description .= '<br><i class="chip">' . sprintf( __( 'There appears to be a conflict with the %s %s. This module may not work as expected.', 'themeisle-companion' ), $type, $name ) . '</i>';
+			/*
+			 * translators: %1$s Component name %2$s Component type
+			 */
+			$this->description   .= '<br><i class="chip">' . sprintf( __( 'There appears to be a conflict with the %1$s %2$s. This module may not work as expected.', 'themeisle-companion' ), $type, $name ) . '</i>';
 			$this->active_default = false;
 		}
 	}

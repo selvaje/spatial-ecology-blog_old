@@ -65,6 +65,9 @@ foreach ($severitySections as $severityLevel => $severityLabel):
 	else if ($i['type'] == 'wafStatus') {
 		echo '<p>' . __('Firewall issues may be caused by file permission changes or other technical problems.', 'wordfence') . ' <a href="' . wfSupportController::esc_supportURL(wfSupportController::ITEM_SCAN_RESULT_WAF_DISABLED) . '" target="_blank" rel="nofollow noreferrer noopener">' . __('More Details and Instructions', 'wordfence') . '</a></p>';
     }
+	else if ($i['type'] == 'skippedPaths') {
+		echo '<p>' . __('Scanning additional paths is optional and is not always necessary.', 'wordfence') . ' <a href="' . wfSupportController::esc_supportURL(wfSupportController::ITEM_SCAN_RESULT_SKIPPED_PATHS) . '" target="_blank" rel="nofollow noreferrer noopener">' . __('Learn More', 'wordfence') . '</a></p>';
+	}
 
 	$showWPParagraph = !empty($i['tmplData']['vulnerable']) || isset($i['tmplData']['wpURL']);
 	if ($showWPParagraph) {
@@ -107,7 +110,6 @@ if (!empty($i['tmplData']['badURL'])):
 		<li><?php _e('Receive real-time Firewall and Scan engine rule updates for protection as threats emerge', 'wordfence'); ?></li>
 		<li><?php _e('Real-time IP Blacklist blocks the most malicious IPs from accessing your site', 'wordfence'); ?></li>
 		<li><?php _e('Country blocking', 'wordfence'); ?></li>
-		<li><?php _e('Two factor authentication', 'wordfence'); ?></li>
 		<li><?php _e('IP reputation monitoring', 'wordfence'); ?></li>
 		<li><?php _e('Schedule scans to run more frequently and at optimal times', 'wordfence'); ?></li>
 		<li><?php _e('Access to Premium Support', 'wordfence'); ?></li>

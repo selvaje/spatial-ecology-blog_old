@@ -1,4 +1,35 @@
 
+ ### v3.7.2 - 2019-11-13 
+ **Changes:** 
+ * Tested up to WordPress 5.3
+* Added filter `wppr_amp_exclude_stylesheets` to exclude stylesheets in AMP
+* Fix issue with showing limited rows when user influence is on
+ 
+ ### v3.7.1 - 2019-08-24 
+ **Changes:** 
+ * Improve UI for AMP requests
+* Fix CSS conflict with some themes
+* Make rating column sortable in listing screen
+ 
+ ### v3.7.0 - 2019-07-04 
+ **Changes:** 
+ * Add rating scale out of 5
+* Add star rating
+* Fix UI for AMP requests
+* Added filter to disable comments per review
+ 
+ ### v3.6.1 - 2019-05-22 
+ **Changes:** 
+ * Fix error in structured data
+* Fix issue with selecting number of options/pros/cons
+ 
+ ### v3.6.0 - 2019-05-14 
+ **Changes:** 
+ * Add support for more schema types
+* Use Dashicons instead of FontAwesome
+* Fix issue with buy button in listing table
+* Tested up to WP 5.2
+ 
  ### v3.5.2 - 2019-02-28 
  **Changes:** 
  * Fix issues with Gutenberg

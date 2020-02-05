@@ -154,7 +154,7 @@ longname : 'CC Child Pages',
 author : 'Tim Lomas',
 authorurl : 'http://caterhamcomputing.net',
 infourl : 'http://ccchildpages.ccplugins.co.uk',
-version : "1.36"
+version : "1.37"
 };
 				}
 			});

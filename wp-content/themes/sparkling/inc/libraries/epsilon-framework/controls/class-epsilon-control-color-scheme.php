@@ -41,12 +41,12 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 		<div id="color_scheme_<?php echo $this->id; ?>" class="epsilon-color-scheme">
 			<?php foreach ( $this->choices as $choice ) { ?>
 				<div class="epsilon-color-scheme-option <?php echo $choice['id'] === $this->value() ? 'selected' : ''; ?>"
-					 data-color-id="<?php echo $choice['id']; ?>">
+					 data-color-id="<?php echo $choice['id'] ?>">
 					<input type="hidden" value="<?php echo esc_attr( json_encode( $choice['colors'] ) ); ?>"/>
-					<span class="epsilon-color-scheme-name"> <?php echo $choice['name']; ?> </span>
+					<span class="epsilon-color-scheme-name"> <?php echo $choice['name'] ?> </span>
 					<div class="epsilon-color-scheme-palette">
 						<?php foreach ( $choice['colors'] as $color ) { ?>
-							<span style="background-color:<?php echo $color; ?>"></span>
+							<span style="background-color:<?php echo $color ?>"></span>
 						<?php } ?>
 					</div>
 				</div>

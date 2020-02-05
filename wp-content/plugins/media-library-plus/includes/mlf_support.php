@@ -56,8 +56,9 @@
                 </ul>
                 
                 <h4><?php _e('How to Delete a Folder?', 'maxgalleria-media-library' ); ?></h4>
-                
+      
                 <p><?php _e('To delete a folder, right click (Ctrl-click with Macs) on a folder. A popup menu will appear with the options, ‘Delete this folder?’ and ‘Hide this folder?’. Click the delete option. The folder has to be empty in order to delete it. If you receive a message that the folder is not empty, use the sync function to display files that are still present in the folder.', 'maxgalleria-media-library' ); ?></p`>
+                <p><?php _e('In some cases if that the folder is empty and Media Library Folders is unable to delete it, delete the folder from the server either by the site’s file manager or by FTP and then delete it in Media Library Folders.', 'maxgalleria-media-library' ); ?></p>
 
                 <h4><?php _e('Folders and images added to the site by FTP are not showing up in Media Library Folders', 'maxgalleria-media-library' ); ?></h4>
 
@@ -98,6 +99,10 @@
 
                 <h4><?php _e('How to Upload Multiple Files', 'maxgalleria-media-library' ); ?></h4>
                 <p><?php _e('Users can upload multiple files by using drag and drop. When the Add Files button is click it revels the file upload area either single or multiple files can be highlight can be dragged from you computer’s file manager and dropped into the file uploads areas.', 'maxgalleria-media-library' ); ?></p>
+                
+                <h4><?php _e('Cannot Rename or Move a Folder', 'maxgalleria-media-library' ); ?></h4>
+                <p><?php _e('Because most images and files in the media library have corresponding links embedded in site’s posts and pages, Media Library Folders does not allow folders to be rename or moved in order to prevent breaking these links. Rather, to rename or move a folder, one needs to create a new folder and move the files from the old folder to the new. During the move process, Media Library Folders will scan the sites standard posts and pages for any links matching the old address of the images or files and update them to the new address.', 'maxgalleria-media-library' ); ?></p>
+                
                 
               </div>
               

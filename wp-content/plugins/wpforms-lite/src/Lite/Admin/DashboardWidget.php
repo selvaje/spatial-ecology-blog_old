@@ -5,16 +5,14 @@ namespace WPForms\Lite\Admin;
 /**
  * Dashboard Widget shows a chart and the form entries stats in WP Dashboard.
  *
- * @package    WPForms\Admin
- * @author     WPForms
- * @since      1.5.0
- * @license    GPL-2.0+
- * @copyright  Copyright (c) 2018, WPForms LLC
+ * @since 1.5.0
  */
 class DashboardWidget {
 
 	/**
 	 * Widget settings.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @var array
 	 */
@@ -27,8 +25,17 @@ class DashboardWidget {
 	 */
 	public function __construct() {
 
+		add_action( 'admin_init', array( $this, 'init' ) );
+	}
+	/**
+	 * Init class.
+	 *
+	 * @since 1.5.5
+	 */
+	public function init() {
+
 		// This widget should be displayed for certain high-level users only.
-		if ( ! wpforms_current_user_can() ) {
+		if ( ! wpforms_current_user_can( 'view_forms' ) ) {
 			return;
 		}
 
@@ -61,7 +68,7 @@ class DashboardWidget {
 			// Allow entries count logging for WPForms Lite.
 			'allow_entries_count_lite'         => \apply_filters( 'wpforms_dash_widget_allow_entries_count_lite', true ),
 
-			// Determines if the forms with no entries should appear in a forms list. Once switched, the effect applies after cache expiration.
+			// Determine if the forms with no entries should appear in a forms list. Once switched, the effect applies after cache expiration.
 			'display_forms_list_empty_entries' => \apply_filters( 'wpforms_dash_widget_display_forms_list_empty_entries', true ),
 		);
 	}
@@ -82,6 +89,10 @@ class DashboardWidget {
 		if ( ! empty( $this->settings['allow_entries_count_lite'] ) ) {
 			\add_action( 'wpforms_process_entry_save', array( $this, 'update_entry_count' ), 10, 3 );
 		}
+
+		\add_action( 'wpforms_create_form', __CLASS__ . '::clear_widget_cache' );
+		\add_action( 'wpforms_save_form', __CLASS__ . '::clear_widget_cache' );
+		\add_action( 'wpforms_delete_form', __CLASS__ . '::clear_widget_cache' );
 	}
 
 	/**
@@ -483,5 +494,15 @@ class DashboardWidget {
 
 		$count = \absint( \get_post_meta( $form_id, 'wpforms_entries_count', true ) );
 		\update_post_meta( $form_id, 'wpforms_entries_count', $count + 1 );
+	}
+
+	/**
+	 * Clear dashboard widget cached data.
+	 *
+	 * @since 1.5.2
+	 */
+	public static function clear_widget_cache() {
+
+		delete_transient( 'wpforms_dash_widget_lite_entries_by_form' );
 	}
 }

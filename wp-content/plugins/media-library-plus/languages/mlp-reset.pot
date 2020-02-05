@@ -1,0 +1,126 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: mlp-reset\n"
+"POT-Creation-Date: 2019-12-24 07:38-0300\n"
+"PO-Revision-Date: 2019-12-24 08:26-0300\n"
+"Last-Translator: Alan Pasho <apasho@gmail.com>\n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../mlp-reset.php:17
+msgid "Media Library Folders Reset"
+msgstr "Reset MLF"
+
+#: ../mlp-reset.php:18
+msgid "Display Attachment URLs"
+msgstr ""
+
+#: ../mlp-reset.php:19
+msgid "Display Folder Data"
+msgstr ""
+
+#: ../mlp-reset.php:20
+msgid "Check for Folders Without Parent IDs"
+msgstr ""
+
+#: ../mlp-reset.php:21
+msgid "Reset Database"
+msgstr ""
+
+#: ../mlp-reset.php:33
+msgid "WordPress Media Library Folders Reset Instructions"
+msgstr ""
+
+#: ../mlp-reset.php:34
+msgid ""
+"If you need to rescan your database, please deactivate the WordPress Media "
+"Library Folders plugin and then click WordPress Media Library Folders Reset-"
+">Reset Database to erase the folder data. Then deactivate WordPress Media "
+"Library Folders Reset and reactivate WordPress Media Library Folders which "
+"will perform a fresh scan of your database."
+msgstr ""
+
+#: ../mlp-reset.php:70
+msgid "Removing mgmlp_media_folder posts"
+msgstr ""
+
+#: ../mlp-reset.php:74
+msgid "Done. You can now reactivate WordPress Media Library Folders."
+msgstr ""
+
+#: ../mlp-reset.php:98
+msgid "Attachment URLs"
+msgstr ""
+
+#: ../mlp-reset.php:100
+msgid "Number of attachments"
+msgstr ""
+
+#: ../mlp-reset.php:106
+msgid "Attachment ID"
+msgstr ""
+
+#: ../mlp-reset.php:107
+msgid "Attachment URL"
+msgstr ""
+
+#: ../mlp-reset.php:108 ../mlp-reset.php:163
+msgid "Folder ID"
+msgstr ""
+
+#: ../mlp-reset.php:135
+msgid "Folder URLs"
+msgstr ""
+
+#: ../mlp-reset.php:141
+msgid "Uploads folder: "
+msgstr ""
+
+#: ../mlp-reset.php:143
+msgid "Uploads URL: "
+msgstr ""
+
+#: ../mlp-reset.php:145
+msgid "Number of folders: "
+msgstr ""
+
+#: ../mlp-reset.php:164
+msgid "Folder Name"
+msgstr ""
+
+#: ../mlp-reset.php:165
+msgid "Folder URL"
+msgstr ""
+
+#: ../mlp-reset.php:166
+msgid "Parent ID"
+msgstr ""
+
+#: ../mlp-reset.php:225
+msgid "Checking for files without folder IDs"
+msgstr ""
+
+#: ../mlp-reset.php:240
+msgid "The following files with missing folder IDs were found"
+msgstr ""
+
+#: ../mlp-reset.php:252
+msgid "Fixed"
+msgstr ""
+
+#: ../mlp-reset.php:254
+msgid " Parent folder not found."
+msgstr ""
+
+#: ../mlp-reset.php:259
+msgid "No files with missing folder IDs were found."
+msgstr ""

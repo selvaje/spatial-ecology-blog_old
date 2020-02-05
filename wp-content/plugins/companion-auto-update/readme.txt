@@ -1,11 +1,11 @@
 === Companion Auto Update ===
 Contributors: Papin, qweb
-Donate link: https://www.paypal.me/dakel/5/
+Donate link: https://www.paypal.me/dakel/10/
 Tags: auto, automatic, background, update, updates, updating, automatic updates, automatic background updates, easy update, wordpress update, theme update, plugin update, up-to-date, security, update latest version, update core, update wp, update wp core, major updates, minor updates, update to new version, update core, update plugin, update plugins, update plugins automatically, update theme, plugin, theme, advance, control, mail, notifations, enable
-Requires at least: 3.5.0
-Tested up to: 5.1
+Requires at least: 3.6.0
+Tested up to: 5.3
 Requires PHP: 5.1
-Stable tag: 3.3.8
+Stable tag: 3.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,8 +26,7 @@ We want you to know what's happening on your website. This plugin offers setting
 But if you don't want to recieve emails about this you can still log in and view the changelog to see what happened.
 
 = Advanced Controls =
-You can control auto-updating per plugin via the plugin filter. 
-For example: If you have Woocommerce installed but you do not wan't to have it auto-updated you can now disable auto-updating for Woocommerce only, so your other plugins will continue to be updated.
+You might not want to update all plugins or themes automatically, no problem! With the advanced filters you can easily select single plugins and/or themes that you want the plugin to skip. We can notify you when one of the selected plugins has an update ready so you can then head over to your dashboard and update them manually.
 
 = Scheduling =
 By default the updater will run twice a day, but you can change this to every hour or to daily. When set to daily you can even set the time at which it should run, this way you can make sure that it will not overload your server by letting it run at times with less activity. The same settings can be set for notifications.
@@ -51,26 +50,74 @@ Settings can be found trough Tools > Auto Updater
 
 == Frequently Asked Questions ==
 
-= Can I disable auto updating for certain plugins? =
+= Check our website for the FAQ =
 
-Yes. You can control auto-updating per plugin via the plugin filter. 
+[https://codeermeneer.nl/documentation/auto-update/faq-auto-updater/](https://codeermeneer.nl/documentation/auto-update/faq-auto-updater/)
 
-= I'm using cPanel and auto-updating doesn't work =
+= What features can I expect to see in the future? =
 
-A few years ago cPanel added a line by default that would disable auto-updating. According to cPanel this can be fixed by removing the line "AUTOMATIC_UPDATER_DISABLED" from your wp-config file.
+Your feedback is what made this plugin what is and what it’ll become so keep the feedback coming! To see what features you've suggested and what we're working on [read our blogpost here](https://codeermeneer.nl/blog/companion-auto-update-and-its-future/)
 
-= My theme by Elegant Themes is not updating =
-
-For some reason this plugin seems to have trouble with updating themes by Elegant Themes on some installs. I've reached out to Elegant Themes and they couldn't help me. They said that if you're experiencing problems with it you should contact them and they would help you with it.
 
 == Screenshots ==
 
 1. Full control over what to update and when to recieve notifications
-2. Disable auto-updating for certain plugins
+2. Disable auto-updating for certain plugins and/or themes
 3. Advanced scheduling options for updating and notifcations
 4. Keep track of updates with the update log
 
 == Changelog ==
+
+= 3.4.8 (January 2, 2020) =
+* This update brings a few under the hood changes to ensure better updates in the future
+* We've also fixed a (rare) Undefined variable: headers error
+
+= 3.4.7 (January 1, 2020) =
+* Fix: Cronjob error
+
+= 3.4.6 (December 31, 2019) =
+* New: Filter themes, just like you do with plugins
+* New: Link to the release notes of the plugin in the email
+* Fixed: Sometimes the pluginfilter wouldn't save when using a lot of plugins
+* Fixed: A few errors regarding emails
+* Fixed: Errors regarding the set timezone
+* Tweak: Changing settings no longer requires page reload to see the changes
+* Few tweaks in code for better performance
+
+= 3.4.5 (November 26, 2019) =
+* Fix: Some of you reported several database errors in version 3.4.4, these are fixed now
+* Tweak: Few minor design changes to fit the changes made in WordPress 5.3
+* Tweak: Explained that emails will also be sent on manual plugin updates
+
+= 3.4.4 (November  16, 2019) =
+* Sometimes the database wouldn't correctly update to the newest version, we've added a manual button for this now.
+* Sometimes plugins excluded from the updater would still update, this should be fixed now.
+
+= 3.4.3 (November 8, 2019) =
+* New: Options for "Weekly", "Twice a month" and "Monthly" for scheduling
+* New: Added Database version to status page
+* Tweak: cau_database_creation() query is no longer running on every page load, just on activation or updating of the plugin
+
+= 3.4.2 (June 28, 2019) =
+* Fixed: Times being all messed up
+* New: Set the time of email notifications
+* Fixed: Email notifications will no longer show as active on the status page when they actually aren't active
+
+= 3.4.1 (May 4, 2019) =
+* Fixed issue where sometimes settings wouldn't safe
+* Fixed issue where sometimes the status page would show incorrect times at events
+
+= 3.4.0 (April 4, 2019) =
+* (Actually) Fixed: Cronjobs disabled shouldn't be a 'critical error'
+* New status icon at the status tab to quicker see issues
+* Fixed: You're not allowed to view error
+
+= 3.3.9 (March 11, 2019) =
+* Fix: Sometimes emails would be sent twice
+* Fix: Cronjobs disabled shouldn't be a critical error
+* Fix: Sometimes update reminder emails would not send at all
+* Improvement: Removed "Howdy" from emails
+* Improvement: Fixed a few typos
 
 = 3.3.8 (March 1, 2019) =
 * Fix: Show correct timestamp in log

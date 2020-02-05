@@ -64,13 +64,11 @@ class Epsilon_Color_Coded_Categories {
 			return false;
 		}
 
-		$wp_customize->add_section(
-			$this->section['id'], array(
-				'priority' => 1,
-				'title'    => $this->section['title'],
-				'panel'    => $this->section['panel'],
-			)
-		);
+		$wp_customize->add_section( $this->section['id'], array(
+			'priority' => 1,
+			'title'    => $this->section['title'],
+			'panel'    => $this->section['panel'],
+		) );
 
 		$i    = 1;
 		$args = array(
@@ -81,11 +79,9 @@ class Epsilon_Color_Coded_Categories {
 		$categories       = get_categories( $args );
 		$wp_category_list = array();
 
-		$wp_customize->add_setting(
-			'epsilon_hidden_category_info', array(
-				'sanitize_callback' => 'esc_html',
-			)
-		);
+		$wp_customize->add_setting( 'epsilon_hidden_category_info', array(
+			'sanitize_callback' => 'esc_html',
+		) );
 
 		$wp_customize->add_control(
 			'epsilon_hidden_category_info',
@@ -99,30 +95,24 @@ class Epsilon_Color_Coded_Categories {
 		);
 		foreach ( $categories as $category_list ) {
 			$wp_category_list[ $category_list->cat_ID ] = $category_list->cat_name;
-			$wp_customize->add_setting(
-				'epsilon_category_color_' . get_cat_ID( $wp_category_list[ $category_list->cat_ID ] ), array(
-					'default'              => '',
-					'capability'           => 'edit_theme_options',
-					'sanitize_callback'    => array(
-						'Epsilon_Color_Coded_Categories',
-						'color_option_hex_sanitize',
-					),
-					'sanitize_js_callback' => array(
-						'Epsilon_Color_Coded_Categories',
-						'color_escaping_option_sanitize',
-					),
-				)
-			);
-			$wp_customize->add_control(
-				new WP_Customize_Color_Control(
-					$wp_customize, 'epsilon_category_color_' . get_cat_ID( $wp_category_list[ $category_list->cat_ID ] ), array(
-						'label'    => sprintf( '%s', $wp_category_list[ $category_list->cat_ID ] ),
-						'section'  => $this->section['id'],
-						'settings' => 'epsilon_category_color_' . get_cat_ID( $wp_category_list[ $category_list->cat_ID ] ),
-						'priority' => $i,
-					)
-				)
-			);
+			$wp_customize->add_setting( 'epsilon_category_color_' . get_cat_ID( $wp_category_list[ $category_list->cat_ID ] ), array(
+				'default'              => '',
+				'capability'           => 'edit_theme_options',
+				'sanitize_callback'    => array(
+					'Epsilon_Color_Coded_Categories',
+					'color_option_hex_sanitize',
+				),
+				'sanitize_js_callback' => array(
+					'Epsilon_Color_Coded_Categories',
+					'color_escaping_option_sanitize',
+				),
+			) );
+			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'epsilon_category_color_' . get_cat_ID( $wp_category_list[ $category_list->cat_ID ] ), array(
+				'label'    => sprintf( '%s', $wp_category_list[ $category_list->cat_ID ] ),
+				'section'  => $this->section['id'],
+				'settings' => 'epsilon_category_color_' . get_cat_ID( $wp_category_list[ $category_list->cat_ID ] ),
+				'priority' => $i,
+			) ) );
 			$i ++;
 		}
 

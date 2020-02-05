@@ -1,4 +1,132 @@
 
+ ### v8.5.2 - 2019-12-31 
+ **Changes:** 
+ * New PRO: Share posts that have been scheduled for future publication by WordPress when their status change from "Scheduled" to "Publish" [Learn more](https://docs.revive.social/article/1194-share-scheduled-posts-to-social-media-on-publish-with-revive-old-posts)
+* Fix PRO: Better compatibility for grabbing images for Tumblr shares on WPEngine hosted websites.
+* Fix PRO: Tumblr URL shares were not showing the Link preview image.
+* Fix: Instant sharing options set on the General Settings tab were not being honored.
+* Fix: Corrected support doc URL for a LinkedIn error.
+* Fix: Strip Divi builder shortcodes from the content before sharing to prevent undesired share output.
+* Change: Videos selected for sharing in Media gallery will always be uploaded as a native video to Twitter regardless of "Post with image" option.
+* Change: Call for Facebook URL scrape will now occur on original URL instead of the processed URL.
+* Info: Added "Learn more" links for certain setting options on the plugin dashboard
+ 
+ ### v8.5.1 - 2019-11-21 
+ **Changes:** 
+ * V851
+ 
+ ### v8.5.0 - 2019-11-21 
+ **Changes:** 
+ * New PRO: Made it easier to connect LinkedIn Accounts for New Users
+* New PRO: Plugin will now grab LinkedIn company pages using LinkedIn service in ROP dashboard
+* New PRO: Easier addition of Instagram accounts and Facebook Groups using Buffer integration
+* New PRO: Ability to add custom images to post share variations
+* Fix PRO: Fixed an issue where Pinterest sharing failed on some hosts
+* Fix: Post immediately feature not working in Gutenberg
+* Change: Moved post immediately feature to metabox
+* Change: Opened up easier Twitter login workflow for old installs
+* Change: Sharing as an article post to Facebook no longer requires varifying domain with Facebook Business Manager
+* Change: Scrape post details before sharing to Facebook to ensure link preview is always up to date
+* Change: Enhance tutorial pointers
+* Change: Plugin Roadmap link added to submenu (Vote for features you want to see in ROP!)
+* Info: Tested on WP 5.3
+ 
+ ### v8.4.4 - 2019-10-03 
+ **Changes:** 
+ * New: Label to show sharing status.
+* Change: Removed some UI buttons and made UX improvements to dashboard.
+* Change: Send posts to Facebook as text posts if users have not verified their domain with Facebook; inform users on how to go about the process. .
+ 
+ ### v8.4.3 - 2019-09-12 
+ **Changes:** 
+ * New: Toast message will now show on ROP dashboard when an error is present in the log.
+* New: Added a check to detect when ROP cron event is not firing.
+* Fix: Switching from queue tab to another tab would refresh queue order.
+* Fix: Linkedin 411 length required error.
+* Fix: Users would be redirected to Tumblr homepage if credentials were wrong. An error will now be displayed.
+* Fix: Pressing Twitter account button after deleting a Twitter account from ROP would refresh the page.
+* Change: Edited "no accounts" text area with more details to help users get started.
+* Change: Moved Support & Documentation buttons to top section of ROP dashboard.
+* Change: Set rviv.ly back as default shortener.
+* Change: Delete icon will now show whenever an account is deactivated
+ 
+ ### v8.4.2 - 2019-08-23 
+ **Changes:** 
+ * PRO Fix: Unauthorized error when updating Pro plugin 
+* Fix: Error would occur if the user tried to sign in while the API credentials form fields were empty
+* Fix: Timer was not stopped if all accounts were removed using "remove all accounts" button
+* Fix: Removing an account and then immediately trying to add it back would attempt to validate with old API credentials
+ 
+ ### v8.4.1 - 2019-08-19 
+ **Changes:** 
+ * Fix: Use own keys button was appearing in Twitter modal for old installs
+ 
+ ### v8.4.0 - 2019-08-19 
+ **Changes:** 
+ * PRO: Share to Instagram, Facebook Groups, LinkedIn Company Pages via Buffer integration.
+* New: Made it easier to connect Twitter accounts for new users.
+* Fix: Wrong error solution doc link would sometimes be given in Log.
+* Fix: Fixed a bug where the sharing queue would be duplicated when switching tabs.
+* Fix: Sites with Jetpack Photon feature activated would have issues with sharing images to twitter.
+ 
+ ### v8.3.5 - 2019-08-02 
+ **Changes:** 
+ * Change: Made some UX changes to plugin dashboard
+ 
+ ### v8.3.4 - 2019-07-21 
+ **Changes:** 
+ * New: Roadmap & Voting button! See where ROP is headed and vote on or recommend features which matter to you.
+* Fix: PHP warning when Share Immediately feature would receive a non-array of selected accounts in rare cases.
+* Fix: Silent Undefined Index error where Cron would try to fire for non-set actions.
+* Change: Allow users who installed ROP prior to v8.3.0 to connect their Facebook accounts using the Revive Social Facebook App. No more need to go through an App review.
+ 
+ ### v8.3.3 - 2019-07-10 
+ **Changes:** 
+ * New: An email will be sent to admin email address if the "Share more than once" option is unchecked and sharing is complete
+* New: Documentation and support buttons on plugin dashboard
+* Fix: LinkedIn Image sharing
+* Fix: Facebook sharing timeout on some servers
+ 
+ ### v8.3.2 - 2019-05-27 
+ **Changes:** 
+ * Fix: Log would some times show the wrong status message for the share
+* Change: Use button to show app credential fields on new installs
+ 
+ ### v8.3.1 - 2019-05-24 
+ **Changes:** 
+ * Fix: Use wp_remote_request functions in favor of guzzle which was causing issues on some websites
+* Fix: Posting to Pinterest board names with commas
+ 
+ ### v8.3.0 - 2019-05-24 
+ **Changes:** 
+ * New: Made connecting Facebook pages to plugin much simpler.
+* Fix: When using publish now feature, all services would be checked after page reload even though only one was selected.
+ 
+ ### v8.2.5 - 2019-05-17 
+ **Changes:** 
+ * New: Show admin notice when WP Cron is turned off, which can cause posting issues with ROP
+* Fix: LinkedIn Image posts were not going through
+* Fix: Posting to some Pinterest boards with special characters was not working
+* Info: Tested on WP 5.2
+ 
+ ### v8.2.4 - 2019-04-15 
+ **Changes:** 
+ * Fix: Minor bugs
+ 
+ ### v8.2.3 - 2019-04-10 
+ **Changes:** 
+ * New: Filter introduced for Post Title & Content separator (check revive.social docs)
+* New: Known errors will now show a link to the fix in the log area
+* Fix: Twitter images would not share for sites which moved to a different protocol but didn't update their image links in the database
+* PRO Fix: Moved to LinkedIn API v2 (check revive.social docs)
+ 
+ ### v8.2.2 - 2019-03-20 
+ **Changes:** 
+ * New: Feedback button on plugin dashboard. Help us make ROP better by filling out the form!
+* Fix: Minor typos
+* PRO: You can now share custom messages/share variations in the order they were added.
+* PRO Change: Updated custom messages/share variations metabox design
+ 
  ### v8.2.1 - 2019-03-01 
  **Changes:** 
  * Fix: Sharing queue issue with sites running WPML plugin

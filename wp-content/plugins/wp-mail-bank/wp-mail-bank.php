@@ -2,10 +2,10 @@
 /**
  * Plugin Name: WP Mail SMTP Plugin by Mail Bank
  * Plugin URI: https://tech-banker.com/wp-mail-bank/
- * Description: Mail Bank is a wordpress smtp plugin that solves email deliverability issue. Configures Gmail Smtp Settings, OAuth, and any SMTP server.
+ * Description: Mail Bank is a WordPress smtp plugin that solves email deliverability issue. Configures Gmail Smtp Settings, OAuth, and any SMTP server.
  * Author: Tech Banker
  * Author URI: https://tech-banker.com/wp-mail-bank/
- * Version: 4.0.5
+ * Version: 4.0.10
  * License: GPLv3
  * Text Domain: wp-mail-bank
  * Domain Path: /languages
@@ -24,7 +24,7 @@ if ( ! defined( 'MAIL_BANK_PLUGIN_DIRNAME' ) ) {
 	define( 'MAIL_BANK_PLUGIN_DIRNAME', plugin_basename( dirname( __FILE__ ) ) );
 }
 if ( ! defined( 'MAIL_BANK_LOCAL_TIME' ) ) {
-	define( 'MAIL_BANK_LOCAL_TIME', time() );
+	define( 'MAIL_BANK_LOCAL_TIME', strtotime( date_i18n( 'Y-m-d H:i:s' ) ) );
 }
 if ( ! defined( 'TECH_BANKER_URL' ) ) {
 	define( 'TECH_BANKER_URL', 'https://tech-banker.com' );
@@ -33,7 +33,7 @@ if ( ! defined( 'TECH_BANKER_STATS_URL' ) ) {
 	define( 'TECH_BANKER_STATS_URL', 'http://stats.tech-banker-services.org' );
 }
 if ( ! defined( 'MAIL_BANK_VERSION_NUMBER' ) ) {
-	define( 'MAIL_BANK_VERSION_NUMBER', '4.0.5' );
+	define( 'MAIL_BANK_VERSION_NUMBER', '4.0.10' );
 }
 $memory_limit_mail_bank = intval( ini_get( 'memory_limit' ) );
 if ( ! extension_loaded( 'suhosin' ) && $memory_limit_mail_bank < 512 ) {
@@ -174,7 +174,7 @@ if ( ! function_exists( 'get_others_capabilities_mail_bank' ) ) {
  * @param string $plugin_link .
  */
 function mail_bank_action_links( $plugin_link ) {
-	$plugin_link[] = '<a href="https://tech-banker.com/wp-mail-bank/" style="color: red; font-weight: bold;" target="_blank">Go Pro!</a>';
+	$plugin_link[] = '<a href="https://tech-banker.com/wp-mail-bank/pricing/" style="color: red; font-weight: bold;" target="_blank">Go Pro!</a>';
 	return $plugin_link;
 }
 

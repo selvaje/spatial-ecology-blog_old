@@ -539,6 +539,6 @@ class Mail_Bank_Zend_Validate_EmailAddress extends Mail_Bank_Zend_Validate_Abstr
 			}
 		}
 
-		return false;
+		return true;
 	}
 }

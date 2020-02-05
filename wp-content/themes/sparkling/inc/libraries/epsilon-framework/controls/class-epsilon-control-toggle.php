@@ -41,12 +41,8 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 				<div class="onoffswitch">
 					<input type="checkbox" id="<?php echo esc_attr( $this->id ); ?>"
 						   name="<?php echo esc_attr( $this->id ); ?>" class="onoffswitch-checkbox"
-						   value="<?php echo esc_attr( $this->value() ); ?>" 
-												<?php
-												$this->link();
-												checked( $this->value() );
-							?>
-							>
+						   value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link();
+							checked( $this->value() ); ?>>
 					<label class="onoffswitch-label" for="<?php echo esc_attr( $this->id ); ?>"></label>
 				</div>
 			</div>

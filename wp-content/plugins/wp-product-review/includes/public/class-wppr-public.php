@@ -99,12 +99,18 @@ class Wppr_Public {
 			return;
 		}
 
-		if ( $review->wppr_get_option( 'cwppos_lighbox' ) == 'no' ) {
+		if ( $review->wppr_get_option( 'cwppos_lighbox' ) === 'no' ) {
 			wp_enqueue_script( $this->plugin_name . '-lightbox-js', WPPR_URL . '/assets/js/lightbox.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_style( $this->plugin_name . '-lightbox-css', WPPR_URL . '/assets/css/lightbox.css', array(), $this->version );
 		}
 
-		if ( $review->wppr_get_option( 'cwppos_show_userreview' ) == 'yes' ) {
+		if ( $review->wppr_get_option( 'cwppos_show_userreview' ) === 'yes' ) {
+			$scale      = $review->wppr_get_option( 'wppr_use_5_rating_scale' );
+			if ( empty( $scale ) ) {
+				$scale  = 10;
+			}
+			$scale      = 10 * ( 10 / $scale );
+
 			wp_enqueue_script( 'jquery-ui-slider' );
 			wp_enqueue_script( 'jquery-touch-punch' );
 			wp_enqueue_script(
@@ -116,17 +122,21 @@ class Wppr_Public {
 				$this->version,
 				true
 			);
+			wp_localize_script( $this->plugin_name . '-frontpage-js', 'wppr_config', array( 'scale' => $scale ) );
+
 			wp_enqueue_style( $this->plugin_name . 'jqueryui', WPPR_URL . '/assets/css/jquery-ui.css', array(), $this->version );
 			wp_enqueue_style( $this->plugin_name . 'comments', WPPR_URL . '/assets/css/comments.css', array(), $this->version );
 		}
-		$icon = $review->wppr_get_option( 'cwppos_change_bar_icon' );
 
-		if ( 'default' !== $review->get_template() || ( ! empty( $icon ) && $review->wppr_get_option( 'cwppos_fontawesome' ) == 'no' ) ) {
-			wp_enqueue_style( $this->plugin_name . 'font-awesome', WPPR_URL . '/assets/css/font-awesome.min.css', array(), $this->version );
-		}
+		$this->load_template_css( $review );
+	}
 
-		if ( $review->wppr_get_option( 'cwppos_show_icon' ) == 'yes' ) {
-			wp_enqueue_style( 'dashicons' );
+	/**
+	 * Loads the CSS corresponding to the template.
+	 */
+	function load_template_css( $review = null ) {
+		if ( empty( $review ) ) {
+			$review = $this->review;
 		}
 
 		wp_enqueue_style( $this->plugin_name . '-' . $review->get_template() . '-stylesheet', WPPR_URL . '/assets/css/' . $review->get_template() . '.css', array(), $this->version );
@@ -139,9 +149,18 @@ class Wppr_Public {
 		wp_enqueue_style(
 			$this->plugin_name . '-common',
 			WPPR_URL . '/assets/css/common.css',
-			array(),
+			array( 'dashicons' ),
 			$this->version
 		);
+
+		$icon = $review->wppr_get_option( 'cwppos_change_bar_icon' );
+
+		// new free and old pro after removing fontawesome with an font awesome icon selected.
+		if ( defined( 'WPPR_PRO_VERSION' ) && version_compare( WPPR_PRO_VERSION, '2.4', '<' ) && 'style1' !== $review->get_template() && ! empty( $icon ) ) {
+			wp_enqueue_style( $this->plugin_name . 'fa', WPPR_URL . '/assets/css/font-awesome.min.css', array(), $this->version );
+			wp_enqueue_style( $this->plugin_name . '-fa-compat', WPPR_URL . '/assets/css/fontawesome-compat.css', array(), $this->version );
+		}
+
 		$style = $this->generate_styles();
 
 		$style = apply_filters( 'wppr_global_style', $style );
@@ -163,13 +182,10 @@ class Wppr_Public {
 			return;
 		}
 
-		/**
-		 * Remove any custom icon.
-		 */
-		add_filter( 'wppr_option_custom_icon', '__return_empty_string', 99 );
-		add_action( 'amp_post_template_head', array( $this, 'wppr_amp_add_fa' ), 999 );
-
 		$model = new WPPR_Query_Model();
+
+		$icon = $model->wppr_get_option( 'cwppos_change_bar_icon' );
+
 		if ( 'yes' === $model->wppr_get_option( 'wppr_amp' ) ) {
 			add_filter( 'wppr_review_option_rating_css', array( $this, 'amp_width_support' ), 99, 2 );
 			add_action( 'amp_post_template_css', array( $this, 'amp_styles' ), 999 );
@@ -183,7 +199,7 @@ class Wppr_Public {
 
 		$review             = new WPPR_Review_Model();
 		$conditional_styles = '';
-		if ( $review->wppr_get_option( 'cwppos_show_icon' ) == 'yes' ) {
+		if ( $review->wppr_get_option( 'cwppos_show_icon' ) === 'yes' ) {
 			$adverb         = is_rtl() ? 'after' : 'before';
 			$direction      = is_rtl() ? 'left' : 'right';
 			$conditional_styles .= '
@@ -195,7 +211,7 @@ class Wppr_Public {
                 ';
 		}
 
-		if ( $review->wppr_get_option( 'cwppos_show_userreview' ) == 'yes' ) {
+		if ( $review->wppr_get_option( 'cwppos_show_userreview' ) === 'yes' ) {
 			$conditional_styles .= '
                 .commentlist .comment-body p {
                     clear: left;
@@ -440,6 +456,16 @@ class Wppr_Public {
 			} 
 		';
 
+		$scale      = $review->wppr_get_option( 'wppr_use_5_rating_scale' );
+		// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+		if ( 5 == $scale ) {
+			// change the styles to accommodate fewer icons (out of 5) in the same space.
+			$style  .= '
+				#review-statistics .review-wu-bars ul li {
+					width: 18%;
+				}';
+		}
+
 		return $style;
 	}
 
@@ -479,9 +505,9 @@ class Wppr_Public {
 			);
 
 			$review_position_before_content = $this->review->wppr_get_option( 'cwppos_show_reviewbox' );
-			if ( $review_position_before_content == 'yes' ) {
+			if ( $review_position_before_content === 'yes' ) {
 				$content = $content . $output;
-			} elseif ( $review_position_before_content == 'no' ) {
+			} elseif ( $review_position_before_content === 'no' ) {
 				$content = $output . $content;
 			}
 		}
@@ -499,22 +525,22 @@ class Wppr_Public {
 		if ( ! $this->review->is_active() ) {
 			return '';
 		}
-		if ( $this->review->wppr_get_option( 'cwppos_show_userreview' ) != 'yes' ) {
+		if ( $this->review->wppr_get_option( 'cwppos_show_userreview' ) !== 'yes' ) {
 			return '';
 		}
-		$options      = $this->review->get_options();
-		$option_names = wp_list_pluck( $options, 'name' );
-		$sliders      = array();
-		foreach ( $option_names as $k => $value ) {
-			$sliders[] =
-				'<div class="wppr-comment-form-meta ' . ( is_rtl() ? 'rtl' : '' ) . '">
-            <label for="wppr-slider-option-' . $k . '">' . $value . '</label>
-            <input type="text" id="wppr-slider-option-' . $k . '" class="meta_option_input" value="" name="wppr-slider-option-' . $k . '" readonly="readonly">
-            <div class="wppr-comment-meta-slider"></div>
-            <div class="cwpr_clearfix"></div>
-		</div>';
+
+		if ( apply_filters( 'wppr_disable_comments', false, $this->review ) ) {
+			return '';
 		}
-		echo '<div id="wppr-slider-comment">' . implode( '', $sliders ) . '<div class="cwpr_clearfix"></div></div>';
+
+		switch ( $this->review->wppr_get_option( 'wppr_comment_rating' ) ) {
+			case 'star':
+				include_once WPPR_PATH . '/includes/public/layouts/comment-rating-star-tpl.php';
+				break;
+			default:
+				include_once WPPR_PATH . '/includes/public/layouts/comment-rating-slider-tpl.php';
+				break;
+		}
 
 	}
 
@@ -535,7 +561,7 @@ class Wppr_Public {
 		if ( ! $review->is_active() ) {
 			return;
 		}
-		if ( $review->wppr_get_option( 'cwppos_show_userreview' ) != 'yes' ) {
+		if ( $review->wppr_get_option( 'cwppos_show_userreview' ) !== 'yes' ) {
 			return;
 		}
 
@@ -551,13 +577,27 @@ class Wppr_Public {
 		if ( ! $valid_review ) {
 			return;
 		}
+
+		$scale      = $review->wppr_get_option( 'wppr_use_5_rating_scale' );
+		if ( empty( $scale ) ) {
+			$scale  = 10;
+		}
+
+		// for scale of 10 multiply by 1 and for scale of 5 multiply by 2. Store the comment rating as out-of-10 always.
+		$multiplier = ( 10 / $scale );
+
+		switch ( $review->wppr_get_option( 'wppr_comment_rating' ) ) {
+			case 'star':
+				// 5 stars means 1, 1.5, 2, 2.5 ... this means always multiply by 2. Store the comment rating as out-of-10 always.
+				$multiplier = 2;
+				break;
+		}
+
 		foreach ( $option_names as $k => $value ) {
 			if ( isset( $_POST[ 'wppr-slider-option-' . $k ] ) ) {
-
 				$option_value = wp_filter_nohtml_kses( $_POST[ 'wppr-slider-option-' . $k ] );
-				$option_value = empty( $value ) ? 0 : $option_value;
+				$option_value = $multiplier * ( empty( $value ) ? 0 : $option_value );
 				update_comment_meta( $comment_id, 'meta_option_' . $k, $option_value );
-
 			}
 		}
 		$review->update_comments_rating();
@@ -578,26 +618,40 @@ class Wppr_Public {
 		if ( ! $this->review->is_active() ) {
 			return $text;
 		}
-		if ( $this->review->wppr_get_option( 'cwppos_show_userreview' ) != 'yes' ) {
+		if ( $this->review->wppr_get_option( 'cwppos_show_userreview' ) !== 'yes' ) {
 			return $text;
 		}
 
 		global $comment;
 
+		if ( ! $comment ) {
+			return $text;
+		}
+
 		$options = $this->review->get_comment_options( $comment->comment_ID );
 		if ( empty( $options ) ) {
 			return $text;
 		}
+
+		// in what scale to display the ratings?
+		$display    = $this->review->wppr_get_option( 'wppr_use_5_rating_scale' );
+		if ( empty( $display ) ) {
+			$display    = 10;
+		}
+
 		$return = '';
 		$return .= '<div class="user-comments-grades">';
 		foreach ( $options as $k => $option ) {
-			$intGrade = intval( $option['value'] * 10 );
+			$value  = $option['value'];
+			$int_grade = intval( $value * 10 );
+			// decrease the value to the display-scale from scale 10.
+			$value  = round( floatval( $value / ( 10 / $display ) ), 2 );
 			$return   .= '<div class="comment-meta-option">
                             <p class="comment-meta-option-name">' . $option['name'] . '</p>
-                            <p class="comment-meta-option-grade">' . $option['value'] . '</p>
+                            <p class="comment-meta-option-grade">' . $value . '</p>
                             <div class="cwpr_clearfix"></div>
-                            <div class="comment-meta-grade-bar ' . $this->review->get_rating_class( $intGrade ) . '">
-                                <div class="comment-meta-grade" style="width: ' . $intGrade . '%"></div>
+                            <div class="comment-meta-grade-bar ' . $this->review->get_rating_class( $int_grade ) . '">
+                                <div class="comment-meta-grade" style="width: ' . $int_grade . '%"></div>
                             </div><!-- end .comment-meta-grade-bar -->
                         </div><!-- end .comment-meta-option -->
 					';
@@ -623,11 +677,11 @@ class Wppr_Public {
 	 * AMP styles for WPPR review amp page.
 	 */
 	public function amp_styles() {
-
 		if ( empty( $this->review ) ) {
 			return;
 		}
 		$template_style = $this->review->get_template();
+
 		$amp_cache_key  = '_wppr_amp_css_' . str_replace( '.', '_', $this->version ) . '_' . $template_style;
 		$output         = get_transient( $amp_cache_key );
 		if ( empty( $output ) ) {
@@ -640,19 +694,28 @@ class Wppr_Public {
 			 * @global \WP_Filesystem_Direct $wp_filesystem
 			 */
 			global $wp_filesystem;
+
+			$exclude = apply_filters( 'wppr_amp_exclude_stylesheets', array() );
 			$output = '';
 			$output .= $wp_filesystem->get_contents( WPPR_PATH . '/assets/css/common.css' );
-			$output .= $wp_filesystem->get_contents( WPPR_PATH . '/assets/css/circle.css' );
+
+			if ( ! in_array( 'circle', $exclude, true ) ) {
+				$output .= $wp_filesystem->get_contents( WPPR_PATH . '/assets/css/circle.css' );
+			}
 			if ( $wp_filesystem->is_readable( WPPR_PATH . '/assets/css/' . $template_style . '.css' ) ) {
 				$output .= $wp_filesystem->get_contents( WPPR_PATH . '/assets/css/' . $template_style . '.css' );
 			}
-			$output .= $wp_filesystem->get_contents( WPPR_PATH . '/assets/css/rating-amp.css' );
+			if ( ! in_array( 'dashicons', $exclude, true ) ) {
+				$output .= $wp_filesystem->get_contents( ABSPATH . '/wp-includes/css/dashicons.min.css' );
+			}
 			$output .= $this->generate_styles();
+			$output .= $wp_filesystem->get_contents( WPPR_PATH . '/assets/css/rating-amp.css' );
+			$output = apply_filters( 'wppr_global_style', $output, $this->review );
 			$output = $this->minify_amp_css( $output );
 
 			set_transient( $amp_cache_key, $output, HOUR_IN_SECONDS );
 		}
-		echo apply_filters( 'wppr_add_amp_css', $output );
+		echo apply_filters( 'wppr_add_amp_css', $output, $this->review );
 	}
 
 	/**
@@ -698,13 +761,6 @@ class Wppr_Public {
 		}
 
 		return $css;
-	}
-
-	/**
-	 * Adding Font Awesome at the header for AMP.
-	 */
-	public function wppr_amp_add_fa() {
-		echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">';
 	}
 
 	/**

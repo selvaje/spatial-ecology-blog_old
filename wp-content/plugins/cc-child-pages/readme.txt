@@ -6,9 +6,9 @@ Plugin URI: http://ccchildpages.ccplugins.co.uk/
 Author URI: https://caterhamcomputing.net/
 Donate Link: http://ccchildpages.ccplugins.co.uk/donate/
 Requires at least: 4.0
-Tested up to: 4.9
-Stable tag: 1.36
-Version: 1.36
+Tested up to: 5.3
+Stable tag: 1.37
+Version: 1.37
 Tags: child pages widget, child pages shortcode, child pages, child page, shortcode, widget, list, sub-pages, subpages, sub-page, subpage, sub page, responsive, child-page, child-pages, childpage, childpages, siblings, sibling pages, posts, custom posts
 
 Adds a responsive shortcode to list child and sibling pages. Pre-styled or specify your own CSS class for custom styling. Includes child pages widget.
@@ -346,6 +346,9 @@ By default, sticky posts are not shown ... however, if you want them to be displ
 
 == Changelog ==
 
+= 1.37 =
+* Small changes to try to prevent problems interacting with other plugins that may not return correct values in their filters
+
 = 1.36 =
 * Bug fix - by default private pages will be visible or hidden depending on whether the user is logged in
 * Added `post_status` parameter to show child pages with specific statuses
@@ -505,6 +508,9 @@ By default, sticky posts are not shown ... however, if you want them to be displ
 * Initial Release
 
 == Upgrade Notice ==
+
+= 1.37 =
+* Small changes to try to prevent problems interacting with other plugins that may not return correct values in their filters
 
 = 1.36 =
 * Bug fix - by default private pages will be visible or hidden depending on whether the user is logged in

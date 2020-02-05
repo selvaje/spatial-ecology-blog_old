@@ -169,7 +169,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 						</i>
 					<?php endif; ?>
 				</span>
-				<input disabled type="hidden" id="selectors_<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( $this->set_selectors() ); ?>"/>
+				<input disabled type="hidden" id="selectors_<?php echo esc_attr( $this->id ) ?>" value="<?php echo esc_attr( $this->set_selectors() ); ?>"/>
 				<input disabled type="hidden" class="epsilon-typography-input" id="hidden_input_<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>
 			</label>
 
@@ -177,14 +177,14 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 			$inputs = $this->get_values( $this->id );
 			$fonts  = $this->google_fonts();
 			?>
-			<div class="epsilon-typography-container" data-unique-id="<?php echo esc_attr( $this->id ); ?>">
+			<div class="epsilon-typography-container" data-unique-id="<?php echo esc_attr( $this->id ) ?>">
 				<?php if ( in_array( 'font-family', $this->choices ) ) : ?>
 					<div class="epsilon-typography-font-family">
 						<select id="<?php echo esc_attr( $this->id ); ?>-font-family" class="epsilon-typography-input">
 							<option value="default_font"><?php echo esc_html__( 'Theme default', 'epsilon-framework' ); ?></option>
 							<?php foreach ( $fonts as $font => $properties ) { ?>
 								<option <?php echo $inputs['font-family'] === $properties->family ? 'selected' : ''; ?>
-									value="<?php echo esc_attr( $properties->family ); ?>"><?php echo esc_html( $properties->family ); ?></option>
+									value="<?php echo esc_attr( $properties->family ) ?>"><?php echo esc_html( $properties->family ) ?></option>
 							<?php } ?>
 						</select>
 					</div>
@@ -192,30 +192,30 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 				<div class="epsilon-typography-font-weight">
 					<div class="epsilon-font-weight-switch">
-						<input type="checkbox" id="<?php echo esc_attr( $this->id ); ?>-font-weight" class="epsilon-typography-input epsilon-font-weight-switch-checkbox" value="on" <?php checked( $inputs['font-weight'], 'on' ); ?>>
+						<input type="checkbox" id="<?php echo esc_attr( $this->id ); ?>-font-weight" class="epsilon-typography-input epsilon-font-weight-switch-checkbox" value="on" <?php checked( $inputs['font-weight'], 'on' ) ?>>
 						<label class="epsilon-font-weight-switch-label" for="<?php echo esc_attr( $this->id ); ?>-font-weight"></label>
 					</div>
 				</div>
 
 				<div class="epsilon-typography-font-style">
 					<div class="epsilon-font-style-switch">
-						<input type="checkbox" id="<?php echo esc_attr( $this->id ); ?>-font-style" class="epsilon-typography-input epsilon-font-style-switch-checkbox" value="on" <?php checked( $inputs['font-style'], 'on' ); ?>>
+						<input type="checkbox" id="<?php echo esc_attr( $this->id ); ?>-font-style" class="epsilon-typography-input epsilon-font-style-switch-checkbox" value="on" <?php checked( $inputs['font-style'], 'on' ) ?>>
 						<label class="epsilon-font-style-switch-label" for="<?php echo esc_attr( $this->id ); ?>-font-style"></label>
 					</div>
 				</div>
 
 				<?php if ( in_array( 'font-size', $this->choices ) || in_array( 'line-height', $this->choices ) || in_array( 'letter-spacing', $this->choices ) ) : ?>
 					<div class="epsilon-typography-advanced">
-						<a href="#" data-toggle="<?php echo esc_attr( $this->id ); ?>-toggle" class="epsilon-typography-advanced-options-toggler"><span class="dashicons dashicons-admin-generic"></span></a>
+						<a href="#" data-toggle="<?php echo esc_attr( $this->id ) ?>-toggle" class="epsilon-typography-advanced-options-toggler"><span class="dashicons dashicons-admin-generic"></span></a>
 					</div>
-					<div class="epsilon-typography-advanced-options" id="<?php echo esc_attr( $this->id ); ?>-toggle">
+					<div class="epsilon-typography-advanced-options" id="<?php echo esc_attr( $this->id ) ?>-toggle">
 						<?php if ( in_array( 'font-size', $this->choices ) ) : ?>
 							<label for="<?php echo esc_attr( $this->id ); ?>-font-size">
 								<?php echo esc_html__( 'Font Size', 'epsilon-framework' ); ?>
 							</label>
 							<div class="slider-container">
-								<input data-default-font-size="<?php echo esc_attr( $this->font_defaults[ $this->id ]['font-size'] ); ?>" type="text" class="epsilon-typography-input rl-slider" id="<?php echo esc_attr( $this->id ); ?>-font-size" value="<?php echo esc_attr( $inputs['font-size'] ); ?>"/>
-								<div id="slider_<?php echo esc_attr( $this->id ); ?>-font-size" data-attr-min="0" data-attr-max="40" data-attr-step="1" class="ss-slider"></div>
+								<input data-default-font-size="<?php echo esc_attr( $this->font_defaults[ $this->id ]['font-size'] ) ?>" type="text" class="epsilon-typography-input rl-slider" id="<?php echo esc_attr( $this->id ); ?>-font-size" value="<?php echo esc_attr( $inputs['font-size'] ); ?>"/>
+								<div id="slider_<?php echo esc_attr( $this->id ) ?>-font-size" data-attr-min="0" data-attr-max="40" data-attr-step="1" class="ss-slider"></div>
 							</div>
 						<?php endif; ?>
 						<?php if ( in_array( 'line-height', $this->choices ) ) : ?>
@@ -223,8 +223,8 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 								<?php echo esc_html__( 'Line Height', 'epsilon-framework' ); ?>
 							</label>
 							<div class="slider-container">
-								<input data-default-line-height="<?php echo esc_attr( $this->font_defaults[ $this->id ]['line-height'] ); ?>" type="text" class="epsilon-typography-input rl-slider" id="<?php echo esc_attr( $this->id ); ?>-line-height" value="<?php echo esc_attr( $inputs['line-height'] ); ?>"/>
-								<div id="slider_<?php echo esc_attr( $this->id ); ?>-line-height" data-attr-min="0" data-attr-max="40" data-attr-step="1" class="ss-slider"></div>
+								<input data-default-line-height="<?php echo esc_attr( $this->font_defaults[ $this->id ]['line-height'] ) ?>" type="text" class="epsilon-typography-input rl-slider" id="<?php echo esc_attr( $this->id ); ?>-line-height" value="<?php echo esc_attr( $inputs['line-height'] ); ?>"/>
+								<div id="slider_<?php echo esc_attr( $this->id ) ?>-line-height" data-attr-min="0" data-attr-max="40" data-attr-step="1" class="ss-slider"></div>
 							</div>
 						<?php endif; ?>
 						<?php if ( in_array( 'letter-spacing', $this->choices ) ) : ?>
@@ -232,8 +232,8 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 								<?php echo esc_html__( 'Letter Spacing', 'epsilon-framework' ); ?>
 							</label>
 							<div class="slider-container">
-								<input data-default-letter-spacing="<?php echo esc_attr( $this->font_defaults[ $this->id ]['letter-spacing'] ); ?>" type="text" class="epsilon-typography-input rl-slider" id="<?php echo esc_attr( $this->id ); ?>-letter-spacing" value="<?php echo esc_attr( $inputs['letter-spacing'] ); ?>"/>
-								<div id="slider_<?php echo esc_attr( $this->id ); ?>-letter-spacing" data-attr-min="0" data-attr-max="5" data-attr-step="0.1" class="ss-slider"></div>
+								<input data-default-letter-spacing="<?php echo esc_attr( $this->font_defaults[ $this->id ]['letter-spacing'] ) ?>" type="text" class="epsilon-typography-input rl-slider" id="<?php echo esc_attr( $this->id ); ?>-letter-spacing" value="<?php echo esc_attr( $inputs['letter-spacing'] ); ?>"/>
+								<div id="slider_<?php echo esc_attr( $this->id ) ?>-letter-spacing" data-attr-min="0" data-attr-max="5" data-attr-step="0.1" class="ss-slider"></div>
 							</div>
 						<?php endif; ?>
 					</div>

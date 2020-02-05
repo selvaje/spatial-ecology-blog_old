@@ -349,7 +349,7 @@ class Rop_Facebook_Service extends Rop_Services_Abstract {
 					$user_details['active']       = false;
 					$pages_array[]                = $user_details;
 				}
-			} while ( $pages = $api->next( $pages ) );
+			} while ( $pages == $api->next( $pages ) );
 		} catch ( Exception $e ) {
 			$this->logger->alert_error( 'Can not fetch pages for facebook. Error: ' . $e->getMessage() );
 		}
@@ -433,7 +433,10 @@ class Rop_Facebook_Service extends Rop_Services_Abstract {
 
 		$_SESSION['rop_facebook_credentials'] = $credentials;
 
-		$api    = $this->get_api( $credentials['app_id'], $credentials['secret'] );
+		$api = $this->get_api( $credentials['app_id'], $credentials['secret'] );
+		if ( empty( $api ) || ! method_exists( $api, 'getRedirectLoginHelper' ) ) {
+			return '';
+		}
 		$helper = $api->getRedirectLoginHelper();
 		$url    = $helper->getLoginUrl( $this->get_legacy_url(), $this->permissions );
 
@@ -450,6 +453,7 @@ class Rop_Facebook_Service extends Rop_Services_Abstract {
 	 * @param   array $args Optional arguments needed by the method.
 	 *
 	 * @return mixed
+	 * @throws \Facebook\Exceptions\FacebookSDKException Facebook library exception.
 	 */
 	public function share( $post_details, $args = array() ) {
 		if ( Rop_Admin::rop_site_is_staging() ) {
@@ -491,75 +495,125 @@ class Rop_Facebook_Service extends Rop_Services_Abstract {
 	 * @param   array $post_details The post details to be published by the service.
 	 *
 	 * @return array
+	 * @throws \Facebook\Exceptions\FacebookSDKException Facebook library exception.
 	 */
 	private function prepare_for_sharing( $post_details ) {
 		$post_id = $post_details['post_id'];
 
 		/**
-		 * If is not an attachment and we do have an url share it as regular post.
 		 *
 		 * TODO Add in the post format tab, for facebook, an posting behaviour option,
 		 * where we should allow user to choose how the posting with image will work, as regular post or photo post.
 		 */
+
+		// Fb connected via Revive Social App
+		$installed_with_app = get_option( 'rop_facebook_via_rs_app' );
+
+		if ( ! empty( $installed_with_app ) ) {
+
+			// If is media attachment post
+			if ( get_post_type( $post_id ) === 'attachment' ) {
+
+				// If media video post, share as regular post on FB
+				if ( strpos( get_post_mime_type( $post_id ), 'video' ) !== false ) {
+
+					$new_post['message'] = $post_details['content'] . $post_details['hashtags'];
+					$new_post['link']    = get_permalink( $post_id );
+
+					return array(
+						'post_data' => $new_post,
+						'type'      => 'post',
+					);
+				}
+
+				$attachment_url = wp_get_attachment_url( $post_id );
+				// before making a PHOTO request, we need to make sure the post has an image attached.
+				if ( false !== $attachment_url ) {
+					// Where $post_id is attachment ID.
+					// The source and url, one of these parameters will become unset later on, as only 1 is used for posting.
+					$new_post['source']  = $this->get_path_by_url( $attachment_url, get_post_mime_type( $post_id ) ); // get image path
+					$new_post['url']     = $attachment_url; // get image url
+					$new_post['caption'] = $post_details['content'] . $this->get_url( $post_details ) . $post_details['hashtags'];
+
+					return array(
+						'post_data' => $new_post,
+						'type'      => 'photo',
+					);
+
+				} else { // If there is not attachment image the request becomes POST.
+					$new_post['message'] = $post_details['content'] . $post_details['hashtags'];
+					$new_post['link']    = get_permalink( $post_id );
+
+					return array(
+						'post_data' => $new_post,
+						'type'      => 'post',
+					);
+				}
+			}
+
+			// If is regular post, but post with image option checked, post as Image on FB
+			if ( get_post_type( $post_id ) !== 'attachment' && ! empty( $post_details['post_image'] ) ) {
+				// The source and url, one of these parameters will become unset later on, as only 1 is used for posting.
+				$new_post['url']     = $post_details['post_image'];// get image url
+				$new_post['source']  = $this->get_path_by_url( $post_details['post_image'], $post_details['mimetype'] ); // get image path
+				$new_post['caption'] = $post_details['content'] . $this->get_url( $post_details ) . $post_details['hashtags'];
+
+				return array(
+					'post_data' => $new_post,
+					'type'      => 'photo',
+				);
+
+			}
+		}
+
+		// if regular post, but "Include link" is selected in Post Format settings, post as normal article post
 		if ( get_post_type( $post_id ) !== 'attachment' && ! empty( $post_details['post_url'] ) ) {
 
 			$new_post['message'] = $this->strip_excess_blank_lines( $post_details['content'] ) . $post_details['hashtags'];
 
-			if ( ! empty( $post_details['post_url'] ) ) {
-				$new_post['name'] = html_entity_decode( get_the_title( $post_details['post_id'] ) );
-				$new_post['link'] = $this->get_url( $post_details );
-			}
-			if ( ! empty( $post_details['post_image'] ) ) {
-				$new_post['picture'] = $post_details['post_image'];
-			}
+			$new_post['link'] = $this->get_url( $post_details );
 
-			return [
+			return array(
 				'post_data' => $new_post,
 				'type'      => 'post',
-			];
+			);
 		}
 
-		// If we don't have an image link share as regular post.
-		if ( empty( $post_details['post_image'] ) ) {
+		// if we don't have "Post with image", nor "Include link" checked in Post Format settings, post as text post.
+		if ( get_post_type( $post_id ) !== 'attachment' && empty( $post_details['post_image'] ) && empty( $post_details['post_url'] ) ) {
 
 			$new_post['message'] = $post_details['content'] . $post_details['hashtags'];
 
-			if ( ! empty( $post_details['post_url'] ) ) {
-				$new_post['name'] = html_entity_decode( get_the_title( $post_details['post_id'] ) );
-				$new_post['link'] = $this->get_url( $post_details );
-			}
-
-			return [
+			return array(
 				'post_data' => $new_post,
 				'type'      => 'post',
-			];
+			);
 		}
 
 		$api = $this->get_api();
 
 		if ( strpos( $post_details['mimetype']['type'], 'image' ) !== false ) {
-
-			$new_post['source'] = $api->fileToUpload( $post_details['post_image'] );
+			$image              = $this->get_path_by_url( $post_details['post_image'], $post_details['mimetype'] );
+			$new_post['source'] = $api->fileToUpload( $image );
 
 			$new_post['message'] = $post_details['content'] . $this->get_url( $post_details ) . $post_details['hashtags'];
 
-			return [
+			return array(
 				'post_data' => $new_post,
 				'type'      => 'photo',
-			];
+			);
 		}
 		if ( strpos( $post_details['mimetype']['type'], 'video' ) !== false ) {
-
-			$new_post['source']      = $api->fileToUpload( $post_details['post_image'] );
+			$image                   = $this->get_path_by_url( $post_details['post_image'], $post_details['mimetype'] );
+			$new_post['source']      = $api->videoToUpload( $image );
 			$new_post['title']       = html_entity_decode( get_the_title( $post_id ) );
 			$new_post['description'] = $post_details['content'] . $this->get_url( $post_details ) . $post_details['hashtags'];
 
-			return [
+			return array(
 				'post_data' => $new_post,
 				'type'      => 'video',
-			];
+			);
 		}
-
 	}
 
 	/**
@@ -578,33 +632,375 @@ class Rop_Facebook_Service extends Rop_Services_Abstract {
 	 * @return bool
 	 */
 	private function try_post( $new_post, $page_id, $token, $post_id, $posting_type ) {
+		$path = '/' . $page_id . '/feed';
+		switch ( $posting_type ) {
+			case 'photo':
+				$path = '/' . $page_id . '/photos';
+				break;
+			case 'video':
+				$path = '/' . $page_id . '/videos';
+				break;
+			default:
+				break;
+		}
 
 		$this->set_api( $this->credentials['app_id'], $this->credentials['secret'] );
-		$api = $this->get_api();
 
-		try {
-			switch ( $posting_type ) {
-				case 'photo':
-					$api->post( '/' . $page_id . '/photos', $new_post, $token );
-					break;
-				case 'video':
-					$api->post( '/' . $page_id . '/videos', $new_post, $token );
-					break;
-				default:
-					$api->post( '/' . $page_id . '/feed', $new_post, $token );
-					break;
+		if ( $this->get_api() ) {
+			// Page was added using user application (old method)
+			// Try post via Facebook Graph SDK
+			$api = $this->get_api();
+			try {
+
+				// Scrape post URL before sharing
+				if ( isset( $new_post['link'] ) ) {
+					$this->rop_fb_scrape_url( $posting_type, $post_id, $token );
+				}
+
+				$api->post( $path, $new_post, $token );
+
+				return true;
+			} catch ( Facebook\Exceptions\FacebookResponseException $e ) {
+				$error_message = $e->getMessage();
+
+				if (
+					strpos( $error_message, '(#100)' ) !== false &&
+					(
+						! empty( $new_post['name'] ) ||
+						( ! empty( $new_post['link'] ) && isset( $new_post['message'] ) )
+					)
+				) {
+					// https://developers.facebook.com/docs/graph-api/reference/v3.2/page/feed#custom-image
+					// retry without name and with link inside message.
+					if ( isset( $new_post['name'] ) ) {
+						unset( $new_post['name'] );
+					}
+					if ( ! empty( $new_post['link'] ) && isset( $new_post['message'] ) ) {
+						$new_post['message'] .= $new_post['link'];
+						unset( $new_post['link'] );
+					}
+
+					try {
+						$api->post( $path, $new_post, $token );
+
+						return true;
+					} catch ( Facebook\Exceptions\FacebookResponseException $e ) {
+						$this->logger->alert_error( 'Unable to share post for facebook. (FacebookResponseException) Error: ' . $e->getMessage() );
+						$this->rop_get_error_docs( $e->getMessage() );
+
+						return false;
+					} catch ( Facebook\Exceptions\FacebookSDKException $e ) {
+						$this->logger->alert_error( 'Unable to share post for facebook.  Error: ' . $e->getMessage() );
+						$this->rop_get_error_docs( $e->getMessage() );
+
+						return false;
+					}
+				} else {
+					$this->logger->alert_error( 'Unable to share post for facebook. (FacebookResponseException) Error: ' . $error_message );
+					$this->rop_get_error_docs( $e->getMessage() );
+
+					return false;
+				}
+			} catch ( Facebook\Exceptions\FacebookSDKException $e ) {
+				$this->logger->alert_error( 'Unable to share post for facebook.  Error: ' . $e->getMessage() );
+				$this->rop_get_error_docs( $e->getMessage() );
+
+				return false;
+			}
+		} else {
+			// Page was added using ROP application (new method)
+			$post_data                 = $new_post;
+			$post_data['access_token'] = $token;
+
+			if ( 'video' === $posting_type ) {
+				$url = 'https://graph-video.facebook.com' . $path;
+			} else {
+				$url = 'https://graph.facebook.com' . $path;
 			}
 
-			return true;
-		} catch ( Facebook\Exceptions\FacebookResponseException $e ) {
-			$this->logger->alert_error( 'Unable to share post for facebook.  Error: ' . $e->getMessage() );
+			// Scrape post URL before sharing
+			if ( isset( $post_data['link'] ) ) {
+				$this->rop_fb_scrape_url( $posting_type, $post_id, $token );
+			}
 
-			return false;
-		} catch ( Facebook\Exceptions\FacebookSDKException $e ) {
-			$this->logger->alert_error( 'Unable to share post for facebook.  Error: ' . $e->getMessage() );
+			// Hold this value for now
+			$attachment_url  = '';
+			$attachment_path = '';
 
+			if ( isset( $post_data['url'] ) ) {
+				$attachment_url = trim( $post_data['url'] );
+				unset( $post_data['url'] ); // Unset from posting parameters
+			}
+
+			if ( isset( $post_data['source'] ) ) {
+				$attachment_path = $post_data['source'];
+				unset( $post_data['source'] ); // Remove image path as it's not needed and it might create an error.
+			}
+
+			// If the cURL library is installed and usable
+			if ( $this->is_curl_active() && ! empty( $attachment_path ) && false === $this->is_remote_file( $attachment_path ) ) {
+				$post_data['source'] = new CurlFile( realpath( $attachment_path ), mime_content_type( $attachment_path ) );
+
+				// Send the request via cURL
+				$body     = $this->remote_post_curl( $url, $post_data );
+				$response = $body; // Compatible with the code before.
+
+				// If the previous request failed, let's try over HTTP request.
+				if ( isset( $body['error'] ) ) {
+					if ( ! empty( $attachment_url ) ) {
+						$post_data['url'] = $attachment_url; // To use HTTP request, we need image url back.
+					}
+					if ( isset( $post_data['source'] ) ) {
+						unset( $post_data['source'] );
+					}
+
+					// Send the request via http request.
+					$sent_request = $this->remote_post_http( $url, $post_data );
+					$response     = $sent_request['response'];
+					$body         = $sent_request['body'];
+				}
+			} else {
+
+				if ( ! empty( $attachment_url ) ) {
+					$post_data['url'] = $attachment_url; // To use HTTP request, we need image url back.
+				}
+				// Send the request via http request.
+				$sent_request = $this->remote_post_http( $url, $post_data );
+				$response     = $sent_request['response'];
+				$body         = $sent_request['body'];
+			}
+
+			if ( ! empty( $body['id'] ) ) {
+				return true;
+			} elseif ( ! empty( $body['error']['message'] ) ) {
+				if (
+					strpos( $body['error']['message'], '(#100)' ) !== false &&
+					(
+						! empty( $post_data['name'] ) ||
+						( ! empty( $post_data['link'] ) && isset( $post_data['message'] ) )
+					)
+				) {
+					// https://developers.facebook.com/docs/graph-api/reference/v3.2/page/feed#custom-image
+					// retry without name and with link inside message.
+					if ( isset( $post_data['name'] ) ) {
+						unset( $post_data['name'] );
+					}
+					if ( ! empty( $post_data['link'] ) && isset( $post_data['message'] ) ) {
+						$post_data['message'] .= $post_data['link'];
+						unset( $post_data['link'] );
+					}
+
+					if ( isset( $post_data['source'] ) ) {
+						unset( $post_data['source'] );
+					}
+					if ( isset( $post_data['url'] ) ) {
+						unset( $post_data['url'] );
+					}
+
+					// If the cURL library is installed and usable
+					if ( $this->is_curl_active() && ! empty( $attachment_path ) && false === $this->is_remote_file( $attachment_path ) ) {
+						$post_data['source'] = new CurlFile( realpath( $attachment_path ), mime_content_type( $attachment_path ) );
+
+						// Send the request via cURL
+						$body     = $this->remote_post_curl( $url, $post_data );
+						$response = $body; // Compatible with the code before.
+
+						// If the previous request failed, let's try over HTTP request.
+						if ( isset( $body['error'] ) ) {
+							if ( ! empty( $attachment_url ) ) {
+								$post_data['url'] = $attachment_url; // To use HTTP request, we need image url back.
+							}
+							if ( isset( $post_data['source'] ) ) {
+								unset( $post_data['source'] );
+							}
+							// Send the request via http request.
+							$sent_request = $this->remote_post_http( $url, $post_data );
+							$response     = $sent_request['response'];
+							$body         = $sent_request['body'];
+						}
+					} else {
+
+						if ( ! empty( $attachment_url ) ) {
+							$post_data['url'] = $attachment_url; // To use HTTP request, we need image url back.
+						}
+						// Send the request via http request.
+						$sent_request = $this->remote_post_http( $url, $post_data );
+						$response     = $sent_request['response'];
+						$body         = $sent_request['body'];
+					}
+
+					if ( ! empty( $body['id'] ) ) {
+						return true;
+					} elseif ( ! empty( $body['error']['message'] ) ) {
+						$this->logger->alert_error( 'Error Posting to Facebook: ' . $body['error']['message'] );
+						$this->rop_get_error_docs( $body['error']['message'] );
+
+						return false;
+					} else {
+						$this->logger->alert_error( 'Error Posting to Facebook, response: ' . print_r( $response, true ) );
+
+						return false;
+					}
+				} else {
+					$this->logger->alert_error( 'Error Posting to Facebook: ' . $body['error']['message'] );
+					$this->rop_get_error_docs( $body['error']['message'] );
+
+					return false;
+				}
+			} else {
+				$this->logger->alert_error( 'Error Posting to Facebook, response: ' . print_r( $response, true ) );
+
+				return false;
+			}
+		}
+	}
+
+
+	/**
+	 * Post to FB using cURL module.
+	 *
+	 * @param string $url Facebook link path.
+	 * @param array  $post_data Data to be posted.
+	 *
+	 * @since 8.5.0
+	 *
+	 * @return array|mixed|object
+	 */
+	public function remote_post_curl( $url = '', $post_data = array() ) {
+
+		$connection = curl_init();
+		curl_setopt( $connection, CURLOPT_URL, $url );
+		curl_setopt( $connection, CURLOPT_HTTPHEADER, array( 'Content-Type: multipart/form-data' ) );
+		curl_setopt( $connection, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $connection, CURLOPT_POST, true );
+		curl_setopt( $connection, CURLOPT_POSTFIELDS, $post_data );
+		$data = curl_exec( $connection );
+
+		return json_decode( $data, true );
+	}
+
+	/**
+	 * Post to FB using the WordPress function.
+	 *
+	 * @param string $url Facebook link path.
+	 * @param array  $post_data Data to be posted.
+	 *
+	 * @since 8.5.0
+	 *
+	 * @return array|mixed|object
+	 */
+	public function remote_post_http( $url = '', $post_data = array() ) {
+		$response = wp_remote_post(
+			$url,
+			array(
+
+				'body'    => $post_data,
+				'headers' => array(
+					'Content-Type' => 'application/x-www-form-urlencoded',
+				),
+				'timeout' => 60,
+
+			)
+		);
+
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		return array(
+			'response' => $response,
+			'body'     => $body,
+		);
+	}
+
+	/**
+	 * Method to add pages.
+	 * Used in Rest Api.
+	 *
+	 * @since   8.3.0
+	 * @access  public
+	 *
+	 * @param   array $account_data Facebook pages data.
+	 *
+	 * @return  bool
+	 */
+	public function add_account_with_app( $account_data ) {
+		if ( ! $this->is_set_not_empty( $account_data, array( 'id', 'pages' ) ) ) {
 			return false;
 		}
+
+		$accounts = array();
+
+		$pages_arr = $account_data['pages'];
+
+		for ( $i = 0; $i < sizeof( $pages_arr ); $i ++ ) {
+
+			$page_data = unserialize( base64_decode( $pages_arr[ $i ] ) );
+			// assign default values to variable
+			$page                 = $this->user_default;
+			$page['id']           = $page_data['id'];
+			$page['user']         = $this->normalize_string( empty( $page_data['name'] ) ? '' : $page_data['name'] );
+			$page['account']      = $page_data['email'];
+			$page['img']          = $page_data['img'];
+			$page['access_token'] = $page_data['access_token'];
+			if ( $i == 0 ) {
+				$page['active'] = true;
+			} else {
+				$page['active'] = false;
+			}
+			$accounts[] = $page;
+		}
+
+		$this->service = array(
+			'id'                 => unserialize( base64_decode( $account_data['id'] ) ),
+			'service'            => $this->service_name,
+			'credentials'        => $this->credentials,
+			'available_accounts' => $accounts,
+		);
+
+		return true;
+	}
+
+	/**
+	 * Method to scrape post URLs before sharing.
+	 *
+	 * Facebook crawler caches post details, this method ensures the shared post always reflects the correct info
+	 *
+	 * @since   8.5.0
+	 * @access  public
+	 *
+	 * @param   array $posting_type The type of post being created.
+	 * @param   array $post_id The post id.
+	 * @param   array $token The access token.
+	 */
+	public function rop_fb_scrape_url( $posting_type, $post_id, $token ) {
+
+		// Scrape post URL before sharing
+		if ( $posting_type !== 'video' && $posting_type !== 'photo' ) {
+
+			$scrape = array();
+			$url = get_permalink( $post_id );
+
+			$scrape['id']           = $url . '?scrape=true';
+			$scrape['access_token'] = $token;
+
+			$scrape_response = wp_remote_post(
+				'https://graph.facebook.com',
+				array(
+
+					'body'    => $scrape,
+					'headers' => array(
+						'Content-Type' => 'application/x-www-form-urlencoded',
+					),
+					'timeout' => 60,
+
+				)
+			);
+
+			$body = wp_remote_retrieve_body( $scrape_response );
+
+			$this->logger->info( 'Scrape Info: ' . $body );
+
+		}
+
 	}
 
 }

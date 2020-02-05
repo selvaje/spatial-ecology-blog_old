@@ -182,7 +182,7 @@ Template 2
 	display: inline-block;
 	float: left;
 	margin-right: 10px;
-	font-family: FontAwesome;
+	font-family: dashicons;
 	font-size: 25px;
 	-webkit-font-smoothing: antialiased;
 	line-height: 1;
@@ -197,7 +197,7 @@ Template 2
 }
 
 .wppr-template-2 .wppr-review-option-rating li:before {
-	content: "\f005";
+	content: "\f155";
 }
 
 .wppr-template-2.rtl .affiliate-button a span {

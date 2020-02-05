@@ -595,7 +595,7 @@ class PirateForms_Public {
 			if ( array_key_exists( 'HTTP_X_FORWARDED_FOR', $_SERVER ) ) {
 				$contact_ip_tmp = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
 				if ( ! empty( $contact_ip_tmp ) ) {
-					$contact_ip = array_pop( $contact_ip_tmp );
+					$contact_ip = filter_var( array_pop( $contact_ip_tmp ), FILTER_VALIDATE_IP );
 				}
 			}
 

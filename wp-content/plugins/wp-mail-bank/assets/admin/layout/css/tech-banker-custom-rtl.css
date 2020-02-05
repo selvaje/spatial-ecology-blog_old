@@ -165,7 +165,12 @@ div.loader_opacity
 }
 .form-group select
 {
-	 height: 34px;
+	height: 34px;
+	max-width: 100%;
+}
+.form-group input[type=text]
+{
+	height: 34px;
 }
 .line-separator
 {
@@ -494,9 +499,4 @@ div.dataTables_wrapper div.dataTables_length label
 {
 	 margin-right : 0px !important;
 	 margin-left : 0px !important
-}
-.row-bg
-{
-	 background-color : #e1e1e1;
-	 padding : 20px 0px 20px 0px;
 }

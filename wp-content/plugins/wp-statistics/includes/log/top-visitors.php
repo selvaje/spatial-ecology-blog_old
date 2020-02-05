@@ -30,7 +30,18 @@ include( WP_Statistics::$reg['plugin-dir'] . 'includes/log/widgets/top.visitors.
 	echo '<input type="hidden" name="statsdate" id="stats-date" value="' . $rang_start . '">';
 	echo '</form>' . "\r\n";
 
-	echo '<script>jQuery(function() { jQuery( "#statsdate" ).datepicker({dateFormat: \'' . wp_statistics_dateformat_php_to_jqueryui( get_option( "date_format" ) ) . '\', onSelect: function(selectedDate) {var v = jQuery(this).val(), d = new Date(v);if (v.length > 0) {jQuery("#rangeend").val(d.toISOString().split(\'T\')[0]);}}}); } );</script>' . "\r\n";
+	echo '<script src="' . WP_Statistics::$reg['plugin-url'] . 'assets/js/moment.min.js?ver=2.24.0"></script>';
+	echo '<script>
+        jQuery(function() { 
+        jQuery( "#statsdate" ).datepicker({dateFormat: \'' . wp_statistics_dateformat_php_to_jqueryui( get_option( "date_format" ) ) . '\', 
+        onSelect: function(selectedDate) {
+            if (selectedDate.length > 0) {
+                jQuery("#stats-date").val(moment(selectedDate, \'' . wp_statistics_convert_php_to_moment_js( get_option( "date_format" ) ) . '\').format(\'YYYY-MM-DD\'));
+            }
+        }
+        });
+        });
+        </script>' . "\r\n";
 
 	?>
     <div class="postbox-container" id="last-log" style="width: 100%;">

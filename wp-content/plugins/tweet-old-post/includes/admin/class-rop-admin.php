@@ -59,7 +59,29 @@ class Rop_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 		$this->set_allowed_screens();
+		add_action( 'admin_notices', array( &$this, 'display_global_status_warning' ) );
+	}
 
+
+	/**
+	 * Will display an admin notice if there are ROP_STATUS_ALERT consecutive errors.
+	 *
+	 * @since 8.4.4
+	 * @access public
+	 */
+	public function display_global_status_warning() {
+		$log                  = new Rop_Logger();
+		$is_status_logs_alert = $log->is_status_error_necessary(); // true | false
+		if ( $is_status_logs_alert ) {
+			?>
+			<div class="notice notice-error is-dismissible">
+				<p>
+					<strong><?php echo esc_html( Rop_I18n::get_labels( 'general.plugin_name' ) ); ?></strong>:
+					<?php echo Rop_I18n::get_labels( 'general.status_error_global' ); ?>
+				</p>
+			</div>
+			<?php
+		}
 	}
 
 	/**
@@ -95,7 +117,7 @@ class Rop_Admin {
 	 */
 	public function check_shortener_service( $shortener ) {
 
-		$model = new Rop_Post_Format_Model;
+		$model       = new Rop_Post_Format_Model;
 		$post_format = $model->get_post_format();
 
 		$shorteners = array();
@@ -124,10 +146,10 @@ class Rop_Admin {
 			return;
 		}
 		?>
-			<div class="notice notice-error is-dismissible">
-				<?php echo sprintf( __( '%1$s%2$sRevive Old Posts:%3$s Please upgrade your Bit.ly keys. See this %4$sarticle for instructions.%5$s%6$s', 'tweet-old-post' ), '<p>', '<b>', '</b>', '<a href="https://docs.revive.social/article/976-how-to-connect-bit-ly-to-revive-old-posts" target="_blank">', '</a>', '</p>' ); ?>
-			</div>
-			<?php
+		<div class="notice notice-error is-dismissible">
+			<?php echo sprintf( __( '%1$s%2$sRevive Old Posts:%3$s Please upgrade your Bit.ly keys. See this %4$sarticle for instructions.%5$s%6$s', 'tweet-old-post' ), '<p>', '<b>', '</b>', '<a href="https://docs.revive.social/article/976-how-to-connect-bit-ly-to-revive-old-posts" target="_blank">', '</a>', '</p>' ); ?>
+		</div>
+		<?php
 	}
 
 	/**
@@ -139,7 +161,7 @@ class Rop_Admin {
 
 		$general_settings = new Rop_Settings_Model;
 
-		$post_types = wp_list_pluck( $general_settings->get_selected_post_types(), 'value' );
+		$post_types           = wp_list_pluck( $general_settings->get_selected_post_types(), 'value' );
 		$attachment_post_type = array_search( 'attachment', $post_types );
 
 		if ( ! empty( $attachment_post_type ) ) {
@@ -186,6 +208,20 @@ class Rop_Admin {
 	}
 
 	/**
+	 * Whether we will display the toast message related to facebook
+	 *
+	 * @since 8.4.3
+	 *
+	 * @return mixed
+	 */
+	private function facebook_exception_toast_display() {
+		$show_the_toast = get_option( 'rop_facebook_domain_toast', 'no' );
+		// Will comment this return for now, might be of use later on.
+		// return filter_var( $show_the_toast, FILTER_VALIDATE_BOOLEAN );
+		return false;
+	}
+
+	/**
 	 * Register the JavaScript for the admin area.
 	 *
 	 * @since    8.0.0
@@ -211,19 +247,46 @@ class Rop_Admin {
 		}
 
 		$services        = new Rop_Services_Model();
+		$li_service      = new Rop_Linkedin_Service();
 		$active_accounts = $services->get_active_accounts();
 
-		$global_settings             = new Rop_Global_Settings();
-		$settings                   = new Rop_Settings_Model();
+		$added_services = $services->get_authenticated_services();
+		$added_networks = 0;
+		if ( $added_services ) {
+			$added_networks = count( array_unique( wp_list_pluck( array_values( $added_services ), 'service' ) ) );
+		}
 
-		$array_nonce['license_type'] = $global_settings->license_type();
-		$array_nonce['labels']       = Rop_I18n::get_labels();
-		$array_nonce['upsell_link']  = Rop_I18n::UPSELL_LINK;
-		$array_nonce['staging']      = $this->rop_site_is_staging();
-		$array_nonce['debug']        = ( ( ROP_DEBUG ) ? 'yes' : 'no' );
-		$array_nonce['publish_now']  = array(
+		$global_settings = new Rop_Global_Settings();
+		$settings        = new Rop_Settings_Model();
+
+		$array_nonce['license_type']            = $global_settings->license_type();
+		$array_nonce['fb_domain_toast_display'] = $this->facebook_exception_toast_display();
+		$array_nonce['labels']                  = Rop_I18n::get_labels();
+		$array_nonce['upsell_link']             = Rop_I18n::UPSELL_LINK;
+		$array_nonce['pro_installed']           = ( defined( 'ROP_PRO_VERSION' ) ) ? true : false;
+		$array_nonce['staging']                 = $this->rop_site_is_staging();
+		$array_nonce['show_li_app_btn']         = $li_service->rop_show_li_app_btn();
+		$array_nonce['debug']                   = ( ( ROP_DEBUG ) ? 'yes' : 'no' );
+		$array_nonce['publish_now']             = array(
 			'action'   => $settings->get_instant_sharing_by_default(),
 			'accounts' => $active_accounts,
+		);
+		$array_nonce['added_networks']          = $added_networks;
+
+		$admin_url = get_admin_url( get_current_blog_id(), 'admin.php?page=TweetOldPost' );
+		$token     = get_option( ROP_APP_TOKEN_OPTION );
+		$signature = md5( $admin_url . $token );
+
+		$rop_auth_app_data = array(
+			'adminEmail'          => base64_encode( get_option( 'admin_email' ) ),
+			'authAppUrl'          => ROP_AUTH_APP_URL,
+			'authAppFacebookPath' => ROP_APP_FACEBOOK_PATH,
+			'authAppTwitterPath'  => ROP_APP_TWITTER_PATH,
+			'authAppLinkedInPath' => ROP_APP_LINKEDIN_PATH,
+			'authAppBufferPath'   => ROP_APP_BUFFER_PATH,
+			'authToken'           => $token,
+			'adminUrl'            => urlencode( $admin_url ),
+			'authSignature'       => $signature,
 		);
 
 		if ( 'publish_now' === $page ) {
@@ -233,6 +296,7 @@ class Rop_Admin {
 
 		wp_localize_script( $this->plugin_name . '-' . $page, 'ropApiSettings', $array_nonce );
 		wp_localize_script( $this->plugin_name . '-' . $page, 'ROP_ASSETS_URL', ROP_LITE_URL . 'assets/' );
+		wp_localize_script( $this->plugin_name . '-' . $page, 'ropAuthAppData', $rop_auth_app_data );
 		wp_enqueue_script( $this->plugin_name . '-' . $page );
 
 	}
@@ -328,7 +392,7 @@ class Rop_Admin {
 		/**
 		 * For twitter we don't have code/state params.
 		 */
-		if ( ( empty( $code ) || empty( $state ) ) && $network !== 'twitter' ) {
+		if ( ( empty( $code ) && empty( $state ) ) && $network !== 'twitter' ) {
 			return;
 		}
 
@@ -340,6 +404,7 @@ class Rop_Admin {
 		if ( ( empty( $oauth_token ) || empty( $oauth_verifier ) ) && $network === 'twitter' ) {
 			return;
 		}
+
 		switch ( $network ) {
 			case 'linkedin':
 				$lk_service = new Rop_Linkedin_Service();
@@ -352,6 +417,10 @@ class Rop_Admin {
 			case 'pinterest':
 				$pinterest_service = new Rop_Pinterest_Service();
 				$pinterest_service->authorize();
+				break;
+			case 'buffer':
+				$buffer_service = new Rop_Buffer_Service();
+				$buffer_service->authorize();
 				break;
 			default:
 				$fb_service = new Rop_Facebook_Service();
@@ -444,6 +513,30 @@ class Rop_Admin {
 				'content_filters',
 			)
 		);
+
+		add_submenu_page(
+			'TweetOldPost',
+			__( 'Roadmap', 'tweet-old-post' ),
+			__( 'Plugin Roadmap', 'tweet-old-post' ),
+			'manage_options',
+			'https://trello.com/b/svAZqXO1/roadmap-revive-old-posts'
+		);
+	}
+
+	/**
+	 * Open roadmap in new tab
+	 *
+	 * @since   8.5.0
+	 * @access  public
+	 */
+	function rop_roadmap_new_tab() {
+		?>
+		<script type="text/javascript">
+			jQuery(document).ready(function ($) {
+				$("ul#adminmenu a[href$='https://trello.com/b/svAZqXO1/roadmap-revive-old-posts']").attr('target', '_blank');
+			});
+		</script>
+		<?php
 	}
 
 	/**
@@ -458,13 +551,13 @@ class Rop_Admin {
 			return;
 		}
 		$global_settings = new Rop_Global_Settings;
-		$settings = new Rop_Settings_Model;
+		$settings        = new Rop_Settings_Model;
 
 		$services        = new Rop_Services_Model();
 		$active_accounts = $services->get_active_accounts();
 
 		if ( $settings->get_instant_sharing() && count( $active_accounts ) >= 2 && ! defined( 'ROP_PRO_VERSION' ) ) {
-			echo '<div class="misc-pub-section  " style="font-size: 13px;text-align: center;line-height: 1.7em;color: #888;"><span class="dashicons dashicons-lock"></span>' .
+			echo '<div class="misc-pub-section  " style="font-size: 11px;text-align: center;line-height: 1.7em;color: #888;"><span class="dashicons dashicons-lock"></span>' .
 				__(
 					'Share to more accounts by upgrading to the extended version for ',
 					'tweet-old-post'
@@ -472,6 +565,54 @@ class Rop_Admin {
 						</div>';
 		}
 	}
+
+	/**
+	 * Creates publish now metabox.
+	 *
+	 * @since   8.5.0
+	 * @access  public
+	 */
+	public function rop_publish_now_metabox() {
+
+		$settings_model = new Rop_Settings_Model();
+		// Get selected post types from General settings
+		$screens = wp_list_pluck( $settings_model->get_selected_post_types(), 'value' );
+
+		if ( empty( $screens ) ) {
+			return;
+		}
+
+		if ( ! $settings_model->get_instant_sharing() ) {
+			return;
+		}
+
+		foreach ( $screens as $screen ) {
+			add_meta_box(
+				'rop_publish_now_metabox',
+				'Revive Old Posts',
+				array( $this, 'rop_publish_now_metabox_html' ),
+				$screen,
+				'side',
+				'high'
+			);
+		}
+	}
+
+	/**
+	 * Publish now metabox html.
+	 *
+	 * @since   8.5.0
+	 * @access  public
+	 */
+	public function rop_publish_now_metabox_html() {
+
+		wp_nonce_field( 'rop_publish_now_nonce', 'rop_publish_now_nonce' );
+		include_once ROP_LITE_PATH . '/includes/admin/views/publish_now.php';
+
+		$this->publish_now_upsell();
+
+	}
+
 
 	/**
 	 * Adds the publish now buttons.
@@ -496,11 +637,11 @@ class Rop_Admin {
 		}
 	}
 
-		/**
-		 * Publish now attributes to be provided to the javascript.
-		 *
-		 * @param   array $default The default attributes.
-		 */
+	/**
+	 * Publish now attributes to be provided to the javascript.
+	 *
+	 * @param   array $default The default attributes.
+	 */
 	public function publish_now_attributes( $default ) {
 		global $post;
 
@@ -512,11 +653,11 @@ class Rop_Admin {
 		return $default;
 	}
 
-		/**
-		 * Publish now, if enabled.
-		 *
-		 * @param   int $post_id The post ID.
-		 */
+	/**
+	 * Publish now, if enabled.
+	 *
+	 * @param   int $post_id The post ID.
+	 */
 	public function maybe_publish_now( $post_id ) {
 		if ( ! isset( $_POST['rop_publish_now_nonce'] ) || ! wp_verify_nonce( $_POST['rop_publish_now_nonce'], 'rop_publish_now_nonce' ) ) {
 			return;
@@ -539,6 +680,10 @@ class Rop_Admin {
 
 		$enabled = $_POST['publish_now_accounts'];
 
+		if ( ! is_array( $enabled ) ) {
+			$enabled = array();
+		}
+
 		$services = new Rop_Services_Model();
 		$active   = array_keys( $services->get_active_accounts() );
 		// has something been added extra?
@@ -555,6 +700,63 @@ class Rop_Admin {
 
 		$cron = new Rop_Cron_Helper();
 		$cron->manage_cron( array( 'action' => 'publish-now' ) );
+	}
+
+	/**
+	 * Method to share future scheduled WP posts to social media on publish.
+	 *
+	 * @since   8.5.2
+	 *
+	 * @param   object $post The post object.
+	 * @access  public
+	 */
+	public function share_scheduled_future_post( $post ) {
+
+		$settings = new Rop_Settings_Model();
+		$selected_post_types = wp_list_pluck( $settings->get_selected_post_types(), 'value' );
+
+		if ( ! $settings->get_instant_share_future_scheduled() ) {
+			return;
+		}
+
+		if ( ! in_array( $post->post_type, $selected_post_types ) ) {
+			return;
+		}
+
+		// get taxonomies selected in general settings
+		$selected_taxonomies = $settings->get_selected_taxonomies();
+
+		if ( ! empty( $selected_taxonomies ) ) {
+
+			// check if "Exclude" is checked
+			$taxonomies_are_excluded = $settings->get_exclude_taxonomies();
+
+			$taxonomies = array();
+			foreach ( $selected_taxonomies as $key => $value ) {
+				$taxonomies[] = $value['tax'];
+			}
+
+			// check if current post has any of the taxonomies set in general settings
+			$post_terms = wp_get_post_terms( $post->ID, $taxonomies );
+			// if the post contains any of the taxonomies that are exluded, bail
+			if ( ! empty( $post_terms ) && $taxonomies_are_excluded ) {
+				return;
+			}
+			// if the post doesn't contain any of the selected taxonomies that are whitelisted for posting, bail
+			if ( empty( $post_terms ) && ! $taxonomies_are_excluded ) {
+				return;
+			}
+		}
+
+		$services = new Rop_Services_Model();
+		$active  = array_keys( $services->get_active_accounts() );
+
+		update_post_meta( $post->ID, 'rop_publish_now', 'yes' );
+		update_post_meta( $post->ID, 'rop_publish_now_accounts', $active );
+
+		$cron = new Rop_Cron_Helper();
+		$cron->manage_cron( array( 'action' => 'publish-now' ) );
+
 	}
 
 
@@ -619,6 +821,16 @@ class Rop_Admin {
 	}
 
 	/**
+	 * Used for Cron Job sharing that will run once.
+	 *
+	 * @since 8.5.0
+	 */
+	public function rop_cron_job_once() {
+		$this->rop_cron_job();
+
+	}
+
+	/**
 	 * The Cron Job for the plugin.
 	 *
 	 * @since   8.0.0
@@ -654,13 +866,260 @@ class Rop_Admin {
 							}
 						} catch ( Exception $exception ) {
 							$error_message = sprintf( Rop_I18n::get_labels( 'accounts.service_error' ), $account_data['service'] );
-							$logger->alert_error( $error_message . ' Error: ' . $exception->getTrace() );
+							$logger->alert_error( $error_message . ' Error: ' . $exception->getMessage() );
 						}
 					}
 				}
 			}
 		}
 		$cron->create_cron( false );
+	}
+
+	/**
+	 * Linkedin API upgrade notice.
+	 *
+	 * @since   8.2.3
+	 * @access  public
+	 */
+	public function rop_linkedin_api_v2_notice() {
+
+		if ( ! current_user_can( 'install_plugins' ) ) {
+			return;
+		}
+
+		// This option was introduced the same time we updated Linkedin API to v2.
+		// Gets created on plugin activation hook, old installs would not have this option.
+		// So we return in case this is a brand new install.
+		if ( ! empty( get_option( 'rop_first_install_version' ) ) ) {
+			return;
+		}
+
+		$user_id = get_current_user_id();
+
+		if ( get_user_meta( $user_id, 'rop-linkedin-api-notice-dismissed' ) ) {
+			return;
+		}
+
+		$show_notice = false;
+
+		$services_model = new Rop_Services_Model();
+
+		$services = $services_model->get_authenticated_services();
+
+		foreach ( $services as $key => $value ) {
+
+			if ( $value['service'] == 'linkedin' ) {
+				$show_notice = true;
+				break;
+			}
+		}
+
+		if ( $show_notice == false ) {
+			return;
+		}
+
+		?>
+		<div class="notice notice-error">
+			<?php echo sprintf( __( '%1$s%2$sRevive Old Posts:%3$s The Linkedin API Has been updated. You need to reconnect your LinkedIn account to continue posting to LinkedIn. Please see %4$sthis article for instructions.%5$s%6$s%7$s', 'tweet-old-post' ), '<p>', '<b>', '</b>', '<a href="https://docs.revive.social/article/1040-how-to-move-to-linkedin-api-v2" target="_blank">', '</a>', '<a style="float: right;" href="?rop-linkedin-api-notice-dismissed">Dismiss</a>', '</p>' ); ?>
+
+		</div>
+		<?php
+
+	}
+
+	/**
+	 * Dismiss Linkedin API upgrade notice.
+	 *
+	 * @since   8.2.3
+	 * @access  public
+	 */
+	public function rop_dismiss_linkedin_api_v2_notice() {
+		$user_id = get_current_user_id();
+		if ( isset( $_GET['rop-linkedin-api-notice-dismissed'] ) ) {
+			add_user_meta( $user_id, 'rop-linkedin-api-notice-dismissed', 'true', true );
+		}
+
+	}
+
+
+	/**
+	 * Disable Cron Jobs on refresh if remove_cron() method was called
+	 *
+	 * @since 8.5.0
+	 */
+	public function check_cron_status() {
+		$key             = 'rop_is_sharing_cron_active';
+		$should_cron_run = get_option( $key, 'yes' );
+		$should_cron_run = filter_var( $should_cron_run, FILTER_VALIDATE_BOOLEAN );
+		if ( false === $should_cron_run ) {
+			wp_clear_scheduled_hook( Rop_Cron_Helper::CRON_NAMESPACE );
+			wp_clear_scheduled_hook( Rop_Cron_Helper::CRON_NAMESPACE_ONCE );
+		}
+	}
+
+	/**
+	 * WordPress Cron disabled notice.
+	 *
+	 * @since   8.2.5
+	 * @access  public
+	 */
+	public function rop_wp_cron_notice() {
+
+		if ( ! defined( 'DISABLE_WP_CRON' ) ) {
+			return;
+		}
+
+		$user_id = get_current_user_id();
+
+		if ( get_user_meta( $user_id, 'rop-wp-cron-notice-dismissed' ) ) {
+			return;
+		}
+
+		if ( DISABLE_WP_CRON ) {
+
+			?>
+			<div class="notice notice-error">
+				<?php echo sprintf( __( '%1$s%2$sRevive Old Posts:%3$s The WordPress Cron seems is disabled on your website. This can cause sharing issues with Revive Old Posts. If sharing is not working, then see %4$shere for solutions.%5$s%6$s%7$s', 'tweet-old-post' ), '<p>', '<b>', '</b>', '<a href="https://docs.revive.social/article/686-fix-revive-old-post-not-posting" target="_blank">', '</a>', '<a style="float: right;" href="?rop-wp-cron-notice-dismissed">Dismiss</a>', '</p>' ); ?>
+
+			</div>
+			<?php
+
+		}
+
+	}
+
+	/**
+	 * Dismiss WordPress Cron disabled notice.
+	 *
+	 * @since   8.2.5
+	 * @access  public
+	 */
+	public function rop_dismiss_cron_disabled_notice() {
+
+		$user_id = get_current_user_id();
+		if ( isset( $_GET['rop-wp-cron-notice-dismissed'] ) ) {
+			add_user_meta( $user_id, 'rop-wp-cron-notice-dismissed', 'true', true );
+		}
+
+	}
+
+	/**
+	 * Checks to see if the cron schedule is firing.
+	 *
+	 * @since   8.4.3
+	 * @access  public
+	 */
+	public function rop_cron_event_status_notice() {
+
+		$user_id = get_current_user_id();
+
+		if ( get_user_meta( $user_id, 'rop-cron-event-status-notice-dismissed' ) ) {
+			return;
+		}
+
+		$rop_next_task_hit = wp_next_scheduled( 'rop_cron_job' );
+		$rop_current_time  = time();
+
+		// if sharing not started cron event will not be present
+		if ( ! $rop_next_task_hit ) {
+			return;
+		}
+
+		$rop_cron_elapsed_time = ( $rop_current_time - $rop_next_task_hit ) / 60;
+		$rop_cron_elapsed_time = absint( $rop_cron_elapsed_time );
+
+		// default: 60 minutes
+		$rop_cron_event_excess_elapsed_time = apply_filters( 'rop_cron_event_excess_elapsed_time', 60 );
+
+		if ( $rop_cron_elapsed_time >= $rop_cron_event_excess_elapsed_time ) {
+
+			?>
+			<div class="notice notice-error">
+				<?php echo sprintf( __( '%1$s%2$sRevive Old Posts:%3$s There might be an issue preventing Revive Old Posts from sharing to your connected accounts. If sharing is not working, then see %4$shere for solutions.%5$s%6$s%7$s', 'tweet-old-post' ), '<p>', '<b>', '</b>', '<a href="https://docs.revive.social/article/686-fix-revive-old-post-not-posting" target="_blank">', '</a>', '<a style="float: right;" href="?rop-cron-event-status-notice-dismissed">Dismiss</a>', '</p>' ); ?>
+
+			</div>
+			<?php
+
+		}
+
+	}
+
+	/**
+	 * Dismiss rop_cron_job not firing notice.
+	 *
+	 * @since   8.4.3
+	 * @access  public
+	 */
+	public function rop_dismiss_rop_event_not_firing_notice() {
+
+		$user_id = get_current_user_id();
+		if ( isset( $_GET['rop-cron-event-status-notice-dismissed'] ) ) {
+			add_user_meta( $user_id, 'rop-cron-event-status-notice-dismissed', 'true', true );
+		}
+
+	}
+
+	/**
+	 * Buffer addon disabled notice.
+	 *
+	 * @since   8.4.0
+	 * @access  public
+	 */
+	public function rop_buffer_addon_notice() {
+
+		if ( is_plugin_active( 'rop-buffer-addon/rop-buffer-addon.php' ) ) {
+			deactivate_plugins( 'rop-buffer-addon/rop-buffer-addon.php' );
+		} else {
+			return;
+		}
+
+		$user_id = get_current_user_id();
+
+		if ( get_user_meta( $user_id, 'rop-buffer-addon-notice-dismissed' ) ) {
+			return;
+		}
+
+		?>
+
+		<div class="notice notice-error">
+			<?php echo sprintf( __( '%1$s We\'ve bundled the Buffer feature into Revive Old Posts Pro, and therefore deactivated the Buffer Addon automatically to prevent any conflicts. If you were a free user testing out the addon then please send us a support request %2$shere%3$s. %4$s %5$s', 'tweet-old-post' ), '<p>', '<a href="https://revive.social/support/" target="_blank">', '</a>', '<a style="float: right;" href="?rop-wp-cron-notice-dismissed">Dismiss</a>', '</p>' ); ?>
+		</div>
+		<?php
+
+	}
+
+	/**
+	 * Dismiss WordPress Cron disabled notice.
+	 *
+	 * @since   8.4.0
+	 * @access  public
+	 */
+	public function rop_dismiss_buffer_addon_disabled_notice() {
+
+		$user_id = get_current_user_id();
+		if ( isset( $_GET['rop-buffer-addon-notice-dismissed'] ) ) {
+			add_user_meta( $user_id, 'rop-buffer-addon-notice-dismissed', 'true', true );
+		}
+
+	}
+
+	/**
+	 * Clears the array of account IDs.
+	 *
+	 * Delete the db option holding the account IDs used to determine when to send an email
+	 * To website admin, letting them know that all posts have been shared; when the share more than once option is unchecked.
+	 *
+	 * @since   8.3.3
+	 * @access  public
+	 */
+	public function rop_clear_one_time_share_accounts() {
+
+		$settings = new Rop_Settings_Model();
+
+		if ( ! $settings->get_more_than_once() ) {
+			delete_option( 'rop_one_time_share_accounts' );
+		}
+
 	}
 
 }

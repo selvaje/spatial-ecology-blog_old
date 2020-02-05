@@ -41,18 +41,14 @@ class Epsilon_Color_Scheme {
 		$this->css     = $args['css'];
 		$this->set_customizer_controls( $args );
 
-		add_action(
-			'wp_ajax_epsilon_generate_color_scheme_css', array(
-				$this,
-				'epsilon_generate_color_scheme_css',
-			)
-		);
-		add_action(
-			'wp_ajax_nopriv_epsilon_generate_color_scheme_css', array(
-				$this,
-				'epsilon_generate_color_scheme_css',
-			)
-		);
+		add_action( 'wp_ajax_epsilon_generate_color_scheme_css', array(
+			$this,
+			'epsilon_generate_color_scheme_css',
+		) );
+		add_action( 'wp_ajax_nopriv_epsilon_generate_color_scheme_css', array(
+			$this,
+			'epsilon_generate_color_scheme_css',
+		) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_action( 'customize_register', array( $this, 'add_controls_settings' ) );
@@ -135,25 +131,19 @@ class Epsilon_Color_Scheme {
 		global $wp_customize;
 		$i = 3;
 		foreach ( $this->customizer_controls as $control => $properties ) {
-			$wp_customize->add_setting(
-				$control, array(
-					'default'           => $properties['default'],
-					'sanitize_callback' => 'sanitize_hex_color',
-					'transport'         => 'postMessage',
-				)
-			);
+			$wp_customize->add_setting( $control, array(
+				'default'           => $properties['default'],
+				'sanitize_callback' => 'sanitize_hex_color',
+				'transport'         => 'postMessage',
+			) );
 			$wp_customize->add_control( $control, array() );
-			$wp_customize->add_control(
-				new WP_Customize_Color_Control(
-					$wp_customize, $control, array(
-						'label'       => $properties['label'],
-						'description' => $properties['description'],
-						'section'     => $properties['section'],
-						'settings'    => $control,
-						'priority'    => $i,
-					)
-				)
-			);
+			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $control, array(
+				'label'       => $properties['label'],
+				'description' => $properties['description'],
+				'section'     => $properties['section'],
+				'settings'    => $control,
+				'priority'    => $i,
+			) ) );
 			$i ++;
 		}
 	}
@@ -174,8 +164,8 @@ class Epsilon_Color_Scheme {
 		$color_parts = str_split( $hex, 2 );
 		$return      = '#';
 		foreach ( $color_parts as $color ) {
-			$color   = hexdec( $color ); // Convert to decimal
-			$color   = max( 0, min( 255, $color + $steps ) ); // Adjust color
+			$color  = hexdec( $color ); // Convert to decimal
+			$color  = max( 0, min( 255, $color + $steps ) ); // Adjust color
 			$return .= str_pad( dechex( $color ), 2, '0', STR_PAD_LEFT ); // Make two char hex code
 		}
 

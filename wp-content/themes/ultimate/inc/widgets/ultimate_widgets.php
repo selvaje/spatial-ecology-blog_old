@@ -289,8 +289,9 @@ class ultimate_promobox_widget extends WP_Widget {
 		<?php
 			if (!empty($widget_primary)) {echo '<div class="container"><div class="promotional-text">'.esc_html($widget_primary);}?> <span> <?php echo esc_html($widget_secondary);
 			?> </span> <?php echo '</div><!-- .promotional-text -->';
-			?> <a class="call-to-action" href="<?php echo esc_html($widget_redirecturl);?>" title="<?php echo esc_html($redirect_text);?>"><?php echo esc_html($redirect_text);
-			?></a></div><!-- .container -->
+			?> 
+			<?php if ( !empty($redirect_text) && !empty($widget_redirecturl) ) { ?><a class="call-to-action" href="<?php echo esc_html($widget_redirecturl);?>" title="<?php echo esc_html($redirect_text);?>"><?php echo esc_html($redirect_text);
+			?></a><?php } ?></div><!-- .container -->
 		</div><!-- .promotional_bar_content -->
 		<?php
 		echo $after_widget;
@@ -436,9 +437,10 @@ class ultimate_recent_work_widget extends WP_Widget {
 			));
 		echo $before_widget;
 		echo '<div class="container clearfix">';
-				if (!empty($title)) {echo $before_title.esc_html($title).$after_title; ?>
+				if (!empty($title)) {echo $before_title.esc_html($title).$after_title; 
+					if (!empty($text)) { ?>
 						<p><?php echo esc_textarea($text);?></p>
-		<?php }
+		<?php  } }
 			echo '<div class="column clearfix">';
 		$j = 1;
 		while ($get_featured_pages->have_posts()):$get_featured_pages->the_post();

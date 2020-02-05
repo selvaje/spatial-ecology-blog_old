@@ -239,7 +239,7 @@ function wp_statistics_visit( $time, $daily = null ) {
 		$sum = $result;
 	}
 
-	return $sum;
+	return ! is_numeric( $sum ) ? 0 : $sum;
 }
 
 /**
@@ -328,7 +328,7 @@ function wp_statistics_visitor( $time, $daily = null, $count_only = false, $opti
 	$where = false;
 
 	//Check Type of Page
-	if ( $arg['type'] != "all" ) {
+	if ( $arg['type'] != "all" and $WP_Statistics->get_option( 'visitors_log' ) == true ) {
 		$where[] = "`" . wp_statistics_db_table( 'pages' ) . "`.`type`='" . $arg['type'] . "' AND `" . wp_statistics_db_table( 'pages' ) . "`.`page_id` = " . $arg['ID'];
 	}
 
@@ -409,7 +409,7 @@ function wp_statistics_pages( $time, $page_uri = '', $id = - 1, $rangestartdate 
 
 	//Check Query By Page ID or Page Url
 	if ( $type != false and $id != - 1 ) {
-		$where[] = "`type`='" . $type . "' AND `page_id` = " . $id;
+		$where[] = "`type`='" . $type . "' AND `id` = " . $id;
 	} else {
 
 		// If no page URI has been passed in, get the current page URI.
@@ -496,9 +496,9 @@ function wp_statistics_get_top_pages( $rangestartdate = null, $rangeenddate = nu
 
 	// Get every unique URI from the pages database.
 	if ( $rangestartdate != null && $rangeenddate != null ) {
-		$result = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT `uri`,`id`,`type` FROM {$wpdb->prefix}statistics_pages WHERE `date` BETWEEN %s AND %s", $rangestartdate, $rangeenddate ), ARRAY_N );
+		$result = $wpdb->get_results( $wpdb->prepare( "SELECT `uri`,`id`,`type` FROM {$wpdb->prefix}statistics_pages WHERE `date` BETWEEN %s AND %s GROUP BY `uri`", $rangestartdate, $rangeenddate ), ARRAY_N );
 	} else {
-		$result = $wpdb->get_results( "SELECT DISTINCT `uri`,`id`,`type` FROM {$wpdb->prefix}statistics_pages", ARRAY_N );
+		$result = $wpdb->get_results( "SELECT `uri`,`id`,`type` FROM {$wpdb->prefix}statistics_pages GROUP BY `uri`", ARRAY_N );
 	}
 
 	$total = 0;
@@ -523,7 +523,7 @@ function wp_statistics_get_top_pages( $rangestartdate = null, $rangeenddate = nu
 			$id       = wp_statistics_uri_to_id( $out[0] );
 			$post     = get_post( $id );
 			if ( is_object( $post ) ) {
-				$title = $post->post_title;
+				$title = esc_html( $post->post_title );
 			} else {
 				if ( $out[0] == '/' ) {
 					$title = get_bloginfo();
@@ -531,6 +531,11 @@ function wp_statistics_get_top_pages( $rangestartdate = null, $rangeenddate = nu
 					$title = '';
 				}
 			}
+		}
+
+		//Check Title is empty
+		if ( empty( $title ) ) {
+			$title = '-';
 		}
 
 		// Add the current post to the array.
@@ -594,6 +599,9 @@ function wp_statistics_get_uri() {
 			$page_uri = substr( $page_uri, $site_uri_len );
 		}
 	}
+
+	//Sanitize Xss injection
+	$page_uri = filter_var( $page_uri, FILTER_SANITIZE_STRING );
 
 	// If we're at the root (aka the URI is blank), let's make sure to indicate it.
 	if ( $page_uri == '' ) {
@@ -1321,6 +1329,64 @@ function wp_statistics_geoip_supported() {
 	return $enabled;
 }
 
+/**
+ * Convert PHP date Format to Moment js
+ *
+ * @param $phpFormat
+ * @return string
+ * @see https://stackoverflow.com/questions/30186611/php-dateformat-to-moment-js-format
+ */
+function wp_statistics_convert_php_to_moment_js( $phpFormat ) {
+	$replacements = array(
+		'A' => 'A',
+		'a' => 'a',
+		'B' => '',
+		'c' => 'YYYY-MM-DD[T]HH:mm:ssZ',
+		'D' => 'ddd',
+		'd' => 'DD',
+		'e' => 'zz',
+		'F' => 'MMMM',
+		'G' => 'H',
+		'g' => 'h',
+		'H' => 'HH',
+		'h' => 'hh',
+		'I' => '',
+		'i' => 'mm',
+		'j' => 'D',
+		'L' => '',
+		'l' => 'dddd',
+		'M' => 'MMM',
+		'm' => 'MM',
+		'N' => 'E',
+		'n' => 'M',
+		'O' => 'ZZ',
+		'o' => 'YYYY',
+		'P' => 'Z',
+		'r' => 'ddd, DD MMM YYYY HH:mm:ss ZZ',
+		'S' => 'o',
+		's' => 'ss',
+		'T' => 'z',
+		't' => '',
+		'U' => 'X',
+		'u' => 'SSSSSS',
+		'v' => 'SSS',
+		'W' => 'W',
+		'w' => 'e',
+		'Y' => 'YYYY',
+		'y' => 'YY',
+		'Z' => '',
+		'z' => 'DDD'
+	);
+
+	// Converts escaped characters.
+	foreach ( $replacements as $from => $to ) {
+		$replacements[ '\\' . $from ] = '[' . $from . ']';
+	}
+
+	return strtr( $phpFormat, $replacements );
+}
+
+
 // This function creates the date range selector 'widget' used in the various statistics pages.
 function wp_statistics_date_range_selector( $page, $current, $range = array(), $desc = array(), $extrafields = '', $pre_extra = '', $post_extra = '' ) {
 	GLOBAL $WP_Statistics;
@@ -1439,11 +1505,26 @@ function wp_statistics_date_range_selector( $page, $current, $range = array(), $
 	echo $post_extra;
 
 	echo '</form>' . "\r\n";
+	echo '<script src="' . WP_Statistics::$reg['plugin-url'] . 'assets/js/moment.min.js?ver=2.24.0"></script>';
 	echo '<script>
-        jQuery(function() { 
-        jQuery( "#datestartpicker" ).datepicker({dateFormat: \'' . wp_statistics_dateformat_php_to_jqueryui( get_option( "date_format" ) ) . '\', onSelect: function(selectedDate) {var v = jQuery(this).val(), d = new Date(v);if (v.length > 0) {jQuery("#rangestart").val(d.toISOString().split(\'T\')[0]);}}});
-        jQuery( "#dateendpicker" ).datepicker({dateFormat: \'' . wp_statistics_dateformat_php_to_jqueryui( get_option( "date_format" ) ) . '\', onSelect: function(selectedDate) {var v = jQuery(this).val(), d = new Date(v);if (v.length > 0) {jQuery("#rangeend").val(d.toISOString().split(\'T\')[0]);}}});
+        jQuery(function() {
+            
+        //From Date
+        jQuery( "#datestartpicker" ).datepicker({dateFormat: \'' . wp_statistics_dateformat_php_to_jqueryui( get_option( "date_format" ) ) . '\', 
+        onSelect: function(selectedDate) {
+        if (selectedDate.length > 0) {
+            jQuery("#rangestart").val(moment(selectedDate, \'' . wp_statistics_convert_php_to_moment_js( get_option( "date_format" ) ) . '\').format(\'YYYY-MM-DD\'));
+         }
+         }
         });
+        //To Date
+        jQuery( "#dateendpicker" ).datepicker({
+        dateFormat: \'' . wp_statistics_dateformat_php_to_jqueryui( get_option( "date_format" ) ) . '\',
+         onSelect: function(selectedDate) {
+        if (selectedDate.length > 0) {
+            jQuery("#rangeend").val(moment(selectedDate, \'' . wp_statistics_convert_php_to_moment_js( get_option( "date_format" ) ) . '\').format(\'YYYY-MM-DD\'));
+         }
+        }});});
         </script>' . "\r\n";
 }
 
@@ -1555,14 +1636,27 @@ function wp_statistics_dateformat_php_to_jqueryui( $php_format ) {
 	return $jqueryui_format;
 }
 
-// This function is used to calculate the number of days and thier respective unix timestamps.
+/**
+ * This function is used to calculate the number of days and their respective unix timestamps.
+ *
+ * @param $days
+ * @param $start
+ * @param $end
+ * @return array
+ */
 function wp_statistics_date_range_calculator( $days, $start, $end ) {
-	GLOBAL $WP_Statistics;
+	global $WP_Statistics;
 
 	$daysToDisplay = $days;
 	$rangestart    = $start;
 	$rangeend      = $end;
 
+	//Check Exist params
+	if ( ! empty( $daysToDisplay ) and ! empty( $rangestart ) and ! empty( $rangeend ) ) {
+		return array( $daysToDisplay, strtotime( $rangestart ), strtotime( $rangeend ) );
+	}
+
+	//Check Not Exist day to display
 	if ( $daysToDisplay == - 1 ) {
 		$rangestart_utime = $WP_Statistics->strtotimetz( $rangestart );
 		$rangeend_utime   = $WP_Statistics->strtotimetz( $rangeend );
@@ -1842,7 +1936,7 @@ function wp_statistics_get_post_list( $args = array() ) {
 	$query = new WP_Query( $args );
 	$list  = array();
 	foreach ( $query->posts as $ID ) {
-		$list[ $ID ] = get_the_title( $ID );
+		$list[ $ID ] = esc_html( get_the_title( $ID ) );
 	}
 
 	return $list;
@@ -1867,14 +1961,14 @@ function wp_statistics_get_page_info( $page_id, $type = 'post' ) {
 		'meta'      => array()
 	);
 
-	if ( $page_id > 0 and ! empty( $type ) ) {
+	if ( ! empty( $type ) ) {
 		switch ( $type ) {
 			case "product":
 			case "attachment":
 			case "post":
 			case "page":
 				$arg = array(
-					'title'     => get_the_title( $page_id ),
+					'title'     => esc_html( get_the_title( $page_id ) ),
 					'link'      => get_the_permalink( $page_id ),
 					'edit_link' => get_edit_post_link( $page_id ),
 					'meta'      => array(
@@ -1887,7 +1981,7 @@ function wp_statistics_get_page_info( $page_id, $type = 'post' ) {
 			case "tax":
 				$term = get_term( $page_id );
 				$arg  = array(
-					'title'     => $term->name,
+					'title'     => esc_html( $term->name ),
 					'link'      => ( is_wp_error( get_term_link( $page_id ) ) === true ? '' : get_term_link( $page_id ) ),
 					'edit_link' => get_edit_term_link( $page_id ),
 					'meta'      => array(
@@ -1906,7 +2000,7 @@ function wp_statistics_get_page_info( $page_id, $type = 'post' ) {
 			case "author":
 				$user_info = get_userdata( $page_id );
 				$arg       = array(
-					'title'     => ( $user_info->display_name != "" ? $user_info->display_name : $user_info->first_name . ' ' . $user_info->last_name ),
+					'title'     => ( $user_info->display_name != "" ? esc_html( $user_info->display_name ) : esc_html( $user_info->first_name . ' ' . $user_info->last_name ) ),
 					'link'      => get_author_posts_url( $page_id ),
 					'edit_link' => get_edit_user_link( $page_id ),
 				);
@@ -2065,7 +2159,7 @@ function wp_statistics_get_site_title( $url ) {
 		if ( isset( $dom ) and $dom->getElementsByTagName( 'title' )->length > 0 ) {
 			$title = $dom->getElementsByTagName( 'title' )->item( '0' )->nodeValue;
 		}
-		return ( wp_strip_all_tags( $title ) == "" ? false : $title );
+		return ( wp_strip_all_tags( $title ) == "" ? false : wp_strip_all_tags( $title ) );
 	}
 
 	return false;

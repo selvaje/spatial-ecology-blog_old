@@ -55,6 +55,7 @@ final class Loader {
 		'logger',
 		'translate',
 		'review',
+		'recommendation',
 
 	];
 
@@ -83,7 +84,7 @@ final class Loader {
 	 */
 	public static function add_product( $base_file ) {
 
-		if ( ! is_readable( $base_file ) ) {
+		if ( ! is_file( $base_file ) ) {
 			return self::$instance;
 		}
 		$product = new Product( $base_file );
@@ -113,5 +114,13 @@ final class Loader {
 		return self::$products;
 	}
 
+	/**
+	 * Get the version of the SDK.
+	 *
+	 * @return string The version.
+	 */
+	public static function get_version() {
+		return self::$version;
+	}
 
 }

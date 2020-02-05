@@ -1,4 +1,77 @@
+#### [Version 2.9.0](https://github.com/Codeinwp/themeisle-companion/compare/v2.8.14...v2.9.0) (2020-02-03)
 
+* Update dependencies 
+* Remove legacy modules
+
+### v2.8.14 - 2019-12-02 
+ **Changes:** 
+ * Fix fatal error with Membership Pro
+* Various bug fixes to forms and Elementor widgets
+ 
+ ### v2.8.13 - 2019-11-18 
+ **Changes:** 
+ * Fix dependency issues on content forms module
+ 
+ ### v2.8.12 - 2019-11-18 
+ **Changes:** 
+ * sync dependencies
+ 
+ ### v2.8.11 - 2019-11-18 
+ **Changes:** 
+ * Various improvements for Beaver and Elementor form widgets.
+* Improvements to the post grid Elementor module.
+* Compatibility with WordPress 5.3
+ 
+ ### v2.8.10 - 2019-09-13 
+ **Changes:** 
+ * Development
+ 
+ ### v2.8.8 - 2019-09-11 
+ **Changes:** 
+ * Fixes Constant Warning for Beaver Widgets Module
+ 
+ ### v2.8.7 - 2019-08-13 
+ **Changes:** 
+ * Release
+ 
+ ### v2.8.6 - 2019-08-12 
+ **Changes:** 
+ * Improve script loading performance
+* Fix issue with mystock import
+ 
+ ### v2.8.5 - 2019-07-26 
+ **Changes:** 
+ * Merge pull request #368 from Codeinwp/master
+ 
+ ### v2.8.4 - 2019-05-23 
+ **Changes:** 
+ * minor adjustments to the dashboard UI
+* various updates to the Gutenberg blocks available
+* adds compatibility with WordPress 5.2
+ 
+ ### v2.8.3 - 2019-04-20 
+ **Changes:** 
+ * Fixed issue with constant not being checked in Otter
+* Added error handling in Backbone functions
+ 
+ ### v2.8.2 - 2019-04-18 
+ **Changes:** 
+ * Fix PHP notice
+ 
+ ### v2.8.1 - 2019-04-18 
+ **Changes:** 
+ * Fix issues with newsletter form
+ 
+ ### v2.8.0 - 2019-04-02 
+ **Changes:** 
+ * Fix font awesome menu icons issue in the menu builder
+* Fix issue on dismiss nag info for OrbitFox post install
+* Fix menu icon possible conflicts report info
+* FIx undefined error on new installs for image module
+* Fix issues with mystock import on certain use cases
+* Remove image CDN module for new users, service will be migrated to optimole plugin
+* Adds recommended plugins tab into Orbitfox settings page.
+ 
  ### v2.7.5 - 2019-02-02 
  **Changes:** 
  * Improve compatibility with Image CDN module by disabling the feature if Optimole exits already
@@ -277,4 +350,3 @@
 * Added simple reporting functionality.
 * Added support for upcoming caching, security and analytics feature.
 * Branded to Orbit Fox companion
- 

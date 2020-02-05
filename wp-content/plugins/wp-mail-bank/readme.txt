@@ -1,9 +1,9 @@
-﻿=== WP Mail SMTP Plugin with Email Logs===
+﻿=== WP Mail SMTP Plugin - Mail Bank ===
 Contributors: contact-banker, Gallery-Bank, wordpress-empire
 Donate link: https://tech-banker.com/wp-mail-bank/
 Tags: smtp, mail, gmail smtp, wp mail, wordpress smtp plugin
 Requires at least: 3.8
-Tested up to: 4.9
+Tested up to: 5.3
 Stable Tag: trunk
 Requires PHP: 5.4
 License: GPLv3
@@ -16,6 +16,10 @@ Mail Bank is a wordpress smtp plugin that solves email deliverability issue. Con
 ### WP Mail Bank: The #1 WordPress Mail SMTP Plugin
 
 [**WP Mail Bank — Tech Banker**](https://tech-banker.com/wp-mail-bank/)
+* **[Detailed Features](https://tech-banker.com/wp-mail-bank/)**
+* **[Back End Demos](https://tech-banker.com/wp-mail-bank/demos/)**
+* **[Documentation](https://tech-banker.com/blog/)**
+* **[Upgrade to Premium Editions](https://tech-banker.com/wp-mail-bank/pricing/)**
 
 Are you **100% confident** all your WordPress emails reach their destination?
 
@@ -63,7 +67,7 @@ Over 50,000+ website owners have chosen [**Mail Bank**](https://tech-banker.com/
 
 * Our **email logger** will give you information on all of your emails. This includes undelivered mail and the information required to debug undelivered mail. You'll also be able to take action on each of the emails or use **bulk actions to delete or resend** them. You'll never have to leave a portion of your users in the dark again with this feature.
 
-* Our customer support team will always help you with any arising issue. Note that **[Premium Edition](https://tech-banker.com/wp-mail-bank/) Customers** get priority support. If your emails become undelivered, and you can't find a solution in our [documentation](https://tech-banker.com/blog/), we ask you to please [contact us](https://tech-banker.com/contact-us/) at [support@tech-banker.com](mailto:support@tech-banker.com). You may also give us suggestions and feedback on how well we're doing for you. **We care about our customers.**
+* Our customer support team will always help you with any arising issue. Note that **[Premium Edition](https://tech-banker.com/wp-mail-bank/pricing/) Customers** get priority support. If your emails become undelivered, and you can't find a solution in our [documentation](https://tech-banker.com/blog/), we ask you to please [contact us](https://tech-banker.com/contact-us/) at [support@tech-banker.com](mailto:support@tech-banker.com). You may also give us suggestions and feedback on how well we're doing for you. **We care about our customers.**
 
 #### SMTP Security & Flexibility
 
@@ -122,7 +126,7 @@ Mail Bank is translated by professionals and native speakers in these 16 languag
 * **Technical Support:** Free users will get support on WordPress.org. Premium users will have a seperate, priority support package available off-site.
 * **Free & Automatic Updates:** You'll be able to choose whether your plugin is updated automatically or not. All updates come for free.
 * **Compatibility With All Major Plugins**: Mail Bank is compatible with almost all of the WordPress plugins available. We're constantly bringing out compatibility updates.
-* **Email Setup Wizard:** The Email Setup tab is a quick and painless way to get you going in seconds. It includes fields such as: "From Name", "From Email", "Reply To", "CC", "BCC", and "Additional Headers". 
+* **Email Setup Wizard:** The Email Setup tab is a quick and painless way to get you going in seconds. It includes fields such as: "From Name", "From Email", "Reply To", "CC", "BCC", and "Additional Headers".
 * **SMTP Support:** You'll have support for almost every FREE SMTP provider, and that includes the Mailgun and SendGrid APIs.
 * **Authentication Options:** You'll be able to login using your username and password, or the more secure **oAuth 2.0**. There are also options for no authentication and plain login.
 * **Test Emails:** Test Emails will give you quick feedback on how your configuration is doing. Full debugging information will be provided, as well as a button to contact our support team.
@@ -132,7 +136,7 @@ Mail Bank is translated by professionals and native speakers in these 16 languag
 * **Email Logs:** Will give you an overview of sent emails. It will let you take action on undelivered emails.
 * **Roles & Capabilities:** Will let you set different kinds of restrictions to different kinds of users. This includes creating your own custom entries for users.
 
-> Some of these features are only available in the **[Premium Edition](https://tech-banker.com/wp-mail-bank/)** of the plugin. You can purchase the plugin on [our site at: https://tech-banker.com/wp-mail-bank/](https://tech-banker.com/wp-mail-bank/)
+> Some of these features are only available in the **[Premium Edition](https://tech-banker.com/wp-mail-bank/pricing/)** of the plugin. You can purchase the plugin on [our site at: https://tech-banker.com/wp-mail-bank/](https://tech-banker.com/wp-mail-bank/)
 
 ### Error Messages
 
@@ -194,7 +198,7 @@ If you you've found a bug in our plugin or have questions please contact us at [
 
 Please use the support forum on WordPress.org only for the free **Standard Version** of the plugin.
 
-For the **[Premium Edition](https://tech-banker.com/wp-mail-bank/) Customers** there is a seperate, priority support package available. Please, don't use the WordPress.org support forum for questions about the [Premium Edition](https://tech-banker.com/wp-mail-bank/) of Mail Bank.
+For the **[Premium Edition](https://tech-banker.com/wp-mail-bank/pricing/) Customers** there is a seperate, priority support package available. Please, don't use the WordPress.org support forum for questions about the [Premium Edition](https://tech-banker.com/wp-mail-bank/pricing/) of Mail Bank.
 
 ### Contact Us
 
@@ -253,6 +257,27 @@ You can enable or disable the debug mode to get the debugging output of logged e
 15. System Information
 
 == Changelog ==
+
+= 4.0.10 =
+
+* TWEAK: CSS Confliction Fixed
+
+= 4.0.9 =
+
+* Encoding Error Fixed
+
+= 4.0.8 =
+
+* FIX: Date Bug Fixed
+* TWEAK: Wizard Icon Removed
+
+= 4.0.7 =
+
+* FIX: Phpcs Bug Fixed
+
+= 4.0.6 =
+
+* FIX: Bug Fixed
 
 = 4.0.5 =
 

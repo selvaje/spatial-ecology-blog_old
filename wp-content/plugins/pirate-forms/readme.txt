@@ -143,6 +143,9 @@ Syed Balkhi
 4. Screenshot 4. Enabling SMTP
 
 == Changelog ==
+= 2.5.2 - 2019-07-26  =
+* Improved security of notfication emails.
+
 = 2.5.1 - 2019-01-17  =
 * Remove third party library not needed, from composer (mailin-api).
 

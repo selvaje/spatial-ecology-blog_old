@@ -31,12 +31,13 @@ $files_to_load = [
 	$path . '/src/' . 'Modules/Logger.php',
 	$path . '/src/' . 'Modules/Translate.php',
 	$path . '/src/' . 'Modules/Review.php',
+	$path . '/src/' . 'Modules/Recommendation.php',
 ];
 
 $files_to_load = array_merge( $files_to_load, apply_filters( 'themeisle_sdk_required_files', [] ) );
 
 foreach ( $files_to_load as $file ) {
-	if ( is_readable( $file ) ) {
+	if ( is_file( $file ) ) {
 		require_once $file;
 	}
 }

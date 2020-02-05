@@ -77,11 +77,9 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 		wp_enqueue_style( 'plugin-install' );
 		wp_enqueue_script( 'plugin-install' );
 		wp_enqueue_script( 'updates' );
-		wp_localize_script(
-			'updates', '_wpUpdatesItemCounts', array(
-				'totals' => wp_get_update_data(),
-			)
-		);
+		wp_localize_script( 'updates', '_wpUpdatesItemCounts', array(
+			'totals' => wp_get_update_data(),
+		) );
 		wp_add_inline_script( 'plugin-install', 'var pagenow = "plugin-install";' );
 	}
 
@@ -294,7 +292,8 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 			}
 
 			$arr[] = $v;
-		};// End foreach().
+		}// End foreach().
+		;
 
 		return $arr;
 	}
@@ -512,28 +511,26 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 		include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 		$call_api = get_transient( 'epsilon_plugin_information_transient_' . $slug );
 		if ( false === $call_api ) {
-			$call_api = plugins_api(
-				'plugin_information', array(
-					'slug'   => $slug,
-					'fields' => array(
-						'downloaded'        => false,
-						'rating'            => false,
-						'description'       => false,
-						'short_description' => true,
-						'donate_link'       => false,
-						'tags'              => false,
-						'sections'          => true,
-						'homepage'          => true,
-						'added'             => false,
-						'last_updated'      => false,
-						'compatibility'     => false,
-						'tested'            => false,
-						'requires'          => false,
-						'downloadlink'      => false,
-						'icons'             => true,
-					),
-				)
-			);
+			$call_api = plugins_api( 'plugin_information', array(
+				'slug'   => $slug,
+				'fields' => array(
+					'downloaded'        => false,
+					'rating'            => false,
+					'description'       => false,
+					'short_description' => true,
+					'donate_link'       => false,
+					'tags'              => false,
+					'sections'          => true,
+					'homepage'          => true,
+					'added'             => false,
+					'last_updated'      => false,
+					'compatibility'     => false,
+					'tested'            => false,
+					'requires'          => false,
+					'downloadlink'      => false,
+					'icons'             => true,
+				),
+			) );
 			set_transient( 'epsilon_plugin_information_transient_' . $slug, $call_api, 30 * MINUTE_IN_SECONDS );
 		}
 

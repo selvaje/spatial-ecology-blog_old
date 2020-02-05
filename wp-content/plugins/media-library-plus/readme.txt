@@ -2,8 +2,8 @@
 Contributors: maxfoundry, AlanP57
 Tags: WordPress media library folders, media library folders, organize media library
 Requires at least: 4.0
-Tested up to: 5.1
-Stable tag: 4.3.7
+Tested up to: 5.3.2
+Stable tag: 5.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -165,12 +165,81 @@ Limitations on web server processing time may cause dragging and dropping a larg
 
 To delete a folder, right click (Ctrl-click with Macs) on a folder. A popup menu will appear with the options, 'Delete this folder?' and 'Hide this folder?'. Click the delete option.
 
+= Fatal error: Maximum execution time exceeded =
+
+The Maximum execution time error takes place when moving, syncing or uploading too many files at one time. The web site’s server has a setting for how long it can be busy with a task. Depending on your server, size of files and the transmission speed of your internet, you may need to reduce the number of files you upload or move at one time.
+
+It is possible to change the maximum execution time either with a plugin such as WP Maximum Execution Time Exceeded or by editing your site’s .htaccess file and adding this line:
+
+php_value max_execution_time 300
+
+Which will raise the maximum execution time to five minutes.
+
+= How to Upload Multiple Files =
+
+Users can upload multiple files by using drag and drop. When the Add Files button is click it revels the file upload area either single or multiple files can be highlight can be dragged from you computer’s file manager and dropped into the file uploads areas.
+
+= Cannot Rename or Move a Folder =
+
+Because most images and files in the media library have corresponding links embedded in site’s posts and pages, Media Library Folders does not allow folders to be rename or moved in order to prevent breaking these links. Rather, to rename or move a folder, one needs to create a new folder and move the files from the old folder to the new. During the move process, Media Library Folders will scan the sites standard posts and pages for any links matching the old address of the images or files and update them to the new address.
 
 == Changelog ==
+= 5.1.6 =
+* Added Dutch translation to Media Library Folders Reset
+* Added code to insure removal of files deleted through media library folders pro
+
+= 5.1.4 =
+* Enabled localization (translation) of text in the Media Library Folders Reset plugin
+
+= 5.1.3 =
+* Added ability to close MLFP page popups
+* Added setting to display scaling feature added in Wordpress 5.3
+
+= 5.1.1 =
+* Added the optional constant FS_CHMOD_DIR for setting the permission set for new folders
+* Added code to check for current folder id
+* Fixed issue with deleting folders
+
+= 5.1.0 =
+* Fixed issue with missing alt text when renaming an image
+
+= 5.0.9 =
+* Added code to update links in Themify Builder and Beaver Builder posts and pages. Note, when links have been updated in Beaver Builder, it is necessary to open a page or post containing updated links in the editor and resave it for the change to take effect  
+* Updated frequently asked questions
+* Added code to update links in WP Pagebuilder
+
+= 5.0.8 =
+* Added code to update links in SiteOrigin Page Builder and Beaver Builder posts and pages. Note, when links have been updated in Beaver Builder, it is necessary to open a page or post containing updated links in the editor and resave it for the change to take effect  
+* Updated the Dutch translation files
+
+= 5.0.7 =
+* Removed the file extension from image SEO file names
+* Fixed issue with displaying changes to image SEO settings
+
+= 5.0.4 =
+* Improved updating of links for Elementor background images
+
+= 5.0.3 =
+* Added code to prevent activation is Media Library Folders Pro is already activated
+* Fixed issue with dragging blocks in the Gutenburg editor
+* Replace relative paths with absolute paths for opening include files
+
+= 5.0.2 =
+* Added code to allow unfiltered uploads
+
+= 5.0.0 =
+* Removed PHP notice text appearing on some sites  
+
+= 4.3.9 =
+* Fixed conflict with other plugins using pluggable.php 
+
+= 4.3.8 =
+* Added security enhancements
+
 = 4.3.7 =
 * Add code to check for IIS when generating image metadata
 
-= 4.3.5 =
+= 4.3.5 = 
 * Added code to check for non existent folder parent as suggested by Christian
 
 = 4.3.4 =
