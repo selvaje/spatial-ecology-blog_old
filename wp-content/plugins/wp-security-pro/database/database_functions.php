@@ -2,7 +2,7 @@
 
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
-	class MoWpnsDB
+	class mo_MoWpnsDB
 	{
 		private $transactionTable;
 		private $blockedIPsTable;
@@ -33,16 +33,16 @@
 		function mo_plugin_activate()
 		{
 			global $wpdb;
-			if(!get_option('mo_wpns_dbversion')||get_option('mo_wpns_dbversion')<MoWpnsConstants::DB_VERSION)
+			if(!get_option('mo_wpns_pro_dbversion')||get_option('mo_wpns_pro_dbversion')<mo_MoWpnsConstants::DB_VERSION)
 			{
-				update_option('mo_wpns_dbversion', MoWpnsConstants::DB_VERSION );
+				update_option('mo_wpns_pro_dbversion', mo_MoWpnsConstants::DB_VERSION );
 				$this->generate_tables();
 			} 
 			else 
 			{
-				$current_db_version = get_option('mo_wpns_dbversion');
-				if($current_db_version < MoWpnsConstants::DB_VERSION)
-					update_option('mo_wpns_dbversion', MoWpnsConstants::DB_VERSION );
+				$current_db_version = get_option('mo_wpns_pro_dbversion');
+				if($current_db_version < mo_MoWpnsConstants::DB_VERSION)
+				update_option('mo_wpns_pro_dbversion', mo_MoWpnsConstants::DB_VERSION );
 			}
 		}
 
@@ -358,14 +358,14 @@
 
 		function get_count_of_attacks_blocked(){
 			global $wpdb;
-			return $wpdb->get_var( "SELECT COUNT(*) FROM ".$this->transactionTable." WHERE status = '".MoWpnsConstants::FAILED."' OR status = '".MoWpnsConstants::PAST_FAILED."'" );
+			return $wpdb->get_var( "SELECT COUNT(*) FROM ".$this->transactionTable." WHERE status = '".mo_MoWpnsConstants::FAILED."' OR status = '".mo_MoWpnsConstants::PAST_FAILED."'" );
 		}
 
 		function get_failed_transaction_count($ipAddress)
 		{
 			global $wpdb;
 			return $wpdb->get_var( "SELECT COUNT(*) FROM ".$this->transactionTable." WHERE ip_address = '".$ipAddress."'
-			AND status = '".MoWpnsConstants::FAILED."'" );
+			AND status = '".mo_MoWpnsConstants::FAILED."'" );
 		}
 
 		function delete_transaction($ipAddress)
@@ -373,7 +373,7 @@
 			global $wpdb;
 			$wpdb->query( 
 				"DELETE FROM ".$this->transactionTable." 
-				WHERE ip_address = '".$ipAddress."' AND status='".MoWpnsConstants::FAILED."'"
+				WHERE ip_address = '".$ipAddress."' AND status='".mo_MoWpnsConstants::FAILED."'"
 			);
 			return;
 		}

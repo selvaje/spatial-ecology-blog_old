@@ -1,6 +1,6 @@
 <?php
 	
-	class Spam
+	class mo_Spam
 	{
 		function __construct()
 		{
@@ -16,7 +16,7 @@
 		echo '<input type="hidden" name="mocomment" />';
 			if(get_option('mo_wpns_enable_comment_recaptcha'))
 			{
-				echo '<script src="'.MoWpnsConstants::RECAPTCHA_URL.'"></script>';
+				echo '<script src="'.mo_MoWpnsConstants::RECAPTCHA_URL.'"></script>';
 				echo '<div class="g-recaptcha" data-sitekey="'.get_option('mo_wpns_recaptcha_site_key').'"></div>  ';
 			}
 		echo '<input type="submit" value ="Post Comment">';
@@ -25,12 +25,12 @@
 		function comment_spam_check( $comment_data ) 
 		{
 			if(!is_user_logged_in()){
-			global $moWpnsUtility;
+			global $mo_MoWpnsUtility;
 			if( isset($_POST['mocomment']) && !empty($_POST['mocomment']))
 				wp_die( __( 'You are not authorised to perform this action.'));
 			else if(get_option('mo_wpns_enable_comment_recaptcha'))
 			{
-				if(is_wp_error($moWpnsUtility->verify_recaptcha($_POST['g-recaptcha-response'])))
+				if(is_wp_error($mo_MoWpnsUtility->verify_recaptcha($_POST['g-recaptcha-response'])))
 					wp_die( __( 'Invalid captcha. Please verify captcha again.'));
 			}
 			return $comment_data;
@@ -45,9 +45,9 @@
 			echo '<input type="hidden" name="mocomment" />';
 			if(get_option('mo_wpns_enable_comment_recaptcha'))
 			{
-				echo '<script src="'.MoWpnsConstants::RECAPTCHA_URL.'"></script>';
+				echo '<script src="'.mo_MoWpnsConstants::RECAPTCHA_URL.'"></script>';
 				echo '<div class="g-recaptcha" data-sitekey="'.get_option('mo_wpns_recaptcha_site_key').'"></div>';
 			}
 		}
 	}
-	new Spam;
+	new mo_Spam;

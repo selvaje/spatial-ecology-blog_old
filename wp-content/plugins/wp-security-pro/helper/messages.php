@@ -1,6 +1,6 @@
 <?php
 	
-	class MoWpnsMessages
+	class mo_MoWpnsMessages
 	{
 		// ip-blocking messages
 		const INVALID_IP						= "Please enter a valid IP address.";

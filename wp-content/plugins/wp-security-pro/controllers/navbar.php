@@ -1,6 +1,6 @@
 <?php
 	
-	global $moWpnsUtility,$dirName;
+	global $mo_MoWpnsUtility,$mo_dirName;
 
 
 	$profile_url	= add_query_arg( array('page' => 'mo_wpns_account'		), $_SERVER['REQUEST_URI'] );
@@ -22,11 +22,11 @@
     $upgrade_url	= add_query_arg(array('page' => 'mo_wpns_upgrade'				), $_SERVER['REQUEST_URI']);
    //dynamic
     $logo_url = plugin_dir_url(dirname(__FILE__)) . 'includes/images/miniorange_logo.png';
-   // $logo_url		= plugin_dir_url($dirName) . 'wp-security-pro/includes/images/miniorange_logo.png';
+   // $logo_url		= plugin_dir_url($mo_dirName) . 'wp-security-pro/includes/images/miniorange_logo.png';
     $shw_feedback	= get_option('donot_show_feedback_message') ? false: true;
-    $moPluginHandler= new MoWpnsHandler();
-    $safe			= $moPluginHandler->is_whitelisted($moWpnsUtility->get_client_ip());
+    $moPluginHandler= new mo_MoWpnsHandler();
+    $safe			= $moPluginHandler->is_whitelisted($mo_MoWpnsUtility->get_client_ip());
 
     $active_tab 	= $_GET['page'];
 
-	include $dirName . 'views'.DIRECTORY_SEPARATOR.'navbar.php';
+	include $mo_dirName . 'views'.DIRECTORY_SEPARATOR.'navbar.php';

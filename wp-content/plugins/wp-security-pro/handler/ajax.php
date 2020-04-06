@@ -1,6 +1,6 @@
 <?php
 
-class AjaxHandler
+class mo_AjaxHandler
 {
 	function __construct()
 	{
@@ -9,7 +9,7 @@ class AjaxHandler
 
 	function mo_wpns_saml_actions()
 	{
-		global $moWpnsUtility,$dirName;
+		global $mo_MoWpnsUtility,$mo_dirName;
 
 		if (current_user_can( 'manage_options' ) && isset( $_REQUEST['option'] ))
 		{ 
@@ -41,7 +41,7 @@ class AjaxHandler
             $timeoffset="";
         }
 
-		$ipLookUpTemplate  = MoWpnsConstants::IP_LOOKUP_TEMPLATE;
+		$ipLookUpTemplate  = mo_MoWpnsConstants::IP_LOOKUP_TEMPLATE;
 		if($result['geoplugin_request']==$ip) {
 
             $ipLookUpTemplate = str_replace("{{status}}", $result["geoplugin_status"], $ipLookUpTemplate);
@@ -147,7 +147,7 @@ class AjaxHandler
 			mkdir($basepath."db-backups");
 		}
                	$basepath = get_home_path().'db-backups/';
-		$handler_obj = new site_backup;
+		$handler_obj = new mo_site_backup;
 		$handler_obj->create_index_file($basepath);
 		if(!file_exists($basepath.$folderName)){
 			mkdir($basepath.$folderName);
@@ -168,10 +168,10 @@ class AjaxHandler
 
 	private function whitelist_self()
 	{
-		global $moWpnsUtility;
-		$moPluginsUtility = new MoWpnsHandler();
-		$moPluginsUtility->whitelist_ip($moWpnsUtility->get_client_ip());
+		global $mo_MoWpnsUtility;
+		$moPluginsUtility = new mo_MoWpnsHandler();
+		$moPluginsUtility->whitelist_ip($mo_MoWpnsUtility->get_client_ip());
 		wp_send_json('success');
 	}
 
-}new AjaxHandler;
+}new mo_AjaxHandler;

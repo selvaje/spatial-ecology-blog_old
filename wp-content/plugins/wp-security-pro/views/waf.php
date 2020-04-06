@@ -1,11 +1,11 @@
 <div id="wpns_message" style=" padding-top:8px"></div>
 <div class="mo_wpns_divided_layout_tab">
 <div class="mo_wpns_tab">
-  <button class="tablinks" onclick="waf_function(event, 'waf_dash')" id="defaultOpen">Firewall Dashboard</button>
-  <button class="tablinks" onclick="waf_function(event, 'settings')" id="settingsTab">Settings</button>
-  <button class="tablinks" onclick="waf_function(event, 'block_list')" id="BlockWhiteTab" >IP Blacklist</button>
-  <button class="tablinks" onclick="waf_function(event, 'real_time')" id="RealTimeTab">Real Time Blocking</button>
-  <button class="tablinks" onclick="waf_function(event, 'rate_limiting')" id="RateLimitTab">Rate Limiting</button>
+  <button class="tablinks" onclick="mo_waf_function(event, 'waf_dash')" id="defaultOpen">Firewall Dashboard</button>
+  <button class="tablinks" onclick="mo_waf_function(event, 'settings')" id="settingsTab">Settings</button>
+  <button class="tablinks" onclick="mo_waf_function(event, 'block_list')" id="BlockWhiteTab" >IP Blacklist</button>
+  <button class="tablinks" onclick="mo_waf_function(event, 'real_time')" id="RealTimeTab">Real Time Blocking</button>
+  <button class="tablinks" onclick="mo_waf_function(event, 'rate_limiting')" id="RateLimitTab">Rate Limiting</button>
 </div>
 </div>
 <br>
@@ -97,11 +97,11 @@
 				<tbody>
 					
 <?php			
-			$mo_wpns_handler 	= new MoWpnsHandler();
+			$mo_wpns_handler 	= new mo_MoWpnsHandler();
 			$blockedips 		= $mo_wpns_handler->get_blocked_ips();
 			$whitelisted_ips 	= $mo_wpns_handler->get_whitelisted_ips();
 			$disabled = '';
-			global $dirName;
+			global $mo_dirName;
 			foreach($blockedips as $blockedip)
 			{
 echo 			"<tr class='mo_wpns_not_bold'><td>".$blockedip->ip_address."</td><td>".$blockedip->reason."</td><td>";
@@ -109,7 +109,7 @@ echo 			"<tr class='mo_wpns_not_bold'><td>".$blockedip->ip_address."</td><td>".$
 echo 				"<span class=redtext>Permanently</span>"; 
 				else 
 echo 				date("M j, Y, g:i:s a",$blockedip->blocked_for_time);
-echo 			"</td><td>".date("M j, Y, g:i:s a",$blockedip->created_timestamp)."</td><td><a ".$disabled." onclick=unblockip('".$blockedip->id."')>Unblock IP</a></td></tr>";
+echo 			"</td><td>".date("M j, Y, g:i:s a",$blockedip->created_timestamp)."</td><td><a ".$disabled." onclick=mo_unblockip('".$blockedip->id."')>Unblock IP</a></td></tr>";
 			} 
 ?>
 					</tbody>
@@ -135,7 +135,7 @@ echo 			"</td><td>".date("M j, Y, g:i:s a",$blockedip->created_timestamp)."</td>
 <?php
 					foreach($whitelisted_ips as $whitelisted_ip)
 					{
-						echo "<tr class='mo_wpns_not_bold'><td>".$whitelisted_ip->ip_address."</td><td>".date("M j, Y, g:i:s a",$whitelisted_ip->created_timestamp)."</td><td><a ".$disabled." onclick=removefromwhitelist('".$whitelisted_ip->id."')>Remove</a></td></tr>";
+						echo "<tr class='mo_wpns_not_bold'><td>".$whitelisted_ip->ip_address."</td><td>".date("M j, Y, g:i:s a",$whitelisted_ip->created_timestamp)."</td><td><a ".$disabled." onclick=mo_removefromwhitelist('".$whitelisted_ip->id."')>Remove</a></td></tr>";
 					} 
 
 echo'			</tbody>
@@ -1194,7 +1194,7 @@ jQuery('#RTBPage').click(function(){
 	window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 	
-function waf_function(evt, cityName) {
+function mo_waf_function(evt, cityName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
@@ -1286,7 +1286,7 @@ jQuery('#BlockIP').click(function(){
 				else
 				{
 					jQuery('#wpns_message').empty();
-					refreshblocktable(response);
+					mo_refreshblocktable(response);
 					jQuery('#wpns_message').append("<div class= 'notice notice-success is-dismissible' style='height : 25px;padding-top: 10px;  ' >IP Blocked Sucessfully.</div>");
 					window.scrollTo({ top: 0, behavior: 'smooth' });
 				}
@@ -1337,7 +1337,7 @@ jQuery('#WhiteListIP').click(function(){
 				else
 				{	
 					jQuery('#wpns_message').empty();
-					refreshWhiteListTable(response);	
+					mo_refreshWhiteListTable(response);	
 					jQuery('#wpns_message').append("<div class= 'notice notice-success is-dismissible' style='height : 25px;padding-top: 10px;  ' >IP whitelisted Sucessfully.</div>");
 					window.scrollTo({ top: 0, behavior: 'smooth' });
 			
@@ -1354,7 +1354,7 @@ jQuery("#blockedips_table").DataTable({
 jQuery("#whitelistedips_table").DataTable({
 				"order": [[ 1, "desc" ]]
 			});
-function unblockip(id) {
+function mo_unblockip(id) {
   var nonce = '<?php echo wp_create_nonce("manualIPBlockingNonce");?>';
 	if(id != '')
 	{
@@ -1376,7 +1376,7 @@ function unblockip(id) {
 			else
 			{
 				jQuery('#wpns_message').empty();
-				refreshblocktable(response);
+				mo_refreshblocktable(response);
 				jQuery('#wpns_message').append("<div class= 'notice notice-success is-dismissible' style='height : 25px;padding-top: 10px;  ' >IP UnBlocked Sucessfully.</div>");
 				window.scrollTo({ top: 0, behavior: 'smooth' });
 			}
@@ -1384,7 +1384,7 @@ function unblockip(id) {
 					
 	}
 }
-function removefromwhitelist(id)
+function mo_removefromwhitelist(id)
 {
 	var nonce = '<?php echo wp_create_nonce("IPWhiteListingNonce");?>';
 	if(id != '')
@@ -1407,7 +1407,7 @@ function removefromwhitelist(id)
 				else
 				{
 					jQuery('#wpns_message').empty();
-					refreshWhiteListTable(response);	
+					mo_refreshWhiteListTable(response);	
 					jQuery('#wpns_message').append("<div class= 'notice notice-success is-dismissible' style='height : 25px;padding-top: 10px;  ' >IP removed from Whitelist.</div>");
 					window.scrollTo({ top: 0, behavior: 'smooth' });		
 				}
@@ -1416,12 +1416,12 @@ function removefromwhitelist(id)
 	}
 }
 
-function refreshblocktable(html)
+function mo_refreshblocktable(html)
 {
 	 jQuery('#blockIPtable').html(html);
 }
 
-function refreshWhiteListTable(html)
+function mo_refreshWhiteListTable(html)
 {
 	 
 	 jQuery('#WhiteListIPtable').html(html);	

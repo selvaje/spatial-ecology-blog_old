@@ -3,12 +3,12 @@
 
 
     //all the variables and links
-	$wpns_database = new MoWpnsDB;
+	$wpns_database = new mo_MoWpnsDB;
 	$wpns_count_ips_blocked = $wpns_database->get_count_of_blocked_ips();
 	$wpns_count_ips_whitelisted = $wpns_database->get_number_of_whitelisted_ips();
 	$wpns_attacks_blocked = $wpns_database->get_count_of_attacks_blocked();
 
-	$mo_wpns_handler 	= new MoWpnsHandler();
+	$mo_wpns_handler 	= new mo_MoWpnsHandler();
 	$sqlC 			= $mo_wpns_handler->get_blocked_attacks_count("SQL");
 	$rceC 			= $mo_wpns_handler->get_blocked_attacks_count("RCE");
 	$rfiC 			= $mo_wpns_handler->get_blocked_attacks_count("RFI");
@@ -20,4 +20,4 @@
 		$total_malicious=($total_malicious/1000);
 		$total_malicious= round($total_malicious,1)."k";
 	}
-    include $dirName . 'views'.DIRECTORY_SEPARATOR.'dashboard.php';
+    include $mo_dirName . 'views'.DIRECTORY_SEPARATOR.'dashboard.php';

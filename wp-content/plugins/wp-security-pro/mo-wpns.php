@@ -4,7 +4,7 @@
 	    Plugin URI: http://miniorange.com
 	    Description: Security against Login, Registrations, brute force attacks by tracking IP and Blacklisting IP's.
 	    Author: miniorange
-	    Version: 4.0.8
+	    Version: 4.0.9
 	    Author URI: http://miniorange.com
     */
 	
@@ -17,7 +17,7 @@
 			add_action( 'admin_menu'				 , array( $this, 'mo_wpns_widget_menu'		  	   )		);
 			add_action( 'admin_enqueue_scripts'		 , array( $this, 'mo_wpns_settings_style'	       )		);
 			add_action( 'admin_enqueue_scripts'		 , array( $this, 'mo_wpns_settings_script'	       )	    );
-			add_action( 'wpns_show_message'		 	 , array( $this, 'mo_show_message' 				   ), 1 , 2 );
+			add_action( 'mo_wpns_show_message'		 	 , array( $this, 'mo_show_message' 				   ), 1 , 2 );
 			add_action( 'wp_footer'					 , array( $this, 'footer_link'					   ),100	);
             add_action( 'admin_footer', array( $this, 'feedback_request' ) );
 			if(get_option('disable_file_editing')) 	 define('DISALLOW_FILE_EDIT', true);
@@ -28,7 +28,7 @@
             if ( 'plugins.php' != basename( $_SERVER['PHP_SELF'] ) ) {
                 return;
             }
-            global $dirName;
+            global $mo_dirName;
 
              $email = get_option("mo_wpns_admin_email");
             if(empty($email)){
@@ -42,7 +42,7 @@
             wp_enqueue_script( 'utils' );
             wp_enqueue_style( 'mo_wpns_admin_plugins_page_style', plugins_url( '/includes/css/style_settings.css?ver=4.8.60', __FILE__ ) );
 
-            include $dirName . 'views'.DIRECTORY_SEPARATOR.'feedback_form.php';;
+            include $mo_dirName . 'views'.DIRECTORY_SEPARATOR.'feedback_form.php';;
 
         }
 
@@ -68,8 +68,8 @@
 
 		function mo_wpns()
 		{
-			global $wpnsDbQueries;
-			$wpnsDbQueries->mo_plugin_activate();
+			global $mo_wpnsDbQueries;
+			$mo_wpnsDbQueries->mo_plugin_activate();
 			
 			add_option( 'mo_wpns_enable_brute_force' , true);
 			add_option( 'mo_wpns_show_remaining_attempts' , true);
@@ -93,14 +93,14 @@
 
 		function mo_wpns_activate() 
 		{
-			global $wpnsDbQueries;
-			$wpnsDbQueries->mo_plugin_activate();
+			global $mo_wpnsDbQueries;
+			$mo_wpnsDbQueries->mo_plugin_activate();
 		}
 
 		function mo_wpns_deactivate() 
 		{
-			global $moWpnsUtility;
-			if( !$moWpnsUtility->check_empty_or_null( get_option('mo_wpns_registration_status') ) ) {
+			global $mo_MoWpnsUtility;
+			if( !$mo_MoWpnsUtility->check_empty_or_null( get_option('mo_wpns_registration_status') ) ) {
 				delete_option('mo_wpns_admin_email');
 			}
 
@@ -144,7 +144,7 @@
 
 		function footer_link()
 		{
-			echo MoWpnsConstants::FOOTER_LINK;
+			echo mo_MoWpnsConstants::FOOTER_LINK;
 		}
 
 		function includes()

@@ -165,7 +165,7 @@ namespace WPForms {
 
 				// Load Pro or Lite specific files.
 				if ( self::$instance->pro ) {
-					require_once WPFORMS_PLUGIN_DIR . 'pro/wpforms-pro.php';
+					self::$instance->registry['pro'] = require_once WPFORMS_PLUGIN_DIR . 'pro/wpforms-pro.php';
 				} else {
 					require_once WPFORMS_PLUGIN_DIR . 'lite/wpforms-lite.php';
 				}
@@ -213,6 +213,8 @@ namespace WPForms {
 		 */
 		private function includes() {
 
+			require_once WPFORMS_PLUGIN_DIR . 'includes/class-db.php';
+
 			$this->includes_magic();
 
 			// Global includes.
@@ -251,7 +253,6 @@ namespace WPForms {
 				require_once WPFORMS_PLUGIN_DIR . 'includes/admin/class-importers.php';
 				require_once WPFORMS_PLUGIN_DIR . 'includes/admin/class-about.php';
 				require_once WPFORMS_PLUGIN_DIR . 'includes/admin/ajax-actions.php';
-				require_once WPFORMS_PLUGIN_DIR . 'includes/admin/class-am-deactivation-survey.php';
 			}
 		}
 
@@ -262,10 +263,13 @@ namespace WPForms {
 		 */
 		private function includes_magic() {
 
+			// Action Scheduler requires a special loading procedure.
+			require_once WPFORMS_PLUGIN_DIR . 'vendor/woocommerce/action-scheduler/action-scheduler.php';
+
 			// Autoload Composer packages.
 			require_once WPFORMS_PLUGIN_DIR . 'vendor/autoload.php';
 
-			 // Load the class loader.
+			// Load the class loader.
 			$this->register(
 				[
 					'name' => 'Loader',
@@ -316,12 +320,6 @@ namespace WPForms {
 			$this->process    = new \WPForms_Process();
 			$this->smart_tags = new \WPForms_Smart_Tags();
 			$this->logs       = new \WPForms_Logging();
-
-			if ( is_admin() ) {
-				if ( $this->pro || ( ! $this->pro && ! file_exists( WP_PLUGIN_DIR . '/wpforms/wpforms.php' ) ) ) {
-					new \AM_Deactivation_Survey( 'WPForms', basename( dirname( __DIR__ ) ) );
-				}
-			}
 
 			// Hook now that all of the WPForms stuff is loaded.
 			do_action( 'wpforms_loaded' );

@@ -1,11 +1,11 @@
 <?php
 	
-	global $moWpnsUtility,$dirName;
+	global $mo_MoWpnsUtility,$mo_dirName;
 
 	$default_url 	  	= add_query_arg( array('page' => 'default'	), $_SERVER['REQUEST_URI'] );
-	$form_action 	  	= MoWpnsConstants::HOST_NAME.'/moas/login';
+	$form_action 	  	= mo_MoWpnsConstants::HOST_NAME.'/moas/login';
 	$admin_email 	  	= get_option('mo_wpns_admin_email');
-	$redirect_url	  	= MoWpnsConstants::HOST_NAME .'/moas/initializepayment';
+	$redirect_url	  	= mo_MoWpnsConstants::HOST_NAME .'/moas/initializepayment';
 
 	$basic_plan_price 	= '$9 / year'; 
 	$premium_plan_price	= '$9 / year + One Time Setup Fees';
@@ -47,4 +47,4 @@
 		'End to End Integration Support'
 	);
 
-	include $dirName . 'views'.DIRECTORY_SEPARATOR.'licensing.php';
+	include $mo_dirName . 'views'.DIRECTORY_SEPARATOR.'licensing.php';

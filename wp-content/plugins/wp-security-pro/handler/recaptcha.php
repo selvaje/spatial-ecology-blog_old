@@ -1,6 +1,6 @@
 <?php
 
-	class reCaptcha
+	class mo_reCaptcha
 	{
 		function __construct()
 		{
@@ -16,16 +16,16 @@
 		//Function to handle Testing reCaptcha
 		function handle_recaptcha()
 		{
-			global $moWpnsUtility,$dirName;
+			global $mo_MoWpnsUtility,$mo_dirName;
 			if (current_user_can( 'manage_options' ))
 			{ 
 				if(isset($_REQUEST['option']) && $_REQUEST['option']=='testrecaptchaconfig')
 				{	
 						if(array_key_exists('g-recaptcha-response',$_POST))
 						{
-							$userIp 	= $moWpnsUtility->get_client_ip();
-							$mocURL 	= new MocURL;
-							$response 	= $mocURL->validate_recaptcha($userIp,$_POST['g-recaptcha-response']);
+							$userIp 	= $mo_MoWpnsUtility->get_client_ip();
+							$mo_MocURL 	= new mo_MocURL;
+							$response 	= $mo_MocURL->validate_recaptcha($userIp,$_POST['g-recaptcha-response']);
 							$content	= json_decode($response, true);
 							if(isset($content['error-codes']) && in_array("invalid-input-secret", $content['error-codes']))
 								echo "<br><br><h2 style=color:red;text-align:center>Invalid Secret Key.</h2>";
@@ -34,7 +34,7 @@
 							else
 								echo "<br><br><h2 style=color:red;text-align:center>Invalid captcha. Please try again.</h2>";
 						}
-						show_google_recaptcha_form();
+						mo_show_google_recaptcha_form();
 				}
 			}
 		}
@@ -45,7 +45,7 @@
 			if(get_option('mo_wpns_activate_recaptcha_for_login'))
 			{
 				
-				echo "<script src='".MoWpnsConstants::RECAPTCHA_URL."'></script>";
+				echo "<script src='".mo_MoWpnsConstants::RECAPTCHA_URL."'></script>";
 				echo '<div class="g-recaptcha" data-sitekey="'.get_option("mo_wpns_recaptcha_site_key").'"></div>';
 				echo '<style>#login{ width:349px;padding:2% 0 0; }.g-recaptcha{margin-bottom:5%;}#loginform{padding-bottom:20px;}</style>';
 			}
@@ -54,7 +54,7 @@
 		function register_with_captcha(){
 			if(get_option('mo_wpns_activate_recaptcha_for_registration'))
 			{
-				echo "<script src='".MoWpnsConstants::RECAPTCHA_URL."'></script>";
+				echo "<script src='".mo_MoWpnsConstants::RECAPTCHA_URL."'></script>";
 				echo '<div class="g-recaptcha" data-sitekey="'.get_option("mo_wpns_recaptcha_site_key").'"></div>';
 				echo '<style>#login{ width:349px;padding:2% 0 0; }.g-recaptcha{margin-bottom:5%;}#registerform{padding-bottom:20px;}</style>';
 			}
@@ -63,7 +63,7 @@
                  function woocommerce_register_with_captcha(){
 			if(get_option('mo_wpns_activate_recaptcha_for_woocommerce_registration'))
 			{
-				echo "<script src='".MoWpnsConstants::RECAPTCHA_URL."'></script>";
+				echo "<script src='".mo_MoWpnsConstants::RECAPTCHA_URL."'></script>";
 				echo '<div class="g-recaptcha" data-sitekey="'.get_option("mo_wpns_recaptcha_site_key").'"></div>';
 				echo '<style>#login{ width:349px;padding:2% 0 0; }.g-recaptcha{margin-bottom:5%;}#registerform{padding-bottom:20px;}</style>';
 			}
@@ -73,7 +73,7 @@
 			if(get_option('mo_wpns_activate_recaptcha_for_woocommerce_login'))
 			{
 				
-				echo "<script src='".MoWpnsConstants::RECAPTCHA_URL."'></script>";
+				echo "<script src='".mo_MoWpnsConstants::RECAPTCHA_URL."'></script>";
 				     
 				echo '<div class="g-recaptcha" data-sitekey="'.get_option("mo_wpns_recaptcha_site_key").'"></div>';
 				echo '<style>#login{ width:349px;padding:2% 0 0; }.g-recaptcha{margin-bottom:5%;}#loginform{padding-bottom:20px;}</style>';
@@ -85,7 +85,7 @@
 			if (!is_user_logged_in()){
 				if(get_option('mo_wpns_activate_recaptcha_for_woocommerce_registration'))
 				{
-					echo "<script src='".MoWpnsConstants::RECAPTCHA_URL."'></script>";
+					echo "<script src='".mo_MoWpnsConstants::RECAPTCHA_URL."'></script>";
 					echo '<div class="g-recaptcha" data-sitekey="'.get_option("mo_wpns_recaptcha_site_key").'"></div>';
 					echo '<style>#login{ width:349px;padding:2% 0 0; }.g-recaptcha{margin-bottom:5%;}#registerform{padding-bottom:20px;}</style>';
 				}
@@ -94,14 +94,14 @@
 		
 		public static function recaptcha_verify($response)
 		{
-			global $moWpnsUtility;
-			$userIp 	= $moWpnsUtility->get_client_ip();
-			$mocURL 	= new MocURL;
-			$response 	= $mocURL->validate_recaptcha($userIp,$response);
+			global $mo_MoWpnsUtility;
+			$userIp 	= $mo_MoWpnsUtility->get_client_ip();
+			$mo_MocURL 	= new mo_MocURL;
+			$response 	= $mo_MocURL->validate_recaptcha($userIp,$response);
 			$content	= json_decode($response, true);
 			$isvalid 	= isset($content['success']) && $content['success']==1 ? true : false;
 			return $isvalid;
 		}
 
 	}
-	new reCaptcha;
+	new mo_reCaptcha;

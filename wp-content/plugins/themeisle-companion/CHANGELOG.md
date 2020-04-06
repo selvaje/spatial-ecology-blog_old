@@ -1,3 +1,29 @@
+##### [Version 2.9.6](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.5...v2.9.6) (2020-04-06)
+
+* Update compatibility with WordPress 5.4 
+* Sync dependencies
+* Fix selective refresh for Hestia enhacements features
+
+##### [Version 2.9.5](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.4...v2.9.5) (2020-03-30)
+
+* Fix notice on analytics module when the codes are missing
+* Update dependencies to the latest versions
+
+##### [Version 2.9.4](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.3...v2.9.4) (2020-03-23)
+
+* Improve FA loading in Hestia compatibility features
+* Update dependencies
+
+##### [Version 2.9.3](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.2...v2.9.3) (2020-03-05)
+
+* Update dependencies
+* Fix admin notice viewed by non-admins
+
+##### [Version 2.9.2](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.1...v2.9.2) (2020-02-13)
+
+* Fix issue with cookie notices closing behavior. 
+* Fix notice when Otter and Orbit Fox were both active.
+
 ##### [Version 2.9.1](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.0...v2.9.1) (2020-02-05)
 
 * Fix possible error with edge case legacy module loading.

@@ -4,7 +4,7 @@ Donate link: https://miniorange.com
 Tags: security, firewall, malware scanner, backup, login, Brute Force, limit login attempts, Spam Protection,  Malware Scanning, Encrypted Backup, Database Backup, Login Security, login protection, anti spam, spam check, wordfence, Brute Force protection, Brute Force attack, bruteforce, ip blocking, strong passwords, htaccess security, ip range blocking, Anti Virus, anti hack, spam filter,comments filter, firewall, country blocking, live traffic, fraud prevention, malware, malware removal, front end security, safe browsing, htaccess, injection, login, secrity, secure, secure login, secure website, security plugin, seucrity, SQL Injection, two factor, two factor authentication, virus, vulnerability, Web application firewall, web server security, website security, wordpress, wordpress cache, wordpress caching, admin security, backup, DB backup,  authenticate, authentication, authentication cookie
 Requires at least: 2.0.2
 Tested up to: 5.3
-Stable tag: 4.0.8
+Stable tag: 4.0.9
 Requires PHP: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -153,6 +153,9 @@ Please email us at info@xecurify.com or <a href="http://miniorange.com/contact" 
 
 == Changelog ==
 
+= 4.0.9 =
+* Malware related changes and issue fix.
+
 = 4.0.8 =
 * Firewall and malware related issue fix.
 
@@ -173,6 +176,9 @@ Please email us at info@xecurify.com or <a href="http://miniorange.com/contact" 
 
 
 == Upgrade Notice ==
+
+= 4.0.9 =
+* Malware related changes and issue fix.
 
 = 4.0.8 =
 * Firewall and malware related issue fix.

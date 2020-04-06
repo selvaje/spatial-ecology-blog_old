@@ -1,8 +1,8 @@
  
 <div class="mo_wpns_tab">
-	<button class="tablinks" onclick="openTab(event, 'security_login')" id="login_sec">Login Security</button>
-    <button class="tablinks" onclick="openTab(event, 'security_registration')" id="reg_sec">Registration Security</button>
-    <button class="tablinks" onclick="openTab(event, 'content_spam')" id="spam_content">Content & Spam</button>
+	<button class="tablinks" onclick="mo_openTab(event, 'security_login')" id="login_sec">Login Security</button>
+    <button class="tablinks" onclick="mo_openTab(event, 'security_registration')" id="reg_sec">Registration Security</button>
+    <button class="tablinks" onclick="mo_openTab(event, 'content_spam')" id="spam_content">Content & Spam</button>
 </div>
 <br>
 <div class="tabcontent" id="security_login">
@@ -10,7 +10,7 @@
 		<table style="width:100%;">
 			<tr>
 				<td>
-					<?php include_once $dirName . 'controllers'.DIRECTORY_SEPARATOR.'login-security.php'; ?>
+					<?php include_once $mo_dirName . 'controllers'.DIRECTORY_SEPARATOR.'login-security.php'; ?>
 				</td>
 			</tr>
 		</table>
@@ -21,7 +21,7 @@
 		<table style="width:100%;">
 			<tr>
 				<td>
-					<?php include_once $dirName . 'controllers'.DIRECTORY_SEPARATOR.'registration-security.php'; ?>
+					<?php include_once $mo_dirName . 'controllers'.DIRECTORY_SEPARATOR.'registration-security.php'; ?>
 				</td>
 			</tr>
 		</table>
@@ -32,7 +32,7 @@
 		<table style="width:100%;">
 			<tr>
 				<td>
-					<?php include_once $dirName . 'controllers'.DIRECTORY_SEPARATOR.'content-protection.php'; ?>
+					<?php include_once $mo_dirName . 'controllers'.DIRECTORY_SEPARATOR.'content-protection.php'; ?>
 				</td>
 			</tr>
 		</table>
@@ -43,7 +43,7 @@
 	document.getElementById("security_registration").style.display = "none";
 	document.getElementById("content_spam").style.display = "none";
 	document.getElementById("login_sec").className += " active";
-	function openTab(evt, tabname){
+	function mo_openTab(evt, tabname){
 		var i, tablinks, tabcontent;
 		tabcontent = document.getElementsByClassName("tabcontent");
   			for (i = 0; i < tabcontent.length; i++) {

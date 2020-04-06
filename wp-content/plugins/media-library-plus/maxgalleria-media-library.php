@@ -3,7 +3,7 @@
 Plugin Name: Media Library Folders for WordPress
 Plugin URI: http://maxgalleria.com
 Description: Gives you the ability to adds folders and move files in the WordPress Media Library.
-Version: 5.1.6
+Version: 5.1.9
 Author: Max Foundry
 Author URI: http://maxfoundry.com
 
@@ -51,7 +51,7 @@ class MaxGalleriaMediaLib {
 
 	public function set_global_constants() {	
 		define('MAXGALLERIA_MEDIA_LIBRARY_VERSION_KEY', 'maxgalleria_media_library_version');
-		define('MAXGALLERIA_MEDIA_LIBRARY_VERSION_NUM', '5.1.6');
+		define('MAXGALLERIA_MEDIA_LIBRARY_VERSION_NUM', '5.1.9');
 		define('MAXGALLERIA_MEDIA_LIBRARY_IGNORE_NOTICE', 'maxgalleria_media_library_ignore_notice');
 		define('MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_NAME', trim(dirname(plugin_basename(__FILE__)), '/'));
 		define('MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_NAME);
@@ -231,7 +231,7 @@ class MaxGalleriaMediaLib {
       if($_REQUEST['page'] === 'media-library-folders' || 
 				 $_REQUEST['page'] === 'search-library') {
 		
-				wp_enqueue_style('jstree', MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_URL . '/js/jstree/themes/default/style.min.css');    		
+				wp_enqueue_style('jstree-style', MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_URL . '/js/jstree/themes/default/style.min.css');    		
 
 				wp_register_script('jquery-ui', MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_URL . '/js/jquery-ui-1.11.4.custom/jquery-ui.min.js', array('jquery'));
 				wp_enqueue_script('jquery-ui');
@@ -250,6 +250,13 @@ class MaxGalleriaMediaLib {
   
   public function enqueue_admin_print_scripts() {
     global $pagenow, $current_screen;
+    $mlf_page = false;
+    
+    //error_log("pag " . $_REQUEST['page']);
+    if(isset($_REQUEST['page'])) {
+      if($_REQUEST['page'] == 'media-library-folders')
+        $mlf_page = true;
+    }
     
     if($this->current_user_can_upload) {
 		
@@ -261,7 +268,9 @@ class MaxGalleriaMediaLib {
 //          $current_screen->base != 'pmxi-admin-import') {
         
         
-      if (isset( $current_screen ) && 
+      //if (isset( $current_screen ) && 
+      if(isset($current_screen) || $mlf_page) {
+        if( $mlf_page || 
           $current_screen->base == 'toplevel_page_media-library-folders' ||
           $current_screen->base == 'media-library-folders_page_mlpp-settings' ||
           $current_screen->base == 'media-library-folders_page_mlp-support' ||              
@@ -285,7 +294,7 @@ class MaxGalleriaMediaLib {
                        ); 
 
             wp_enqueue_script('loader-folders');
-
+        }
       }
     }  
   }
@@ -508,7 +517,7 @@ public function add_attachment_to_folder2( $metadata, $attachment_id ) {
   `post_id` bigint(20) NOT NULL,
   `folder_id` bigint(20) NOT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;";	
+) DEFAULT CHARSET=utf8;";	
  
     dbDelta($sql);
     
@@ -540,48 +549,49 @@ public function add_attachment_to_folder2( $metadata, $attachment_id ) {
 		
     $destination = $this->get_folder_path($folder_id);
         
-    if ( 0 < $_FILES['file']['error'] ) {
-       echo 'Error: ' . $_FILES['file']['error'] . '<br>';
-    } else {
-		
-      
-      if(!defined('ALLOW_UNFILTERED_UPLOADS')) {  
-        $wp_filetype = wp_check_filetype_and_ext($_FILES['file']['tmp_name'], $_FILES['file']['name'] );
+    if(isset($_FILES['file'])){
+      if ( 0 < $_FILES['file']['error'] ) {
+         echo 'Error: ' . $_FILES['file']['error'] . '<br>';
+      } else {
 
-        //error_log(print_r($wp_filetype,true));
 
-        if ($wp_filetype['ext'] === false) {
-          echo '<script>' , PHP_EOL;
-          echo '  jQuery("#folder-message").html("<span class=\"mlp-warning\">';
-          echo $_FILES['file']['name'] . __(' file\'s type is invalid.', 'maxgalleria-media-library');
-          echo '</span>");';
-          echo '</script>' , PHP_EOL;
-          exit;
+        if(!defined('ALLOW_UNFILTERED_UPLOADS')) {  
+          $wp_filetype = wp_check_filetype_and_ext($_FILES['file']['tmp_name'], $_FILES['file']['name'] );
+
+          //error_log(print_r($wp_filetype,true));
+
+          if ($wp_filetype['ext'] === false) {
+            echo '<script>' , PHP_EOL;
+            echo '  jQuery("#folder-message").html("<span class=\"mlp-warning\">';
+            echo $_FILES['file']['name'] . __(' file\'s type is invalid.', 'maxgalleria-media-library');
+            echo '</span>");';
+            echo '</script>' , PHP_EOL;
+            exit;
+          }
+        }  
+
+        // insure it has a unique name
+        $title_text = $_FILES['file']['name'];    
+        $new_filename = wp_unique_filename( $destination, $_FILES['file']['name'], null );
+
+        if ($is_IIS || strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' || strtoupper(substr(PHP_OS, 0, 13)) == 'MICROSOFT-IIS' )
+          $destination = rtrim($destination, '\\');
+
+        $filename = $destination . DIRECTORY_SEPARATOR . $new_filename;
+        if( move_uploaded_file($_FILES['file']['tmp_name'], $filename) ) {
+
+          // Set correct file permissions.
+          $stat = stat( dirname( $filename ));
+          $perms = $stat['mode'] & 0000664;
+          @ chmod( $filename, $perms );
+
+          $this->add_new_attachment($filename, $folder_id, $title_text, $alt_text, $seo_title_text);
+
+          $this->display_folder_contents ($folder_id);
+
         }
-      }  
- 			
-      // insure it has a unique name
- 			$title_text = $_FILES['file']['name'];    
-      $new_filename = wp_unique_filename( $destination, $_FILES['file']['name'], null );
-      
-      if ($is_IIS || strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' || strtoupper(substr(PHP_OS, 0, 13)) == 'MICROSOFT-IIS' )
-			  $destination = rtrim($destination, '\\');
-      
-      $filename = $destination . DIRECTORY_SEPARATOR . $new_filename;
-      if( move_uploaded_file($_FILES['file']['tmp_name'], $filename) ) {
-        
-        // Set correct file permissions.
-	      $stat = stat( dirname( $filename ));
-        $perms = $stat['mode'] & 0000664;
-        @ chmod( $filename, $perms );
-        
-        $this->add_new_attachment($filename, $folder_id, $title_text, $alt_text, $seo_title_text);
-
-        $this->display_folder_contents ($folder_id);
-        
       }
-    }
-        
+    }    
     die();
   }
       
@@ -880,12 +890,18 @@ and pm.meta_key = '_wp_attached_file'";
     global $wpdb;    
     $table = $wpdb->prefix . MAXGALLERIA_MEDIA_LIBRARY_FOLDER_TABLE;
     
+    // check for existing record  
+    $sql = "select post_id from $table where post_id = $record_id";
+    
+    if($wpdb->get_var($sql) == NULL) {
+    
       $new_record = array( 
 			  'post_id'   => $record_id, 
 			  'folder_id' => $parent_folder 
 			);
       
       $wpdb->insert( $table, $new_record );
+    }
       
   }
     
@@ -1078,12 +1094,15 @@ and pm.meta_key = '_wp_attached_file'";
 					<!--<div id="mgmlp-outer-container">--> 
 						
 				  <div id="scan-results"></div>				
+          <noscript>
+            <p><?php _e('Media Library Folders has detected that Javascript has been turned off in this browser. It is necessary for Javascript to be running in order for Media Library Folders to function.','maxgalleria-media-library'); ?></p>
+          </noscript>
 						
 					<?php 
 																									
 						$phpversion = phpversion();		
-						if($phpversion < '5.6')		
-							echo "<br><div>" . __('Current PHP version, ','maxgalleria-media-library') . $phpversion . __(', is outdated. Please upgrade to version 5.6.','maxgalleria-media-library') . "</div>";
+						if($phpversion < '7.2')		
+							echo "<br><div>" . __('Current PHP version, ','maxgalleria-media-library') . $phpversion . __(', is outdated. Please upgrade to version 7.2.','maxgalleria-media-library') . "</div>";
 										
             $folder_location = $this->get_folder_path($current_folder_id);
 
@@ -2317,7 +2336,7 @@ AND meta_key = '_wp_attached_file'";
       
       $sql = "select post_title, ID, $folder_table.folder_id 
 from $wpdb->prefix" . "posts 
-LEFT JOIN $folder_table ON($wpdb->prefix" . "posts.ID = $folder_table.post_id)
+LEFT JOIN $folder_table ON ($wpdb->prefix" . "posts.ID = $folder_table.post_id)
 where ID = $folder_id";    
       
       $row = $wpdb->get_row($sql);
@@ -2604,20 +2623,22 @@ AND pm.meta_key = '_wp_attached_file'";
               $this->write_log("Deleting $folder_path");
               // try to delete first
               rmdir($folder_path);              
-              if($this->is_dir_empty($folder_path)) {
-                //unlink($folder_path. "/.DS_Store");
-                //error_log("folder_path $folder_path");
-                if(rmdir($folder_path)) {
-                  $this->write_log(__('The folder was deleted.','maxgalleria-media-library'));
+              if(file_exists($folder_path)) {
+                if($this->is_dir_empty($folder_path)) {
+                  //unlink($folder_path. "/.DS_Store");
+                  //error_log("folder_path $folder_path");
+                  if(rmdir($folder_path)) {
+                    $this->write_log(__('The folder was deleted.','maxgalleria-media-library'));
+                  } else {
+                    $message = __('The folder could not be deleted.','maxgalleria-media-library');
+                    $this->write_log($message);
+                    $folder_deleted = false;
+                  }  
                 } else {
-                  $message = __('The folder could not be deleted.','maxgalleria-media-library');
+                  $message = __('The folder is not empty and could not be deleted.','maxgalleria-media-library');
                   $this->write_log($message);
-                  $folder_deleted = false;
-                }  
-              } else {
-                $message = __('The folder is not empty and could not be deleted.','maxgalleria-media-library');
-                $this->write_log($message);
-                $folder_deleted = false;                
+                  $folder_deleted = false;                
+                }
               }
 						}          
 					}                          
@@ -2656,15 +2677,17 @@ AND pm.meta_key = '_wp_attached_file'";
             //error_log("image_path $image_path");            
             if(file_exists($image_path))
               unlink($image_path);
-            foreach($metadata['sizes'] as $source_path) {
-              $thumbnail_file = $path_to_thumbnails . DIRECTORY_SEPARATOR . $source_path['file'];
+            if(isset($metadata['sizes'])) {
+              foreach($metadata['sizes'] as $source_path) {
+                $thumbnail_file = $path_to_thumbnails . DIRECTORY_SEPARATOR . $source_path['file'];
 
-              if ($is_IIS || strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' || strtoupper(substr(PHP_OS, 0, 13)) == 'MICROSOFT-IIS' )
-                $thumbnail_file = str_replace('/', '\\', $thumbnail_file);
+                if ($is_IIS || strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' || strtoupper(substr(PHP_OS, 0, 13)) == 'MICROSOFT-IIS' )
+                  $thumbnail_file = str_replace('/', '\\', $thumbnail_file);
 
-              if(file_exists($thumbnail_file))
-                unlink($thumbnail_file);
-            }  
+                if(file_exists($thumbnail_file))
+                  unlink($thumbnail_file);
+              }  
+            }
                         
 					} else {
             $message = __('The file(s) were not deleted','maxgalleria-media-library') . PHP_EOL;
@@ -3708,11 +3731,17 @@ and meta_key = '_wp_attached_file'";
 		$found = false;
     if($attachments) {
       foreach($attachments as $row) {
-        $current_file_path = pathinfo(get_attached_file($row->ID), PATHINFO_BASENAME);				
+        $current_file_path = pathinfo(get_attached_file($row->ID), PATHINFO_BASENAME);
+        if(strpos($current_file_path, '-scaled.') !== false)
+          $current_file_path = str_replace ('-scaled', '', $current_file_path);
+        //error_log("$current_file_path $file_path");
 				if($current_file_path === $file_path) {
 					$found = true;
+          //error_log("found");
 					break;
-				}
+				} else {
+          //error_log("not found");          
+        }
       }			
     }
 		return $found; 
@@ -4935,25 +4964,27 @@ and meta_key = '_wp_attached_file'";
 			if($file_path !== '.DS_Store' && $file_path !== '.htaccess') {
 				$new_attachment = $folder_path . DIRECTORY_SEPARATOR . $file_path;
 				if(!strpos($new_attachment, '-uai-')) {  // skip thumbnails created by the Uncode theme
-          if(!strpos($new_attachment, '-pdf.jpg')) {  // skip pdf thumbnails
-            if(!is_dir($new_attachment)) {
-              if($this->is_base_file($file_path, $folder_contents)) {				
-                if(!$this->search_folder_attachments($file_path, $attachments)) {
+          if(!strpos($new_attachment, '-scaled.')) {  // skip scaled images
+            if(!strpos($new_attachment, '-pdf.jpg')) {  // skip pdf thumbnails
+              if(!is_dir($new_attachment)) {
+                if($this->is_base_file($file_path, $folder_contents)) {				
+                  if(!$this->search_folder_attachments($file_path, $attachments)) {
 
-                  $old_attachment_name = $new_attachment;
-                  //$new_attachment = pathinfo($new_attachment, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR . pathinfo($new_attachment, PATHINFO_FILENAME) . "." . strtolower(pathinfo($new_attachment, PATHINFO_EXTENSION));
-                  $new_attachment = pathinfo($new_attachment, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR . sanitize_file_name(pathinfo($new_attachment, PATHINFO_FILENAME) . "." . strtolower(pathinfo($new_attachment, PATHINFO_EXTENSION)));
+                    $old_attachment_name = $new_attachment;
+                    //$new_attachment = pathinfo($new_attachment, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR . pathinfo($new_attachment, PATHINFO_FILENAME) . "." . strtolower(pathinfo($new_attachment, PATHINFO_EXTENSION));
+                    $new_attachment = pathinfo($new_attachment, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR . sanitize_file_name(pathinfo($new_attachment, PATHINFO_FILENAME) . "." . strtolower(pathinfo($new_attachment, PATHINFO_EXTENSION)));
 
-                  if(rename($old_attachment_name, $new_attachment)) {	
-                    $files_to_add[] = basename($new_attachment);
-                    $files_count++;
-                  } else {
-                    $files_to_add[] = basename($old_attachment_name);
-                    $files_count++;
-                  }
-                }	
-              }
-            } 
+                    if(rename($old_attachment_name, $new_attachment)) {	
+                      $files_to_add[] = basename($new_attachment);
+                      $files_count++;
+                    } else {
+                      $files_to_add[] = basename($old_attachment_name);
+                      $files_count++;
+                    }
+                  }	
+                }
+              } 
+            }
           }
 				}
 			}		

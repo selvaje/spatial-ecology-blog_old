@@ -1,20 +1,20 @@
 <?php 
 	
-	global $moWpnsUtility,$dirName;
-	$mo_wpns_handler 	= new MoWpnsHandler();
+	global $mo_MoWpnsUtility,$mo_dirName;
+	$mo_wpns_handler 	= new mo_MoWpnsHandler();
 
 	if(current_user_can( 'manage_options' )  && isset($_POST['option']))
 	{
 		switch($_POST['option'])
 		{
 			case "mo_wpns_manual_block_ip":
-				wpns_handle_manual_block_ip($_POST['IP']);			break;
+				mo_wpns_handle_manual_block_ip($_POST['IP']);			break;
 			case "mo_wpns_unblock_ip":
-				wpns_handle_unblock_ip($_POST['id']);			break;
+				mo_wpns_handle_unblock_ip($_POST['id']);			break;
 			case "mo_wpns_whitelist_ip":
-				wpns_handle_whitelist_ip($_POST['IP']);				break;
+				mo_wpns_handle_whitelist_ip($_POST['IP']);				break;
 			case "mo_wpns_remove_whitelist":
-				wpns_handle_remove_whitelist($_POST['id'] );	break;
+				mo_wpns_handle_remove_whitelist($_POST['id'] );	break;
 		}
 	}
 
@@ -24,19 +24,19 @@
 	$page_url			= "";
 	$license_url		= add_query_arg( array('page' => 'mo_wpns_upgrade'), $_SERVER['REQUEST_URI'] );
 
-	//include $dirName . 'views/ip-blocking.php';
+	//include $mo_dirName . 'views/ip-blocking.php';
 
 /** IP BLOCKING RELATED FUNCTIONS **/
 
 	// Function to handle Manual Block IP form submit
-	function wpns_handle_manual_block_ip($ip)
+	function mo_wpns_handle_manual_block_ip($ip)
 	{
 		
-		global $moWpnsUtility;	
+		global $mo_MoWpnsUtility;	
 
-		if( $moWpnsUtility->check_empty_or_null( $ip) )
+		if( $mo_MoWpnsUtility->check_empty_or_null( $ip) )
 		{
-			//do_action('wpns_show_message',MoWpnsMessages::showMessage('INVALID_IP'),'ERROR');
+			//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('INVALID_IP'),'ERROR');
 			//Improper message
 			echo("empty IP");
 			exit;
@@ -49,28 +49,28 @@
 		else
 		{
 			$ipAddress 		= sanitize_text_field( $ip );
-			$mo_wpns_config = new MoWpnsHandler();
+			$mo_wpns_config = new mo_MoWpnsHandler();
 			$isWhitelisted 	= $mo_wpns_config->is_whitelisted($ipAddress);
 			if(!$isWhitelisted)
 			{
 				if($mo_wpns_config->is_ip_blocked($ipAddress)){
-					//do_action('wpns_show_message',MoWpnsMessages::showMessage('IP_ALREADY_BLOCKED'),'ERROR');
+					//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('IP_ALREADY_BLOCKED'),'ERROR');
 					//Change message
 					echo("already blocked");	
 					exit;
 				} else{
-					$mo_wpns_config->block_ip($ipAddress, MoWpnsConstants::BLOCKED_BY_ADMIN, true);
-					//do_action('wpns_show_message',MoWpnsMessages::showMessage('IP_PERMANENTLY_BLOCKED'),'SUCCESS');
+					$mo_wpns_config->block_ip($ipAddress, mo_MoWpnsConstants::BLOCKED_BY_ADMIN, true);
+					//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('IP_PERMANENTLY_BLOCKED'),'SUCCESS');
 					//not in structures		
 					?>
 					<table id="blockedips_table1" class="display">
 				<thead><tr><th>IP Address&emsp;&emsp;</th><th>Reason&emsp;&emsp;</th><th>Blocked Until&emsp;&emsp;</th><th>Blocked Date&emsp;&emsp;</th><th>Action&emsp;&emsp;</th></tr></thead>
 				<tbody>
 <?php					
-				$mo_wpns_handler 	= new MoWpnsHandler();
+				$mo_wpns_handler 	= new mo_MoWpnsHandler();
 				$blockedips 		= $mo_wpns_handler->get_blocked_ips();
 				$whitelisted_ips 	= $mo_wpns_handler->get_whitelisted_ips();
-				global $dirName;
+				global $mo_dirName;
 				foreach($blockedips as $blockedip)
 				{
 	echo 			"<tr class='mo_wpns_not_bold'><td>".$blockedip->ip_address."</td><td>".$blockedip->reason."</td><td>";
@@ -94,7 +94,7 @@
 			}
 			else
 			{
-				//do_action('wpns_show_message',MoWpnsMessages::showMessage('IP_IN_WHITELISTED'),'ERROR');
+				//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('IP_IN_WHITELISTED'),'ERROR');
 				// Change message
 				echo("IP_IN_WHITELISTED");
 				exit;
@@ -104,13 +104,13 @@
 
 
 	// Function to handle Manual Block IP form submit
-	function wpns_handle_unblock_ip($entryID)
+	function mo_wpns_handle_unblock_ip($entryID)
 	{
-		global $moWpnsUtility;
+		global $mo_MoWpnsUtility;
 		
-		if( $moWpnsUtility->check_empty_or_null($entryID))
+		if( $mo_MoWpnsUtility->check_empty_or_null($entryID))
 		{
-			//do_action('wpns_show_message',MoWpnsMessages::showMessage('UNKNOWN_ERROR'),'ERROR');
+			//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('UNKNOWN_ERROR'),'ERROR');
 			// Change message
 			echo("UNKNOWN_ERROR");
 			exit;
@@ -118,19 +118,19 @@
 		else
 		{
 			$entryid 		= sanitize_text_field($entryID);
-			$mo_wpns_config = new MoWpnsHandler();
+			$mo_wpns_config = new mo_MoWpnsHandler();
 			$mo_wpns_config->unblock_ip_entry($entryid);
-			//do_action('wpns_show_message',MoWpnsMessages::showMessage('IP_UNBLOCKED'),'SUCCESS');
+			//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('IP_UNBLOCKED'),'SUCCESS');
 			//not is structure	
 					?>
 				<table id="blockedips_table1" class="display">
 				<thead><tr><th>IP Address&emsp;&emsp;</th><th>Reason&emsp;&emsp;</th><th>Blocked Until&emsp;&emsp;</th><th>Blocked Date&emsp;&emsp;</th><th>Action&emsp;&emsp;</th></tr></thead>
 				<tbody>
 <?php					
-				$mo_wpns_handler 	= new MoWpnsHandler();
+				$mo_wpns_handler 	= new mo_MoWpnsHandler();
 				$blockedips 		= $mo_wpns_handler->get_blocked_ips();
 				$whitelisted_ips 	= $mo_wpns_handler->get_whitelisted_ips();
-				global $dirName;
+				global $mo_dirName;
 				foreach($blockedips as $blockedip)
 				{
 	echo 			"<tr class='mo_wpns_not_bold'><td>".$blockedip->ip_address."</td><td>".$blockedip->reason."</td><td>";
@@ -156,12 +156,12 @@
 
 
 	// Function to handle Whitelist IP form submit
-	function wpns_handle_whitelist_ip($ip)
+	function mo_wpns_handle_whitelist_ip($ip)
 	{
-		global $moWpnsUtility;
-		if( $moWpnsUtility->check_empty_or_null($ip))
+		global $mo_MoWpnsUtility;
+		if( $mo_MoWpnsUtility->check_empty_or_null($ip))
 		{
-			//do_action('wpns_show_message',MoWpnsMessages::showMessage('INVALID_IP'),'ERROR');
+			//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('INVALID_IP'),'ERROR');
 			//change message
 			echo("EMPTY IP");
 			exit;
@@ -174,10 +174,10 @@
 		else
 		{
 			$ipAddress = sanitize_text_field($ip);
-			$mo_wpns_config = new MoWpnsHandler();
+			$mo_wpns_config = new mo_MoWpnsHandler();
 			if($mo_wpns_config->is_whitelisted($ipAddress))
 			{
-				//do_action('wpns_show_message',MoWpnsMessages::showMessage('IP_ALREADY_WHITELISTED'),'ERROR');
+				//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('IP_ALREADY_WHITELISTED'),'ERROR');
 				//change message
 				echo("IP_ALREADY_WHITELISTED");
 				exit;
@@ -185,9 +185,9 @@
 			else
 			{
 				$mo_wpns_config->whitelist_ip($ip);
-				//do_action('wpns_show_message',MoWpnsMessages::showMessage('IP_WHITELISTED'),'SUCCESS');
+				//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('IP_WHITELISTED'),'SUCCESS');
 				//Structures issues
-				$mo_wpns_handler 	= new MoWpnsHandler();
+				$mo_wpns_handler 	= new mo_MoWpnsHandler();
 				$whitelisted_ips 	= $mo_wpns_handler->get_whitelisted_ips();
 					
 			?>
@@ -218,12 +218,12 @@
 
 
 	// Function to handle remove whitelisted IP form submit
-	function wpns_handle_remove_whitelist($entryID)
+	function mo_wpns_handle_remove_whitelist($entryID)
 	{
-		global $moWpnsUtility;
-		if( $moWpnsUtility->check_empty_or_null($entryID))
+		global $mo_MoWpnsUtility;
+		if( $mo_MoWpnsUtility->check_empty_or_null($entryID))
 		{
-			//do_action('wpns_show_message',MoWpnsMessages::showMessage('UNKNOWN_ERROR'),'ERROR');
+			//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('UNKNOWN_ERROR'),'ERROR');
 			//change Message
 			echo("UNKNOWN_ERROR");
 			exit;
@@ -231,11 +231,11 @@
 		else
 		{
 			$entryid = sanitize_text_field($entryID);
-			$mo_wpns_config = new MoWpnsHandler();
+			$mo_wpns_config = new mo_MoWpnsHandler();
 			$mo_wpns_config->remove_whitelist_entry($entryid);
-			//do_action('wpns_show_message',MoWpnsMessages::showMessage('IP_UNWHITELISTED'),'SUCCESS');
+			//do_action('wpns_show_message',mo_MoWpnsMessages::showMessage('IP_UNWHITELISTED'),'SUCCESS');
 			//structures
-				$mo_wpns_handler 	= new MoWpnsHandler();
+				$mo_wpns_handler 	= new mo_MoWpnsHandler();
 				$whitelisted_ips 	= $mo_wpns_handler->get_whitelisted_ips();
 					
 			?>

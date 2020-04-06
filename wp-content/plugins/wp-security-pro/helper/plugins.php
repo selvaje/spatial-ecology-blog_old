@@ -1,6 +1,6 @@
 <?php
 	
-	class FeaturePluginInterface
+	class mo_FeaturePluginInterface
 	{
 		function __construct()
 		{
@@ -10,15 +10,15 @@
 	}
 
 
-	class TwoFAPlugin extends FeaturePluginInterface
+	class mo_TwoFAPlugin extends mo_FeaturePluginInterface
 	{	
 
 		function getstatus()
 		{
 		    $all_plugins = get_plugins();
 			$status 	 = 'NOT_INSTALLED';
-			if(isset($all_plugins[MoWpnsConstants::TWO_FACTOR_SETTINGS]))
-				$status = is_plugin_active(MoWpnsConstants::TWO_FACTOR_SETTINGS) ? 'ACTIVE' : 'INSTALLED';
+			if(isset($all_plugins[mo_MoWpnsConstants::TWO_FACTOR_SETTINGS]))
+				$status = is_plugin_active(mo_MoWpnsConstants::TWO_FACTOR_SETTINGS) ? 'ACTIVE' : 'INSTALLED';
 			return $status;
 		}
 
@@ -30,11 +30,11 @@
 
 			if(!get_option( 'mo2f_customerKey') || !get_option( 'mo2f_api_key') || !get_option( 'mo2f_customer_token') || !get_option( 'mo2f_app_secret'))
 			{
-				global $dirName;
+				global $mo_dirName;
 				$current_user = wp_get_current_user();
 				$mo2fa 		  = new Two_Factor_Setup();
 				update_option( 'mo2f_email'				,get_option( 'mo_wpns_admin_email'));
-				update_option( 'mo2f_host_name' 		,MoWpnsConstants::HOST_NAME);
+				update_option( 'mo2f_host_name' 		,mo_MoWpnsConstants::HOST_NAME);
 				update_option( 'mo2f_phone'				,get_option( 'mo_wpns_admin_phone'));
 				update_option( 'mo2f_customerKey'		,get_option( 'mo_wpns_admin_customer_key'));
 				update_option( 'mo2f_api_key'			,get_option( 'mo_wpns_admin_api_key'));
@@ -54,14 +54,14 @@
 	}
 
 
-	class OTPPlugin extends FeaturePluginInterface
+	class mo_OTPPlugin extends mo_FeaturePluginInterface
 	{
 		function getstatus()
 		{
 		    $all_plugins = get_plugins();
 			$status = 'NOT_INSTALLED';
-			if(isset($all_plugins[MoWpnsConstants::OTP_VERIFICATION_SETTINGS]))
-				$status = is_plugin_active(MoWpnsConstants::OTP_VERIFICATION_SETTINGS) ? 'ACTIVE' : 'INSTALLED';
+			if(isset($all_plugins[mo_MoWpnsConstants::OTP_VERIFICATION_SETTINGS]))
+				$status = is_plugin_active(mo_MoWpnsConstants::OTP_VERIFICATION_SETTINGS) ? 'ACTIVE' : 'INSTALLED';
 			return $status;
 		}
 
@@ -90,14 +90,14 @@
 	}
 
 
-	class SocialPlugin extends FeaturePluginInterface
+	class mo_SocialPlugin extends mo_FeaturePluginInterface
 	{
 		function getstatus()
 		{
 		    $all_plugins = get_plugins();
 			$status = 'NOT_INSTALLED';
-			if(isset($all_plugins[MoWpnsConstants::SOCIAL_LOGIN_SETTINGS]))
-				$status = is_plugin_active(MoWpnsConstants::SOCIAL_LOGIN_SETTINGS) ? 'ACTIVE' : 'INSTALLED';
+			if(isset($all_plugins[mo_MoWpnsConstants::SOCIAL_LOGIN_SETTINGS]))
+				$status = is_plugin_active(mo_MoWpnsConstants::SOCIAL_LOGIN_SETTINGS) ? 'ACTIVE' : 'INSTALLED';
 			return $status;
 		}
 	}

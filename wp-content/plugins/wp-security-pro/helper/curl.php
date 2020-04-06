@@ -1,11 +1,11 @@
 <?php
 
-class MocURL
+class mo_MocURL
 {
 
 	public static function create_customer($email, $company, $password, $phone = '', $first_name = '', $last_name = '')
 	{
-		$url = MoWpnsConstants::HOST_NAME . '/moas/rest/customer/add';
+		$url = mo_MoWpnsConstants::HOST_NAME . '/moas/rest/customer/add';
 		$fields = array (
 			'companyName' 	 => $company,
 			'areaOfInterest' => 'WP Security Pro',
@@ -22,7 +22,7 @@ class MocURL
 	
 	public static function get_customer_key($email, $password) 
 	{
-		$url 	= MoWpnsConstants::HOST_NAME. "/moas/rest/customer/key";
+		$url 	= mo_MoWpnsConstants::HOST_NAME. "/moas/rest/customer/key";
 		$fields = array (
 					'email' 	=> $email,
 					'password'  => $password
@@ -35,7 +35,7 @@ class MocURL
 	function submit_contact_us( $q_email, $q_phone, $query )
 	{
 		$current_user = wp_get_current_user();
-		$url    = MoWpnsConstants::HOST_NAME . "/moas/rest/customer/contact-us";
+		$url    = mo_MoWpnsConstants::HOST_NAME . "/moas/rest/customer/contact-us";
 		$query  = '[WP Network Security]: ' . $query;
 		$fields = array(
 					'firstName'	=> $current_user->user_firstname,
@@ -54,7 +54,7 @@ class MocURL
 
 	function lookupIP($ip)
 	{
-		$url 	= MoWpnsConstants::HOST_NAME. "/moas/rest/security/iplookup";
+		$url 	= mo_MoWpnsConstants::HOST_NAME. "/moas/rest/security/iplookup";
 		$fields = array (
 					'ip' => $ip
 				);
@@ -66,9 +66,9 @@ class MocURL
 	function send_otp_token($auth_type, $phone, $email)
 	{
 		
-		$url 		 = MoWpnsConstants::HOST_NAME . '/moas/api/auth/challenge';
-		$customerKey = MoWpnsConstants::DEFAULT_CUSTOMER_KEY;
-		$apiKey 	 = MoWpnsConstants::DEFAULT_API_KEY;
+		$url 		 = mo_MoWpnsConstants::HOST_NAME . '/moas/api/auth/challenge';
+		$customerKey = mo_MoWpnsConstants::DEFAULT_CUSTOMER_KEY;
+		$apiKey 	 = mo_MoWpnsConstants::DEFAULT_API_KEY;
 
 		$fields  	 = array(
 							'customerKey' 	  => $customerKey,
@@ -85,7 +85,7 @@ class MocURL
 
 	function validate_recaptcha($ip,$response)
 	{
-		$url 		 = MoWpnsConstants::RECAPTCHA_VERIFY;
+		$url 		 = mo_MoWpnsConstants::RECAPTCHA_VERIFY;
 		$json		 = "";
 		$fields 	 = array(
 							'response' => $response,
@@ -100,9 +100,9 @@ class MocURL
 
 	function validate_otp_token($transactionId,$otpToken)
 	{
-		$url 		 = MoWpnsConstants::HOST_NAME . '/moas/api/auth/validate';
-		$customerKey = MoWpnsConstants::DEFAULT_CUSTOMER_KEY;
-		$apiKey 	 = MoWpnsConstants::DEFAULT_API_KEY;
+		$url 		 = mo_MoWpnsConstants::HOST_NAME . '/moas/api/auth/validate';
+		$customerKey = mo_MoWpnsConstants::DEFAULT_CUSTOMER_KEY;
+		$apiKey 	 = mo_MoWpnsConstants::DEFAULT_API_KEY;
 
 		$fields 	 = array(
 						'txId'  => $transactionId,
@@ -117,7 +117,7 @@ class MocURL
 	
 	function check_customer($email)
 	{
-		$url 	= MoWpnsConstants::HOST_NAME . "/moas/rest/customer/check-if-exists";
+		$url 	= mo_MoWpnsConstants::HOST_NAME . "/moas/rest/customer/check-if-exists";
 		$fields = array(
 					'email' 	=> $email,
 				);
@@ -129,7 +129,7 @@ class MocURL
 	function mo_wpns_forgot_password()
 	{
 	
-		$url 		 = MoWpnsConstants::HOST_NAME . '/moas/rest/customer/password-reset';
+		$url 		 = mo_MoWpnsConstants::HOST_NAME . '/moas/rest/customer/password-reset';
 		$email       = get_option('mo_wpns_admin_email');
 		$customerKey = get_option('mo_wpns_admin_customer_key');
 		$apiKey 	 = get_option('mo_wpns_admin_api_key');
@@ -161,9 +161,9 @@ class MocURL
 
     function send_email_alert($email,$phone,$message){
 
-        $url = MoWpnsConstants::HOST_NAME . '/moas/api/notify/send';
-        $customerKey = MoWpnsConstants::DEFAULT_CUSTOMER_KEY;
-        $apiKey 	 = MoWpnsConstants::DEFAULT_API_KEY;
+        $url = mo_MoWpnsConstants::HOST_NAME . '/moas/api/notify/send';
+        $customerKey = mo_MoWpnsConstants::DEFAULT_CUSTOMER_KEY;
+        $apiKey 	 = mo_MoWpnsConstants::DEFAULT_API_KEY;
         $fromEmail			= 'no-reply@xecurify.com';
         $subject            = "Feedback: WordPress WP Security Pro Plugin";
 

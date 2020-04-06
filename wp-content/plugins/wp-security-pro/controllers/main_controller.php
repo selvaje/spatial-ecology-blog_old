@@ -1,8 +1,8 @@
 <?php
 
-	global $moWpnsUtility,$dirName;
+	global $mo_MoWpnsUtility,$mo_dirName;
 
-	$controller = $dirName . 'controllers/';
+	$controller = $mo_dirName . 'controllers/';
 
 	include $controller 	 . 'navbar.php';
 

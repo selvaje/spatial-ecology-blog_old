@@ -12,14 +12,39 @@
 /* Welcome screen */
 .welcome-to-cau {
     background: #FFF;
+    border: 1px solid #CCD0D4;
     margin: 25px 0;
     padding: 30px;
     background-size: 140px;
     background-position: left bottom;
     background-repeat: no-repeat;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
 }
-.welcome-to-cau.welcome-bg {
+.welcome-to-cau .welcome-image {
+	display: inline-block;
+	vertical-align: middle;
+	width: 100px;
+	height: 100px;
     background-image: url('images/welcome.svg');
+    background-size: contain;
+    background-position: center;
+	box-sizing: border-box;
+}
+.welcome-to-cau .welcome-content {
+	display: inline-block;
+	vertical-align: middle;
+	width: calc(100% - 100px);
+	padding-left: 25px;
+	box-sizing: border-box;
+}
+.welcome-to-cau .welcome-content strong {
+	color: #000;
+}
+.welcome-to-cau .welcome-content p {
+	margin: 2px 0;
+}
+.welcome-to-cau.help-bg {
+    background-image: url('images/help.svg');
 }
 .welcome-to-cau.support-bg {
     background-image: url('images/support.svg');
@@ -27,12 +52,24 @@
 .welcome-to-cau.love-bg {
     background-image: url('images/love.svg');
 }
+.welcome-to-cau.update-bg {
+    background-image: url('images/update.svg');
+}
+.welcome-to-cau.email-bg {
+    background-image: url('images/email.svg');
+}
+.welcome-to-cau.interval-bg {
+    background-image: url('images/interval.svg');
+}
 .welcome-to-cau h2 {
 	margin: 0;
 	margin-bottom: 25px;
     font-size: 21px;
     font-weight: 400;
     line-height: 1.2;
+}
+.welcome-to-cau h2.title {
+	margin-bottom: 10px;
 }
 .welcome-to-cau h3 {
     font-size: 16px;
@@ -70,11 +107,51 @@
 	padding: 5px;
 }
 
+/* Overwrite core UI */
+.cau_content input[type=checkbox]:checked::before {
+	content: "";
+	background: url( 'images/check.svg' );
+	background-size: contain;
+	background-position: center center;
+}
+.cau_content a {
+	color: #9178B7;
+}
+.cau_content a.nav-tab {
+	color: #23282D;
+}
+.cau_content .button-primary {
+	background-color: #9178B7!important;
+	border-color: #9178B7!important;
+}
+.cau_content .button-alt {
+	color: #9178B7!important;
+	border-color: #9178B7!important;
+}
+.cau_content .button-hero {
+	font-weight: 500;
+	padding: 15px 30px!important;
+}
+#message.cau {
+	background: #FFF;
+    border: 1px solid #CCD0D4;
+    border-left-width: 4px;
+    border-left-color: #9178B7;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    margin: 25px 0px 5px 0;
+	padding: 15px;
+}
+#message.cau a, #message.cau strong {
+	color: #9178B7;
+}
+
 /* Dashboard */
 .cau-column-wide {
+	box-sizing: border-box;
 	display: inline-block;
 	vertical-align: top;
 	width: calc(100% - 450px);
+	padding-right: 25px;
 }
 .cau-column-small {
 	display: inline-block;
@@ -84,9 +161,18 @@
 .cau-dashboard-box {
 	background-position: right bottom;
 }
+.cau-column-wide .cau-dashboard-box {
+	padding-right: 125px;
+}
 .cau-dashboard-box a {
 	margin-left: 0px;
 	margin-top: 10px;
+}
+.cau-dashboard-box .welcome-column {
+	padding-right: 25px;
+}
+.support-sidebar-list {
+	margin-bottom: 25px;
 }
 .nav-tab {
 	position: relative;
@@ -221,7 +307,7 @@ table.rollbacklist td a.versionselectbutton {
 	width: 30px; 
 	height: 16px;
 	background: transparent;
-	border: 2px solid #0085BA;
+	border: 2px solid #9178B7;
 	border-radius: 15px;
 	transition: background-color .2s;
 }
@@ -231,16 +317,16 @@ table.rollbacklist td a.versionselectbutton {
 	transition: all .2s;
 	border-radius: 500px;
 	background: transparent;
-	border: 2px solid #0085BA;
+	border: 2px solid #9178B7;
 	top: 1px; 
 	left: 5px;
 }
 #the-list input[type="checkbox"]:not(:checked) + label:before {
- 	background: #0085BA; 
-	border: 2px solid #0085BA;
+ 	background: #9178B7; 
+	border: 2px solid #9178B7;
 }
 #the-list input[type="checkbox"]:not(:checked) + label:after {
-	background: #0085BA;
+	background: #9178B7;
 	border-color: #FFF;
 	left: 18px;
 }
@@ -268,41 +354,75 @@ table.rollbacklist td a.versionselectbutton {
 	width: 125px;
 	padding-left: 5px;
 }
+.cau_shedule_notation .dashicons {
+	position: relative;
+	bottom: -5px;
+}
 
-/* Custom buttons */
-.cau-button {
-	display: inline-block;
-	padding: 15px 25px;
-	text-decoration: none;
-	border-radius: 3px;
-	border: 1px solid rgba(0,0,0,0.2);
-	font-weight: 500;
-	font-size: 1.1em;
-	margin: 0 10px;
+/* Tooltip */
+.cau_tooltip {
+	position: relative;
 }
-.cau-button:hover {
-	opacity: 0.9;
+.cau_tooltip .cau_tooltip_text {
+    visibility: hidden;
+    background-color: rgba(0,0,0,0.7);	
+    color: #FFF;
+    text-align: left;
+    font-size: 14px;
+    padding: 15px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    width: 240px;
+    bottom: 100%;
+    left: 50%; 
+    margin-left: -60px;
+    margin-bottom: 10px;
+    opacity: 0;
+    transition: .3s;
+    font-weight: normal;
 }
-.cau-button .dashicons {
-	bottom: -2px;
+.cau_tooltip:hover .cau_tooltip_text {
+    visibility: visible;
+    opacity: 1;
 }
-.donate-button {
-	background-color: #9178B7;
-	border-color: #6B5887;
-	color: #FFF;
-}
-.rate-button {
-	background: #F7F7F7;
-	color: #735F91;
-}
-.donate-button:hover {
-	color: #FFF;
-}
-.rate-button:hover {
-	color: #735F91;
+.cau_tooltip .cau_tooltip_text::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -75px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.7) transparent transparent transparent;
 }
 
 /* Responsive */
+@media screen and (max-width: 1400px) {
+
+	.cau-column-wide {
+		width: calc(100% - 350px);
+	}
+	.cau-column-small {
+		width: 350px;
+	}
+	.welcome-to-cau .welcome-column.welcome-column-quarter {
+		width: 50%;
+		padding-bottom: 35px;
+	}
+	.cau-column-small .welcome-to-cau {
+		background-image: none;
+	}
+
+}
+@media screen and (max-width: 1150px) {
+
+	.cau-column-wide, .cau-column-small {
+		width: 100%;
+		padding: 0;
+	}
+
+}
 @media screen and (max-width: 1000px) {
 
 	/* Basics */
@@ -341,7 +461,7 @@ table.rollbacklist td a.versionselectbutton {
 
 	/* Scheduling */
 	.cau_schedule_input {
-		width: 50px;
+		width: 75px;
 	}
 
 	/* Custom buttons */
@@ -354,7 +474,7 @@ table.rollbacklist td a.versionselectbutton {
 		float: left;
 	}
 
-	/* Welcome screen */
+	/* Dashboard */
 	.welcome-to-cau {
 		background-position: right bottom;
 	}
@@ -367,15 +487,11 @@ table.rollbacklist td a.versionselectbutton {
 	.welcome-to-cau .welcome-column.welcome-column-first {
 		padding-left: 0px;
 	}
-
-	/* Dashboard */
+	.cau-column-wide .cau-dashboard-box {
+		padding-right: 30px;
+		padding-bottom: 125px
+	}
 	.majorMinorExplain {
-		display: none;
-	}
-	.cau-column-wide {
-		width: 100%;
-	}
-	.cau-column-small {
 		display: none;
 	}
 

@@ -51,14 +51,14 @@ echo'			</table>
 				<input type="hidden" name="option" value="mo_wpns_browser_blocking">
 				<table style="width:100%">
 				<tr>
-					<td width="33%"><input type="checkbox" name="mo_wpns_block_chrome" '.$block_chrome.' > Google Chrome '.($current_browser=='chrome' ? MoWpnsConstants::CURRENT_BROWSER : "").'</td>
-					<td width="33%"><input type="checkbox" name="mo_wpns_block_firefox" '.$block_firefox.' > Firefox '.($current_browser=='firefox' ? MoWpnsConstants::CURRENT_BROWSER : "").'</td>
-					<td width="33%"><input type="checkbox" name="mo_wpns_block_ie" '.$block_ie.' > Internet Explorer '.($current_browser=='ie' ? MoWpnsConstants::CURRENT_BROWSER : "").'</td>
+					<td width="33%"><input type="checkbox" name="mo_wpns_block_chrome" '.$block_chrome.' > Google Chrome '.($current_browser=='chrome' ? mo_MoWpnsConstants::CURRENT_BROWSER : "").'</td>
+					<td width="33%"><input type="checkbox" name="mo_wpns_block_firefox" '.$block_firefox.' > Firefox '.($current_browser=='firefox' ? mo_MoWpnsConstants::CURRENT_BROWSER : "").'</td>
+					<td width="33%"><input type="checkbox" name="mo_wpns_block_ie" '.$block_ie.' > Internet Explorer '.($current_browser=='ie' ? mo_MoWpnsConstants::CURRENT_BROWSER : "").'</td>
 				</tr>
 				<tr>
-					<td width="33%"><input type="checkbox" name="mo_wpns_block_safari" '.$block_safari.' > Safari '.($current_browser=='safari' ? MoWpnsConstants::CURRENT_BROWSER : "").'</td>
-					<td width="33%"><input type="checkbox" name="mo_wpns_block_opera" '.$block_opera.' > Opera '.($current_browser=='opera' ? MoWpnsConstants::CURRENT_BROWSER : "").'</td>
-					<td width="33%"><input type="checkbox" name="mo_wpns_block_edge" '.$block_edge.' > Microsoft Edge '.($current_browser=='edge' ? MoWpnsConstants::CURRENT_BROWSER : "").'</td>
+					<td width="33%"><input type="checkbox" name="mo_wpns_block_safari" '.$block_safari.' > Safari '.($current_browser=='safari' ? mo_MoWpnsConstants::CURRENT_BROWSER : "").'</td>
+					<td width="33%"><input type="checkbox" name="mo_wpns_block_opera" '.$block_opera.' > Opera '.($current_browser=='opera' ? mo_MoWpnsConstants::CURRENT_BROWSER : "").'</td>
+					<td width="33%"><input type="checkbox" name="mo_wpns_block_edge" '.$block_edge.' > Microsoft Edge '.($current_browser=='edge' ? mo_MoWpnsConstants::CURRENT_BROWSER : "").'</td>
 				</tr>
 				</table>
 				<br>

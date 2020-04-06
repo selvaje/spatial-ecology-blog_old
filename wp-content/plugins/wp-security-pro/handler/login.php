@@ -1,6 +1,6 @@
 <?php 
 
-	class LoginHandler
+	class mo_LoginHandler
 	{
 		function __construct()
 		{
@@ -25,22 +25,22 @@
 				add_action( 'woocommerce_register_post', array( $this,'wooc_validate_user_captcha_register'), 1, 3);
 			}
 			
-			$mo_wpns_db_handler = new MoWpnsDB();
-            add_action( 'upgrade_process_complete', array($mo_wpns_db_handler, 'mo_mmp_upgrade_process_complete') );
+			$mo_wpns_db_handler = new mo_MoWpnsDB();
+            add_action( 'upgrader_process_complete', array($mo_wpns_db_handler, 'mo_mmp_upgrade_process_complete') );
 		}	
 
 
 		function mo_wpns_init()
 		{
-			global $moWpnsUtility,$dirName;
+			global $mo_MoWpnsUtility,$mo_dirName;
 			$WAFEnabled = get_option('WAFEnabled');
 			$WAFLevel = get_option('WAF');
 			if($WAFEnabled == 1)
 			{
 				if($WAFLevel == 'PluginLevel')
 				{
-					if(file_exists($dirName .'handler'.DIRECTORY_SEPARATOR.'mo-waf-plugin.php'))
-						include_once($dirName .'handler'.DIRECTORY_SEPARATOR.'mo-waf-plugin.php');
+					if(file_exists($mo_dirName .'handler'.DIRECTORY_SEPARATOR.'mo-waf-plugin.php'))
+						include_once($mo_dirName .'handler'.DIRECTORY_SEPARATOR.'mo-waf-plugin.php');
 					else
 					{
 						//UNable to find file. Please reconfigure.
@@ -48,15 +48,15 @@
 				}
 			}
 			
-				$userIp 			= $moWpnsUtility->get_client_ip();
-				$mo_wpns_config = new MoWpnsHandler();
+				$userIp 			= $mo_MoWpnsUtility->get_client_ip();
+				$mo_wpns_config = new mo_MoWpnsHandler();
 				$isWhitelisted   = $mo_wpns_config->is_whitelisted($userIp);
 				$isIpBlocked = false;
 				if(!$isWhitelisted){
 				$isIpBlocked = $mo_wpns_config->is_ip_blocked_in_anyway($userIp);
 				}
 				 if($isIpBlocked)
-				 	include $dirName . 'views'.DIRECTORY_SEPARATOR.'error'.DIRECTORY_SEPARATOR.'403.php';
+				 	include $mo_dirName . 'views'.DIRECTORY_SEPARATOR.'error'.DIRECTORY_SEPARATOR.'403.php';
 
 
 				$requested_uri = $_SERVER["REQUEST_URI"];
@@ -111,7 +111,7 @@
 		//Function to Handle Change Password Form
 		function handle_change_password($username,$newpassword,$confirmpassword)
 		{
-			global $dirName;
+			global $mo_dirName;
 			$user  = get_user_by("login",$username);
 			$error = wp_authenticate_username_password($user,$username,$newpassword);
 
@@ -133,7 +133,7 @@
 		//Function to Update User password
 		function update_strong_password($username,$newpassword,$confirmpassword)
 		{
-			global $dirName;
+			global $mo_dirName;
 
 			if(strlen($newpassword) > 5 && preg_match("#[0-9]+#", $newpassword) && preg_match("#[a-zA-Z]+#", $newpassword)
 				&& preg_match('/[^a-zA-Z\d]/', $newpassword) && $newpassword==$confirmpassword)
@@ -143,14 +143,14 @@
 				return "success";
 			}
 			else
-				include $dirName . 'controllers'.DIRECTORY_SEPARATOR.'change-password.php';
+				include $mo_dirName . 'controllers'.DIRECTORY_SEPARATOR.'change-password.php';
 		}
 
 
 		//Our custom logic for user authentication
 		function custom_authenticate($user, $username, $password)
 		{
-			global $moWpnsUtility;
+			global $mo_MoWpnsUtility;
 			$error = new WP_Error();
 
 			if(empty($username) && empty ($password))
@@ -178,7 +178,7 @@
 				{
 
 					if(get_option('mo_wpns_activate_recaptcha_for_login'))
-						$recaptchaError = $moWpnsUtility->verify_recaptcha($_POST['g-recaptcha-response']);
+						$recaptchaError = $mo_MoWpnsUtility->verify_recaptcha($_POST['g-recaptcha-response']);
 
 					if(empty($recaptchaError->errors) && get_option('mo_wpns_enforce_strong_passswords'))
 						$error = $this->check_password($user,$error,$password);
@@ -204,18 +204,18 @@
 		//Function to check user password
 		function check_password($user,$error,$password)
 		{
-			global $moWpnsUtility, $dirName;
+			global $mo_MoWpnsUtility, $mo_dirName;
 
 			if ( wp_check_password( $password, $user->data->user_pass, $user->ID) )
 			{
-				if($moWpnsUtility->check_user_password_strength($user,$password,"")=="success")
+				if($mo_MoWpnsUtility->check_user_password_strength($user,$password,"")=="success")
 				{
 					if(get_option('mo_wpns_enable_brute_force'))
 						$this->mo_wpns_login_success($user->data->user_login);
 					return $user;
 				}
 				else
-					include $dirName . 'controllers'.DIRECTORY_SEPARATOR.'change-password.php';
+					include $mo_dirName . 'controllers'.DIRECTORY_SEPARATOR.'change-password.php';
 			}
 			else
 				$error->add('empty_password', __('<strong>ERROR</strong>: Wrong password.'));
@@ -227,39 +227,39 @@
 		//Function to handle successful user login
 		function mo_wpns_login_success($username)
 		{
-			global $moWpnsUtility;
+			global $mo_MoWpnsUtility;
 
-				$mo_wpns_config = new MoWpnsHandler();
-				$userIp 		= $moWpnsUtility->get_client_ip();
+				$mo_wpns_config = new mo_MoWpnsHandler();
+				$userIp 		= $mo_MoWpnsUtility->get_client_ip();
 
 				$mo_wpns_config->move_failed_transactions_to_past_failed($userIp);
 
 				if(get_option('mo_wpns_enable_unusual_activity_email_to_user'))
-					$moWpnsUtility->sendNotificationToUserForUnusualActivities($username, $userIp, MoWpnsConstants::LOGGED_IN_FROM_NEW_IP);
+					$mo_MoWpnsUtility->sendNotificationToUserForUnusualActivities($username, $userIp, mo_MoWpnsConstants::LOGGED_IN_FROM_NEW_IP);
 
 
-				$mo_wpns_config->add_transactions($userIp, $username, MoWpnsConstants::LOGIN_TRANSACTION, MoWpnsConstants::SUCCESS);
+				$mo_wpns_config->add_transactions($userIp, $username, mo_MoWpnsConstants::LOGIN_TRANSACTION, mo_MoWpnsConstants::SUCCESS);
 		}
 
 
 		//Function to handle failed user login attempt
 		function mo_wpns_login_failed($username)
 		{
-			global $moWpnsUtility;
-				$userIp 		= $moWpnsUtility->get_client_ip();
+			global $mo_MoWpnsUtility;
+				$userIp 		= $mo_MoWpnsUtility->get_client_ip();
 
 				if(empty($userIp) || empty($username) || !get_option('mo_wpns_enable_brute_force'))
 					return;
 
-				$mo_wpns_config = new MoWpnsHandler();
+				$mo_wpns_config = new mo_MoWpnsHandler();
 				$isWhitelisted  = $mo_wpns_config->is_whitelisted($userIp);
 
-				$mo_wpns_config->add_transactions($userIp, $username, MoWpnsConstants::LOGIN_TRANSACTION, MoWpnsConstants::FAILED);
+				$mo_wpns_config->add_transactions($userIp, $username, mo_MoWpnsConstants::LOGIN_TRANSACTION, mo_MoWpnsConstants::FAILED);
 
 
 
 					if(get_option('mo_wpns_enable_unusual_activity_email_to_user'))
-							$moWpnsUtility->sendNotificationToUserForUnusualActivities($username, $userIp, MoWpnsConstants::FAILED_LOGIN_ATTEMPTS_FROM_NEW_IP);
+							$mo_MoWpnsUtility->sendNotificationToUserForUnusualActivities($username, $userIp, mo_MoWpnsConstants::FAILED_LOGIN_ATTEMPTS_FROM_NEW_IP);
 
 					$failedAttempts 	 = $mo_wpns_config->get_failed_attempts_count($userIp);
 					$allowedLoginAttepts = get_option('mo_wpns_allwed_login_attempts') ? get_option('mo_wpns_allwed_login_attempts') : 5;
@@ -282,11 +282,11 @@
 		//Function to handle login limit exceeded
 		function handle_login_attempt_exceeded($userIp)
 		{
-			global $moWpnsUtility, $dirName;
-			$mo_wpns_config = new MoWpnsHandler();
-			$mo_wpns_config->block_ip($userIp, MoWpnsConstants::LOGIN_ATTEMPTS_EXCEEDED, false);
-			include $dirName . 'views'.DIRECTORY_SEPARATOR.'error'.DIRECTORY_SEPARATOR.'403.php';
+			global $mo_MoWpnsUtility, $mo_dirName;
+			$mo_wpns_config = new mo_MoWpnsHandler();
+			$mo_wpns_config->block_ip($userIp, mo_MoWpnsConstants::LOGIN_ATTEMPTS_EXCEEDED, false);
+			include $mo_dirName . 'views'.DIRECTORY_SEPARATOR.'error'.DIRECTORY_SEPARATOR.'403.php';
 		}
 
 	}
-	new LoginHandler;
+	new mo_LoginHandler;

@@ -1,6 +1,6 @@
 <?php
 	
-	global $moWpnsUtility,$dirName;
+	global $mo_MoWpnsUtility,$mo_dirName;
 
 	if(isset($_POST['option']) and $_POST['option']=='mo_wpns_manual_clear'){
 		global $wpdb;
@@ -16,11 +16,11 @@
 
 	}
 
-	$mo_wpns_handler   = new MoWpnsHandler();
+	$mo_wpns_handler   = new mo_MoWpnsHandler();
 	$logintranscations = $mo_wpns_handler->get_login_transaction_report();
 	$errortranscations = $mo_wpns_handler->get_error_transaction_report();
 
-	include $dirName . 'views'.DIRECTORY_SEPARATOR.'reports.php';
+	include $mo_dirName . 'views'.DIRECTORY_SEPARATOR.'reports.php';
 
 ?>
 		

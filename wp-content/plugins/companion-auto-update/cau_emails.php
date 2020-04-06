@@ -42,21 +42,30 @@ Leaving your site outdated is a security risk so please consider manually updati
 // Set the content for the emails about recent updates
 function cau_updated_message( $type, $updatedList ) {
 
+	// Check if cau_get_db_value() function exists.
+	if ( !function_exists( 'cau_get_db_value' ) ) require_once( plugin_dir_path( __FILE__ ) . 'cau_function.php' );
+
+	// What markup to use
+	if( cau_get_db_value( 'html_or_text' ) == 'html' ) $break = '<br />';
+	else $break = "\n";
+
+	// The message
 	$text = sprintf( esc_html__( 
 		'One or more %1$s on your WordPress site at %2$s have been updated by Companion Auto Update. No further action is needed on your part. 
-		For more info on what is new visit your dashboard and check the changelog.', 'companion-auto-update'
+For more info on what is new visit your dashboard and check the changelog.', 'companion-auto-update'
 	), $type, get_site_url() );
 
-	$text .= '<br /><br />';
+	$text .= $break;
+	$text .= $break;
 	$text .= sprintf( esc_html__( 
 		'The following %1$s have been updated:', 'companion-auto-update'
 	), $type );
 
-	$text .= '<br />';
+	$text .= $break;
 	$text .= $updatedList;
 
-	$text .= '<br />';
-	$text .= __( "(You'll also recieve this email if you manually updated a plugin or theme)", "companion-auto-update"  );
+	$text .= $break;
+	$text .= __( "(You'll also receive this email if you manually updated a plugin or theme)", "companion-auto-update"  );
 
 	return $text;
 
@@ -133,6 +142,9 @@ function cau_list_plugin_updates() {
 
 // Alerts when plugin has been updated
 function cau_plugin_updated() {
+
+	// Check if cau_get_db_value() function exists.
+	if ( !function_exists( 'cau_get_db_value' ) ) require_once( plugin_dir_path( __FILE__ ) . 'cau_function.php' );
 
 	// Create arrays
 	$pluginNames 	= array();
@@ -227,27 +239,46 @@ function cau_plugin_updated() {
 	
 	$totalNumP 		= 0;
 	$totalNumT		= 0;
-	$updatedListP 	= '<ol>';
-	$updatedListT 	= '<ol>';
+	$updatedListP 	= '';
+	$updatedListT 	= '';
+	
+	if( cau_get_db_value( 'html_or_text' ) == 'html' ) {
+		$updatedListP 	.= '<ol>';
+		$updatedListT 	.= '<ol>';
+	}
 
 	foreach ( $pluginDates as $key => $value ) {
-		$updatedListP .= "<li><strong>".$pluginNames[$key]."</strong><br />
-						to version ".$pluginVersion[$key]." <a href='https://wordpress.org/plugins/".$pluginSlug[$key]."/#developers'>".__( "Release notes", "companion-auto-update" )."</a></li>";
+		if( cau_get_db_value( 'html_or_text' ) == 'html' ) {
+			$updatedListP .= "<li><strong>".$pluginNames[$key]." </strong><br />
+			to version ".$pluginVersion[$key]." <a href='https://wordpress.org/plugins/".$pluginSlug[$key]."/#developers'>".__( "Release notes", "companion-auto-update" )."</a></li>";
+		} else {
+			$updatedListP .= "- ".$pluginNames[$key]." to version ".$pluginVersion[$key]."\n";
+			$updatedListP .= "  Release notes: https://wordpress.org/plugins/".$pluginSlug[$key]."/#developers\n";
+		}
 		$totalNumP++;
 	}
+
 	foreach ( $themeNames as $key => $value ) {
-		$updatedListT .= "<li>".$themeNames[$key]."</li>";
+		if( cau_get_db_value( 'html_or_text' ) == 'html' ) {
+			$updatedListT .= "<li>".$themeNames[$key]."</li>";
+		} else {
+			$updatedListT .= "- ".$themeNames[$key]."\n";
+		}
 		$totalNumT++;
 	}
 
-	$updatedListP 	.= '</ol>';
-	$updatedListT 	.= '</ol>';
+	if( cau_get_db_value( 'html_or_text' ) == 'html' ) {
+		$updatedListP 	.= '</ol>';
+		$updatedListT 	.= '</ol>';
+	}
 
 	// Set the email content type
-	function cau_mail_content_type() {
-	    return 'text/html';
+	if( cau_get_db_value( 'html_or_text' ) == 'html' ) {
+		function cau_mail_content_type() {
+		    return 'text/html';
+		}
+		add_filter( 'wp_mail_content_type', 'cau_mail_content_type' );
 	}
-	add_filter( 'wp_mail_content_type', 'cau_mail_content_type' );
 
 	// If plugins have been updated, send email
 	if( $totalNumP > 0 ) {
@@ -285,7 +316,7 @@ function cau_plugin_updated() {
 
 	}
 
-	remove_filter( 'wp_mail_content_type', 'cau_mail_content_type' );
+	if( cau_get_db_value( 'html_or_text' ) == 'html' ) remove_filter( 'wp_mail_content_type', 'cau_mail_content_type' );
 	
 	// Prevent duplicate emails by setting the event again
 	if( $totalNumT > 0 OR $totalNumP > 0 ) {

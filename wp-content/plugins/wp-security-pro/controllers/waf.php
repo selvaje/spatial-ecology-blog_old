@@ -1,6 +1,6 @@
 <?php
-    global $moWpnsUtility,$dirName;
-	$mo_wpns_handler 	= new MoWpnsHandler();
+    global $mo_MoWpnsUtility,$mo_dirName;
+	$mo_wpns_handler 	= new mo_MoWpnsHandler();
 	$sqlC 			= $mo_wpns_handler->get_blocked_attacks_count("SQL");
 	$rceC 			= $mo_wpns_handler->get_blocked_attacks_count("RCE");
 	$rfiC 			= $mo_wpns_handler->get_blocked_attacks_count("RFI");
@@ -35,7 +35,7 @@
 	}
 	
 
-    include $dirName . 'views'.DIRECTORY_SEPARATOR.'waf.php';
+    include $mo_dirName . 'views'.DIRECTORY_SEPARATOR.'waf.php';
     
 
 

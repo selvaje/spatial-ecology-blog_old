@@ -1,5 +1,5 @@
 <?php
-add_action( 'admin_footer', 'backup_save_settings' );
+add_action( 'admin_footer', 'mo_backup_save_settings' );
 echo '
 		<div id="wpns_backup_message" style=" padding-top:8px"></div>
 		
@@ -154,7 +154,7 @@ echo   '</div>
 
 	<?php 
        
-       function backup_save_settings(){
+       function mo_backup_save_settings(){
        	if ( ('admin.php' != basename( $_SERVER['PHP_SELF'] )) || ($_GET['page'] != 'mo_wpns_backup') ) {
                 return;
             }

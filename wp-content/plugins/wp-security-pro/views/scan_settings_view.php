@@ -1,5 +1,5 @@
 <?php
-	add_action('admin_footer','mo_malware_config_page_submit');
+	add_action('admin_footer','mo_malware_config_page_submit_wpns');
 	$mo_mmp_scan_files_extensions = get_option('mo_wpns_scan_files_extensions');
 	if($mo_mmp_scan_files_extensions == false)
 		$mo_mmp_scan_files_extensions = "php";
@@ -76,7 +76,7 @@
 					<?php }
 				?>
 			</table>
-			<a style="cursor:pointer" onclick="add_skip_folders();">Add More Folders</a>
+			<a style="cursor:pointer" onclick="mo_add_skip_folders();">Add More Folders</a>
 			</td>
 		</tr>
 		<tr><td>&nbsp;</td><td></td></tr>
@@ -92,7 +92,7 @@
 					<?php }
 				?>
 			</table>
-			<a style="cursor:pointer" onclick="add_white_url();">Add More URLs</a>
+			<a style="cursor:pointer" onclick="mo_add_white_url();">Add More URLs</a>
 			</td>
 		</tr>
 		<tr><td>&nbsp;</td><td></td></tr>
@@ -108,7 +108,7 @@
 					<?php }
 				?>
 			</table>
-			<a style="cursor:pointer" onclick="add_custom_sign();">Add More Signatures</a>
+			<a style="cursor:pointer" onclick="mo_add_custom_sign();">Add More Signatures</a>
 			</td>
 		</tr>
 		<tr>
@@ -120,7 +120,7 @@
 </div>
 <?php
 
-function mo_malware_config_page_submit(){
+function mo_malware_config_page_submit_wpns(){
 	if ( ('admin.php' != basename( $_SERVER['PHP_SELF'] )) || ($_GET['page'] != 'mo_wpns_malwarescan') ) {
         return;
     }
@@ -166,7 +166,7 @@ jQuery(document).ready(function(){
 }
 ?>
 <script>
-	function add_skip_folders(){
+	function mo_add_skip_folders(){
 		var last_index_name = jQuery('#skip_folders tr:last .mo_wpns_table_textbox').attr('name');
 		var splittedArray = last_index_name.split("_");
 		var countAttributes = parseInt(splittedArray[splittedArray.length-1])+1;
@@ -174,7 +174,7 @@ jQuery(document).ready(function(){
 	
 	}
 
-	function add_white_url(){
+	function mo_add_white_url(){
 		var last_index_name = jQuery('#white_url tr:last .mo_wpns_table_textbox').attr('name');
 		var splittedArray = last_index_name.split("_");
 		var countAttributes = parseInt(splittedArray[splittedArray.length-1])+1;
@@ -182,7 +182,7 @@ jQuery(document).ready(function(){
 	
 	}
 
-	function add_custom_sign(){
+	function mo_add_custom_sign(){
 		var last_index_name = jQuery('#sign_custom tr:last .mo_wpns_table_textbox').attr('name');
 		var splittedArray = last_index_name.split("_");
 		var countAttributes = parseInt(splittedArray[splittedArray.length-1])+1;

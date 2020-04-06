@@ -5174,7 +5174,7 @@ process.umask = function() { return 0; };
 /* 4 */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.9' };
+var core = module.exports = { version: '2.6.11' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -5214,7 +5214,7 @@ $exports.store = store;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/*!
- * Vue.js v2.6.10
+ * Vue.js v2.6.11
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
@@ -7184,7 +7184,7 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
   isUsingMicroTask = true;
 } else if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
   // Fallback to setImmediate.
-  // Techinically it leverages the (macro) task queue,
+  // Technically it leverages the (macro) task queue,
   // but it is still a better choice than setTimeout.
   timerFunc = function () {
     setImmediate(flushCallbacks);
@@ -7273,7 +7273,7 @@ if (process.env.NODE_ENV !== 'production') {
     warn(
       "Property \"" + key + "\" must be accessed with \"$data." + key + "\" because " +
       'properties starting with "$" or "_" are not proxied in the Vue instance to ' +
-      'prevent conflicts with Vue internals' +
+      'prevent conflicts with Vue internals. ' +
       'See: https://vuejs.org/v2/api/#data',
       target
     );
@@ -8135,7 +8135,7 @@ function bindDynamicKeys (baseObj, values) {
     if (typeof key === 'string' && key) {
       baseObj[values[i]] = values[i + 1];
     } else if (process.env.NODE_ENV !== 'production' && key !== '' && key !== null) {
-      // null is a speical value for explicitly removing a binding
+      // null is a special value for explicitly removing a binding
       warn(
         ("Invalid value for dynamic directive argument (expected string or null): " + key),
         this
@@ -8631,6 +8631,12 @@ function _createElement (
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
     if (config.isReservedTag(tag)) {
       // platform built-in elements
+      if (process.env.NODE_ENV !== 'production' && isDef(data) && isDef(data.nativeOn)) {
+        warn(
+          ("The .native modifier for v-on is only valid on components but it was used on <" + tag + ">."),
+          context
+        );
+      }
       vnode = new VNode(
         config.parsePlatformTagName(tag), data, children,
         undefined, undefined, context
@@ -8759,7 +8765,7 @@ function renderMixin (Vue) {
     // render self
     var vnode;
     try {
-      // There's no need to maintain a stack becaues all render fns are called
+      // There's no need to maintain a stack because all render fns are called
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
       currentRenderingInstance = vm;
@@ -10668,7 +10674,7 @@ Object.defineProperty(Vue, 'FunctionalRenderContext', {
   value: FunctionalRenderContext
 });
 
-Vue.version = '2.6.10';
+Vue.version = '2.6.11';
 
 /*  */
 
@@ -11341,7 +11347,7 @@ function createPatchFunction (backend) {
     }
   }
 
-  function removeVnodes (parentElm, vnodes, startIdx, endIdx) {
+  function removeVnodes (vnodes, startIdx, endIdx) {
     for (; startIdx <= endIdx; ++startIdx) {
       var ch = vnodes[startIdx];
       if (isDef(ch)) {
@@ -11452,7 +11458,7 @@ function createPatchFunction (backend) {
       refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
       addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
     } else if (newStartIdx > newEndIdx) {
-      removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
+      removeVnodes(oldCh, oldStartIdx, oldEndIdx);
     }
   }
 
@@ -11544,7 +11550,7 @@ function createPatchFunction (backend) {
         if (isDef(oldVnode.text)) { nodeOps.setTextContent(elm, ''); }
         addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue);
       } else if (isDef(oldCh)) {
-        removeVnodes(elm, oldCh, 0, oldCh.length - 1);
+        removeVnodes(oldCh, 0, oldCh.length - 1);
       } else if (isDef(oldVnode.text)) {
         nodeOps.setTextContent(elm, '');
       }
@@ -11775,7 +11781,7 @@ function createPatchFunction (backend) {
 
         // destroy old node
         if (isDef(parentElm)) {
-          removeVnodes(parentElm, [oldVnode], 0, 0);
+          removeVnodes([oldVnode], 0, 0);
         } else if (isDef(oldVnode.tag)) {
           invokeDestroyHook(oldVnode);
         }
@@ -14487,7 +14493,7 @@ var startTagOpen = new RegExp(("^<" + qnameCapture));
 var startTagClose = /^\s*(\/?)>/;
 var endTag = new RegExp(("^<\\/" + qnameCapture + "[^>]*>"));
 var doctype = /^<!DOCTYPE [^>]+>/i;
-// #7298: escape - to avoid being pased as HTML comment when inlined in page
+// #7298: escape - to avoid being passed as HTML comment when inlined in page
 var comment = /^<!\--/;
 var conditionalComment = /^<!\[/;
 
@@ -14773,7 +14779,7 @@ function parseHTML (html, options) {
 /*  */
 
 var onRE = /^@|^v-on:/;
-var dirRE = /^v-|^@|^:/;
+var dirRE = /^v-|^@|^:|^#/;
 var forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
 var forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/;
 var stripParensRE = /^\(|\)$/g;
@@ -15397,7 +15403,7 @@ function processSlotContent (el) {
           if (el.parent && !maybeComponent(el.parent)) {
             warn$2(
               "<template v-slot> can only appear at the root level inside " +
-              "the receiving the component",
+              "the receiving component",
               el
             );
           }
@@ -15962,7 +15968,7 @@ function isDirectChildOfTemplateFor (node) {
 
 /*  */
 
-var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*(?:[\w$]+)?\s*\(/;
+var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function(?:\s+[\w$]+)?\s*\(/;
 var fnInvokeRE = /\([^)]*?\);*$/;
 var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;
 
@@ -16734,6 +16740,8 @@ function checkNode (node, warn) {
           var range = node.rawAttrsMap[name];
           if (name === 'v-for') {
             checkFor(node, ("v-for=\"" + value + "\""), warn, range);
+          } else if (name === 'v-slot' || name[0] === '#') {
+            checkFunctionParameterExpression(value, (name + "=\"" + value + "\""), warn, range);
           } else if (onRE.test(name)) {
             checkEvent(value, (name + "=\"" + value + "\""), warn, range);
           } else {
@@ -16753,9 +16761,9 @@ function checkNode (node, warn) {
 }
 
 function checkEvent (exp, text, warn, range) {
-  var stipped = exp.replace(stripStringRE, '');
-  var keywordMatch = stipped.match(unaryOperatorsRE);
-  if (keywordMatch && stipped.charAt(keywordMatch.index - 1) !== '$') {
+  var stripped = exp.replace(stripStringRE, '');
+  var keywordMatch = stripped.match(unaryOperatorsRE);
+  if (keywordMatch && stripped.charAt(keywordMatch.index - 1) !== '$') {
     warn(
       "avoid using JavaScript unary operator as property name: " +
       "\"" + (keywordMatch[0]) + "\" in expression " + (text.trim()),
@@ -16807,6 +16815,19 @@ function checkExpression (exp, text, warn, range) {
         range
       );
     }
+  }
+}
+
+function checkFunctionParameterExpression (exp, text, warn, range) {
+  try {
+    new Function(exp, '');
+  } catch (e) {
+    warn(
+      "invalid function parameter expression: " + (e.message) + " in\n\n" +
+      "    " + exp + "\n\n" +
+      "  Raw expression: " + (text.trim()) + "\n",
+      range
+    );
   }
 }
 
@@ -17289,7 +17310,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(44);
+var IObject = __webpack_require__(45);
 var defined = __webpack_require__(15);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -17324,8 +17345,8 @@ module.exports = function (key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(11);
-var IE8_DOM_DEFINE = __webpack_require__(50);
-var toPrimitive = __webpack_require__(51);
+var IE8_DOM_DEFINE = __webpack_require__(51);
+var toPrimitive = __webpack_require__(52);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(12) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -20574,7 +20595,7 @@ module.exports = (
 
 var global = __webpack_require__(5);
 var core = __webpack_require__(4);
-var ctx = __webpack_require__(48);
+var ctx = __webpack_require__(49);
 var hide = __webpack_require__(9);
 var has = __webpack_require__(10);
 var PROTOTYPE = 'prototype';
@@ -20667,16 +20688,22 @@ module.exports = function (bitmap, value) {
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = { "default": __webpack_require__(53), __esModule: true };
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 var LIBRARY = __webpack_require__(32);
 var $export = __webpack_require__(35);
-var redefine = __webpack_require__(57);
+var redefine = __webpack_require__(58);
 var hide = __webpack_require__(9);
 var Iterators = __webpack_require__(13);
-var $iterCreate = __webpack_require__(58);
-var setToStringTag = __webpack_require__(39);
-var getPrototypeOf = __webpack_require__(62);
+var $iterCreate = __webpack_require__(59);
+var setToStringTag = __webpack_require__(40);
+var getPrototypeOf = __webpack_require__(63);
 var ITERATOR = __webpack_require__(6)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -20740,7 +20767,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(19).f;
@@ -20753,7 +20780,29 @@ module.exports = function (it, tag, stat) {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_script__, __vue_template__
+__vue_script__ = __webpack_require__(69)
+__vue_template__ = __webpack_require__(71)
+module.exports = __vue_script__ || {}
+if (module.exports.__esModule) module.exports = module.exports.default
+if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+if (false) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/home/uriahsvictor/atom/git_repos/tweet-old-post/vue/src/vue-elements/reusables/multiple-select.vue"
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, __vue_template__)
+  }
+})()}
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
@@ -20764,11 +20813,11 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(43);
+var $keys = __webpack_require__(44);
 var enumBugKeys = __webpack_require__(34);
 
 module.exports = Object.keys || function keys(O) {
@@ -20777,18 +20826,12 @@ module.exports = Object.keys || function keys(O) {
 
 
 /***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(52), __esModule: true };
-
-/***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(10);
 var toIObject = __webpack_require__(16);
-var arrayIndexOf = __webpack_require__(45)(false);
+var arrayIndexOf = __webpack_require__(46)(false);
 var IE_PROTO = __webpack_require__(18)('IE_PROTO');
 
 module.exports = function (object, names) {
@@ -20806,7 +20849,7 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
@@ -20818,14 +20861,14 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(16);
-var toLength = __webpack_require__(46);
-var toAbsoluteIndex = __webpack_require__(47);
+var toLength = __webpack_require__(47);
+var toAbsoluteIndex = __webpack_require__(48);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -20847,7 +20890,7 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
@@ -20859,7 +20902,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(17);
@@ -20872,11 +20915,11 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(49);
+var aFunction = __webpack_require__(50);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -20898,7 +20941,7 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -20908,7 +20951,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(12) && !__webpack_require__(21)(function () {
@@ -20917,7 +20960,7 @@ module.exports = !__webpack_require__(12) && !__webpack_require__(21)(function (
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
@@ -20935,19 +20978,19 @@ module.exports = function (it, S) {
 
 
 /***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(53);
-__webpack_require__(63);
-module.exports = __webpack_require__(65);
-
-
-/***/ }),
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(54);
+__webpack_require__(64);
+module.exports = __webpack_require__(66);
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(55);
 var global = __webpack_require__(5);
 var hide = __webpack_require__(9);
 var Iterators = __webpack_require__(13);
@@ -20969,13 +21012,13 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(55);
-var step = __webpack_require__(56);
+var addToUnscopables = __webpack_require__(56);
+var step = __webpack_require__(57);
 var Iterators = __webpack_require__(13);
 var toIObject = __webpack_require__(16);
 
@@ -20983,7 +21026,7 @@ var toIObject = __webpack_require__(16);
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(38)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(39)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -21010,14 +21053,14 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports) {
 
 module.exports = function () { /* empty */ };
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -21026,21 +21069,21 @@ module.exports = function (done, value) {
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(9);
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var create = __webpack_require__(59);
+var create = __webpack_require__(60);
 var descriptor = __webpack_require__(37);
-var setToStringTag = __webpack_require__(39);
+var setToStringTag = __webpack_require__(40);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
@@ -21053,12 +21096,12 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(11);
-var dPs = __webpack_require__(60);
+var dPs = __webpack_require__(61);
 var enumBugKeys = __webpack_require__(34);
 var IE_PROTO = __webpack_require__(18)('IE_PROTO');
 var Empty = function () { /* empty */ };
@@ -21073,7 +21116,7 @@ var createDict = function () {
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(61).appendChild(iframe);
+  __webpack_require__(62).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -21100,12 +21143,12 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(19);
 var anObject = __webpack_require__(11);
-var getKeys = __webpack_require__(41);
+var getKeys = __webpack_require__(43);
 
 module.exports = __webpack_require__(12) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -21119,7 +21162,7 @@ module.exports = __webpack_require__(12) ? Object.defineProperties : function de
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(5).document;
@@ -21127,12 +21170,12 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(10);
-var toObject = __webpack_require__(40);
+var toObject = __webpack_require__(42);
 var IE_PROTO = __webpack_require__(18)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -21146,15 +21189,15 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $at = __webpack_require__(64)(true);
+var $at = __webpack_require__(65)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(38)(String, 'String', function (iterated) {
+__webpack_require__(39)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -21170,7 +21213,7 @@ __webpack_require__(38)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(17);
@@ -21193,11 +21236,11 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(11);
-var get = __webpack_require__(66);
+var get = __webpack_require__(67);
 module.exports = __webpack_require__(4).getIterator = function (it) {
   var iterFn = get(it);
   if (typeof iterFn != 'function') throw TypeError(it + ' is not iterable!');
@@ -21206,10 +21249,10 @@ module.exports = __webpack_require__(4).getIterator = function (it) {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof = __webpack_require__(67);
+var classof = __webpack_require__(68);
 var ITERATOR = __webpack_require__(6)('iterator');
 var Iterators = __webpack_require__(13);
 module.exports = __webpack_require__(4).getIteratorMethod = function (it) {
@@ -21220,7 +21263,7 @@ module.exports = __webpack_require__(4).getIteratorMethod = function (it) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
@@ -21249,35 +21292,13 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_script__, __vue_template__
-__vue_script__ = __webpack_require__(69)
-__vue_template__ = __webpack_require__(71)
-module.exports = __vue_script__ || {}
-if (module.exports.__esModule) module.exports = module.exports.default
-if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
-if (false) {(function () {  module.hot.accept()
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), true)
-  if (!hotAPI.compatible) return
-  var id = "/home/uriahsvictor/atom/git_repos/tweet-old-post/vue/src/vue-elements/reusables/multiple-select.vue"
-  if (!module.hot.data) {
-    hotAPI.createRecord(id, module.exports)
-  } else {
-    hotAPI.update(id, module.exports, __vue_template__)
-  }
-})()}
-
-/***/ }),
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _getIterator2 = __webpack_require__(42);
+var _getIterator2 = __webpack_require__(38);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
@@ -21372,6 +21393,14 @@ module.exports = {
 		dontLock: {
 			default: false,
 			type: Boolean
+		},
+		is_pro_version: {
+			default: false,
+			type: Boolean
+		},
+		apply_limit: {
+			default: false,
+			type: Boolean
 		}
 	},
 	mounted: function mounted() {
@@ -21414,8 +21443,6 @@ module.exports = {
 					}
 				}
 			}
-
-			// this.$emit( 'update', this.search )
 		} catch (err) {
 			_didIteratorError = true;
 			_iteratorError = err;
@@ -21431,6 +21458,147 @@ module.exports = {
 			}
 		}
 	},
+	updated: function updated() {
+		var _iteratorNormalCompletion3 = true;
+		var _didIteratorError3 = false;
+		var _iteratorError3 = undefined;
+
+		try {
+
+			for (var _iterator3 = (0, _getIterator3.default)(this.selected), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+				var selection = _step3.value;
+
+				if (selection.selected) {
+					var index = 0;
+					var _iteratorNormalCompletion4 = true;
+					var _didIteratorError4 = false;
+					var _iteratorError4 = undefined;
+
+					try {
+						for (var _iterator4 = (0, _getIterator3.default)(this.options), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+							var option = _step4.value;
+
+							if (option.value === selection.value) {
+								this.options[index].selected = selection.selected;
+							}
+							index++;
+						}
+					} catch (err) {
+						_didIteratorError4 = true;
+						_iteratorError4 = err;
+					} finally {
+						try {
+							if (!_iteratorNormalCompletion4 && _iterator4.return) {
+								_iterator4.return();
+							}
+						} finally {
+							if (_didIteratorError4) {
+								throw _iteratorError4;
+							}
+						}
+					}
+				}
+			}
+		} catch (err) {
+			_didIteratorError3 = true;
+			_iteratorError3 = err;
+		} finally {
+			try {
+				if (!_iteratorNormalCompletion3 && _iterator3.return) {
+					_iterator3.return();
+				}
+			} finally {
+				if (_didIteratorError3) {
+					throw _iteratorError3;
+				}
+			}
+		}
+	},
+	created: function created() {
+		var selected_items_no = 0;
+		var _iteratorNormalCompletion5 = true;
+		var _didIteratorError5 = false;
+		var _iteratorError5 = undefined;
+
+		try {
+			for (var _iterator5 = (0, _getIterator3.default)(this.selected), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+				var selection = _step5.value;
+
+				if (selection.selected) {
+					var _index = 0;
+					var _iteratorNormalCompletion7 = true;
+					var _didIteratorError7 = false;
+					var _iteratorError7 = undefined;
+
+					try {
+						for (var _iterator7 = (0, _getIterator3.default)(this.options), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+							var option = _step7.value;
+
+							if (option.value === selection.value) {
+								this.options[_index].selected = selection.selected;
+								selected_items_no++;
+							}
+							_index++;
+						}
+					} catch (err) {
+						_didIteratorError7 = true;
+						_iteratorError7 = err;
+					} finally {
+						try {
+							if (!_iteratorNormalCompletion7 && _iterator7.return) {
+								_iterator7.return();
+							}
+						} finally {
+							if (_didIteratorError7) {
+								throw _iteratorError7;
+							}
+						}
+					}
+				}
+			}
+		} catch (err) {
+			_didIteratorError5 = true;
+			_iteratorError5 = err;
+		} finally {
+			try {
+				if (!_iteratorNormalCompletion5 && _iterator5.return) {
+					_iterator5.return();
+				}
+			} finally {
+				if (_didIteratorError5) {
+					throw _iteratorError5;
+				}
+			}
+		}
+
+		this.rand = Math.round(Math.random() * 1000);
+		var index = 0;
+		var _iteratorNormalCompletion6 = true;
+		var _didIteratorError6 = false;
+		var _iteratorError6 = undefined;
+
+		try {
+			for (var _iterator6 = (0, _getIterator3.default)(this.options), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+				var _option = _step6.value;
+
+				this.options[index].selected = false;
+				index++;
+			}
+		} catch (err) {
+			_didIteratorError6 = true;
+			_iteratorError6 = err;
+		} finally {
+			try {
+				if (!_iteratorNormalCompletion6 && _iterator6.return) {
+					_iterator6.return();
+				}
+			} finally {
+				if (_didIteratorError6) {
+					throw _iteratorError6;
+				}
+			}
+		}
+	},
 
 	data: function data() {
 		return {
@@ -21439,12 +21607,16 @@ module.exports = {
 			no_results: false,
 			labels: this.$store.state.labels.general,
 			upsell_link: ropApiSettings.upsell_link,
-			magic_flag: false
+			magic_flag: false,
+			rand: 0
 		};
 	},
 	watch: {
 		search: function search(val) {
 			this.$emit('update', val);
+		},
+		selected: function selected(val) {
+			this.$emit('display-limiter-notice', this.selected.length);
 		}
 	},
 	computed: {
@@ -21480,29 +21652,29 @@ module.exports = {
 		},
 		has_results: function has_results() {
 			var found = 0;
-			var _iteratorNormalCompletion3 = true;
-			var _didIteratorError3 = false;
-			var _iteratorError3 = undefined;
+			var _iteratorNormalCompletion8 = true;
+			var _didIteratorError8 = false;
+			var _iteratorError8 = undefined;
 
 			try {
-				for (var _iterator3 = (0, _getIterator3.default)(this.options), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-					var option = _step3.value;
+				for (var _iterator8 = (0, _getIterator3.default)(this.options), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+					var option = _step8.value;
 
 					if (this.filterSearch(option)) {
 						found++;
 					}
 				}
 			} catch (err) {
-				_didIteratorError3 = true;
-				_iteratorError3 = err;
+				_didIteratorError8 = true;
+				_iteratorError8 = err;
 			} finally {
 				try {
-					if (!_iteratorNormalCompletion3 && _iterator3.return) {
-						_iterator3.return();
+					if (!_iteratorNormalCompletion8 && _iterator8.return) {
+						_iterator8.return();
 					}
 				} finally {
-					if (_didIteratorError3) {
-						throw _iteratorError3;
+					if (_didIteratorError8) {
+						throw _iteratorError8;
 					}
 				}
 			}
@@ -21563,6 +21735,11 @@ module.exports = {
 			if (this.is_disabled) {
 				return;
 			}
+
+			if (false === this.limit_selection()) {
+				return;
+			}
+
 			var newSelection = this.options[index];
 			newSelection.selected = true;
 			this.selected.push(newSelection);
@@ -21580,6 +21757,18 @@ module.exports = {
 			this.magic_flag = false;
 			this.search = '';
 			this.changedSelection(this.selected);
+		},
+		limit_selection: function limit_selection() {
+			if (true === this.apply_limit) {
+				if (false === this.is_pro_version && this.selected.length > 3) {
+					this.$refs.search.focus();
+					this.magic_flag = false;
+					this.search = '';
+
+					return false;
+				}
+			}
+			return true;
 		}
 	}
 	// </script>
@@ -34717,8 +34906,8 @@ module.exports = __webpack_require__(4).Object.keys;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(40);
-var $keys = __webpack_require__(41);
+var toObject = __webpack_require__(42);
+var $keys = __webpack_require__(43);
 
 __webpack_require__(218)('keys', function () {
   return function keys(it) {
@@ -35082,7 +35271,7 @@ var _keys = __webpack_require__(14);
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _getIterator2 = __webpack_require__(42);
+var _getIterator2 = __webpack_require__(38);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
@@ -36533,440 +36722,470 @@ var _counterInput = __webpack_require__(83);
 
 var _counterInput2 = _interopRequireDefault(_counterInput);
 
-var _multipleSelect = __webpack_require__(68);
+var _multipleSelect = __webpack_require__(41);
 
 var _multipleSelect2 = _interopRequireDefault(_multipleSelect);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // <template>
-// 	<div class="tab-view">
-// 		<div class="panel-body">
-// 			<div class="container" :class="'rop-tab-state-'+is_loading">
-// 				<div class="columns py-2" v-if="! isBiz">
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<b>{{labels.min_interval_title}}</b>
-// 						<p class="text-gray">{{labels.min_interval_desc}}</p>
-// 					</div>
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<counter-input id="default_interval"
-// 						               :value.sync="generalSettings.default_interval"></counter-input>
-// 					</div>
-// 				</div>
-// 				<span class="divider"></span>
-// 				<div class="columns py-2">
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<b>{{labels.min_days_title}}</b>
-// 						<p class="text-gray">{{labels.min_days_desc}}</p>
-// 					</div>
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<counter-Input id="min_post_age" :max-val="365"
-// 						               :value.sync="generalSettings.minimum_post_age"></counter-Input>
-// 					</div>
-// 				</div>
-// 				<!-- Max Post Age -->
-// 				<div class="columns py-2">
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<b>{{labels.max_days_title}}</b>
-// 						<p class="text-gray">{{labels.max_days_desc}}</p>
-// 					</div>
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<counter-input id="max_post_age" :max-val="365"
-// 						               :value.sync="generalSettings.maximum_post_age"></counter-input>
-// 					</div>
-// 				</div>
+//     <div class="tab-view">
+//         <div class="panel-body">
+//             <div class="container" :class="'rop-tab-state-'+is_loading">
+//                 <div class="columns py-2" v-if="! isBiz">
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <b>{{labels.min_interval_title}}</b>
+//                         <p class="text-gray">{{labels.min_interval_desc}}</p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <counter-input id="default_interval"
+//                                        :value.sync="generalSettings.default_interval"></counter-input>
+//                     </div>
+//                 </div>
+//                 <span class="divider"></span>
+//                 <div class="columns py-2">
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <b>{{labels.min_days_title}}</b>
+//                         <p class="text-gray">{{labels.min_days_desc}}</p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <counter-Input id="min_post_age" :max-val="365"
+//                                        :value.sync="generalSettings.minimum_post_age"></counter-Input>
+//                     </div>
+//                 </div>
+//                 <!-- Max Post Age -->
+//                 <div class="columns py-2">
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <b>{{labels.max_days_title}}</b>
+//                         <p class="text-gray">{{labels.max_days_desc}}</p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <counter-input id="max_post_age" :max-val="365"
+//                                        :value.sync="generalSettings.maximum_post_age"></counter-input>
+//                     </div>
+//                 </div>
 //
-// 				<span class="divider"></span>
+//                 <span class="divider"></span>
 //
-// 				<div class="columns py-2">
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<b>{{labels.no_posts_title}}</b>
-// 						<p class="text-gray">{{labels.no_posts_desc}}</p>
-// 					</div>
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<counter-input id="no_of_posts" :value.sync="generalSettings.number_of_posts"></counter-input>
-// 					</div>
-// 				</div>
-// 				<span class="divider"></span>
+//                 <div class="columns py-2">
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <b>{{labels.no_posts_title}}</b>
+//                         <p class="text-gray">{{labels.no_posts_desc}}</p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <counter-input id="no_of_posts" :value.sync="generalSettings.number_of_posts"></counter-input>
+//                     </div>
+//                 </div>
+//                 <span class="divider"></span>
 //
-// 				<!-- Share more than once -->
-// 				<div class="columns py-2">
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<b>{{labels.share_once_title}}</b>
-// 						<p class="text-gray">{{labels.share_once_desc}}</p>
-// 					</div>
-// 					<div class="column col-6 col-sm-12 vertical-align text-left">
-// 						<div class="form-group">
-// 							<label class="form-checkbox" id="share_more_than_once">
-// 								<input type="checkbox" v-model="generalSettings.more_than_once"/>
-// 								<i class="form-icon"></i> {{labels.share_once_yes}}
-// 							</label>
-// 						</div>
-// 					</div>
-// 				</div>
-// 				<span class="divider"></span>
-// 				<div class="columns py-2" :class="'rop-control-container-'+isPro">
-// 					<div class="column col-6 col-sm-12 vertical-align rop-control">
-// 						<b>{{labels.post_types_title}}</b>
-// 						<p class="text-gray"><span v-html="labels.post_types_desc"></span></p>
-// 					</div>
-// 					<div class="column col-6 col-sm-12 vertical-align text-left rop-control">
-// 						<multiple-select id="rop_post_types" :options="postTypes" :disabled="isPro"
-// 						                 :selected="generalSettings.selected_post_types"
-// 						                 :changed-selection="updatedPostTypes"></multiple-select>
+//                 <!-- Share more than once -->
+//                 <div class="columns py-2">
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <b>{{labels.share_once_title}}</b>
+//                         <p class="text-gray">{{labels.share_once_desc}}</p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align text-left">
+//                         <div class="form-group">
+//                             <label class="form-checkbox" id="share_more_than_once">
+//                                 <input type="checkbox" v-model="generalSettings.more_than_once"/>
+//                                 <i class="form-icon"></i> {{labels.share_once_yes}}
+//                             </label>
+//                         </div>
+//                     </div>
+//                 </div>
+//                 <span class="divider"></span>
+//                 <div class="columns py-2" :class="'rop-control-container-'+isPro">
+//                     <div class="column col-6 col-sm-12 vertical-align rop-control">
+//                         <b>{{labels.post_types_title}}</b>
+//                         <p class="text-gray"><span v-html="labels.post_types_desc"></span></p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align text-left rop-control">
+//                         <multiple-select id="rop_post_types" :options="postTypes" :disabled="isPro"
+//                                          :selected="generalSettings.selected_post_types"
+//                                          :changed-selection="updatedPostTypes"></multiple-select>
 //
-// 						<p class="text-primary rop-post-type-badge" v-if="checkMediaPostType " v-html="labels.post_types_attachament_info"> </p>
-// 					</div>
-// 				</div>
+//                         <p class="text-primary rop-post-type-badge" v-if="checkMediaPostType " v-html="labels.post_types_attachament_info"></p>
+//                     </div>
+//                 </div>
 //
-// 				<div class="columns " v-if="!isPro">
-// 					<div class="column text-center">
-// 						<p class="upsell"><i class="fa fa-lock"></i> {{labels.post_types_upsell}}</p>
-// 					</div>
-// 				</div>
+//                 <div class="columns " v-if="!isPro">
+//                     <div class="column text-center">
+//                         <p class="upsell"><i class="fa fa-lock"></i> {{labels.post_types_upsell}}</p>
+//                     </div>
+//                 </div>
 //
-// 				<span class="divider"></span>
+// 				<span class="divider" v-if="!isPro"></span>
 //
-// 				<!-- Taxonomies -->
-// 				<div class="columns py-2">
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<b>{{labels.taxonomies_title}}</b>
-// 						<p class="text-gray"><span v-html="labels.taxonomies_desc"></span></p>
-// 					</div>
-// 					<div id="rop_taxonomies" class="column col-6 col-sm-12 vertical-align text-left">
-// 						<div class="input-group">
-// 							<multiple-select :options="taxonomies"
-// 							                 :selected="generalSettings.selected_taxonomies"
-// 							                 :changed-selection="updatedTaxonomies"></multiple-select>
-// 							<span class="input-group-addon vertical-align">
+//                 <!-- Taxonomies -->
+// 				<div class="columns py-2" v-if="!isPro">
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <b>{{labels.taxonomies_title}}</b>
+//                         <p class="text-gray"><span v-html="labels.taxonomies_desc"></span></p>
+//                     </div>
+//                     <div id="rop_taxonomies" class="column col-6 col-sm-12 vertical-align text-left">
+//                         <div class="input-group">
+//                             <multiple-select :options="taxonomies"
+//                                              :selected="generalSettings.selected_taxonomies"
+//                                              :changed-selection="updatedTaxonomies"
+//                                              :is_pro_version="isPro" :apply_limit="isTaxLimit" v-on:display-limiter-notice="displayProMessage"></multiple-select>
+//                             <span class="input-group-addon vertical-align">
 // 								<label class="form-checkbox">
 // 									<input type="checkbox" v-model="generalSettings.exclude_taxonomies"/>
 // 									<i class="form-icon"></i>{{labels.taxonomies_exclude}}
 // 								</label>
 // 							</span>
+//                         </div>
+//                         <p class="text-primary rop-post-type-badge" v-if="is_taxonomy_message" v-html="labels.post_types_taxonomy_limit"></p>
+//                     </div>
+//                 </div>
 //
-// 						</div>
+//                 <span class="divider"></span>
 //
-// 					</div>
+//                 <!-- Google Analytics -->
+//                 <div class="columns py-2">
+//                     <div class="column col-6 col-sm-12 vertical-align">
+//                         <b>{{labels.ga_title}}</b>
+//                         <p class="text-gray">{{labels.ga_desc}}</p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align text-left">
+//                         <div class="form-group">
+//                             <label class="form-checkbox">
+//                                 <input type="checkbox" v-model="generalSettings.ga_tracking"/>
+//                                 <i class="form-icon"></i>{{labels.ga_yes}}
+//                             </label>
+//                         </div>
+//                     </div>
+//                 </div>
 //
-// 				</div>
+//                 <span class="divider"></span>
 //
-// 				<span class="divider"></span>
+//                 <div class="columns py-2">
+//                     <div class="column col-6 col-sm-12 vertical-align rop-control">
+//                         <b>{{labels.instant_share_title}}</b>
+//                         <p class="text-gray"><span v-html="labels.instant_share_desc"></span></p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align text-left rop-control">
+//                         <div class="form-group">
+//                             <label id="rop_instant_share" class="form-checkbox">
+//                                 <input type="checkbox" v-model="generalSettings.instant_share"/>
+//                                 <i class="form-icon"></i>{{labels.instant_share_yes}}
+//                             </label>
+//                         </div>
+//                     </div>
+//                 </div>
 //
-// 				<!-- Google Analytics -->
-// 				<div class="columns py-2">
-// 					<div class="column col-6 col-sm-12 vertical-align">
-// 						<b>{{labels.ga_title}}</b>
-// 						<p class="text-gray">{{labels.ga_desc}}</p>
-// 					</div>
-// 					<div class="column col-6 col-sm-12 vertical-align text-left">
-// 						<div class="form-group">
-// 							<label class="form-checkbox">
-// 								<input type="checkbox" v-model="generalSettings.ga_tracking"/>
-// 								<i class="form-icon"></i>{{labels.ga_yes}}
-// 							</label>
-// 						</div>
-// 					</div>
-// 				</div>
+//                 <span class="divider"></span>
 //
-// 				<span class="divider"></span>
+//                 <div class="columns py-2" v-if="isInstantShare">
+//                     <div class="column col-6 col-sm-12 vertical-align rop-control">
+//                         <b>{{labels.instant_share_default_title}}</b>
+//                         <p class="text-gray">{{labels.instant_share_default_desc}}</p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align text-left rop-control">
+//                         <div class="form-group">
+//                             <label class="form-checkbox">
+//                                 <input type="checkbox" v-model="generalSettings.instant_share_default"/>
+//                                 <i class="form-icon"></i>{{labels.instant_share_default_yes}}
+//                             </label>
+//                         </div>
+//                     </div>
+//                 </div>
 //
-// 							<div class="columns py-2">
-// 									<div class="column col-6 col-sm-12 vertical-align rop-control">
-// 										<b>{{labels.instant_share_title}}</b>
-// 										<p class="text-gray"><span v-html="labels.instant_share_desc"></span></p>
-// 									</div>
-// 									<div class="column col-6 col-sm-12 vertical-align text-left rop-control">
-// 										<div class="form-group">
-// 											<label id="rop_instant_share" class="form-checkbox">
-// 												<input type="checkbox" v-model="generalSettings.instant_share"/>
-// 												<i class="form-icon"></i>{{labels.instant_share_yes}}
-// 											</label>
-// 										</div>
-// 									</div>
-// 								</div>
+//                 <span class="divider" v-if="isInstantShare"></span>
 //
-// 								<span class="divider"></span>
+//                 <div class="columns py-2" v-if="isInstantShare" :class="'rop-control-container-'+isPro">
+//                     <div class="column col-6 col-sm-12 vertical-align rop-control">
+//                         <b>{{labels.instant_share_future_scheduled_title}}</b>
+//                         <p class="text-gray"><span v-html="labels.instant_share_future_scheduled_desc"></span></p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align text-left rop-control">
+//                         <div class="form-group">
+//                             <label class="form-checkbox">
+//                                 <input type="checkbox" v-model="generalSettings.instant_share_future_scheduled"/>
+//                                 <i class="form-icon"></i>{{labels.instant_share_future_scheduled_yes}}
+//                             </label>
+//                         </div>
+//                     </div>
+//                 </div>
+//                 <!-- Upsell -->
+//                 <div class="columns " v-if="!isPro && isInstantShare">
+//                     <div class="column text-center">
+//                         <p class="upsell"><i class="fa fa-lock"></i> {{labels.instant_share_future_scheduled_upsell}}</p>
+//                     </div>
+//                 </div>
+//                 <span class="divider" v-if="isInstantShare"></span>
 //
-// 							<div class="columns py-2" v-if="isInstantShare">
-// 									<div class="column col-6 col-sm-12 vertical-align rop-control">
-// 										<b>{{labels.instant_share_default_title}}</b>
-// 										<p class="text-gray">{{labels.instant_share_default_desc}}</p>
-// 									</div>
-// 									<div class="column col-6 col-sm-12 vertical-align text-left rop-control">
-// 										<div class="form-group">
-// 											<label class="form-checkbox">
-// 												<input type="checkbox" v-model="generalSettings.instant_share_default"/>
-// 												<i class="form-icon"></i>{{labels.instant_share_default_yes}}
-// 											</label>
-// 										</div>
-// 									</div>
-// 								</div>
-//
-// 								<span class="divider" v-if="isInstantShare"></span>
-//
-// 							<div class="columns py-2" v-if="isInstantShare" :class="'rop-control-container-'+isPro">
-// 									<div class="column col-6 col-sm-12 vertical-align rop-control">
-// 										<b>{{labels.instant_share_future_scheduled_title}}</b>
-// 										<p class="text-gray"><span v-html="labels.instant_share_future_scheduled_desc"></span></p>
-// 									</div>
-// 									<div class="column col-6 col-sm-12 vertical-align text-left rop-control">
-// 										<div class="form-group">
-// 											<label class="form-checkbox">
-// 												<input type="checkbox" v-model="generalSettings.instant_share_future_scheduled"/>
-// 												<i class="form-icon"></i>{{labels.instant_share_future_scheduled_yes}}
-// 											</label>
-// 										</div>
-// 									</div>
-// 								</div>
-// 								<!-- Upsell -->
-// 								<div class="columns " v-if="!isPro && isInstantShare">
-// 									<div class="column text-center">
-// 											<p class="upsell"><i class="fa fa-lock"></i> {{labels.instant_share_future_scheduled_upsell}}</p>
-// 									</div>
-// 								</div>
-// 								<span class="divider" v-if="isInstantShare"></span>
-//
-// 				<div class="columns py-2" :class="'rop-control-container-'+isPro">
-// 					<div class="column col-6 col-sm-12 vertical-align rop-control">
-// 						<b>{{labels.custom_share_title}}</b>
-// 						<p class="text-gray"><span v-html="labels.custom_share_desc"></span></p>
-// 					</div>
-// 					<div class="column col-6 col-sm-12 vertical-align text-left rop-control">
-// 						<div class="form-group">
-// 							<label id="rop_custom_share_msg" class="form-checkbox">
-// 								<input type="checkbox" :disabled="!isPro" v-model="generalSettings.custom_messages"/>
-// 								<i class="form-icon"></i>{{labels.custom_share_yes}}
-// 							</label>
-// 						</div>
-// 					</div>
-// 				</div>
-// 				<span class="divider"></span>
+//                 <div class="columns py-2" :class="'rop-control-container-'+isPro">
+//                     <div class="column col-6 col-sm-12 vertical-align rop-control">
+//                         <b>{{labels.custom_share_title}}</b>
+//                         <p class="text-gray"><span v-html="labels.custom_share_desc"></span></p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align text-left rop-control">
+//                         <div class="form-group">
+//                             <label id="rop_custom_share_msg" class="form-checkbox">
+//                                 <input type="checkbox" :disabled="!isPro" v-model="generalSettings.custom_messages"/>
+//                                 <i class="form-icon"></i>{{labels.custom_share_yes}}
+//                             </label>
+//                         </div>
+//                     </div>
+//                 </div>
+//                 <span class="divider"></span>
 //
 //
-// 				<div class="columns py-2" :class="'rop-control-container-'+isPro" v-if="isCustomMsgs">
-// 					<div class="column col-6 col-sm-12 vertical-align rop-control">
-// 						<b>{{labels.custom_share_order_title}}</b>
-// 						<p class="text-gray">{{labels.custom_share_order_desc}}</p>
-// 					</div>
-// 					<div class="column col-6 col-sm-12 vertical-align text-left rop-control">
-// 						<div class="form-group">
-// 							<label id="rop_custom_share_msg" class="form-checkbox">
-// 								<input type="checkbox" :disabled="!isPro" v-model="generalSettings.custom_messages_share_order"/>
-// 								<i class="form-icon"></i>{{labels.custom_share_order_yes}}
-// 							</label>
-// 						</div>
-// 					</div>
-// 				</div>
+//                 <div class="columns py-2" :class="'rop-control-container-'+isPro" v-if="isCustomMsgs">
+//                     <div class="column col-6 col-sm-12 vertical-align rop-control">
+//                         <b>{{labels.custom_share_order_title}}</b>
+//                         <p class="text-gray">{{labels.custom_share_order_desc}}</p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align text-left rop-control">
+//                         <div class="form-group">
+//                             <label id="rop_custom_share_msg" class="form-checkbox">
+//                                 <input type="checkbox" :disabled="!isPro" v-model="generalSettings.custom_messages_share_order"/>
+//                                 <i class="form-icon"></i>{{labels.custom_share_order_yes}}
+//                             </label>
+//                         </div>
+//                     </div>
+//                 </div>
 //
-// 				<!-- Upsell -->
-// 				<div class="columns " v-if="!isPro">
-// 					<div class="column text-center">
-// 						<p class="upsell"><i class="fa fa-lock"></i> {{labels.custom_share_upsell}}</p>
-// 					</div>
-// 				</div>
-// 				<span class="divider" v-if="isCustomMsgs"></span>
+//                 <!-- Upsell -->
+//                 <div class="columns " v-if="!isPro">
+//                     <div class="column text-center">
+//                         <p class="upsell"><i class="fa fa-lock"></i> {{labels.custom_share_upsell}}</p>
+//                     </div>
+//                 </div>
+//                 <span class="divider" v-if="isCustomMsgs"></span>
 //
-// 				<div class="columns py-2">
-// 						<div class="column col-6 col-sm-12 vertical-align rop-control">
-// 							<b>{{labels.housekeeping}}</b>
-// 							<p class="text-gray">{{labels.housekeeping_desc}}</p>
-// 						</div>
-// 						<div class="column col-6 col-sm-12 vertical-align text-left rop-control">
-// 							<div class="form-group">
-// 								<label class="form-checkbox">
-// 									<input type="checkbox" v-model="generalSettings.housekeeping"/>
-// 									<i class="form-icon"></i>{{labels.housekeeping_yes}}
-// 								</label>
-// 							</div>
-// 						</div>
-// 					</div>
-// 					<span class="divider"></span>
+//                 <div class="columns py-2">
+//                     <div class="column col-6 col-sm-12 vertical-align rop-control">
+//                         <b>{{labels.housekeeping}}</b>
+//                         <p class="text-gray">{{labels.housekeeping_desc}}</p>
+//                     </div>
+//                     <div class="column col-6 col-sm-12 vertical-align text-left rop-control">
+//                         <div class="form-group">
+//                             <label class="form-checkbox">
+//                                 <input type="checkbox" v-model="generalSettings.housekeeping"/>
+//                                 <i class="form-icon"></i>{{labels.housekeeping_yes}}
+//                             </label>
+//                         </div>
+//                     </div>
+//                 </div>
+//                 <span class="divider"></span>
 //
-// 			</div>
-// 		</div>
-// 		<div class="panel-footer text-right">
-// 			<button class="btn btn-primary" @click="saveGeneralSettings()"><i class="fa fa-check"
-// 			                                                                  v-if="!this.is_loading"></i> <i
-// 					class="fa fa-spinner fa-spin" v-else></i> {{labels.save}}
-// 			</button>
-// 		</div>
-// 	</div>
+//             </div>
+//         </div>
+//         <div class="panel-footer text-right">
+//             <button class="btn btn-primary" @click="saveGeneralSettings()"><i class="fa fa-check"
+//                                                                               v-if="!this.is_loading"></i> <i
+//                     class="fa fa-spinner fa-spin" v-else></i> {{labels.save}}
+//             </button>
+//         </div>
+//     </div>
 // </template>
 //
 // <script>
 module.exports = {
-	name: 'settings-view',
-	data: function data() {
-		return {
-			searchQuery: '',
-			postTimeout: '',
-			labels: this.$store.state.labels.settings,
-			upsell_link: ropApiSettings.upsell_link,
-			is_loading: false
-		};
-	},
-	computed: {
-		generalSettings: function generalSettings() {
-			return this.$store.state.generalSettings;
-		},
-		isPro: function isPro() {
-			return this.$store.state.licence >= 1;
-		},
-		isBiz: function isBiz() {
-			return this.$store.state.licence > 1;
-		},
-		postTypes: function postTypes() {
-			return this.$store.state.generalSettings.available_post_types;
-		},
-		taxonomies: function taxonomies() {
-			return this.$store.state.generalSettings.available_taxonomies;
-		},
-		checkMediaPostType: function checkMediaPostType() {
-			var post_type = this.$store.state.generalSettings.selected_post_types;
+    name: 'settings-view',
+    data: function data() {
+        return {
+            searchQuery: '',
+            postTimeout: '',
+            labels: this.$store.state.labels.settings,
+            upsell_link: ropApiSettings.upsell_link,
+            is_loading: false,
+            is_taxonomy_message: false
+        };
+    },
+    computed: {
+        generalSettings: function generalSettings() {
+            return this.$store.state.generalSettings;
+        },
+        isPro: function isPro() {
+            return this.$store.state.licence >= 1;
+        },
+        isTaxLimit: function isTaxLimit() {
+            if (ropApiSettings.tax_apply_limit > 0) {
+                return true;
+            }
+            return false;
+        },
+        isBiz: function isBiz() {
+            return this.$store.state.licence > 1;
+        },
+        postTypes: function postTypes() {
+            return this.$store.state.generalSettings.available_post_types;
+        },
+        taxonomies: function taxonomies() {
+            return this.$store.state.generalSettings.available_taxonomies;
+        },
+        checkMediaPostType: function checkMediaPostType() {
+            var post_type = this.$store.state.generalSettings.selected_post_types;
 
-			if (post_type === undefined || post_type === null) {
-				return false;
-			}
+            if (post_type === undefined || post_type === null) {
+                return false;
+            }
 
-			if (post_type.length < 0) {
-				return false;
-			}
+            if (post_type.length < 0) {
+                return false;
+            }
 
-			var result = post_type.map(function (a) {
-				return a.value;
-			});
-			return result.indexOf('attachment') > -1;
-		},
+            var result = post_type.map(function (a) {
+                return a.value;
+            });
+            return result.indexOf('attachment') > -1;
+        },
 
-		isInstantShare: function isInstantShare() {
-			return this.$store.state.generalSettings.instant_share;
-		},
-		isCustomMsgs: function isCustomMsgs() {
-			return this.$store.state.generalSettings.custom_messages;
-		}
-	},
-	mounted: function mounted() {
-		this.$log.info('In General Settings state ');
-		this.getGeneralSettings();
-	},
-	methods: {
-		getGeneralSettings: function getGeneralSettings() {
-			var _this = this;
+        isInstantShare: function isInstantShare() {
+            return this.$store.state.generalSettings.instant_share;
+        },
+        isCustomMsgs: function isCustomMsgs() {
+            return this.$store.state.generalSettings.custom_messages;
+        }
+    },
+    mounted: function mounted() {
+        this.$log.info('In General Settings state ');
+        this.getGeneralSettings();
+    },
+    methods: {
+        displayProMessage: function displayProMessage(data) {
+            if (!this.isPro && data >= 4) {
+                if (true === this.isTaxLimit) {
+                    this.is_taxonomy_message = true;
+                } else {
+                    this.is_taxonomy_message = false;
+                }
+            }
+        },
+        getGeneralSettings: function getGeneralSettings() {
+            var _this = this;
 
-			if (this.$store.state.generalSettings.length === 0) {
-				this.is_loading = true;
-				this.$log.info('Fetching general settings.');
-				this.$store.dispatch('fetchAJAXPromise', { req: 'get_general_settings' }).then(function (response) {
-					_this.is_loading = false;
-					_this.$log.debug('Succesfully fetched.');
-				}, function (error) {
-					_this.is_loading = false;
-					_this.$log.error('Can not fetch the general settings.');
-				});
-			}
-		},
-		searchUpdate: function searchUpdate(newQuery) {
-			this.searchQuery = newQuery;
-		},
-		updatedPostTypes: function updatedPostTypes(data) {
-			var postTypes = [];
-			for (var index in data) {
-				postTypes.push(data[index].value);
-			}
+            if (this.$store.state.generalSettings.length === 0) {
+                this.is_loading = true;
+                this.$log.info('Fetching general settings.');
+                this.$store.dispatch('fetchAJAXPromise', { req: 'get_general_settings' }).then(function (response) {
+                    _this.is_loading = false;
+                    _this.$log.debug('Succesfully fetched.');
+                }, function (error) {
+                    _this.is_loading = false;
+                    _this.$log.error('Can not fetch the general settings.');
+                });
+            }
+        },
+        searchUpdate: function searchUpdate(newQuery) {
+            this.searchQuery = newQuery;
+        },
+        updatedPostTypes: function updatedPostTypes(data) {
+            var postTypes = [];
+            for (var index in data) {
+                postTypes.push(data[index].value);
+            }
 
-			this.$store.commit('updateState', { stateData: data, requestName: 'update_selected_post_types' });
-			this.$store.dispatch('fetchAJAX', { req: 'get_taxonomies', data: { post_types: postTypes } });
-		},
-		updatedTaxonomies: function updatedTaxonomies(data) {
-			var taxonomies = [];
-			for (var index in data) {
-				taxonomies.push(data[index].value);
-			}
-			this.$store.commit('updateState', { stateData: data, requestName: 'update_selected_taxonomies' });
-		},
-		saveGeneralSettings: function saveGeneralSettings() {
-			var _this2 = this;
+            this.$store.commit('updateState', { stateData: data, requestName: 'update_selected_post_types' });
+            this.$store.dispatch('fetchAJAX', { req: 'get_taxonomies', data: { post_types: postTypes } });
+        },
+        updatedTaxonomies: function updatedTaxonomies(data) {
+            var taxonomies = [];
 
-			var postTypesSelected = this.$store.state.generalSettings.selected_post_types;
-			var taxonomiesSelected = this.$store.state.generalSettings.selected_taxonomies;
-			var excludeTaxonomies = this.generalSettings.exclude_taxonomies;
-			var postsSelected = this.generalSettings.selected_posts;
-			this.is_loading = true;
-			this.$log.info('Sending request for saving general settings..');
-			this.$store.dispatch('fetchAJAXPromise', {
-				req: 'save_general_settings',
-				updateState: false,
-				data: {
-					available_taxonomies: this.generalSettings.available_taxonomies,
-					default_interval: this.generalSettings.default_interval,
-					minimum_post_age: this.generalSettings.minimum_post_age,
-					maximum_post_age: this.generalSettings.maximum_post_age,
-					number_of_posts: this.generalSettings.number_of_posts,
-					more_than_once: this.generalSettings.more_than_once,
-					selected_post_types: postTypesSelected,
-					selected_taxonomies: taxonomiesSelected,
-					exclude_taxonomies: excludeTaxonomies,
-					ga_tracking: this.generalSettings.ga_tracking,
-					custom_messages: this.generalSettings.custom_messages,
-					custom_messages_share_order: this.generalSettings.custom_messages_share_order,
-					instant_share: this.generalSettings.instant_share,
-					instant_share_default: this.generalSettings.instant_share_default,
-					instant_share_future_scheduled: this.generalSettings.instant_share_future_scheduled,
-					housekeeping: this.generalSettings.housekeeping
-				}
-			}).then(function (response) {
-				_this2.is_loading = false;
-				_this2.$log.info('Successfully saved general settings.');
-			}, function (error) {
+            if (this.isPro || false === this.isTaxLimit) {
+                this.is_taxonomy_message = false;
+                for (var index in data) {
+                    taxonomies.push(data[index].value);
+                }
+                this.$store.commit('updateState', { stateData: data, requestName: 'update_selected_taxonomies' });
+            } else {
 
-				_this2.$log.error('Successfully saved general settings.');
-				_this2.is_loading = false;
-				Vue.$log.error('Got nothing from server. Prompt user to check internet connection and try again', error);
-			});
-		}
-	},
-	components: {
-		counterInput: _counterInput2.default,
-		MultipleSelect: _multipleSelect2.default
-	}
-	// </script>
-	//
-	// <style scoped>
-	// 	#rop_core .panel-body .text-gray {
-	// 		margin: 0;
-	// 		line-height: normal;
-	// 	}
-	//
-	// 	#rop_core .input-group {
-	// 		width: 100%;
-	// 	}
-	//
-	// 	b {
-	// 		margin-bottom: 5px;
-	// 		display: block;
-	// 	}
-	//
-	// 	#rop_core .input-group .input-group-addon {
-	// 		padding: 3px 5px;
-	// 	}
-	//
-	// 	@media ( max-width: 600px ) {
-	// 		#rop_core .panel-body .text-gray {
-	// 			margin-bottom: 10px;
-	// 		}
-	//
-	// 		#rop_core .text-right {
-	// 			text-align: left;
-	// 		}
-	// 	}
-	//
-	// 	.rop-post-type-badge{
-	// 		text-align: center;
-	//
-	// 	}
-	// </style>
-	//
+                if (data.length > 3) {
+                    this.is_taxonomy_message = true;
+                } else {
+                    this.is_taxonomy_message = false;
+                    for (var _index in data) {
+                        taxonomies.push(data[_index].value);
+                    }
+                    this.$store.commit('updateState', { stateData: data, requestName: 'update_selected_taxonomies' });
+                }
+            }
+        },
+        saveGeneralSettings: function saveGeneralSettings() {
+            var _this2 = this;
+
+            var postTypesSelected = this.$store.state.generalSettings.selected_post_types;
+            var taxonomiesSelected = this.$store.state.generalSettings.selected_taxonomies;
+            var excludeTaxonomies = this.generalSettings.exclude_taxonomies;
+            var postsSelected = this.generalSettings.selected_posts;
+            this.is_loading = true;
+            this.$log.info('Sending request for saving general settings..');
+            this.$store.dispatch('fetchAJAXPromise', {
+                req: 'save_general_settings',
+                updateState: false,
+                data: {
+                    available_taxonomies: this.generalSettings.available_taxonomies,
+                    default_interval: this.generalSettings.default_interval,
+                    minimum_post_age: this.generalSettings.minimum_post_age,
+                    maximum_post_age: this.generalSettings.maximum_post_age,
+                    number_of_posts: this.generalSettings.number_of_posts,
+                    more_than_once: this.generalSettings.more_than_once,
+                    selected_post_types: postTypesSelected,
+                    selected_taxonomies: taxonomiesSelected,
+                    exclude_taxonomies: excludeTaxonomies,
+                    ga_tracking: this.generalSettings.ga_tracking,
+                    custom_messages: this.generalSettings.custom_messages,
+                    custom_messages_share_order: this.generalSettings.custom_messages_share_order,
+                    instant_share: this.generalSettings.instant_share,
+                    instant_share_default: this.generalSettings.instant_share_default,
+                    instant_share_future_scheduled: this.generalSettings.instant_share_future_scheduled,
+                    housekeeping: this.generalSettings.housekeeping
+                }
+            }).then(function (response) {
+                _this2.is_loading = false;
+                _this2.$log.info('Successfully saved general settings.');
+            }, function (error) {
+
+                _this2.$log.error('Successfully saved general settings.');
+                _this2.is_loading = false;
+                Vue.$log.error('Got nothing from server. Prompt user to check internet connection and try again', error);
+            });
+        }
+    },
+    components: {
+        counterInput: _counterInput2.default,
+        MultipleSelect: _multipleSelect2.default
+    }
+    // </script>
+    //
+    // <style scoped>
+    // 	#rop_core .panel-body .text-gray {
+    // 		margin: 0;
+    // 		line-height: normal;
+    // 	}
+    //
+    // 	#rop_core .input-group {
+    // 		width: 100%;
+    // 	}
+    //
+    // 	b {
+    // 		margin-bottom: 5px;
+    // 		display: block;
+    // 	}
+    //
+    // 	#rop_core .input-group .input-group-addon {
+    // 		padding: 3px 5px;
+    // 	}
+    //
+    // 	@media ( max-width: 600px ) {
+    // 		#rop_core .panel-body .text-gray {
+    // 			margin-bottom: 10px;
+    // 		}
+    //
+    // 		#rop_core .text-right {
+    // 			text-align: left;
+    // 		}
+    // 	}
+    //
+    // 	.rop-post-type-badge{
+    // 		text-align: center;
+    //
+    // 	}
+    // </style>
+    //
 
 };
 
@@ -37165,7 +37384,7 @@ module.exports = "\n\t<div class=\"input-group rop-counter-group\">\n\t\t<input 
 /* 256 */
 /***/ (function(module, exports) {
 
-module.exports = "\n\t<div class=\"tab-view\" _v-31740612=\"\">\n\t\t<div class=\"panel-body\" _v-31740612=\"\">\n\t\t\t<div class=\"container\" :class=\"'rop-tab-state-'+is_loading\" _v-31740612=\"\">\n\t\t\t\t<div class=\"columns py-2\" v-if=\"! isBiz\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.min_interval_title}}</b>\n\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\">{{labels.min_interval_desc}}</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<counter-input id=\"default_interval\" :value.sync=\"generalSettings.default_interval\" _v-31740612=\"\"></counter-input>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<span class=\"divider\" _v-31740612=\"\"></span>\n\t\t\t\t<div class=\"columns py-2\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.min_days_title}}</b>\n\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\">{{labels.min_days_desc}}</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<counter-input id=\"min_post_age\" :max-val=\"365\" :value.sync=\"generalSettings.minimum_post_age\" _v-31740612=\"\"></counter-input>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<!-- Max Post Age -->\n\t\t\t\t<div class=\"columns py-2\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.max_days_title}}</b>\n\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\">{{labels.max_days_desc}}</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<counter-input id=\"max_post_age\" :max-val=\"365\" :value.sync=\"generalSettings.maximum_post_age\" _v-31740612=\"\"></counter-input>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<span class=\"divider\" _v-31740612=\"\"></span>\n\n\t\t\t\t<div class=\"columns py-2\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.no_posts_title}}</b>\n\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\">{{labels.no_posts_desc}}</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<counter-input id=\"no_of_posts\" :value.sync=\"generalSettings.number_of_posts\" _v-31740612=\"\"></counter-input>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<span class=\"divider\" _v-31740612=\"\"></span>\n\n\t\t\t\t<!-- Share more than once -->\n\t\t\t\t<div class=\"columns py-2\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.share_once_title}}</b>\n\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\">{{labels.share_once_desc}}</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left\" _v-31740612=\"\">\n\t\t\t\t\t\t<div class=\"form-group\" _v-31740612=\"\">\n\t\t\t\t\t\t\t<label class=\"form-checkbox\" id=\"share_more_than_once\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"generalSettings.more_than_once\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<i class=\"form-icon\" _v-31740612=\"\"></i> {{labels.share_once_yes}}\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<span class=\"divider\" _v-31740612=\"\"></span>\n\t\t\t\t<div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.post_types_title}}</b>\n\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\"><span v-html=\"labels.post_types_desc\" _v-31740612=\"\"></span></p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t<multiple-select id=\"rop_post_types\" :options=\"postTypes\" :disabled=\"isPro\" :selected=\"generalSettings.selected_post_types\" :changed-selection=\"updatedPostTypes\" _v-31740612=\"\"></multiple-select>\n\n\t\t\t\t\t\t<p class=\"text-primary rop-post-type-badge\" v-if=\"checkMediaPostType \" v-html=\"labels.post_types_attachament_info\" _v-31740612=\"\"> </p>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"columns \" v-if=\"!isPro\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column text-center\" _v-31740612=\"\">\n\t\t\t\t\t\t<p class=\"upsell\" _v-31740612=\"\"><i class=\"fa fa-lock\" _v-31740612=\"\"></i> {{labels.post_types_upsell}}</p>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<span class=\"divider\" _v-31740612=\"\"></span>\n\n\t\t\t\t<!-- Taxonomies -->\n\t\t\t\t<div class=\"columns py-2\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.taxonomies_title}}</b>\n\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\"><span v-html=\"labels.taxonomies_desc\" _v-31740612=\"\"></span></p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div id=\"rop_taxonomies\" class=\"column col-6 col-sm-12 vertical-align text-left\" _v-31740612=\"\">\n\t\t\t\t\t\t<div class=\"input-group\" _v-31740612=\"\">\n\t\t\t\t\t\t\t<multiple-select :options=\"taxonomies\" :selected=\"generalSettings.selected_taxonomies\" :changed-selection=\"updatedTaxonomies\" _v-31740612=\"\"></multiple-select>\n\t\t\t\t\t\t\t<span class=\"input-group-addon vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<label class=\"form-checkbox\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"generalSettings.exclude_taxonomies\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t<i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.taxonomies_exclude}}\n\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</span>\n\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t</div>\n\n\t\t\t\t</div>\n\n\t\t\t\t<span class=\"divider\" _v-31740612=\"\"></span>\n\n\t\t\t\t<!-- Google Analytics -->\n\t\t\t\t<div class=\"columns py-2\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.ga_title}}</b>\n\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\">{{labels.ga_desc}}</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left\" _v-31740612=\"\">\n\t\t\t\t\t\t<div class=\"form-group\" _v-31740612=\"\">\n\t\t\t\t\t\t\t<label class=\"form-checkbox\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"generalSettings.ga_tracking\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.ga_yes}}\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<span class=\"divider\" _v-31740612=\"\"></span>\n\n\t\t\t\t\t\t\t<div class=\"columns py-2\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.instant_share_title}}</b>\n\t\t\t\t\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\"><span v-html=\"labels.instant_share_desc\" _v-31740612=\"\"></span></p>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"form-group\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t\t<label id=\"rop_instant_share\" class=\"form-checkbox\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"generalSettings.instant_share\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t\t\t<i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.instant_share_yes}}\n\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t\t<span class=\"divider\" _v-31740612=\"\"></span>\n\n\t\t\t\t\t\t\t<div class=\"columns py-2\" v-if=\"isInstantShare\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.instant_share_default_title}}</b>\n\t\t\t\t\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\">{{labels.instant_share_default_desc}}</p>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"form-group\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t\t<label class=\"form-checkbox\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"generalSettings.instant_share_default\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t\t\t<i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.instant_share_default_yes}}\n\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t\t<span class=\"divider\" v-if=\"isInstantShare\" _v-31740612=\"\"></span>\n\n\t\t\t\t\t\t\t<div class=\"columns py-2\" v-if=\"isInstantShare\" :class=\"'rop-control-container-'+isPro\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.instant_share_future_scheduled_title}}</b>\n\t\t\t\t\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\"><span v-html=\"labels.instant_share_future_scheduled_desc\" _v-31740612=\"\"></span></p>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"form-group\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t\t<label class=\"form-checkbox\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"generalSettings.instant_share_future_scheduled\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t\t\t<i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.instant_share_future_scheduled_yes}}\n\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<!-- Upsell -->\n\t\t\t\t\t\t\t\t<div class=\"columns \" v-if=\"!isPro &amp;&amp; isInstantShare\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t<div class=\"column text-center\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t\t\t<p class=\"upsell\" _v-31740612=\"\"><i class=\"fa fa-lock\" _v-31740612=\"\"></i> {{labels.instant_share_future_scheduled_upsell}}</p>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<span class=\"divider\" v-if=\"isInstantShare\" _v-31740612=\"\"></span>\n\n\t\t\t\t<div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.custom_share_title}}</b>\n\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\"><span v-html=\"labels.custom_share_desc\" _v-31740612=\"\"></span></p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t<div class=\"form-group\" _v-31740612=\"\">\n\t\t\t\t\t\t\t<label id=\"rop_custom_share_msg\" class=\"form-checkbox\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" :disabled=\"!isPro\" v-model=\"generalSettings.custom_messages\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.custom_share_yes}}\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<span class=\"divider\" _v-31740612=\"\"></span>\n\n\n\t\t\t\t<div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" v-if=\"isCustomMsgs\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.custom_share_order_title}}</b>\n\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\">{{labels.custom_share_order_desc}}</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t<div class=\"form-group\" _v-31740612=\"\">\n\t\t\t\t\t\t\t<label id=\"rop_custom_share_msg\" class=\"form-checkbox\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" :disabled=\"!isPro\" v-model=\"generalSettings.custom_messages_share_order\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.custom_share_order_yes}}\n\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<!-- Upsell -->\n\t\t\t\t<div class=\"columns \" v-if=\"!isPro\" _v-31740612=\"\">\n\t\t\t\t\t<div class=\"column text-center\" _v-31740612=\"\">\n\t\t\t\t\t\t<p class=\"upsell\" _v-31740612=\"\"><i class=\"fa fa-lock\" _v-31740612=\"\"></i> {{labels.custom_share_upsell}}</p>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<span class=\"divider\" v-if=\"isCustomMsgs\" _v-31740612=\"\"></span>\n\n\t\t\t\t<div class=\"columns py-2\" _v-31740612=\"\">\n\t\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t\t<b _v-31740612=\"\">{{labels.housekeeping}}</b>\n\t\t\t\t\t\t\t<p class=\"text-gray\" _v-31740612=\"\">{{labels.housekeeping_desc}}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n\t\t\t\t\t\t\t<div class=\"form-group\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<label class=\"form-checkbox\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"generalSettings.housekeeping\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t<i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.housekeeping_yes}}\n\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<span class=\"divider\" _v-31740612=\"\"></span>\n\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"panel-footer text-right\" _v-31740612=\"\">\n\t\t\t<button class=\"btn btn-primary\" @click=\"saveGeneralSettings()\" _v-31740612=\"\"><i class=\"fa fa-check\" v-if=\"!this.is_loading\" _v-31740612=\"\"></i> <i class=\"fa fa-spinner fa-spin\" v-else=\"\" _v-31740612=\"\"></i> {{labels.save}}\n\t\t\t</button>\n\t\t</div>\n\t</div>\n";
+module.exports = "\n    <div class=\"tab-view\" _v-31740612=\"\">\n        <div class=\"panel-body\" _v-31740612=\"\">\n            <div class=\"container\" :class=\"'rop-tab-state-'+is_loading\" _v-31740612=\"\">\n                <div class=\"columns py-2\" v-if=\"! isBiz\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.min_interval_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\">{{labels.min_interval_desc}}</p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <counter-input id=\"default_interval\" :value.sync=\"generalSettings.default_interval\" _v-31740612=\"\"></counter-input>\n                    </div>\n                </div>\n                <span class=\"divider\" _v-31740612=\"\"></span>\n                <div class=\"columns py-2\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.min_days_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\">{{labels.min_days_desc}}</p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <counter-input id=\"min_post_age\" :max-val=\"365\" :value.sync=\"generalSettings.minimum_post_age\" _v-31740612=\"\"></counter-input>\n                    </div>\n                </div>\n                <!-- Max Post Age -->\n                <div class=\"columns py-2\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.max_days_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\">{{labels.max_days_desc}}</p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <counter-input id=\"max_post_age\" :max-val=\"365\" :value.sync=\"generalSettings.maximum_post_age\" _v-31740612=\"\"></counter-input>\n                    </div>\n                </div>\n\n                <span class=\"divider\" _v-31740612=\"\"></span>\n\n                <div class=\"columns py-2\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.no_posts_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\">{{labels.no_posts_desc}}</p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <counter-input id=\"no_of_posts\" :value.sync=\"generalSettings.number_of_posts\" _v-31740612=\"\"></counter-input>\n                    </div>\n                </div>\n                <span class=\"divider\" _v-31740612=\"\"></span>\n\n                <!-- Share more than once -->\n                <div class=\"columns py-2\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.share_once_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\">{{labels.share_once_desc}}</p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align text-left\" _v-31740612=\"\">\n                        <div class=\"form-group\" _v-31740612=\"\">\n                            <label class=\"form-checkbox\" id=\"share_more_than_once\" _v-31740612=\"\">\n                                <input type=\"checkbox\" v-model=\"generalSettings.more_than_once\" _v-31740612=\"\">\n                                <i class=\"form-icon\" _v-31740612=\"\"></i> {{labels.share_once_yes}}\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <span class=\"divider\" _v-31740612=\"\"></span>\n                <div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.post_types_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\"><span v-html=\"labels.post_types_desc\" _v-31740612=\"\"></span></p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n                        <multiple-select id=\"rop_post_types\" :options=\"postTypes\" :disabled=\"isPro\" :selected=\"generalSettings.selected_post_types\" :changed-selection=\"updatedPostTypes\" _v-31740612=\"\"></multiple-select>\n\n                        <p class=\"text-primary rop-post-type-badge\" v-if=\"checkMediaPostType \" v-html=\"labels.post_types_attachament_info\" _v-31740612=\"\"></p>\n                    </div>\n                </div>\n\n                <div class=\"columns \" v-if=\"!isPro\" _v-31740612=\"\">\n                    <div class=\"column text-center\" _v-31740612=\"\">\n                        <p class=\"upsell\" _v-31740612=\"\"><i class=\"fa fa-lock\" _v-31740612=\"\"></i> {{labels.post_types_upsell}}</p>\n                    </div>\n                </div>\n\n\t\t\t\t<span class=\"divider\" v-if=\"!isPro\" _v-31740612=\"\"></span>\n\n                <!-- Taxonomies -->\n\t\t\t\t<div class=\"columns py-2\" v-if=\"!isPro\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.taxonomies_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\"><span v-html=\"labels.taxonomies_desc\" _v-31740612=\"\"></span></p>\n                    </div>\n                    <div id=\"rop_taxonomies\" class=\"column col-6 col-sm-12 vertical-align text-left\" _v-31740612=\"\">\n                        <div class=\"input-group\" _v-31740612=\"\">\n                            <multiple-select :options=\"taxonomies\" :selected=\"generalSettings.selected_taxonomies\" :changed-selection=\"updatedTaxonomies\" :is_pro_version=\"isPro\" :apply_limit=\"isTaxLimit\" v-on:display-limiter-notice=\"displayProMessage\" _v-31740612=\"\"></multiple-select>\n                            <span class=\"input-group-addon vertical-align\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t<label class=\"form-checkbox\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"generalSettings.exclude_taxonomies\" _v-31740612=\"\">\n\t\t\t\t\t\t\t\t\t<i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.taxonomies_exclude}}\n\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</span>\n                        </div>\n                        <p class=\"text-primary rop-post-type-badge\" v-if=\"is_taxonomy_message\" v-html=\"labels.post_types_taxonomy_limit\" _v-31740612=\"\"></p>\n                    </div>\n                </div>\n\n                <span class=\"divider\" _v-31740612=\"\"></span>\n\n                <!-- Google Analytics -->\n                <div class=\"columns py-2\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.ga_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\">{{labels.ga_desc}}</p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align text-left\" _v-31740612=\"\">\n                        <div class=\"form-group\" _v-31740612=\"\">\n                            <label class=\"form-checkbox\" _v-31740612=\"\">\n                                <input type=\"checkbox\" v-model=\"generalSettings.ga_tracking\" _v-31740612=\"\">\n                                <i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.ga_yes}}\n                            </label>\n                        </div>\n                    </div>\n                </div>\n\n                <span class=\"divider\" _v-31740612=\"\"></span>\n\n                <div class=\"columns py-2\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.instant_share_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\"><span v-html=\"labels.instant_share_desc\" _v-31740612=\"\"></span></p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n                        <div class=\"form-group\" _v-31740612=\"\">\n                            <label id=\"rop_instant_share\" class=\"form-checkbox\" _v-31740612=\"\">\n                                <input type=\"checkbox\" v-model=\"generalSettings.instant_share\" _v-31740612=\"\">\n                                <i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.instant_share_yes}}\n                            </label>\n                        </div>\n                    </div>\n                </div>\n\n                <span class=\"divider\" _v-31740612=\"\"></span>\n\n                <div class=\"columns py-2\" v-if=\"isInstantShare\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.instant_share_default_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\">{{labels.instant_share_default_desc}}</p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n                        <div class=\"form-group\" _v-31740612=\"\">\n                            <label class=\"form-checkbox\" _v-31740612=\"\">\n                                <input type=\"checkbox\" v-model=\"generalSettings.instant_share_default\" _v-31740612=\"\">\n                                <i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.instant_share_default_yes}}\n                            </label>\n                        </div>\n                    </div>\n                </div>\n\n                <span class=\"divider\" v-if=\"isInstantShare\" _v-31740612=\"\"></span>\n\n                <div class=\"columns py-2\" v-if=\"isInstantShare\" :class=\"'rop-control-container-'+isPro\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.instant_share_future_scheduled_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\"><span v-html=\"labels.instant_share_future_scheduled_desc\" _v-31740612=\"\"></span></p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n                        <div class=\"form-group\" _v-31740612=\"\">\n                            <label class=\"form-checkbox\" _v-31740612=\"\">\n                                <input type=\"checkbox\" v-model=\"generalSettings.instant_share_future_scheduled\" _v-31740612=\"\">\n                                <i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.instant_share_future_scheduled_yes}}\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <!-- Upsell -->\n                <div class=\"columns \" v-if=\"!isPro &amp;&amp; isInstantShare\" _v-31740612=\"\">\n                    <div class=\"column text-center\" _v-31740612=\"\">\n                        <p class=\"upsell\" _v-31740612=\"\"><i class=\"fa fa-lock\" _v-31740612=\"\"></i> {{labels.instant_share_future_scheduled_upsell}}</p>\n                    </div>\n                </div>\n                <span class=\"divider\" v-if=\"isInstantShare\" _v-31740612=\"\"></span>\n\n                <div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.custom_share_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\"><span v-html=\"labels.custom_share_desc\" _v-31740612=\"\"></span></p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n                        <div class=\"form-group\" _v-31740612=\"\">\n                            <label id=\"rop_custom_share_msg\" class=\"form-checkbox\" _v-31740612=\"\">\n                                <input type=\"checkbox\" :disabled=\"!isPro\" v-model=\"generalSettings.custom_messages\" _v-31740612=\"\">\n                                <i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.custom_share_yes}}\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <span class=\"divider\" _v-31740612=\"\"></span>\n\n\n                <div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" v-if=\"isCustomMsgs\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.custom_share_order_title}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\">{{labels.custom_share_order_desc}}</p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n                        <div class=\"form-group\" _v-31740612=\"\">\n                            <label id=\"rop_custom_share_msg\" class=\"form-checkbox\" _v-31740612=\"\">\n                                <input type=\"checkbox\" :disabled=\"!isPro\" v-model=\"generalSettings.custom_messages_share_order\" _v-31740612=\"\">\n                                <i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.custom_share_order_yes}}\n                            </label>\n                        </div>\n                    </div>\n                </div>\n\n                <!-- Upsell -->\n                <div class=\"columns \" v-if=\"!isPro\" _v-31740612=\"\">\n                    <div class=\"column text-center\" _v-31740612=\"\">\n                        <p class=\"upsell\" _v-31740612=\"\"><i class=\"fa fa-lock\" _v-31740612=\"\"></i> {{labels.custom_share_upsell}}</p>\n                    </div>\n                </div>\n                <span class=\"divider\" v-if=\"isCustomMsgs\" _v-31740612=\"\"></span>\n\n                <div class=\"columns py-2\" _v-31740612=\"\">\n                    <div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-31740612=\"\">\n                        <b _v-31740612=\"\">{{labels.housekeeping}}</b>\n                        <p class=\"text-gray\" _v-31740612=\"\">{{labels.housekeeping_desc}}</p>\n                    </div>\n                    <div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-31740612=\"\">\n                        <div class=\"form-group\" _v-31740612=\"\">\n                            <label class=\"form-checkbox\" _v-31740612=\"\">\n                                <input type=\"checkbox\" v-model=\"generalSettings.housekeeping\" _v-31740612=\"\">\n                                <i class=\"form-icon\" _v-31740612=\"\"></i>{{labels.housekeeping_yes}}\n                            </label>\n                        </div>\n                    </div>\n                </div>\n                <span class=\"divider\" _v-31740612=\"\"></span>\n\n            </div>\n        </div>\n        <div class=\"panel-footer text-right\" _v-31740612=\"\">\n            <button class=\"btn btn-primary\" @click=\"saveGeneralSettings()\" _v-31740612=\"\"><i class=\"fa fa-check\" v-if=\"!this.is_loading\" _v-31740612=\"\"></i> <i class=\"fa fa-spinner fa-spin\" v-else=\"\" _v-31740612=\"\"></i> {{labels.save}}\n            </button>\n        </div>\n    </div>\n";
 
 /***/ }),
 /* 257 */
@@ -37253,8 +37472,70 @@ var _accountSchedule = __webpack_require__(269);
 
 var _accountSchedule2 = _interopRequireDefault(_accountSchedule);
 
+var _multipleSelect = __webpack_require__(41);
+
+var _multipleSelect2 = _interopRequireDefault(_multipleSelect);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// <template>
+// 	<div class="tab-view">
+// 		<div class="panel-body">
+// 			<div class="d-inline-block mt-2 column col-12">
+// 				<p class="text-gray"><i class="fa fa-info-circle"></i> <span v-html="labels.accounts_selector"></span>
+// 				</p>
+// 			</div>
+// 			<empty-active-accounts v-if="accountsCount === 0"></empty-active-accounts>
+// 			<div class="container" v-if="accountsCount > 0">
+// 				<div class="columns">
+// 					<div class="column col-3 col-sm-12 col-md-12 col-xl-3 col-lg-3 col-xs-12 col-rop-selector-accounts">
+// 						<span class="divider"></span>
+// 						<div v-for="( account, id ) in active_accounts">
+// 							<div class="rop-selector-account-container" :class="{active: selected_account===id}"
+// 							     @click="setActiveAccount(id)">
+// 								<div class="tile tile-centered rop-account">
+// 									<div class="tile-icon">
+// 										<div class="icon_box"
+// 										     :class=" (account.img ? 'has_image' : 'no-image' ) + ' ' +account.service ">
+// 											<img class="service_account_image" :src="account.img"
+// 											     v-if="account.img"/>
+// 											<i class="fa  " :class="getIcon(account)" aria-hidden="true"></i>
+// 										</div>
+// 									</div>
+// 									<div class="tile-content">
+// 										<p class="rop-account-name">{{account.user}}</p>
+// 										<strong class="rop-service-name">{{account.service}}</strong>
+// 									</div>
+// 								</div>
+// 							</div>
+// 							<span class="divider"></span>
+// 						</div>
+// 					</div>
+// 					<div class="column col-9 col-sm-12  col-md-12  col-xl-9 col-lg-9 col-xs-12"
+// 					     :class="'rop-tab-state-'+is_loading">
+// 						<component :is="type" :account_id="selected_account" :license="license"></component>
+// 					</div>
+// 				</div>
+// 			</div>
+// 		</div>
+// 		<div class="panel-footer" v-if="accountsCount > 0">
+// 			<div class="panel-actions text-right" v-if="allow_footer">
+// 				<button class="btn btn-secondary" @click="resetAccountData()"><i class="fa fa-ban"
+// 				                                                                 v-if="!this.is_loading"></i> <i
+// 						class="fa fa-spinner fa-spin" v-else></i> {{labels.reset_selector_btn}} {{component_label}}
+// 					{{labels.for}}
+// 					<b>{{active_account_name}}</b>
+// 				</button>
+// 				<button class="btn btn-primary" @click="saveAccountData()"><i class="fa fa-check"
+// 				                                                              v-if="!this.is_loading"></i> <i
+// 						class="fa fa-spinner fa-spin" v-else></i> {{labels.save_selector_btn}} {{component_label}}
+// 				</button>
+// 			</div>
+// 		</div>
+// 	</div>
+// </template>
+//
+// <script>
 module.exports = {
 	name: 'account-selector-view',
 	props: {
@@ -37455,7 +37736,8 @@ module.exports = {
 	components: {
 		'empty-active-accounts': _emptyActiveAccounts2.default,
 		'post-format': _postFormat2.default,
-		'schedule': _accountSchedule2.default
+		'schedule': _accountSchedule2.default,
+		'MultipleSelect': _multipleSelect2.default
 	}
 	// </script>
 	//
@@ -37485,64 +37767,7 @@ module.exports = {
 	// </style>
 	//
 
-}; // <template>
-// 	<div class="tab-view">
-// 		<div class="panel-body">
-// 			<div class="d-inline-block mt-2 column col-12">
-// 				<p class="text-gray"><i class="fa fa-info-circle"></i> <span v-html="labels.accounts_selector"></span>
-// 				</p>
-// 			</div>
-// 			<empty-active-accounts v-if="accountsCount === 0"></empty-active-accounts>
-// 			<div class="container" v-if="accountsCount > 0">
-// 				<div class="columns">
-// 					<div class="column col-3 col-sm-12 col-md-12 col-xl-3 col-lg-3 col-xs-12 col-rop-selector-accounts">
-// 						<span class="divider"></span>
-// 						<div v-for="( account, id ) in active_accounts">
-// 							<div class="rop-selector-account-container" :class="{active: selected_account===id}"
-// 							     @click="setActiveAccount(id)">
-// 								<div class="tile tile-centered rop-account">
-// 									<div class="tile-icon">
-// 										<div class="icon_box"
-// 										     :class=" (account.img ? 'has_image' : 'no-image' ) + ' ' +account.service ">
-// 											<img class="service_account_image" :src="account.img"
-// 											     v-if="account.img"/>
-// 											<i class="fa  " :class="getIcon(account)" aria-hidden="true"></i>
-// 										</div>
-// 									</div>
-// 									<div class="tile-content">
-// 										<p class="rop-account-name">{{account.user}}</p>
-// 										<strong class="rop-service-name">{{account.service}}</strong>
-// 									</div>
-// 								</div>
-// 							</div>
-// 							<span class="divider"></span>
-// 						</div>
-// 					</div>
-// 					<div class="column col-9 col-sm-12  col-md-12  col-xl-9 col-lg-9 col-xs-12"
-// 					     :class="'rop-tab-state-'+is_loading">
-// 						<component :is="type" :account_id="selected_account" :license="license"></component>
-// 					</div>
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<div class="panel-footer" v-if="accountsCount > 0">
-// 			<div class="panel-actions text-right" v-if="allow_footer">
-// 				<button class="btn btn-secondary" @click="resetAccountData()"><i class="fa fa-ban"
-// 				                                                                 v-if="!this.is_loading"></i> <i
-// 						class="fa fa-spinner fa-spin" v-else></i> {{labels.reset_selector_btn}} {{component_label}}
-// 					{{labels.for}}
-// 					<b>{{active_account_name}}</b>
-// 				</button>
-// 				<button class="btn btn-primary" @click="saveAccountData()"><i class="fa fa-check"
-// 				                                                              v-if="!this.is_loading"></i> <i
-// 						class="fa fa-spinner fa-spin" v-else></i> {{labels.save_selector_btn}} {{component_label}}
-// 				</button>
-// 			</div>
-// 		</div>
-// 	</div>
-// </template>
-//
-// <script>
+};
 
 /***/ }),
 /* 261 */
@@ -37665,7 +37890,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, "\n\t#rop_core .panel-body .text-gray[_v-b34c44f8] {\n\t\tmargin: 0;\n\t\tline-height: normal;\n\t}\n\n\tb[_v-b34c44f8] {\n\t\tmargin-bottom: 5px;\n\t\tdisplay: block;\n\t}\n\n\t#rop_core .input-group .input-group-addon[_v-b34c44f8] {\n\t\tpadding: 3px 5px;\n\t}\n\n\t@media ( max-width: 600px ) {\n\t\t#rop_core .panel-body .text-gray[_v-b34c44f8] {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\n\t\t#rop_core .text-right[_v-b34c44f8] {\n\t\t\ttext-align: left;\n\t\t}\n\t}\n", ""]);
+exports.push([module.i, "\n    #rop_core .panel-body .text-gray[_v-b34c44f8] {\n        margin: 0;\n        line-height: normal;\n    }\n\n    b[_v-b34c44f8] {\n        margin-bottom: 5px;\n        display: block;\n    }\n\n    #rop_core .input-group .input-group-addon[_v-b34c44f8] {\n        padding: 3px 5px;\n    }\n\n    @media ( max-width: 600px ) {\n        #rop_core .panel-body .text-gray[_v-b34c44f8] {\n            margin-bottom: 10px;\n        }\n\n        #rop_core .text-right[_v-b34c44f8] {\n            text-align: left;\n        }\n    }\n", ""]);
 
 // exports
 
@@ -37677,366 +37902,519 @@ exports.push([module.i, "\n\t#rop_core .panel-body .text-gray[_v-b34c44f8] {\n\t
 "use strict";
 
 
-// <template>
-// 	<div>
-// 		<div class="columns py-2">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.post_content_title}}</b>
-// 				<p class="text-gray">{{labels.post_content_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<select class="form-select" v-model="post_format.post_content">
-// 						<option value="post_title">{{labels.post_content_option_title}}</option>
-// 						<option value="post_content">{{labels.post_content_option_content}}</option>
-// 						<option value="post_title_content">{{labels.post_content_option_title_content}}</option>
-// 						<option value="custom_field">{{labels.post_content_option_custom_field}}</option>
-// 					</select>
-// 				</div>
-// 			</div>
-// 		</div>
+var _getIterator2 = __webpack_require__(38);
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+var _multipleSelect = __webpack_require__(41);
+
+var _multipleSelect2 = _interopRequireDefault(_multipleSelect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = {
+    name: "post-format",
+    props: ['account_id', 'license'],
+    data: function data() {
+        return {
+            labels: this.$store.state.labels.post_format,
+            labels_settings: this.$store.state.labels.settings,
+            upsell_link: ropApiSettings.upsell_link,
+            selected_tax_filter: []
+        };
+    },
+    created: function created() {
+        this.get_taxonomy_list();
+    },
+    methods: {
+        get_taxonomy_list: function get_taxonomy_list() {
+            var _this = this;
+
+            if (this.$store.state.generalSettings.length === 0) {
+                this.is_loading = true;
+                this.$log.info('Fetching general settings.');
+                this.$store.dispatch('fetchAJAXPromise', { req: 'get_general_settings' }).then(function (response) {
+                    _this.is_loading = false;
+                    _this.$log.debug('Succesfully fetched.');
+                }, function (error) {
+                    _this.is_loading = false;
+                    _this.$log.error('Can not fetch the general settings.');
+                });
+            }
+        },
+        updated_tax_filter: function updated_tax_filter(data) {
+            var taxonomies = [];
+            for (var index in data) {
+                taxonomies.push(data[index].value);
+            }
+
+            var taxonomy_objects = [];
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = (0, _getIterator3.default)(this.taxonomy), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var tax = _step.value;
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
+
+                    try {
+                        for (var _iterator2 = (0, _getIterator3.default)(taxonomies), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var tax_id = _step2.value;
+
+                            tax_id = parseInt(tax_id);
+                            var id = parseInt(tax.value);
+                            if (id === tax_id) {
+                                taxonomy_objects.push(tax);
+                            }
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            this.post_format.taxonomy_filter = taxonomy_objects;
+        }
+    },
+    computed: {
+        post_format: function post_format() {
+            return this.$store.state.activePostFormat[this.account_id] ? this.$store.state.activePostFormat[this.account_id] : [];
+        },
+        isPro: function isPro() {
+            return this.license > 0;
+        },
+        short_url_service: function short_url_service() {
+            var postFormat = this.$store.state.activePostFormat[this.account_id] ? this.$store.state.activePostFormat[this.account_id] : [];
+            return postFormat.short_url_service ? postFormat.short_url_service : '';
+        },
+        taxonomy_filter: function taxonomy_filter() {
+            var postFormat = this.$store.state.activePostFormat[this.account_id] ? this.$store.state.activePostFormat[this.account_id] : [];
+            if (postFormat.taxonomy_filter) {
+                var index = 0;
+                var _iteratorNormalCompletion3 = true;
+                var _didIteratorError3 = false;
+                var _iteratorError3 = undefined;
+
+                try {
+                    for (var _iterator3 = (0, _getIterator3.default)(postFormat.taxonomy_filter), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                        var option = _step3.value;
+
+                        postFormat.taxonomy_filter[index].selected = true;
+                        index++;
+                    }
+                } catch (err) {
+                    _didIteratorError3 = true;
+                    _iteratorError3 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                            _iterator3.return();
+                        }
+                    } finally {
+                        if (_didIteratorError3) {
+                            throw _iteratorError3;
+                        }
+                    }
+                }
+            }
+
+            return postFormat.taxonomy_filter ? postFormat.taxonomy_filter : [];
+        },
+        taxonomy: function taxonomy() {
+
+            return this.$store.state.generalSettings.available_taxonomies;
+        }
+    },
+    watch: {
+        short_url_service: function short_url_service() {
+            var _this2 = this;
+
+            this.$store.dispatch('fetchAJAXPromise', {
+                req: 'get_shortner_credentials',
+                data: { short_url_service: this.short_url_service }
+            }).then(function (response) {
+                _this2.post_format.shortner_credentials = response;
+            }, function (error) {
+                Vue.$log.error('Got nothing from server. Prompt user to check internet connection and try again', error);
+            });
+        }
+    },
+
+    filters: {
+        capitalize: function capitalize(value) {
+            if (!value) return '';
+            value = value.toString().split('_');
+            var name = '';
+            for (var x = 0; x < value.length; x++) {
+                name += value[x].charAt(0).toUpperCase() + value[x].slice(1) + ' ';
+            }
+            return name;
+        }
+    },
+    components: {
+        MultipleSelect: _multipleSelect2.default
+    }
+    // </script>
+    // <style scoped>
+    //     #rop_core .panel-body .text-gray {
+    //         margin: 0;
+    //         line-height: normal;
+    //     }
+    //
+    //     b {
+    //         margin-bottom: 5px;
+    //         display: block;
+    //     }
+    //
+    //     #rop_core .input-group .input-group-addon {
+    //         padding: 3px 5px;
+    //     }
+    //
+    //     @media ( max-width: 600px ) {
+    //         #rop_core .panel-body .text-gray {
+    //             margin-bottom: 10px;
+    //         }
+    //
+    //         #rop_core .text-right {
+    //             text-align: left;
+    //         }
+    //     }
+    // </style>
+    //
+
+}; // <template>
+//     <div>
+//         <div class="columns py-2">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.post_content_title}}</b>
+//                 <p class="text-gray">{{labels.post_content_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <select class="form-select" v-model="post_format.post_content">
+//                         <option value="post_title">{{labels.post_content_option_title}}</option>
+//                         <option value="post_content">{{labels.post_content_option_content}}</option>
+//                         <option value="post_title_content">{{labels.post_content_option_title_content}}</option>
+//                         <option value="custom_field">{{labels.post_content_option_custom_field}}</option>
+//                     </select>
+//                 </div>
+//             </div>
+//         </div>
 //
-// 		<div class="columns py-2" v-if="post_format.post_content === 'custom_field'">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.custom_meta_title}}</b>
-// 				<p class="text-gray">{{labels.custom_meta_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<input class="form-input" type="text" v-model="post_format.custom_meta_field"
-// 					       value="" placeholder=""/>
-// 				</div>
-// 			</div>
-// 		</div>
+//         <div class="columns py-2" v-if="post_format.post_content === 'custom_field'">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.custom_meta_title}}</b>
+//                 <p class="text-gray">{{labels.custom_meta_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <input class="form-input" type="text" v-model="post_format.custom_meta_field"
+//                            value="" placeholder=""/>
+//                 </div>
+//             </div>
+//         </div>
 //
-// 		<span class="divider"></span>
+//         <span class="divider"></span>
 //
-// 		<div class="columns py-2">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.max_char_title}}</b>
-// 				<p class="text-gray">{{labels.max_char_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<input class="form-input" type="number" v-model="post_format.maximum_length"
-// 					       value="" placeholder=""/>
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<span class="divider"></span>
+//         <div class="columns py-2">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.max_char_title}}</b>
+//                 <p class="text-gray">{{labels.max_char_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <input class="form-input" type="number" v-model="post_format.maximum_length"
+//                            value="" placeholder=""/>
+//                 </div>
+//             </div>
+//         </div>
+//         <span class="divider"></span>
 //
-// 		<div class="columns py-2">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.add_char_title}}</b>
-// 				<p class="text-gray"><span v-html="labels.add_char_desc"></span></p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
+//         <div class="columns py-2">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.add_char_title}}</b>
+//                 <p class="text-gray"><span v-html="labels.add_char_desc"></span></p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
 // 					<textarea class="form-input" v-model="post_format.custom_text"
-// 					          v-bind:placeholder="labels.add_char_placeholder">{{post_format.custom_text}}</textarea>
-// 				</div>
-// 			</div>
-// 		</div>
+//                               v-bind:placeholder="labels.add_char_placeholder">{{post_format.custom_text}}</textarea>
+//                 </div>
+//             </div>
+//         </div>
 //
-// 		<div class="columns py-2">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<p class="text-gray">{{labels.add_pos_title}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<select class="form-select" v-model="post_format.custom_text_pos">
-// 						<option value="beginning">{{labels.add_pos_option_start}}</option>
-// 						<option value="end">{{labels.add_pos_option_end}}</option>
-// 					</select>
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<div class="columns py-2">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.add_link_title}}</b>
-// 				<p class="text-gray">{{labels.add_link_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="input-group">
-// 					<label class="form-checkbox">
-// 						<input type="checkbox" v-model="post_format.include_link"/>
-// 						<i class="form-icon"></i> {{labels.add_link_yes}}
-// 					</label>
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<span class="divider"></span>
-// 		<div class="columns py-2">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.meta_link_title}}</b>
-// 				<p class="text-gray">{{labels.meta_link_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="input-group">
-// 					<label class="form-checkbox">
-// 						<input type="checkbox" v-model="post_format.url_from_meta"/>
-// 						<i class="form-icon"></i> {{labels.meta_link_yes}}
-// 					</label>
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<!-- Custom Field -->
-// 		<div class="columns py-2" v-if="post_format.url_from_meta">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.meta_link_name_title}}</b>
-// 				<p class="text-gray">{{labels.meta_link_name_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<input class="form-input" type="text" v-model="post_format.url_meta_key" value=""
-// 					       placeholder=""/>
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<span class="divider"></span>
-// 		<div class="columns py-2">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.use_shortner_title}}</b>
-// 				<p class="text-gray">{{labels.use_shortner_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="input-group">
-// 					<label class="form-checkbox">
-// 						<input type="checkbox" v-model="post_format.short_url"/>
-// 						<i class="form-icon"></i> {{labels.use_shortner_yes}}
-// 					</label>
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<div class="columns py-2" v-if="post_format.short_url">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.shortner_title}}</b>
-// 				<p class="text-gray">{{labels.shortner_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<select class="form-select" v-model="post_format.short_url_service">
-// 						<option value="rviv.ly">rviv.ly</option>
-// 						<option value="bit.ly">bit.ly</option>
-// 						<option value="firebase">google firebase</option>
-// 						<option value="ow.ly">ow.ly</option>
-// 						<option value="is.gd">is.gd</option>
-//       <option value="rebrand.ly">rebrand.ly</option>
-//       <option value="wp_short_url">wp_short_url</option>
-// 					</select>
-// 				</div>
-// 			</div>
-// 		</div>
+//         <div class="columns py-2">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <p class="text-gray">{{labels.add_pos_title}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <select class="form-select" v-model="post_format.custom_text_pos">
+//                         <option value="beginning">{{labels.add_pos_option_start}}</option>
+//                         <option value="end">{{labels.add_pos_option_end}}</option>
+//                     </select>
+//                 </div>
+//             </div>
+//         </div>
+//         <div class="columns py-2">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.add_link_title}}</b>
+//                 <p class="text-gray">{{labels.add_link_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="input-group">
+//                     <label class="form-checkbox">
+//                         <input type="checkbox" v-model="post_format.include_link"/>
+//                         <i class="form-icon"></i> {{labels.add_link_yes}}
+//                     </label>
+//                 </div>
+//             </div>
+//         </div>
+//         <span class="divider"></span>
+//         <div class="columns py-2">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.meta_link_title}}</b>
+//                 <p class="text-gray">{{labels.meta_link_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="input-group">
+//                     <label class="form-checkbox">
+//                         <input type="checkbox" v-model="post_format.url_from_meta"/>
+//                         <i class="form-icon"></i> {{labels.meta_link_yes}}
+//                     </label>
+//                 </div>
+//             </div>
+//         </div>
 //
-// 		<div class="columns py-2" v-if="post_format.short_url" v-for="( credential, key_name ) in post_format.shortner_credentials">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{ key_name | capitalize }}</b>
-// 				<p class="text-gray">{{labels.shortner_field_desc_start}} "{{key_name}}"
-// 					{{labels.shortner_field_desc_end}}
-// 					<strong>{{post_format.short_url_service}}</strong> {{labels.shortner_api_field}}.</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<input class="form-input" type="text" v-model="post_format.shortner_credentials[key_name]">
-// 				</div>
-// 			</div>
-// 		</div>
+//         <!-- Custom Field -->
+//         <div class="columns py-2" v-if="post_format.url_from_meta">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.meta_link_name_title}}</b>
+//                 <p class="text-gray">{{labels.meta_link_name_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <input class="form-input" type="text" v-model="post_format.url_meta_key" value=""
+//                            placeholder=""/>
+//                 </div>
+//             </div>
+//         </div>
+//         <span class="divider" v-if="isPro"></span>
 //
-// 		<div class="columns py-2">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.hashtags_title}}</b>
-// 				<p class="text-gray">{{labels.hashtags_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<select class="form-select" v-model="post_format.hashtags">
-// 						<option value="no-hashtags">{{labels.hashtags_option_no}}</option>
-// 						<option value="common-hashtags">{{labels.hashtags_option_common}}</option>
-// 						<option value="categories-hashtags">{{labels.hashtags_option_cats}}</option>
-// 						<option value="tags-hashtags">{{labels.hashtags_option_tags}}</option>
-// 						<option value="custom-hashtags">{{labels.hashtags_option_field}}</option>
-// 					</select>
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<div class="columns py-2" v-if="post_format.hashtags === 'common-hashtags'">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.hastags_common_title}}</b>
-// 				<p class="text-gray">{{labels.hastags_common_desc}} ",".</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<input class="form-input" type="text" v-model="post_format.hashtags_common" value=""
-// 					       placeholder=""/>
-// 				</div>
-// 			</div>
-// 		</div>
+//         <div class="columns py-2" v-if="isPro">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels_settings.taxonomies_title}}</b>
+//                 <p class="text-gray"><span v-html="labels_settings.taxonomies_desc"></span></p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="input-group">
+//                     <multiple-select :options="taxonomy" :selected="taxonomy_filter" :name="post_format.taxonomy_filter" :changed-selection="updated_tax_filter" :key="this.account_id"></multiple-select>
+//                     <span class="input-group-addon vertical-align">
+//                         <label class="form-checkbox">
+// 						    <input type="checkbox" v-model="post_format.exclude_taxonomies"/>
+// 							<i class="form-icon"></i>{{labels_settings.taxonomies_exclude}}
+// 						</label>
+// 					</span>
+//                 </div>
+//             </div>
+//         </div>
 //
-// 		<div class="columns py-2" v-if="post_format.hashtags === 'custom-hashtags'">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.hastags_field_title}}</b>
-// 				<p class="text-gray">{{labels.hastags_field_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<input class="form-input" type="text" v-model="post_format.hashtags_custom" value=""
-// 					       placeholder=""/>
-// 				</div>
-// 			</div>
-// 		</div>
+//         <span class="divider"></span>
+//         <div class="columns py-2">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.use_shortner_title}}</b>
+//                 <p class="text-gray">{{labels.use_shortner_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="input-group">
+//                     <label class="form-checkbox">
+//                         <input type="checkbox" v-model="post_format.short_url"/>
+//                         <i class="form-icon"></i> {{labels.use_shortner_yes}}
+//                     </label>
+//                 </div>
+//             </div>
+//         </div>
+//         <div class="columns py-2" v-if="post_format.short_url">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.shortner_title}}</b>
+//                 <p class="text-gray">{{labels.shortner_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <select class="form-select" v-model="post_format.short_url_service">
+//                         <option value="rviv.ly">rviv.ly</option>
+//                         <option value="bit.ly">bit.ly</option>
+//                         <option value="firebase">google firebase</option>
+//                         <option value="ow.ly">ow.ly</option>
+//                         <option value="is.gd">is.gd</option>
+//                         <option value="rebrand.ly">rebrand.ly</option>
+//                         <option value="wp_short_url">wp_short_url</option>
+//                     </select>
+//                 </div>
+//             </div>
+//         </div>
 //
-// 		<div class="columns py-2" v-if="post_format.hashtags !== 'no-hashtags'">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.hashtags_length_title}}</b>
-// 				<p class="text-gray">{{labels.hashtags_length_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="form-group">
-// 					<input class="form-input" type="number" v-model="post_format.hashtags_length"
-// 					       value="" placeholder=""/>
-// 				</div>
-// 			</div>
-// 		</div>
+//         <div class="columns py-2" v-if="post_format.short_url" v-for="( credential, key_name ) in post_format.shortner_credentials">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{ key_name | capitalize }}</b>
+//                 <p class="text-gray">{{labels.shortner_field_desc_start}} "{{key_name}}"
+//                     {{labels.shortner_field_desc_end}}
+//                     <strong>{{post_format.short_url_service}}</strong> {{labels.shortner_api_field}}.</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <input class="form-input" type="text" v-model="post_format.shortner_credentials[key_name]">
+//                 </div>
+//             </div>
+//         </div>
 //
-// 		<span class="divider"></span>
+//         <div class="columns py-2">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.hashtags_title}}</b>
+//                 <p class="text-gray">{{labels.hashtags_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <select class="form-select" v-model="post_format.hashtags">
+//                         <option value="no-hashtags">{{labels.hashtags_option_no}}</option>
+//                         <option value="common-hashtags">{{labels.hashtags_option_common}}</option>
+//                         <option value="categories-hashtags">{{labels.hashtags_option_cats}}</option>
+//                         <option value="tags-hashtags">{{labels.hashtags_option_tags}}</option>
+//                         <option value="custom-hashtags">{{labels.hashtags_option_field}}</option>
+//                     </select>
+//                 </div>
+//             </div>
+//         </div>
+//         <div class="columns py-2" v-if="post_format.hashtags === 'common-hashtags'">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.hastags_common_title}}</b>
+//                 <p class="text-gray">{{labels.hastags_common_desc}} ",".</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <input class="form-input" type="text" v-model="post_format.hashtags_common" value=""
+//                            placeholder=""/>
+//                 </div>
+//             </div>
+//         </div>
 //
-// 		<div class="columns py-2" :class="'rop-control-container-'+isPro">
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<b>{{labels.image_title}}</b>
-// 				<p class="text-gray"><span v-html="labels.image_desc"></span></p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align">
-// 				<div class="input-group">
-// 					<label class="form-checkbox">
-// 						<input type="checkbox" v-model="post_format.image"
-// 						       :disabled="!isPro"/>
-// 						<i class="form-icon"></i> {{labels.image_yes}}
-// 					</label>
-// 				</div>
-// 			</div>
-// 		</div>
+//         <div class="columns py-2" v-if="post_format.hashtags === 'custom-hashtags'">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.hastags_field_title}}</b>
+//                 <p class="text-gray">{{labels.hastags_field_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <input class="form-input" type="text" v-model="post_format.hashtags_custom" value=""
+//                            placeholder=""/>
+//                 </div>
+//             </div>
+//         </div>
 //
-// 		<div class="columns " v-if="!isPro">
-// 			<div class="column text-center">
-// 				<p class="upsell"><i class="fa fa-lock"></i> {{labels.image_upsell}}</p>
-// 			</div>
-// 		</div>
-// 		<span class="divider"></span>
-// 		<!-- Google Analytics -->
-// 		<div class="columns py-2" :class="'rop-control-container-'+isPro">
-// 			<div class="column col-6 col-sm-12 vertical-align rop-control">
-// 				<b>{{labels.utm_campaign_medium}}</b>
-// 				<p class="text-gray">{{labels.utm_campaign_medium_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align text-left rop-control">
-// 				<div class="form-group">
-// 						<input type="text" :disabled="!isPro" class="form-input" v-model="post_format.utm_campaign_medium" placeholder="social"/>
-// 				</div>
-// 			</div>
-// 		</div>
+//         <div class="columns py-2" v-if="post_format.hashtags !== 'no-hashtags'">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.hashtags_length_title}}</b>
+//                 <p class="text-gray">{{labels.hashtags_length_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="form-group">
+//                     <input class="form-input" type="number" v-model="post_format.hashtags_length"
+//                            value="" placeholder=""/>
+//                 </div>
+//             </div>
+//         </div>
 //
-// 		<div class="columns py-2" :class="'rop-control-container-'+isPro">
-// 			<div class="column col-6 col-sm-12 vertical-align rop-control">
-// 				<b>{{labels.utm_campaign_name}}</b>
-// 				<p class="text-gray">{{labels.utm_campaign_name_desc}}</p>
-// 			</div>
-// 			<div class="column col-6 col-sm-12 vertical-align text-left rop-control">
-// 				<div class="form-group">
-// 						<input type="text" :disabled="!isPro" class="form-input" v-model="post_format.utm_campaign_name" placeholder="ReviveOldPost"/>
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<div class="columns " v-if="!isPro">
-// 			<div class="column text-center">
-// 				<p class="upsell"><i class="fa fa-lock"></i> {{labels.custom_utm_upsell}}</p>
-// 			</div>
-// 		</div>
-// 		<span class="divider"></span>
-// 	</div>
+//         <span class="divider"></span>
+//
+//         <div class="columns py-2" :class="'rop-control-container-'+isPro">
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <b>{{labels.image_title}}</b>
+//                 <p class="text-gray"><span v-html="labels.image_desc"></span></p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align">
+//                 <div class="input-group">
+//                     <label class="form-checkbox">
+//                         <input type="checkbox" v-model="post_format.image"
+//                                :disabled="!isPro"/>
+//                         <i class="form-icon"></i> {{labels.image_yes}}
+//                     </label>
+//                 </div>
+//             </div>
+//         </div>
+//
+//         <div class="columns " v-if="!isPro">
+//             <div class="column text-center">
+//                 <p class="upsell"><i class="fa fa-lock"></i> {{labels.image_upsell}}</p>
+//             </div>
+//         </div>
+//         <span class="divider"></span>
+//         <!-- Google Analytics -->
+//         <div class="columns py-2" :class="'rop-control-container-'+isPro">
+//             <div class="column col-6 col-sm-12 vertical-align rop-control">
+//                 <b>{{labels.utm_campaign_medium}}</b>
+//                 <p class="text-gray">{{labels.utm_campaign_medium_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align text-left rop-control">
+//                 <div class="form-group">
+//                     <input type="text" :disabled="!isPro" class="form-input" v-model="post_format.utm_campaign_medium" placeholder="social"/>
+//                 </div>
+//             </div>
+//         </div>
+//
+//         <div class="columns py-2" :class="'rop-control-container-'+isPro">
+//             <div class="column col-6 col-sm-12 vertical-align rop-control">
+//                 <b>{{labels.utm_campaign_name}}</b>
+//                 <p class="text-gray">{{labels.utm_campaign_name_desc}}</p>
+//             </div>
+//             <div class="column col-6 col-sm-12 vertical-align text-left rop-control">
+//                 <div class="form-group">
+//                     <input type="text" :disabled="!isPro" class="form-input" v-model="post_format.utm_campaign_name" placeholder="ReviveOldPost"/>
+//                 </div>
+//             </div>
+//         </div>
+//         <div class="columns " v-if="!isPro">
+//             <div class="column text-center">
+//                 <p class="upsell"><i class="fa fa-lock"></i> {{labels.custom_utm_upsell}}</p>
+//             </div>
+//         </div>
+//         <span class="divider"></span>
+//     </div>
 // </template>
 //
 // <script>
-module.exports = {
-	name: "post-format",
-	props: ['account_id', 'license'],
-	data: function data() {
-		return {
-			labels: this.$store.state.labels.post_format,
-			upsell_link: ropApiSettings.upsell_link
-		};
-	},
-	computed: {
-		post_format: function post_format() {
-			return this.$store.state.activePostFormat[this.account_id] ? this.$store.state.activePostFormat[this.account_id] : [];
-		},
-		isPro: function isPro() {
-			return this.license > 0;
-		},
-		short_url_service: function short_url_service() {
-			var postFormat = this.$store.state.activePostFormat[this.account_id] ? this.$store.state.activePostFormat[this.account_id] : [];
-			return postFormat.short_url_service ? postFormat.short_url_service : '';
-		}
-	},
-	watch: {
-		short_url_service: function short_url_service() {
-			var _this = this;
-
-			this.$store.dispatch('fetchAJAXPromise', {
-				req: 'get_shortner_credentials',
-				data: { short_url_service: this.short_url_service }
-			}).then(function (response) {
-				_this.post_format.shortner_credentials = response;
-			}, function (error) {
-				Vue.$log.error('Got nothing from server. Prompt user to check internet connection and try again', error);
-			});
-		}
-	},
-	filters: {
-		capitalize: function capitalize(value) {
-			if (!value) return '';
-			value = value.toString().split('_');
-			var name = '';
-			for (var x = 0; x < value.length; x++) {
-				name += value[x].charAt(0).toUpperCase() + value[x].slice(1) + ' ';
-			}
-			return name;
-		}
-	}
-	// </script>
-	// <style scoped>
-	// 	#rop_core .panel-body .text-gray {
-	// 		margin: 0;
-	// 		line-height: normal;
-	// 	}
-	//
-	// 	b {
-	// 		margin-bottom: 5px;
-	// 		display: block;
-	// 	}
-	//
-	// 	#rop_core .input-group .input-group-addon {
-	// 		padding: 3px 5px;
-	// 	}
-	//
-	// 	@media ( max-width: 600px ) {
-	// 		#rop_core .panel-body .text-gray {
-	// 			margin-bottom: 10px;
-	// 		}
-	//
-	// 		#rop_core .text-right {
-	// 			text-align: left;
-	// 		}
-	// 	}
-	// </style>
-	//
-
-};
 
 /***/ }),
 /* 268 */
 /***/ (function(module, exports) {
 
-module.exports = "\n\t<div _v-b34c44f8=\"\">\n\t\t<div class=\"columns py-2\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.post_content_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.post_content_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<select class=\"form-select\" v-model=\"post_format.post_content\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<option value=\"post_title\" _v-b34c44f8=\"\">{{labels.post_content_option_title}}</option>\n\t\t\t\t\t\t<option value=\"post_content\" _v-b34c44f8=\"\">{{labels.post_content_option_content}}</option>\n\t\t\t\t\t\t<option value=\"post_title_content\" _v-b34c44f8=\"\">{{labels.post_content_option_title_content}}</option>\n\t\t\t\t\t\t<option value=\"custom_field\" _v-b34c44f8=\"\">{{labels.post_content_option_custom_field}}</option>\n\t\t\t\t\t</select>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"columns py-2\" v-if=\"post_format.post_content === 'custom_field'\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.custom_meta_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.custom_meta_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<input class=\"form-input\" type=\"text\" v-model=\"post_format.custom_meta_field\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<span class=\"divider\" _v-b34c44f8=\"\"></span>\n\n\t\t<div class=\"columns py-2\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.max_char_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.max_char_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<input class=\"form-input\" type=\"number\" v-model=\"post_format.maximum_length\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<span class=\"divider\" _v-b34c44f8=\"\"></span>\n\n\t\t<div class=\"columns py-2\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.add_char_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\"><span v-html=\"labels.add_char_desc\" _v-b34c44f8=\"\"></span></p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<textarea class=\"form-input\" v-model=\"post_format.custom_text\" v-bind:placeholder=\"labels.add_char_placeholder\" _v-b34c44f8=\"\">{{post_format.custom_text}}</textarea>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"columns py-2\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.add_pos_title}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<select class=\"form-select\" v-model=\"post_format.custom_text_pos\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<option value=\"beginning\" _v-b34c44f8=\"\">{{labels.add_pos_option_start}}</option>\n\t\t\t\t\t\t<option value=\"end\" _v-b34c44f8=\"\">{{labels.add_pos_option_end}}</option>\n\t\t\t\t\t</select>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"columns py-2\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.add_link_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.add_link_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"input-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<label class=\"form-checkbox\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"post_format.include_link\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<i class=\"form-icon\" _v-b34c44f8=\"\"></i> {{labels.add_link_yes}}\n\t\t\t\t\t</label>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<span class=\"divider\" _v-b34c44f8=\"\"></span>\n\t\t<div class=\"columns py-2\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.meta_link_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.meta_link_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"input-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<label class=\"form-checkbox\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"post_format.url_from_meta\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<i class=\"form-icon\" _v-b34c44f8=\"\"></i> {{labels.meta_link_yes}}\n\t\t\t\t\t</label>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<!-- Custom Field -->\n\t\t<div class=\"columns py-2\" v-if=\"post_format.url_from_meta\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.meta_link_name_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.meta_link_name_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<input class=\"form-input\" type=\"text\" v-model=\"post_format.url_meta_key\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<span class=\"divider\" _v-b34c44f8=\"\"></span>\n\t\t<div class=\"columns py-2\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.use_shortner_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.use_shortner_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"input-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<label class=\"form-checkbox\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"post_format.short_url\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<i class=\"form-icon\" _v-b34c44f8=\"\"></i> {{labels.use_shortner_yes}}\n\t\t\t\t\t</label>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"columns py-2\" v-if=\"post_format.short_url\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.shortner_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.shortner_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<select class=\"form-select\" v-model=\"post_format.short_url_service\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<option value=\"rviv.ly\" _v-b34c44f8=\"\">rviv.ly</option>\n\t\t\t\t\t\t<option value=\"bit.ly\" _v-b34c44f8=\"\">bit.ly</option>\n\t\t\t\t\t\t<option value=\"firebase\" _v-b34c44f8=\"\">google firebase</option>\n\t\t\t\t\t\t<option value=\"ow.ly\" _v-b34c44f8=\"\">ow.ly</option>\n\t\t\t\t\t\t<option value=\"is.gd\" _v-b34c44f8=\"\">is.gd</option>\n      <option value=\"rebrand.ly\" _v-b34c44f8=\"\">rebrand.ly</option>\n      <option value=\"wp_short_url\" _v-b34c44f8=\"\">wp_short_url</option>\n\t\t\t\t\t</select>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"columns py-2\" v-if=\"post_format.short_url\" v-for=\"( credential, key_name ) in post_format.shortner_credentials\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{ key_name | capitalize }}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.shortner_field_desc_start}} \"{{key_name}}\"\n\t\t\t\t\t{{labels.shortner_field_desc_end}}\n\t\t\t\t\t<strong _v-b34c44f8=\"\">{{post_format.short_url_service}}</strong> {{labels.shortner_api_field}}.</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<input class=\"form-input\" type=\"text\" v-model=\"post_format.shortner_credentials[key_name]\" _v-b34c44f8=\"\">\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"columns py-2\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.hashtags_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.hashtags_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<select class=\"form-select\" v-model=\"post_format.hashtags\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<option value=\"no-hashtags\" _v-b34c44f8=\"\">{{labels.hashtags_option_no}}</option>\n\t\t\t\t\t\t<option value=\"common-hashtags\" _v-b34c44f8=\"\">{{labels.hashtags_option_common}}</option>\n\t\t\t\t\t\t<option value=\"categories-hashtags\" _v-b34c44f8=\"\">{{labels.hashtags_option_cats}}</option>\n\t\t\t\t\t\t<option value=\"tags-hashtags\" _v-b34c44f8=\"\">{{labels.hashtags_option_tags}}</option>\n\t\t\t\t\t\t<option value=\"custom-hashtags\" _v-b34c44f8=\"\">{{labels.hashtags_option_field}}</option>\n\t\t\t\t\t</select>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"columns py-2\" v-if=\"post_format.hashtags === 'common-hashtags'\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.hastags_common_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.hastags_common_desc}} \",\".</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<input class=\"form-input\" type=\"text\" v-model=\"post_format.hashtags_common\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"columns py-2\" v-if=\"post_format.hashtags === 'custom-hashtags'\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.hastags_field_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.hastags_field_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<input class=\"form-input\" type=\"text\" v-model=\"post_format.hashtags_custom\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"columns py-2\" v-if=\"post_format.hashtags !== 'no-hashtags'\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.hashtags_length_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.hashtags_length_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<input class=\"form-input\" type=\"number\" v-model=\"post_format.hashtags_length\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<span class=\"divider\" _v-b34c44f8=\"\"></span>\n\n\t\t<div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.image_title}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\"><span v-html=\"labels.image_desc\" _v-b34c44f8=\"\"></span></p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"input-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<label class=\"form-checkbox\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<input type=\"checkbox\" v-model=\"post_format.image\" :disabled=\"!isPro\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<i class=\"form-icon\" _v-b34c44f8=\"\"></i> {{labels.image_yes}}\n\t\t\t\t\t</label>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"columns \" v-if=\"!isPro\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column text-center\" _v-b34c44f8=\"\">\n\t\t\t\t<p class=\"upsell\" _v-b34c44f8=\"\"><i class=\"fa fa-lock\" _v-b34c44f8=\"\"></i> {{labels.image_upsell}}</p>\n\t\t\t</div>\n\t\t</div>\n\t\t<span class=\"divider\" _v-b34c44f8=\"\"></span>\n\t\t<!-- Google Analytics -->\n\t\t<div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.utm_campaign_medium}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.utm_campaign_medium_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<input type=\"text\" :disabled=\"!isPro\" class=\"form-input\" v-model=\"post_format.utm_campaign_medium\" placeholder=\"social\" _v-b34c44f8=\"\">\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-b34c44f8=\"\">\n\t\t\t\t<b _v-b34c44f8=\"\">{{labels.utm_campaign_name}}</b>\n\t\t\t\t<p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.utm_campaign_name_desc}}</p>\n\t\t\t</div>\n\t\t\t<div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-b34c44f8=\"\">\n\t\t\t\t<div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t<input type=\"text\" :disabled=\"!isPro\" class=\"form-input\" v-model=\"post_format.utm_campaign_name\" placeholder=\"ReviveOldPost\" _v-b34c44f8=\"\">\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"columns \" v-if=\"!isPro\" _v-b34c44f8=\"\">\n\t\t\t<div class=\"column text-center\" _v-b34c44f8=\"\">\n\t\t\t\t<p class=\"upsell\" _v-b34c44f8=\"\"><i class=\"fa fa-lock\" _v-b34c44f8=\"\"></i> {{labels.custom_utm_upsell}}</p>\n\t\t\t</div>\n\t\t</div>\n\t\t<span class=\"divider\" _v-b34c44f8=\"\"></span>\n\t</div>\n";
+module.exports = "\n    <div _v-b34c44f8=\"\">\n        <div class=\"columns py-2\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.post_content_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.post_content_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <select class=\"form-select\" v-model=\"post_format.post_content\" _v-b34c44f8=\"\">\n                        <option value=\"post_title\" _v-b34c44f8=\"\">{{labels.post_content_option_title}}</option>\n                        <option value=\"post_content\" _v-b34c44f8=\"\">{{labels.post_content_option_content}}</option>\n                        <option value=\"post_title_content\" _v-b34c44f8=\"\">{{labels.post_content_option_title_content}}</option>\n                        <option value=\"custom_field\" _v-b34c44f8=\"\">{{labels.post_content_option_custom_field}}</option>\n                    </select>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"columns py-2\" v-if=\"post_format.post_content === 'custom_field'\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.custom_meta_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.custom_meta_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <input class=\"form-input\" type=\"text\" v-model=\"post_format.custom_meta_field\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n                </div>\n            </div>\n        </div>\n\n        <span class=\"divider\" _v-b34c44f8=\"\"></span>\n\n        <div class=\"columns py-2\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.max_char_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.max_char_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <input class=\"form-input\" type=\"number\" v-model=\"post_format.maximum_length\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n                </div>\n            </div>\n        </div>\n        <span class=\"divider\" _v-b34c44f8=\"\"></span>\n\n        <div class=\"columns py-2\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.add_char_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\"><span v-html=\"labels.add_char_desc\" _v-b34c44f8=\"\"></span></p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n\t\t\t\t\t<textarea class=\"form-input\" v-model=\"post_format.custom_text\" v-bind:placeholder=\"labels.add_char_placeholder\" _v-b34c44f8=\"\">{{post_format.custom_text}}</textarea>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"columns py-2\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.add_pos_title}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <select class=\"form-select\" v-model=\"post_format.custom_text_pos\" _v-b34c44f8=\"\">\n                        <option value=\"beginning\" _v-b34c44f8=\"\">{{labels.add_pos_option_start}}</option>\n                        <option value=\"end\" _v-b34c44f8=\"\">{{labels.add_pos_option_end}}</option>\n                    </select>\n                </div>\n            </div>\n        </div>\n        <div class=\"columns py-2\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.add_link_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.add_link_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"input-group\" _v-b34c44f8=\"\">\n                    <label class=\"form-checkbox\" _v-b34c44f8=\"\">\n                        <input type=\"checkbox\" v-model=\"post_format.include_link\" _v-b34c44f8=\"\">\n                        <i class=\"form-icon\" _v-b34c44f8=\"\"></i> {{labels.add_link_yes}}\n                    </label>\n                </div>\n            </div>\n        </div>\n        <span class=\"divider\" _v-b34c44f8=\"\"></span>\n        <div class=\"columns py-2\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.meta_link_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.meta_link_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"input-group\" _v-b34c44f8=\"\">\n                    <label class=\"form-checkbox\" _v-b34c44f8=\"\">\n                        <input type=\"checkbox\" v-model=\"post_format.url_from_meta\" _v-b34c44f8=\"\">\n                        <i class=\"form-icon\" _v-b34c44f8=\"\"></i> {{labels.meta_link_yes}}\n                    </label>\n                </div>\n            </div>\n        </div>\n\n        <!-- Custom Field -->\n        <div class=\"columns py-2\" v-if=\"post_format.url_from_meta\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.meta_link_name_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.meta_link_name_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <input class=\"form-input\" type=\"text\" v-model=\"post_format.url_meta_key\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n                </div>\n            </div>\n        </div>\n        <span class=\"divider\" v-if=\"isPro\" _v-b34c44f8=\"\"></span>\n\n        <div class=\"columns py-2\" v-if=\"isPro\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels_settings.taxonomies_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\"><span v-html=\"labels_settings.taxonomies_desc\" _v-b34c44f8=\"\"></span></p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"input-group\" _v-b34c44f8=\"\">\n                    <multiple-select :options=\"taxonomy\" :selected=\"taxonomy_filter\" :name=\"post_format.taxonomy_filter\" :changed-selection=\"updated_tax_filter\" :key=\"this.account_id\" _v-b34c44f8=\"\"></multiple-select>\n                    <span class=\"input-group-addon vertical-align\" _v-b34c44f8=\"\">\n                        <label class=\"form-checkbox\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t    <input type=\"checkbox\" v-model=\"post_format.exclude_taxonomies\" _v-b34c44f8=\"\">\n\t\t\t\t\t\t\t<i class=\"form-icon\" _v-b34c44f8=\"\"></i>{{labels_settings.taxonomies_exclude}}\n\t\t\t\t\t\t</label>\n\t\t\t\t\t</span>\n                </div>\n            </div>\n        </div>\n\n        <span class=\"divider\" _v-b34c44f8=\"\"></span>\n        <div class=\"columns py-2\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.use_shortner_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.use_shortner_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"input-group\" _v-b34c44f8=\"\">\n                    <label class=\"form-checkbox\" _v-b34c44f8=\"\">\n                        <input type=\"checkbox\" v-model=\"post_format.short_url\" _v-b34c44f8=\"\">\n                        <i class=\"form-icon\" _v-b34c44f8=\"\"></i> {{labels.use_shortner_yes}}\n                    </label>\n                </div>\n            </div>\n        </div>\n        <div class=\"columns py-2\" v-if=\"post_format.short_url\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.shortner_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.shortner_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <select class=\"form-select\" v-model=\"post_format.short_url_service\" _v-b34c44f8=\"\">\n                        <option value=\"rviv.ly\" _v-b34c44f8=\"\">rviv.ly</option>\n                        <option value=\"bit.ly\" _v-b34c44f8=\"\">bit.ly</option>\n                        <option value=\"firebase\" _v-b34c44f8=\"\">google firebase</option>\n                        <option value=\"ow.ly\" _v-b34c44f8=\"\">ow.ly</option>\n                        <option value=\"is.gd\" _v-b34c44f8=\"\">is.gd</option>\n                        <option value=\"rebrand.ly\" _v-b34c44f8=\"\">rebrand.ly</option>\n                        <option value=\"wp_short_url\" _v-b34c44f8=\"\">wp_short_url</option>\n                    </select>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"columns py-2\" v-if=\"post_format.short_url\" v-for=\"( credential, key_name ) in post_format.shortner_credentials\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{ key_name | capitalize }}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.shortner_field_desc_start}} \"{{key_name}}\"\n                    {{labels.shortner_field_desc_end}}\n                    <strong _v-b34c44f8=\"\">{{post_format.short_url_service}}</strong> {{labels.shortner_api_field}}.</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <input class=\"form-input\" type=\"text\" v-model=\"post_format.shortner_credentials[key_name]\" _v-b34c44f8=\"\">\n                </div>\n            </div>\n        </div>\n\n        <div class=\"columns py-2\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.hashtags_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.hashtags_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <select class=\"form-select\" v-model=\"post_format.hashtags\" _v-b34c44f8=\"\">\n                        <option value=\"no-hashtags\" _v-b34c44f8=\"\">{{labels.hashtags_option_no}}</option>\n                        <option value=\"common-hashtags\" _v-b34c44f8=\"\">{{labels.hashtags_option_common}}</option>\n                        <option value=\"categories-hashtags\" _v-b34c44f8=\"\">{{labels.hashtags_option_cats}}</option>\n                        <option value=\"tags-hashtags\" _v-b34c44f8=\"\">{{labels.hashtags_option_tags}}</option>\n                        <option value=\"custom-hashtags\" _v-b34c44f8=\"\">{{labels.hashtags_option_field}}</option>\n                    </select>\n                </div>\n            </div>\n        </div>\n        <div class=\"columns py-2\" v-if=\"post_format.hashtags === 'common-hashtags'\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.hastags_common_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.hastags_common_desc}} \",\".</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <input class=\"form-input\" type=\"text\" v-model=\"post_format.hashtags_common\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n                </div>\n            </div>\n        </div>\n\n        <div class=\"columns py-2\" v-if=\"post_format.hashtags === 'custom-hashtags'\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.hastags_field_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.hastags_field_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <input class=\"form-input\" type=\"text\" v-model=\"post_format.hashtags_custom\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n                </div>\n            </div>\n        </div>\n\n        <div class=\"columns py-2\" v-if=\"post_format.hashtags !== 'no-hashtags'\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.hashtags_length_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.hashtags_length_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <input class=\"form-input\" type=\"number\" v-model=\"post_format.hashtags_length\" value=\"\" placeholder=\"\" _v-b34c44f8=\"\">\n                </div>\n            </div>\n        </div>\n\n        <span class=\"divider\" _v-b34c44f8=\"\"></span>\n\n        <div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.image_title}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\"><span v-html=\"labels.image_desc\" _v-b34c44f8=\"\"></span></p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align\" _v-b34c44f8=\"\">\n                <div class=\"input-group\" _v-b34c44f8=\"\">\n                    <label class=\"form-checkbox\" _v-b34c44f8=\"\">\n                        <input type=\"checkbox\" v-model=\"post_format.image\" :disabled=\"!isPro\" _v-b34c44f8=\"\">\n                        <i class=\"form-icon\" _v-b34c44f8=\"\"></i> {{labels.image_yes}}\n                    </label>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"columns \" v-if=\"!isPro\" _v-b34c44f8=\"\">\n            <div class=\"column text-center\" _v-b34c44f8=\"\">\n                <p class=\"upsell\" _v-b34c44f8=\"\"><i class=\"fa fa-lock\" _v-b34c44f8=\"\"></i> {{labels.image_upsell}}</p>\n            </div>\n        </div>\n        <span class=\"divider\" _v-b34c44f8=\"\"></span>\n        <!-- Google Analytics -->\n        <div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.utm_campaign_medium}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.utm_campaign_medium_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <input type=\"text\" :disabled=\"!isPro\" class=\"form-input\" v-model=\"post_format.utm_campaign_medium\" placeholder=\"social\" _v-b34c44f8=\"\">\n                </div>\n            </div>\n        </div>\n\n        <div class=\"columns py-2\" :class=\"'rop-control-container-'+isPro\" _v-b34c44f8=\"\">\n            <div class=\"column col-6 col-sm-12 vertical-align rop-control\" _v-b34c44f8=\"\">\n                <b _v-b34c44f8=\"\">{{labels.utm_campaign_name}}</b>\n                <p class=\"text-gray\" _v-b34c44f8=\"\">{{labels.utm_campaign_name_desc}}</p>\n            </div>\n            <div class=\"column col-6 col-sm-12 vertical-align text-left rop-control\" _v-b34c44f8=\"\">\n                <div class=\"form-group\" _v-b34c44f8=\"\">\n                    <input type=\"text\" :disabled=\"!isPro\" class=\"form-input\" v-model=\"post_format.utm_campaign_name\" placeholder=\"ReviveOldPost\" _v-b34c44f8=\"\">\n                </div>\n            </div>\n        </div>\n        <div class=\"columns \" v-if=\"!isPro\" _v-b34c44f8=\"\">\n            <div class=\"column text-center\" _v-b34c44f8=\"\">\n                <p class=\"upsell\" _v-b34c44f8=\"\"><i class=\"fa fa-lock\" _v-b34c44f8=\"\"></i> {{labels.custom_utm_upsell}}</p>\n            </div>\n        </div>\n        <span class=\"divider\" _v-b34c44f8=\"\"></span>\n    </div>\n";
 
 /***/ }),
 /* 269 */
@@ -39643,7 +40021,6 @@ module.exports = {
 			var self = this;
 			window.on('select', function () {
 				var first = window.state().get('selection').first().toJSON();
-				//console.log( first )
 				self.content.post_image = first.url;
 				self.post_edit.image = first.url;
 			});

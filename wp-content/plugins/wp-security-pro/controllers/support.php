@@ -1,13 +1,13 @@
 <?php
 
-	global $dirName;
+	global $mo_dirName;
 	
 	if(current_user_can( 'manage_options' )  && isset($_POST['option']))
 	{
 		switch($_POST['option'])
 		{
 			case "mo_wpns_send_query":
-				wpns_handle_support_form($_POST['query_email'],$_POST['query'],$_POST['query_phone']);		break;
+				mo_wpns_handle_support_form($_POST['query_email'],$_POST['query'],$_POST['query_phone']);		break;
 		}
 	}
 
@@ -19,18 +19,18 @@
 	if(empty($email))
 		$email 		= $current_user->user_email;
 
-	include $dirName . 'views'.DIRECTORY_SEPARATOR.'support.php';
+	include $mo_dirName . 'views'.DIRECTORY_SEPARATOR.'support.php';
 
 
 	/* SUPPORT FORM RELATED FUNCTIONS */
 
 	//Function to handle support form submit
-	function wpns_handle_support_form($email,$query,$phone)
+	function mo_wpns_handle_support_form($email,$query,$phone)
 	{
 
 		if( empty($email) || empty($query) )
 		{
-			do_action('wpns_show_message',MoWpnsMessages::showMessage('SUPPORT_FORM_VALUES'),'SUCCESS');
+			do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('SUPPORT_FORM_VALUES'),'SUCCESS');
 			return;
 		}
 
@@ -38,14 +38,14 @@
 		$query = sanitize_text_field( $query );
 		$email = sanitize_text_field( $email );
 		$phone = sanitize_text_field( $phone );
-		$contact_us = new MocURL();
+		$contact_us = new mo_MocURL();
 		$submited = json_decode($contact_us->submit_contact_us($email, $phone, $query),true);
 
 		if(json_last_error() == JSON_ERROR_NONE && $submited) 
 		{
-			do_action('wpns_show_message',MoWpnsMessages::showMessage('SUPPORT_FORM_SENT'),'SUCCESS');
+			do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('SUPPORT_FORM_SENT'),'SUCCESS');
 			return;
 		}
 			
-		do_action('wpns_show_message',MoWpnsMessages::showMessage('SUPPORT_FORM_ERROR'),'ERROR');
+		do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('SUPPORT_FORM_ERROR'),'ERROR');
 	}

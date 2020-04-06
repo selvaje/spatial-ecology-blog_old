@@ -3,9 +3,9 @@ Contributors: Papin, qweb
 Donate link: https://www.paypal.me/dakel/10/
 Tags: auto, automatic, background, update, updates, updating, automatic updates, automatic background updates, easy update, wordpress update, theme update, plugin update, up-to-date, security, update latest version, update core, update wp, update wp core, major updates, minor updates, update to new version, update core, update plugin, update plugins, update plugins automatically, update theme, plugin, theme, advance, control, mail, notifations, enable
 Requires at least: 3.6.0
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.1
-Stable tag: 3.4.8
+Stable tag: 3.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,24 @@ Your feedback is what made this plugin what is and what it’ll become so keep t
 4. Keep track of updates with the update log
 
 == Changelog ==
+
+= 3.5.2 (April 1, 2020) =
+* Fix: Not able to see checks in boxes
+
+= 3.5.1 (March 25, 2020) =
+* Tweak: You seem to like the new dashboard, we've fixed a few issues regarding the responsiveness of the design. We've also tweaked the icons to be a bit more transparant.
+* Tweak: We've added the release notes link to Plain text emails
+* Tweak: Fixed a few typos
+* Tweak: Various minor security improvements
+
+Also: Check out what features we're working on at [our blogpost](https://codeermeneer.nl/blog/companion-auto-update-and-its-future/)
+
+= 3.5.0 (March 5, 2020) =
+* We've had to (temporarily) disable the theme filter because it was causing issues on some installations. We'll try to get it working again in a future update.
+* We should've fixed an issue where on occasion nothing would update
+* Made some improvements to the "Fix it" button for the AUTOMATIC_UPDATER_DISABLED error
+* In version 3.4.6 we've changed to HTML emails rather than plain text, in this version you can opt to change it back to plain text emails
+* Redesigned dashboard: We've changed the dashboard, moved both the settings page and de support page to the dashboard. Please let us know if you like this change or not.
 
 = 3.4.8 (January 2, 2020) =
 * This update brings a few under the hood changes to ensure better updates in the future

@@ -39,21 +39,33 @@ if ( ! function_exists( 'hestia_team' ) ) :
 		$section_is_empty     = empty( $hestia_team_title ) && empty( $hestia_team_subtitle ) && empty( $hestia_team_content );
 
 		$hide_section = get_theme_mod( 'hestia_team_hide', false );
-
-		/* Don't show section if Disable section is checked or it doesn't have any content. Show it if it's called as a shortcode */
+		$section_style        = '';
+		/**
+		 * Don't show section if Disable section is checked or it doesn't have any content.
+		 * Show it if it's called as a shortcode.
+		 */
 		if ( ( $is_shortcode === false ) && ( $section_is_empty || (bool) $hide_section === true ) ) {
 			if ( is_customize_preview() ) {
-				echo '<section class="hestia-team" id="team" data-sorder="hestia_team" style="display: none"></section>';
+				$section_style = 'style="display: none"';
+			} else {
+				return;
 			}
-			return;
 		}
 
 		$wrapper_class   = $is_shortcode === true ? 'is-shortcode' : '';
 		$container_class = $is_shortcode === true ? '' : 'container';
 
+		if( function_exists( 'maybe_trigger_fa_loading' ) ){
+			$html_allowed_strings = array(
+				$hestia_team_title,
+				$hestia_team_subtitle,
+			);
+			maybe_trigger_fa_loading( $html_allowed_strings );
+		}
+
 		hestia_before_team_section_trigger();
 		?>
-		<section class="hestia-team <?php echo esc_attr( $wrapper_class ); ?>" id="team" data-sorder="hestia_team">
+		<section class="hestia-team <?php echo esc_attr( $wrapper_class ); ?>" id="team" data-sorder="hestia_team" <?php echo wp_kses_post( $section_style ); ?>>
 			<?php
 			hestia_before_team_section_content_trigger();
 			if ( function_exists( 'hestia_display_customizer_shortcut' ) && $is_shortcode === false ) {
@@ -121,7 +133,10 @@ function hestia_team_content( $hestia_team_content, $is_callback = false ) {
 					$subtitle = ! empty( $team_item->subtitle ) ? apply_filters( 'hestia_translate_single_string', $team_item->subtitle, 'Team section' ) : '';
 					$text     = ! empty( $team_item->text ) ? apply_filters( 'hestia_translate_single_string', $team_item->text, 'Team section' ) : '';
 					$link     = ! empty( $team_item->link ) ? apply_filters( 'hestia_translate_single_string', $team_item->link, 'Team section' ) : '';
-					?>
+
+					if( function_exists( 'maybe_trigger_fa_loading' ) ) {
+						maybe_trigger_fa_loading( $text );
+					} ?>
 					<div class="col-xs-12 col-ms-6 col-sm-6">
 						<div class="card card-profile card-plain">
 							<div class="col-md-5">
@@ -209,7 +224,7 @@ function hestia_team_content( $hestia_team_content, $is_callback = false ) {
 														if ( function_exists( 'hestia_is_external_url' ) ) {
 															$link .= hestia_is_external_url( $social_link );
 														}
-														$link .= ' class="btn btn-just-icon btn-simple"><i class="fa ' . esc_attr( $social_icon ) . '"></i></a>';
+														$link .= ' class="btn btn-just-icon btn-simple"><i class="' . esc_attr( hestia_display_fa_icon( $social_icon ) ) . '"></i></a>';
 														echo $link;
 													}
 												}

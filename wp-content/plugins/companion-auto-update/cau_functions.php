@@ -5,9 +5,8 @@ function cau_get_db_value( $name ) {
 
 	global $wpdb;
 	$table_name 	= $wpdb->prefix . "auto_updates"; 
-	$cau_configs 	= $wpdb->get_results( "SELECT * FROM $table_name WHERE name = '$name'" );
-
-	return $cau_configs[0]->onoroff;
+	$cau_configs 	= $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$table_name} WHERE name = '%s'", $name ) );
+	foreach ( $cau_configs as $config ) return $config->onoroff;
 
 }
 
@@ -667,11 +666,15 @@ function cau_dontUpdateThemes( $update, $item ) {
 
 	$themes = themes_donotupdatelist();
 
-    if ( in_array( $item->slug, $themes ) ) {
-    	return false; // Don't update these plugins
-    } else {
-    	return true; // Always update these plugins
-    } 
+	if( !empty( $themes ) ) {
+	    if ( in_array( $item->slug, $themes ) ) {
+	    	return false; // Don't update these themes
+	    } else {
+	    	return true; // Always update these themes
+	    } 
+	} else {
+		return true;
+	}
 
 
 }

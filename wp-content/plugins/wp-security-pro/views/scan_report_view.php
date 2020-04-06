@@ -1,5 +1,5 @@
 <?php
-add_action('admin_footer','mo_wpns_start_scan');
+add_action('admin_footer','mo_start_scan');
 
 ?>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -20,7 +20,7 @@ add_action('admin_footer','mo_wpns_start_scan');
 
 					<div id="summary_scan" class="mo_wpns_malwarescandiv msdivr">
 						<div class="hdiv shdiv"><b>Scan Summary</b></div>
-					<?php show_summary(); ?>		
+					<?php mo_show_summary(); ?>		
 					</div>
 				</div>
 			</div>
@@ -76,13 +76,13 @@ add_action('admin_footer','mo_wpns_start_scan');
 		<hr>
 		<div id="scandata">
 			<?php 
-				include_once $dirName. 'controllers'.DIRECTORY_SEPARATOR.'malware_scan_result.php';
-				echo showScanResults();
+				include_once $mo_dirName. 'controllers'.DIRECTORY_SEPARATOR.'malware_scan_result.php';
+				echo mo_wpns_showScanResults();
 			?>
 		</div>
 	</div>
 <?php
-function mo_wpns_start_scan(){
+function mo_start_scan(){
 	if ( ('admin.php' != basename( $_SERVER['PHP_SELF'] )) || ($_GET['page'] != 'mo_wpns_malwarescan') ) {
         return;
     }
@@ -326,8 +326,8 @@ function mo_wpns_start_scan(){
 </script>
 <?php
 }
-function show_summary(){
-	$mo_wpns_db_handler = new MoWpnsDB();
+function mo_show_summary(){
+	$mo_wpns_db_handler = new mo_MoWpnsDB();
 	$last_id=$mo_wpns_db_handler->get_last_id();
 	$send_id=$last_id[0]->max;
 	if(is_null($send_id)){
@@ -351,7 +351,7 @@ function show_summary(){
 <?php
 }
 
-function show_scan_details($detailreport, $result, $ignorefiles){
+function mo_show_scan_details($detailreport, $result, $ignorefiles){
 	$record = $result[0];
 	echo "<b>Malicious files found: </b>" .count($detailreport);
 ?>
@@ -449,8 +449,8 @@ function show_scan_details($detailreport, $result, $ignorefiles){
 <?php
 }
 
-function show_scan_report($currenturl, $result){
-	$mo_wpns_db_handler = new MoWpnsDB();
+function mo_show_scan_report($currenturl, $result){
+	$mo_wpns_db_handler = new mo_MoWpnsDB();
 ?>
 <table id="reports_table" class="display" cellspacing="0" width="100%">
 <thead><tr><th>Scan Type</th><th>Scanned Folders</th><th>Status</th><th>Scan Time</th><th>Action</th></tr></thead>

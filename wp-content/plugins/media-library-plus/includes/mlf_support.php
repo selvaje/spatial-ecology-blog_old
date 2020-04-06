@@ -45,6 +45,10 @@
                   <li><?php _e('2. Deactivate Media Library Folders and activate Media Library Folders Reset and run the Reset Database option from the Media Library Folders Reset sub menu in the dashboard.', 'maxgalleria-media-library' ); ?></li>
                   <li><?php _e('3. After that, reactivate Media Library Folders. It will do a fresh scan of your media library database and no changes will be made to the files or folders on your site.', 'maxgalleria-media-library' ); ?></li>
                 </ul>
+                
+                <p><?php _e('Note that resetting the folder data is not a cure for all Media Library Folders problems; it is specifically used when the folder tree does not load.', 'maxgalleria-media-library' ); ?></p>
+                
+                <p>In rare cases, a site may have implemented a Content Security Policy that is preventing the loading of Media Library Folder's Javascript files. To test for this condition, go to <a href="https://observatory.mozilla.org/" target="_blank">observatory.mozilla.org</a>, enter the address of your site and scan your site. From the scanning results, check to see if there is anything under 'Content Security Policy’ If there is nothing under Content Security Policy, then this is not an issue with your site. For those sites that use a Content Security Policy normally the policy would include: <em>script-src ‘self’</em> to load local Javascript file.</p>
 
                 <h4><?php _e('How to Unhide a Hidden Folder', 'maxgalleria-media-library' ); ?></h4>
 
@@ -135,6 +139,12 @@ Web Server:             <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
 
 WordPress URL:          <?php echo get_bloginfo('wpurl') . "\n"; ?>
 Home URL:               <?php echo get_bloginfo('url') . "\n"; ?>
+WP-contents folder:     <?php echo WP_CONTENT_DIR . "\n";  ?>
+<?php 
+  $upload_dir = wp_upload_dir();    
+  $upload_dir1 = $upload_dir['basedir'];
+?>
+Uploads folder:         <?php echo $upload_dir1 . "\n";  ?>
 
 PHP cURL Support:       <?php echo (function_exists('curl_init')) ? 'Yes' . "\n" : 'No' . "\n"; ?>
 PHP GD Support:         <?php echo (function_exists('gd_info')) ? 'Yes' . "\n" : 'No' . "\n"; ?>

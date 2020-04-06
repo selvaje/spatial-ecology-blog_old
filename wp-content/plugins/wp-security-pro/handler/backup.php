@@ -1,6 +1,6 @@
 <?php
 
-class site_backup
+class mo_site_backup
 
 {
 
@@ -14,7 +14,7 @@ class site_backup
     
     function db_cron_backup(){
 		
-			$obj = new AjaxHandler;
+			$obj = new mo_AjaxHandler;
 			$obj->backupDB();
 		
     }
@@ -185,4 +185,4 @@ class site_backup
 				$zip->close();
 }
 
-}new site_backup;
+}new mo_site_backup;

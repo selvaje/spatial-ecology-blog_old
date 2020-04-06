@@ -1,5 +1,5 @@
 <?php
-class wpns_ajax
+class mo_wpns_ajax
 {
 	function __construct(){
 		//add comment here
@@ -72,7 +72,7 @@ class wpns_ajax
 	function wpns_handle_IP_blocking()
 	{
 	
-		global $dirName;	
+		global $mo_dirName;	
 		if(!wp_verify_nonce($_POST['nonce'],'manualIPBlockingNonce'))
 		{
 			echo "NonceDidNotMatch";
@@ -80,12 +80,12 @@ class wpns_ajax
 		}
 		else
 		{	
-			include_once($dirName.'controllers'.DIRECTORY_SEPARATOR.'ip-blocking.php');
+			include_once($mo_dirName.'controllers'.DIRECTORY_SEPARATOR.'ip-blocking.php');
 		}
 	}
 	function wpns_whitelist_ip()
 	{
-		global $dirName;
+		global $mo_dirName;
 		if(!wp_verify_nonce($_POST['nonce'],'IPWhiteListingNonce'))
 		{
 			echo "NonceDidNotMatch";
@@ -93,7 +93,7 @@ class wpns_ajax
 		}
 		else
 		{
-			include_once($dirName.'controllers'.DIRECTORY_SEPARATOR.'ip-blocking.php');
+			include_once($mo_dirName.'controllers'.DIRECTORY_SEPARATOR.'ip-blocking.php');
 		}
 	}
 	function wpns_ip_lookup()
@@ -126,7 +126,7 @@ class wpns_ajax
 	            $result["geoplugin_timezone"]="";
 	            $timeoffset="";
 	        }
-			$ipLookUpTemplate  = MoWpnsConstants::IP_LOOKUP_TEMPLATE;
+			$ipLookUpTemplate  = mo_MoWpnsConstants::IP_LOOKUP_TEMPLATE;
 			if($result['geoplugin_request']==$ip) {
 
 	            $ipLookUpTemplate = str_replace("{{status}}", $result["geoplugin_status"], $ipLookUpTemplate);
@@ -1164,6 +1164,6 @@ class wpns_ajax
 	}
 	
 }
-new wpns_ajax;
+new mo_wpns_ajax;
 
 ?>

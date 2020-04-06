@@ -1,5 +1,5 @@
 <?php
-add_action( 'admin_footer', 'login_security_ajax' );
+add_action( 'admin_footer', 'login_security_ajax_wpns' );
 echo '
 		<div id="wpns_message" style=" padding-top:8px"></div>
 		<div>
@@ -247,7 +247,7 @@ echo'		<br>
 		</script>
 '; 
 
-		function login_security_ajax(){
+		function login_security_ajax_wpns(){
 			if ( ('admin.php' != basename( $_SERVER['PHP_SELF'] )) || ($_GET['page'] != 'mo_wpns_login_and_spam') ) {
 				return;
             }

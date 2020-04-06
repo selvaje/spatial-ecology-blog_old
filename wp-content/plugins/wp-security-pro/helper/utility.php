@@ -19,7 +19,7 @@
 * @license		http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 */
 
-class MoWpnsUtility
+class mo_MoWpnsUtility
 {
 
 	public static function icr() 
@@ -72,7 +72,7 @@ class MoWpnsUtility
 	{
 		$emailarray = explode("@",$email);
 		if(sizeof($emailarray)==2)
-			return in_array(trim($emailarray[1]), MoWpnsConstants::$domains);
+			return in_array(trim($emailarray[1]), mo_MoWpnsConstants::$domains);
 		else
 			return false;
 	}
@@ -124,7 +124,7 @@ class MoWpnsUtility
 		$error = new WP_Error();
 		if(!empty($response))
 		{
-			if(!reCaptcha::recaptcha_verify($response))
+			if(!mo_reCaptcha::recaptcha_verify($response))
 				$error->add('recaptcha_error', __( '<strong>ERROR</strong> : Invalid Captcha. Please verify captcha again.'));
 			else
 				return true;
@@ -137,7 +137,7 @@ class MoWpnsUtility
 
 	function sendIpBlockedNotification($ipAddress, $reason)
 	{
-		global $moWpnsUtility;
+		global $mo_MoWpnsUtility;
 		$subject = 'User with IP address '.$ipAddress.' is blocked | '.get_bloginfo();
 		$toEmail = get_option('admin_email_address');
         	$content = "";
@@ -149,11 +149,11 @@ class MoWpnsUtility
 		else
 			$content = $this->getMessageContent($reason,$ipAddress);
 
-		// $mocURL = new MocURL();
+		// $mo_MocURL = new mo_MocURL();
 		
 		if(isset($content))
 			return $this->wp_mail_send_notification($toEmail,$subject,$content);
-			// return $mocURL->send_notification($toEmail,$subject,$content,MoWpnsConstants::SUPPORT_EMAIL,'miniOrange','Admin');
+			// return $mo_MocURL->send_notification($toEmail,$subject,$content,mo_MoWpnsConstants::SUPPORT_EMAIL,'miniOrange','Admin');
 	}
 
 	function wp_mail_send_notification($toEmail,$subject,$content){
@@ -171,7 +171,7 @@ class MoWpnsUtility
 			return json_encode(array("status"=>'SUCCESS','statusMessage'=>'SUCCESS'));
 		}
 		
-		global $moWpnsUtility;
+		global $mo_MoWpnsUtility;
 
 		$user = get_user_by( 'login', $username );
 		if($user && !empty($user->user_email))
@@ -179,7 +179,7 @@ class MoWpnsUtility
 		else
 			return;
 		
-		$mo_wpns_config = new MoWpnsHandler();
+		$mo_wpns_config = new mo_MoWpnsHandler();
 		if($mo_wpns_config->is_email_sent_to_user($username,$ipAddress))
 			return;
 	
@@ -195,8 +195,8 @@ class MoWpnsUtility
 		else
 			$content = $this->getMessageContent($reason,$ipAddress,$username,$fromEmail);
 		
-		// $mocURL = new MocURL();
-		// return $mocURL->send_notification($toEmail,$subject,$content,$fromEmail,get_bloginfo(),$username);
+		// $mo_MocURL = new mo_MocURL();
+		// return $mo_MocURL->send_notification($toEmail,$subject,$content,$fromEmail,get_bloginfo(),$username);
 		return $this->wp_mail_send_notification($toEmail,$subject,$content,$fromEmail);
 	}
 
@@ -205,16 +205,16 @@ class MoWpnsUtility
 	{
 		switch($reason)
 		{
-			case MoWpnsConstants::LOGIN_ATTEMPTS_EXCEEDED:
+			case mo_MoWpnsConstants::LOGIN_ATTEMPTS_EXCEEDED:
 				$content = "Hello,<br><br>The user with IP Address <b>".$ipAddress."</b> has exceeded allowed failed login attempts on your website <b>".get_bloginfo()."</b> and we have blocked his IP address for further access to website.<br><br>You can login to your WordPress dashaboard to check more details.<br><br>Thanks,<br>miniOrange" ;
 				return $content;
-			case MoWpnsConstants::IP_RANGE_BLOCKING:
+			case mo_MoWpnsConstants::IP_RANGE_BLOCKING:
 				$content = "Hello,<br><br>The user's IP Address <b>".$ipAddress."</b> was found in IP Range specified by you in Advanced IP Blocking and we have blocked his IP address for further access to your website <b>".get_bloginfo()."</b>.<br><br>You can login to your WordPress dashaboard to check more details.<br><br>Thanks,<br>miniOrange" ;
 				return $content;
-			case MoWpnsConstants::LOGGED_IN_FROM_NEW_IP:
+			case mo_MoWpnsConstants::LOGGED_IN_FROM_NEW_IP:
 				$content = "Hello ".$username.",<br><br>Your account was logged in from new IP Address <b>".$ipAddress."</b> on website <b>".get_bloginfo()."</b>. Please <a href='mailto:".$fromEmail."'>contact us</a> if you don't recognise this activity.<br><br>Thanks,<br>".get_bloginfo() ;
 				return $content;
-			case MoWpnsConstants::FAILED_LOGIN_ATTEMPTS_FROM_NEW_IP:
+			case mo_MoWpnsConstants::FAILED_LOGIN_ATTEMPTS_FROM_NEW_IP:
 				$subject = 'Someone trying to access you account | '.get_bloginfo();
 				$content =  "Hello ".$username.",<br><br>Someone tried to login to your account from new IP Address <b>".$ipAddress."</b> on website <b>".get_bloginfo()."</b> with failed login attempts. Please <a href='mailto:".$fromEmail."'>contact us</a> if you don't recognise this activity.<br><br>Thanks,<br>".get_bloginfo() ;
 				return $content;

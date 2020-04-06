@@ -7,7 +7,7 @@
 
 
     <!-- The Modal -->
-    <div id="wpns_feedback_modal" class="mo_modal" style="width:90%; margin-left:12%; margin-top:5%; text-align:center; margin-left">
+    <div id="feedback_modal_wpns" class="mo_modal" style="width:90%; margin-left:12%; margin-top:5%; text-align:center; margin-left">
 
         <!-- Modal content -->
         <div class="mo_wpns_modal-content" style="width:50%;">
@@ -15,9 +15,9 @@
             </h3>
 			<hr style="width:75%;">
 			
-            <form name="f" method="post" action="" id="mo_wpns_feedback">
-                <?php wp_nonce_field("mo_wpns_feedback");?>
-                <input type="hidden" name="option" value="mo_wpns_feedback"/>
+            <form name="f" method="post" action="" id="mo_feedback_wpns">
+                <?php wp_nonce_field("mo_feedback_wpns");?>
+                <input type="hidden" name="option" value="mo_feedback_wpns"/>
                 <div>
                     <p style="margin:2%">
 					<h4 style="margin: 2%; text-align:center;">Please help us to improve our plugin by giving your opinion.<br></h4>
@@ -61,7 +61,7 @@
 						
 						</div>
 						<br><br>
-						<textarea id="wpns_query_feedback" name="wpns_query_feedback" rows="4" style="width: 60%"
+						<textarea id="query_feedback_wpns" name="query_feedback_wpns" rows="4" style="width: 60%"
                               placeholder="Tell us what happened!"></textarea>
 						<br><br>
 						  <input type="checkbox" name="get_reply" value="reply" checked>miniOrange representative will reach out to you at the email-address entered above.</input>
@@ -73,7 +73,7 @@
                                class="mo_wpns_button mo_wpns_button1" value="Send"/>
 						<span width="30%">&nbsp;&nbsp;</span>
                         <input type="button" name="miniorange_skip_feedback"
-                               class="mo_wpns_button mo_wpns_button1" value="Skip" onclick="document.getElementById('mo_wpns_feedback_form_close').submit();"/>
+                               class="mo_wpns_button mo_wpns_button1" value="Skip" onclick="document.getElementById('mo_feedback_form_close_wpns').submit();"/>
                     </div>
                 </div>
 				
@@ -150,9 +150,9 @@
 
 					</style>
             </form>
-            <form name="f" method="post" action="" id="mo_wpns_feedback_form_close">
-                <?php wp_nonce_field("mo_wpns_skip_feedback");?>
-                <input type="hidden" name="option" value="mo_wpns_skip_feedback"/>
+            <form name="f" method="post" action="" id="mo_feedback_form_close_wpns">
+                <?php wp_nonce_field("mo_skip_feedback_wpns");?>
+                <input type="hidden" name="option" value="mo_skip_feedback_wpns"/>
             </form>
 
         </div>
@@ -162,16 +162,16 @@
     <script>
         jQuery('a[aria-label="Deactivate WP Security Pro"]').click(function () {
 
-            var mo_modal = document.getElementById('wpns_feedback_modal');
+            var mo_modal = document.getElementById('feedback_modal_wpns');
 
             var span = document.getElementsByClassName("mo_wpns_close")[0];
 
 // When the user clicks the button, open the mo2f_modal
             mo_modal.style.display = "block";
-			document.querySelector("#wpns_query_feedback").focus();
+			document.querySelector("#query_feedback_wpns").focus();
             span.onclick = function () {
                 mo_modal.style.display = "none";
-                jQuery('#mo_wpns_feedback_form_close').submit();
+                jQuery('#mo_feedback_form_close_wpns').submit();
             }
 
             // When the user clicks anywhere outside of the mo2f_modal, mo2f_close it

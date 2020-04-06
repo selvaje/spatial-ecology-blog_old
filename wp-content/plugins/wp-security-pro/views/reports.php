@@ -69,7 +69,7 @@ echo'	<div>
 		        </thead>
 		        <tbody>';
 		           
-		           showLoginTransactions($logintranscations);
+		           mo_showLoginTransactions($logintranscations);
 
 echo'	        </tbody>
 		    </table>
@@ -106,7 +106,7 @@ echo'	        </tbody>
 		        </thead>
 		        <tbody>';
 		        
-		       showErrorTransactions($errortranscations);
+		       mo_showErrorTransactions($errortranscations);
 
 echo'	        </tbody>
 		    </table>

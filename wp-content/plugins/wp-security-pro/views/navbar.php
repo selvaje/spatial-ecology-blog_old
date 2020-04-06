@@ -1,9 +1,9 @@
 <?php
 
 	if($shw_feedback)
-		do_action('wpns_show_message',MoWpnsMessages::showMessage('FEEDBACK'),'CUSTOM_MESSAGE');
+		do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('FEEDBACK'),'CUSTOM_MESSAGE');
 	if(!$safe)
-		do_action('wpns_show_message',MoWpnsMessages::showMessage('WHITELIST_SELF'),'CUSTOM_MESSAGE');
+		do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('WHITELIST_SELF'),'CUSTOM_MESSAGE');
 
 	echo'<div class="wrap">
 				<div><img  style="float:left;margin-top:5px;" src="'.$logo_url.'"></div>

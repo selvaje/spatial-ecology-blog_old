@@ -20,16 +20,16 @@
 
 
 // need to have different classes here for each ipblocking, whitelisting, htaccess and transaction related functions
-class MoWpnsHandler
+class mo_MoWpnsHandler
 {
 
 	function is_ip_blocked($ipAddress)
 	{
-		global $wpnsDbQueries;
+		global $mo_wpnsDbQueries;
 		if(empty($ipAddress))
 			return false;
 		
-		$user_count = $wpnsDbQueries->get_ip_blocked_count($ipAddress);
+		$user_count = $mo_wpnsDbQueries->get_ip_blocked_count($ipAddress);
 		
 		if($user_count)
 			$user_count = intval($user_count);
@@ -41,8 +41,8 @@ class MoWpnsHandler
 	}
 	function get_blocked_attacks_count($attackName)
 	{
-		global $wpnsDbQueries;
-		$attackCount = $wpnsDbQueries->get_blocked_attack_count($attackName);
+		global $mo_wpnsDbQueries;
+		$attackCount = $mo_wpnsDbQueries->get_blocked_attack_count($attackName);
 		if($attackCount)
 			$attackCount =  intval($attackCount);
 		return $attackCount;
@@ -55,8 +55,8 @@ class MoWpnsHandler
 	}
 	function get_blocked_ip_waf()
 	{
-		global $wpnsDbQueries;
-		$ip_count = $wpnsDbQueries->get_total_blocked_ips_waf();
+		global $mo_wpnsDbQueries;
+		$ip_count = $mo_wpnsDbQueries->get_total_blocked_ips_waf();
 		if($ip_count)
 			$ip_count = intval($ip_count);
 
@@ -64,8 +64,8 @@ class MoWpnsHandler
 	}
 	function get_manual_blocked_ip_count()
 	{
-		global $wpnsDbQueries;
-		$ip_count = $wpnsDbQueries->get_total_manual_blocked_ips();
+		global $mo_wpnsDbQueries;
+		$ip_count = $mo_wpnsDbQueries->get_total_manual_blocked_ips();
 		if($ip_count)
 			$ip_count = intval($ip_count);
 
@@ -73,38 +73,38 @@ class MoWpnsHandler
 	}
 	function get_blocked_ips()
 	{
-		global $wpnsDbQueries;
-		return $wpnsDbQueries->get_blocked_ip_list();
+		global $mo_wpnsDbQueries;
+		return $mo_wpnsDbQueries->get_blocked_ip_list();
 	}
 	function get_blocked_sqli()
 	{
-		global $wpnsDbQueries;
-		return $wpnsDbQueries->get_blocked_sqli_list();
+		global $mo_wpnsDbQueries;
+		return $mo_wpnsDbQueries->get_blocked_sqli_list();
 	}
 	function get_blocked_rfi()
 	{
-		global $wpnsDbQueries;
-		return $wpnsDbQueries->get_blocked_rfi_list();	
+		global $mo_wpnsDbQueries;
+		return $mo_wpnsDbQueries->get_blocked_rfi_list();	
 	}
 	function get_blocked_lfi()
 	{
-		global $wpnsDbQueries;
-		return $wpnsDbQueries->get_blocked_lfi_list();
+		global $mo_wpnsDbQueries;
+		return $mo_wpnsDbQueries->get_blocked_lfi_list();
 	}
 	function get_blocked_rce()
 	{
-		global $wpnsDbQueries;
-		return $wpnsDbQueries->get_blocked_rce_list();
+		global $mo_wpnsDbQueries;
+		return $mo_wpnsDbQueries->get_blocked_rce_list();
 	}
 	function get_blocked_xss()
 	{
-		global $wpnsDbQueries;
-		return $wpnsDbQueries->get_blocked_xss_list();	
+		global $mo_wpnsDbQueries;
+		return $mo_wpnsDbQueries->get_blocked_xss_list();	
 	}
 	
 	function block_ip($ipAddress, $reason, $permenently)
 	{
-		global $wpnsDbQueries;
+		global $mo_wpnsDbQueries;
 		if(empty($ipAddress))
 			return;
 		if($this->is_ip_blocked($ipAddress))
@@ -132,19 +132,19 @@ class MoWpnsHandler
 			fclose($f);
 		}
 		
-		$wpnsDbQueries->insert_blocked_ip($ipAddress, $reason,$blocked_for_time);
+		$mo_wpnsDbQueries->insert_blocked_ip($ipAddress, $reason,$blocked_for_time);
 		
 		//send notification
-		global $moWpnsUtility;
+		global $mo_MoWpnsUtility;
 		if(get_option('mo_wpns_enable_ip_blocked_email_to_admin'))
-			$moWpnsUtility->sendIpBlockedNotification($ipAddress,MoWpnsConstants::LOGIN_ATTEMPTS_EXCEEDED);
+			$mo_MoWpnsUtility->sendIpBlockedNotification($ipAddress,mo_MoWpnsConstants::LOGIN_ATTEMPTS_EXCEEDED);
 			
 	}
 	
 	function unblock_ip_entry($entryid)
 	{
-		global $wpnsDbQueries;
-		$myrows = $wpnsDbQueries->get_blocked_ip($entryid);
+		global $mo_wpnsDbQueries;
+		$myrows = $mo_wpnsDbQueries->get_blocked_ip($entryid);
 		if(count($myrows)>0)
 			if(get_option('mo_wpns_enable_htaccess_blocking'))
 			{
@@ -159,13 +159,13 @@ class MoWpnsHandler
 				}
 			}
 		
-		$wpnsDbQueries->delete_blocked_ip($entryid);
+		$mo_wpnsDbQueries->delete_blocked_ip($entryid);
 	}
 	
 	function remove_htaccess_ips()
 	{
-		global $wpnsDbQueries;
-		$myrows = $wpnsDbQueries->get_blocked_ip_list();
+		global $mo_wpnsDbQueries;
+		$myrows = $mo_wpnsDbQueries->get_blocked_ip_list();
 		$base = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 		$hpath = $base.DIRECTORY_SEPARATOR.".htaccess";
 		$contents = file_get_contents($hpath);
@@ -185,8 +185,8 @@ class MoWpnsHandler
 	
 	function add_htaccess_ips()
 	{
-		global $wpnsDbQueries;
-		$myrows = $wpnsDbQueries->get_blocked_ip_list();
+		global $mo_wpnsDbQueries;
+		$myrows = $mo_wpnsDbQueries->get_blocked_ip_list();
 		$base = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 		$hpath = $base.DIRECTORY_SEPARATOR.".htaccess";
 		$contents = file_get_contents($hpath);
@@ -203,8 +203,8 @@ class MoWpnsHandler
 	
 	function is_whitelisted($ipAddress)
 	{
-		global $wpnsDbQueries;
-		$count = $wpnsDbQueries->get_whitelisted_ip_count($ipAddress);
+		global $mo_wpnsDbQueries;
+		$count = $mo_wpnsDbQueries->get_whitelisted_ip_count($ipAddress);
 
 		if(empty($ipAddress))
 			return false;
@@ -218,7 +218,7 @@ class MoWpnsHandler
 	
 	function whitelist_ip($ipAddress)
 	{
-		global $wpnsDbQueries;	
+		global $mo_wpnsDbQueries;	
 		if(get_option('mo_wpns_enable_htaccess_blocking'))
 		{
 			$base = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
@@ -236,7 +236,7 @@ class MoWpnsHandler
 		if($this->is_whitelisted($ipAddress))
 			return;
 
-		$wpnsDbQueries->insert_whitelisted_ip($ipAddress);
+		$mo_wpnsDbQueries->insert_whitelisted_ip($ipAddress);
 	}
 
 	function update_htaccess_configuration()
@@ -294,22 +294,22 @@ class MoWpnsHandler
 	
 	function remove_whitelist_entry($entryid)
 	{
-		global $wpnsDbQueries;
-		$wpnsDbQueries->delete_whitelisted_ip($entryid);
+		global $mo_wpnsDbQueries;
+		$mo_wpnsDbQueries->delete_whitelisted_ip($entryid);
 	}
 	
 	function get_whitelisted_ips()
 	{
-		global $wpnsDbQueries;
-		return $wpnsDbQueries->get_whitelisted_ips_list();
+		global $mo_wpnsDbQueries;
+		return $mo_wpnsDbQueries->get_whitelisted_ips_list();
 	}
 	
 	function is_email_sent_to_user($username, $ipAddress)
 	{
-		global $wpnsDbQueries;
+		global $mo_wpnsDbQueries;
 		if(empty($ipAddress))
 			return false;
-		$sent_count = $wpnsDbQueries->get_email_audit_count($ipAddress,$username);
+		$sent_count = $mo_wpnsDbQueries->get_email_audit_count($ipAddress,$username);
 		if($sent_count)
 			$sent_count = intval($sent_count);
 		if($sent_count>0)
@@ -321,52 +321,52 @@ class MoWpnsHandler
 	{
 		if(empty($ipAddress) || empty($username))
 			return;
-		global $wpnsDbQueries;
-		$wpnsDbQueries->insert_email_audit($ipAddress,$username,$reason);
+		global $mo_wpnsDbQueries;
+		$mo_wpnsDbQueries->insert_email_audit($ipAddress,$username,$reason);
 	}
 	
 	function add_transactions($ipAddress, $username, $type, $status, $url=null)
 	{
-		global $wpnsDbQueries;
-		$wpnsDbQueries->insert_transaction_audit($ipAddress, $username, $type, $status, $url);
+		global $mo_wpnsDbQueries;
+		$mo_wpnsDbQueries->insert_transaction_audit($ipAddress, $username, $type, $status, $url);
 	}
 
 	function get_login_transaction_report()
 	{
-		global $wpnsDbQueries;
-		return $wpnsDbQueries->get_login_transaction_report();
+		global $mo_wpnsDbQueries;
+		return $mo_wpnsDbQueries->get_login_transaction_report();
 	}
 	
 	function get_error_transaction_report()
 	{
-		global $wpnsDbQueries;
-		return $wpnsDbQueries->get_error_transaction_report();
+		global $mo_wpnsDbQueries;
+		return $mo_wpnsDbQueries->get_error_transaction_report();
 	}
 
 
 	function get_all_transactions()
 	{
-		global $wpnsDbQueries;
-		return $wpnsDbQueries->get_transasction_list();
+		global $mo_wpnsDbQueries;
+		return $mo_wpnsDbQueries->get_transasction_list();
 	}
 	
 	function move_failed_transactions_to_past_failed($ipAddress)
 	{
-		global $wpnsDbQueries;
-		$wpnsDbQueries->update_transaction_table(array('status'=>MoWpnsConstants::FAILED),
-			array('ip_address'=>$ipAddress,'status'=>MoWpnsConstants::PAST_FAILED));
+		global $mo_wpnsDbQueries;
+		$mo_wpnsDbQueries->update_transaction_table(array('status'=>mo_MoWpnsConstants::FAILED),
+			array('ip_address'=>$ipAddress,'status'=>mo_MoWpnsConstants::PAST_FAILED));
 	}
 	
 	function remove_failed_transactions($ipAddress)
 	{
-		global $wpnsDbQueries;
-		$wpnsDbQueries->delete_transaction($ipAddress);	
+		global $mo_wpnsDbQueries;
+		$mo_wpnsDbQueries->delete_transaction($ipAddress);	
 	}
 	
 	function get_failed_attempts_count($ipAddress)
 	{
-		global $wpnsDbQueries;
-		$count = $wpnsDbQueries->get_failed_transaction_count($ipAddress);
+		global $mo_wpnsDbQueries;
+		$count = $mo_wpnsDbQueries->get_failed_transaction_count($ipAddress);
 		if($count)
 		{
 			$count = intval($count);
@@ -406,8 +406,8 @@ class MoWpnsHandler
 				$lowip = ip2long(trim($rangearray[0]));
 				$highip = ip2long(trim($rangearray[1]));
 				if(ip2long($userIp)>=$lowip && ip2long($userIp)<=$highip){
-					$mo_wpns_config = new MoWpnsHandler();
-					$mo_wpns_config->block_ip($userIp, MoWpnsConstants::IP_RANGE_BLOCKING, true);
+					$mo_wpns_config = new mo_MoWpnsHandler();
+					$mo_wpns_config->block_ip($userIp, mo_MoWpnsConstants::IP_RANGE_BLOCKING, true);
 					return true;
 				}
 			}
@@ -418,10 +418,10 @@ class MoWpnsHandler
 	
 	function is_browser_blocked()
 	{
-		global $moWpnsUtility;
+		global $mo_MoWpnsUtility;
 		if(get_option( 'mo_wpns_enable_user_agent_blocking'))
 		{			
-			$current_browser = $moWpnsUtility->getCurrentBrowser();
+			$current_browser = $mo_MoWpnsUtility->getCurrentBrowser();
 			if(get_option('mo_wpns_block_chrome') && $current_browser=='chrome')
 				return true;
 			else if(get_option('mo_wpns_block_firefox') && $current_browser=='firefox')

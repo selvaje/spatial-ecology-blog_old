@@ -1,5 +1,5 @@
 <?php
-class wpns_backup_ajax
+class mo_wpns_backup_ajax
 {
 	function __construct(){
 
@@ -29,7 +29,7 @@ class wpns_backup_ajax
 			wp_send_json('folder_error'); 
             return;
 		}else{
-			 $handler_obj = new site_backup;
+			 $handler_obj = new mo_site_backup;
              $handler_obj->file_cron_backup();
 			 wp_send_json('success');
              return;
@@ -43,7 +43,7 @@ class wpns_backup_ajax
             return;
 		}
 
-		 $handler_obj = new site_backup;
+		 $handler_obj = new mo_site_backup;
     	isset($postData['backup_plugin']) ?  update_option( 'mo_file_backup_plugins', sanitize_text_field($postData['backup_plugin'])) : update_option( 'mo_file_backup_plugins', 0);
 		isset($postData['backup_themes']) ? update_option( 'mo_file_backup_themes', sanitize_text_field($postData['backup_themes'])) : update_option( 'mo_file_backup_themes', 0);
 		isset($postData['backup_wp_files']) ? update_option( 'mo_file_backup_wp_files', sanitize_text_field($postData['backup_wp_files'])) : update_option( 'mo_file_backup_wp_files', 0);
@@ -70,5 +70,5 @@ class wpns_backup_ajax
 
 	}	
 }
-new wpns_backup_ajax();
+new mo_wpns_backup_ajax();
 ?>

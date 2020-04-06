@@ -3,7 +3,7 @@
  * Plugin Name: Companion Auto Update
  * Plugin URI: http://codeermeneer.nl/portfolio/companion-auto-update/
  * Description: This plugin auto updates all plugins, all themes and the wordpress core.
- * Version: 3.4.8
+ * Version: 3.5.2
  * Author: Papin Schipper
  * Author URI: http://codeermeneer.nl/
  * Contributors: papin
@@ -56,7 +56,7 @@ function cau_donateUrl() {
 
 // Database version
 function cau_db_version() {
-	return '3.5.2';
+	return '3.5.3';
 }
 function cau_database_creation() {
 
@@ -137,6 +137,9 @@ function cau_install_data() {
 	if( !cau_check_if_exists( 'wpemails' ) ) 		$wpdb->insert( $table_name, array( 'name' => 'wpemails', 'onoroff' => 'on' ) ); // 9
 	if( !cau_check_if_exists( 'notUpdateListTh' ) ) $wpdb->insert( $table_name, array( 'name' => 'notUpdateListTh', 'onoroff' => '' ) ); // 10
 
+	// Stuff
+	if( !cau_check_if_exists( 'html_or_text' ) ) $wpdb->insert( $table_name, array( 'name' => 'html_or_text', 'onoroff' => 'html' ) ); // 11
+
 
 }
 register_activation_hook( __FILE__, 'cau_install' );
@@ -179,7 +182,7 @@ add_action( 'admin_menu', 'register_cau_menu_page' );
 // Settings page
 function cau_frontend() { ?>
 	
-	<div class='wrap cau_content_wrap'>
+	<div class='wrap cau_content_wrap cau_content'>
 
 		<h1 class="wp-heading-inline"><?php _e('Companion Auto Update', 'companion-auto-update'); ?></h1>
 
@@ -193,11 +196,9 @@ function cau_frontend() { ?>
 		// Allow only access to these pages
 		$allowedPages 	= array( 
 			'dashboard' 	=> __( 'Dashboard' ), 
-			'schedule' 		=> __( 'Advanced settings', 'companion-auto-update' ), 
 			'pluginlist' 	=> __( 'Update filter', 'companion-auto-update' ), 
 			'log' 			=> __( 'Update log', 'companion-auto-update' ), 
 			'status' 		=> __( 'Status', 'companion-auto-update' ), 
-			'support' 		=> __( 'Support', 'companion-auto-update' )
 		);
 
 		// Show subtabs
@@ -220,7 +221,7 @@ function cau_frontend() { ?>
 			$requestedPage 	= 'dashboard';
 			echo "<script>jQuery('#tab-dashboard').addClass('nav-tab-active');</script>"; // Set active tab class
 		} else {
-			$requestedPage 	= $_GET['tab'];
+			$requestedPage 	= sanitize_key( $_GET['tab'] );
 		}
 
 		if( array_key_exists( $requestedPage, $allowedPages ) ) {
@@ -266,7 +267,10 @@ function load_cau_sytyles( $hook ) {
     // WordPress scripts we need
 	wp_enqueue_style( 'thickbox' );
 	wp_enqueue_script( 'thickbox' );   
-	wp_enqueue_script( 'plugin-install' );    
+	wp_enqueue_script( 'plugin-install' );   
+
+	// Check for issues
+    wp_enqueue_style( 'cau_warning_styles', plugins_url( 'backend/warningbar.css' , __FILE__ ) ); 
 
 }
 add_action( 'admin_enqueue_scripts', 'load_cau_sytyles', 100 );
@@ -309,49 +313,43 @@ class CAU_auto_update {
 		// Enable for major updates
 		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'major'");
 		foreach ( $configs as $config ) {
-
 			if( $config->onoroff == 'on' ) add_filter( 'allow_major_auto_core_updates', '__return_true', 1 ); // Turn on
-			if( $config->onoroff != 'on' ) add_filter( 'allow_major_auto_core_updates', '__return_false', 1 ); // Turn off
-
+			else add_filter( 'allow_major_auto_core_updates', '__return_false', 1 ); // Turn off
 		}
 
 		// Enable for minor updates
 		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'minor'");
 		foreach ( $configs as $config ) {
-
 			if( $config->onoroff == 'on' ) add_filter( 'allow_minor_auto_core_updates', '__return_true', 1 ); // Turn on
-			if( $config->onoroff != 'on' ) add_filter( 'allow_minor_auto_core_updates', '__return_false', 1 ); // Turn off
-
+			else add_filter( 'allow_minor_auto_core_updates', '__return_false', 1 ); // Turn off
 		}
 
 		// Enable for plugins
 		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'plugins'");
 		foreach ( $configs as $config ) {
-
 			if( $config->onoroff == 'on' ) add_filter( 'auto_update_plugin', 'cau_dontUpdatePlugins', 10, 2 ); // Turn on
-			if( $config->onoroff != 'on' ) add_filter( 'auto_update_plugin', '__return_false', 1 ); // Turn off
-
+			else add_filter( 'auto_update_plugin', '__return_false', 1 ); // Turn off
 		}
 
 		// Enable for themes
 		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'themes'");
 		foreach ( $configs as $config ) {
-			if( $config->onoroff == 'on' ) add_filter( 'auto_update_theme', 'cau_dontUpdateThemes', 1 ); // Turn on
-			if( $config->onoroff != 'on' ) add_filter( 'auto_update_theme', '__return_false', 1 ); // Turn off
+			if( $config->onoroff == 'on' ) add_filter( 'auto_update_theme', '__return_true' ); // Turn on
+			else add_filter( 'auto_update_theme', '__return_false', 1 ); // Turn off
 		}
 
 		// Enable for translation files
 		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'translations'");
 		foreach ( $configs as $config ) {
 			if( $config->onoroff == 'on' ) add_filter( 'auto_update_translation', '__return_true', 1 ); // Turn on
-			if( $config->onoroff != 'on' ) add_filter( 'auto_update_translation', '__return_false', 1 ); // Turn off
+			else add_filter( 'auto_update_translation', '__return_false', 1 ); // Turn off
 		}
 
 		// WP Email Config
 		$configs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE name = 'wpemails'");
 		foreach ( $configs as $config ) {
 			if( $config->onoroff == 'on' ) add_filter( 'auto_core_update_send_email', '__return_true' ); // Turn on
-			if( $config->onoroff != 'on' ) add_filter( 'auto_core_update_send_email', '__return_false' ); // Turn off
+			else add_filter( 'auto_core_update_send_email', '__return_false' ); // Turn off
 		}
 		
 
@@ -384,10 +382,3 @@ function cau_checkForIssues( $admin_bar ) {
 
 }
 add_action( 'admin_bar_menu', 'cau_checkForIssues', 150 );
-
-function cau_checkForIssuesStyle() {
-
-    wp_enqueue_style( 'cau_warning_styles', plugins_url( 'backend/warningbar.css' , __FILE__ ) );
-
-}
-add_action( 'admin_enqueue_scripts', 'cau_checkForIssuesStyle', 100 );

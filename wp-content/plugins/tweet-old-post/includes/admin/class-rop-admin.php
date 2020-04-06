@@ -49,10 +49,10 @@ class Rop_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    8.0.0
+	 * @param string $plugin_name The name of this plugin.
+	 * @param string $version The version of this plugin.
 	 *
-	 * @param      string $plugin_name The name of this plugin.
-	 * @param      string $version The version of this plugin.
+	 * @since    8.0.0
 	 */
 	public function __construct( $plugin_name = '', $version = '' ) {
 
@@ -109,11 +109,10 @@ class Rop_Admin {
 	/**
 	 * Check if a shortener is in use.
 	 *
-	 * @since    8.1.5
-	 *
 	 * @param string $shortener The shortener to check.
 	 *
 	 * @return bool If shortener is in use.
+	 * @since    8.1.5
 	 */
 	public function check_shortener_service( $shortener ) {
 
@@ -210,15 +209,52 @@ class Rop_Admin {
 	/**
 	 * Whether we will display the toast message related to facebook
 	 *
-	 * @since 8.4.3
-	 *
 	 * @return mixed
+	 * @since 8.4.3
 	 */
 	private function facebook_exception_toast_display() {
 		$show_the_toast = get_option( 'rop_facebook_domain_toast', 'no' );
 		// Will comment this return for now, might be of use later on.
 		// return filter_var( $show_the_toast, FILTER_VALIDATE_BOOLEAN );
 		return false;
+	}
+
+	/**
+	 * Method used to decide whether or not to limit taxonomy select
+	 *
+	 * @return  bool
+	 * @since   8.5.0
+	 * @access  public
+	 */
+	public function limit_tax_dropdown_list() {
+		$installed_at_version = get_option( 'rop_first_install_version' );
+		if ( empty( $installed_at_version ) ) {
+			return 0;
+		}
+		if ( version_compare( $installed_at_version, '8.5.3', '>=' ) ) {
+			return 1;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Method used to decide whether or not to limit exclude posts.
+	 *
+	 * @return  bool
+	 * @since   8.5.4
+	 * @access  public
+	 */
+	public function limit_exclude_list() {
+		$installed_at_version = get_option( 'rop_first_install_version' );
+		if ( empty( $installed_at_version ) ) {
+			return 0;
+		}
+		if ( version_compare( $installed_at_version, '8.5.4', '>=' ) ) {
+			return 1;
+		}
+
+		return 0;
 	}
 
 	/**
@@ -232,7 +268,7 @@ class Rop_Admin {
 		if ( empty( $page ) ) {
 			return;
 		}
-
+		wp_enqueue_media();
 		wp_register_script( $this->plugin_name . '-dashboard', ROP_LITE_URL . 'assets/js/build/dashboard' . ( ( ROP_DEBUG ) ? '' : '.min' ) . '.js', array(), ( ROP_DEBUG ) ? time() : $this->version, false );
 		wp_register_script( $this->plugin_name . '-exclude', ROP_LITE_URL . 'assets/js/build/exclude' . ( ( ROP_DEBUG ) ? '' : '.min' ) . '.js', array(), ( ROP_DEBUG ) ? time() : $this->version, false );
 
@@ -267,6 +303,8 @@ class Rop_Admin {
 		$array_nonce['staging']                 = $this->rop_site_is_staging();
 		$array_nonce['show_li_app_btn']         = $li_service->rop_show_li_app_btn();
 		$array_nonce['debug']                   = ( ( ROP_DEBUG ) ? 'yes' : 'no' );
+		$array_nonce['tax_apply_limit']         = $this->limit_tax_dropdown_list();
+		$array_nonce['exclude_apply_limit']     = $this->limit_exclude_list();
 		$array_nonce['publish_now']             = array(
 			'action'   => $settings->get_instant_sharing_by_default(),
 			'accounts' => $active_accounts,
@@ -304,10 +342,9 @@ class Rop_Admin {
 	/**
 	 * Set our supported mime types.
 	 *
+	 * @return array
 	 * @since   8.1.0
 	 * @access  public
-	 *
-	 * @return array
 	 */
 	public function rop_supported_mime_types() {
 
@@ -347,8 +384,8 @@ class Rop_Admin {
 	/**
 	 * Detects if is a staging environment
 	 *
-	 * @since     8.0.4
 	 * @return    bool   true/false
+	 * @since     8.0.4
 	 */
 	public static function rop_site_is_staging() {
 
@@ -532,9 +569,9 @@ class Rop_Admin {
 	function rop_roadmap_new_tab() {
 		?>
 		<script type="text/javascript">
-			jQuery(document).ready(function ($) {
-				$("ul#adminmenu a[href$='https://trello.com/b/svAZqXO1/roadmap-revive-old-posts']").attr('target', '_blank');
-			});
+		   jQuery( document ).ready( function ( $ ) {
+			   $( "ul#adminmenu a[href$='https://trello.com/b/svAZqXO1/roadmap-revive-old-posts']" ).attr( 'target', '_blank' );
+		   } );
 		</script>
 		<?php
 	}
@@ -640,7 +677,7 @@ class Rop_Admin {
 	/**
 	 * Publish now attributes to be provided to the javascript.
 	 *
-	 * @param   array $default The default attributes.
+	 * @param array $default The default attributes.
 	 */
 	public function publish_now_attributes( $default ) {
 		global $post;
@@ -656,10 +693,14 @@ class Rop_Admin {
 	/**
 	 * Publish now, if enabled.
 	 *
-	 * @param   int $post_id The post ID.
+	 * @param int $post_id The post ID.
 	 */
 	public function maybe_publish_now( $post_id ) {
 		if ( ! isset( $_POST['rop_publish_now_nonce'] ) || ! wp_verify_nonce( $_POST['rop_publish_now_nonce'], 'rop_publish_now_nonce' ) ) {
+			return;
+		}
+
+		if ( get_post_status( $post_id ) !== 'publish' ) {
 			return;
 		}
 
@@ -705,14 +746,14 @@ class Rop_Admin {
 	/**
 	 * Method to share future scheduled WP posts to social media on publish.
 	 *
-	 * @since   8.5.2
+	 * @param object $post The post object.
 	 *
-	 * @param   object $post The post object.
 	 * @access  public
+	 * @since   8.5.2
 	 */
 	public function share_scheduled_future_post( $post ) {
 
-		$settings = new Rop_Settings_Model();
+		$settings            = new Rop_Settings_Model();
 		$selected_post_types = wp_list_pluck( $settings->get_selected_post_types(), 'value' );
 
 		if ( ! $settings->get_instant_share_future_scheduled() ) {
@@ -723,40 +764,100 @@ class Rop_Admin {
 			return;
 		}
 
-		// get taxonomies selected in general settings
-		$selected_taxonomies = $settings->get_selected_taxonomies();
+		$global_settings = new Rop_Global_Settings();
 
-		if ( ! empty( $selected_taxonomies ) ) {
+		$services = new Rop_Services_Model();
+		$active_accounts = array_keys( $services->get_active_accounts() );
 
-			// check if "Exclude" is checked
-			$taxonomies_are_excluded = $settings->get_exclude_taxonomies();
+		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
+		$rop_active_status = in_array( 'tweet-old-post-pro/tweet-old-post-pro.php', $active_plugins );
 
-			$taxonomies = array();
-			foreach ( $selected_taxonomies as $key => $value ) {
-				$taxonomies[] = $value['tax'];
+		// this would only be possible in Pro plugin
+		if ( $global_settings->license_type() > 0 && $rop_active_status ) {
+
+			// Get the current plugin options.
+			$option = get_option( 'rop_data' );
+
+			$social_accounts = array();
+			$post_formats = $option['post_format'];
+
+			foreach ( $post_formats as $key => $value ) {
+
+				if ( ! array_key_exists( 'taxonomy_filter', $value ) ) {
+					// share to accounts where no filters are selected
+					$social_accounts[] = $key;
+					continue;
+				}
+
+				// get account specific taxonomy filter
+				$taxonomy_filter = array_column( $value['taxonomy_filter'], 'tax', 'value' );
+				$taxonomies_are_excluded = $value['exclude_taxonomies'];
+
+				$taxonomies_slug = array_values( $taxonomy_filter );
+				$taxonomies_ids = array_keys( $taxonomy_filter );
+
+				// get term ids for the taxonomies selected on General Settings of ROP that are present in the current post
+				$post_term_ids = wp_get_post_terms( $post->ID, $taxonomies_slug, array( 'fields' => 'ids' ) );
+
+				// get the common term ids between what's assigned to the post and what's selected in General Settings
+				$common = array_intersect( $taxonomies_ids, $post_term_ids );
+
+				// if the post contains any of the taxonomies that are excluded, bail
+				if ( count( $common ) > 0 && $taxonomies_are_excluded ) {
+					continue;
+				}
+				// if the post doesn't contain any of the selected taxonomies that are whitelisted for posting, bail
+				if ( count( $common ) < 1 && ! $taxonomies_are_excluded ) {
+					continue;
+				}
+
+				$social_accounts[] = $key;
+
 			}
 
-			// check if current post has any of the taxonomies set in general settings
-			$post_terms = wp_get_post_terms( $post->ID, $taxonomies );
-			// if the post contains any of the taxonomies that are exluded, bail
-			if ( ! empty( $post_terms ) && $taxonomies_are_excluded ) {
-				return;
-			}
-			// if the post doesn't contain any of the selected taxonomies that are whitelisted for posting, bail
-			if ( empty( $post_terms ) && ! $taxonomies_are_excluded ) {
+			// accounts to share to
+			$active_accounts = array_intersect( $active_accounts, $social_accounts );
+
+			if ( empty( $active_accounts ) ) {
 				return;
 			}
 		}
 
-		$services = new Rop_Services_Model();
-		$active  = array_keys( $services->get_active_accounts() );
+		// get taxonomies selected in general settings
+		$selected_taxonomies = $settings->get_selected_taxonomies();
+
+		// only run if free version
+		if ( ! empty( $selected_taxonomies ) && ( $global_settings->license_type() < 1 || ! $rop_active_status ) ) {
+
+			$taxonomies = array_column( $selected_taxonomies, 'tax', 'value' );
+
+			$taxonomies_slug = array_values( $taxonomies );
+			$taxonomies_ids = array_keys( $taxonomies );
+
+			// get term ids for the taxonomies selected on General Settings of ROP that are present in the current post
+			$post_term_ids = wp_get_post_terms( $post->ID, $taxonomies_slug, array( 'fields' => 'ids' ) );
+
+			// get the common term ids between what's assigned to the post and what's selected in General Settings
+			$common = array_intersect( $taxonomies_ids, $post_term_ids );
+
+			// check if "Exclude" is checked
+			$taxonomies_are_excluded = $settings->get_exclude_taxonomies();
+
+			// if the post contains any of the taxonomies that are excluded, bail
+			if ( count( $common ) > 0 && $taxonomies_are_excluded ) {
+				return;
+			}
+			// if the post doesn't contain any of the selected taxonomies that are whitelisted for posting, bail
+			if ( count( $common ) < 1 && ! $taxonomies_are_excluded ) {
+				return;
+			}
+		}
 
 		update_post_meta( $post->ID, 'rop_publish_now', 'yes' );
-		update_post_meta( $post->ID, 'rop_publish_now_accounts', $active );
+		update_post_meta( $post->ID, 'rop_publish_now_accounts', $active_accounts );
 
 		$cron = new Rop_Cron_Helper();
 		$cron->manage_cron( array( 'action' => 'publish-now' ) );
-
 	}
 
 
@@ -791,32 +892,6 @@ class Rop_Admin {
 					$logger->alert_error( $error_message . ' Error: ' . $exception->getTrace() );
 				}
 			}
-		}
-	}
-
-	/**
-	 * The publish now feature notice message
-	 *
-	 * @since   8.2.0
-	 * @access  public
-	 */
-	public function publish_now_notice() {
-		$user_id = get_current_user_id();
-		if ( ! get_user_meta( $user_id, 'rop_publish_now_notice_dismissed' ) ) {
-			echo '<div class="notice notice-info"><p>' . sprintf( __( '%1$sRevive Old Posts Update:%2$s You can now share posts on publish to your social networks in the free version of %1$sRevive Old Posts%2$s! This can help with Facebook App reviews. %3$sLearn more here.%4$s', 'tweet-old-post' ), '<strong>', '</strong>', '<a href="https://docs.revive.social/article/926-how-to-go-through-the-facebook-review-process" target="_blank">', '</a>' ) . '</p><p><a href="?publish_now_notice_dismissed">' . __( 'Dismiss', 'tweet-old-post' ) . '</a></p></div>';
-		}
-	}
-
-	/**
-	 * The publish now feature notice dismissal
-	 *
-	 * @since   8.2.0
-	 * @access  public
-	 */
-	public function publish_now_notice_dismissed() {
-		$user_id = get_current_user_id();
-		if ( isset( $_GET['publish_now_notice_dismissed'] ) ) {
-			add_user_meta( $user_id, 'rop_publish_now_notice_dismissed', 'true', true );
 		}
 	}
 
@@ -1001,6 +1076,103 @@ class Rop_Admin {
 			add_user_meta( $user_id, 'rop-wp-cron-notice-dismissed', 'true', true );
 		}
 
+	}
+
+	/**
+	 * Migrate the taxonomies from General Settings to Post Format for Pro users.
+	 *
+	 * @since 8.5.4
+	 */
+	public function migrate_taxonomies_to_post_format() {
+
+		$installed_at_version = get_option( 'rop_first_install_version' );
+		// If this option does not exist, stop the process.
+		if ( empty( $installed_at_version ) ) {
+			return;
+		}
+
+		// Apply the migration process only for users that installed an older version.
+		if ( version_compare( $installed_at_version, '8.5.4', '>' ) ) {
+			return;
+		}
+
+		// Fetch the plugin global settings.
+		$global_settings = new Rop_Global_Settings();
+
+		// If there is no pro licence, cut process early.
+		if ( $global_settings->license_type() < 1 ) {
+			return;
+		}
+
+		// If any type of Pro is installed and active.
+		if ( $global_settings->license_type() > 0 ) {
+			// Get the current plugin options.
+			$option = get_option( 'rop_data' );
+
+			// Get the custom options.
+			// If this option exists, then the migration took place, and it will not happen again.
+			// Should return false the first time as it does not exist.
+			$update_took_place = get_option( 'rop_data_migrated_tax' );
+
+			// If the update already took place and the general settings array value does not exist, cut process early.
+			if ( ! empty( $update_took_place ) && ! isset( $option['general_settings'] ) ) {
+				return;
+			}
+
+			$general_settings = array();
+			// Making sure the option we need, exists.
+			if ( empty( $update_took_place ) && isset( $option['general_settings'] ) ) {
+				$general_settings = $option['general_settings'];
+
+				$selected_taxonomies = array();
+				$exclude_taxonomies  = '';
+				if ( isset( $general_settings['selected_taxonomies'] ) ) {
+					// Get the selected Taxonomies from General Settings tab.
+					$selected_taxonomies = $general_settings['selected_taxonomies'];
+				}
+
+				// Making sure to check "Excluded" if the main General Tab ahs it checked.
+				if ( isset( $general_settings['exclude_taxonomies'] ) && ! empty( $general_settings['exclude_taxonomies'] ) ) {
+					$exclude_taxonomies = $general_settings['exclude_taxonomies'];
+				}
+
+				// If there are any taxonomies selected in the general tab.
+				if ( ! empty( $selected_taxonomies ) ) {
+
+					if ( isset( $option['post_format'] ) && ! empty( $option['post_format'] ) ) {
+
+						foreach ( $option['post_format'] as &$social_media_account_data ) {
+							// If the options exists in Post Format but it's empty or,
+							// If the option does not exist at all.
+							if (
+								! isset( $social_media_account_data['taxonomy_filter'] ) ||
+								(
+									isset( $social_media_account_data['taxonomy_filter'] ) &&
+									empty( $social_media_account_data['taxonomy_filter'] )
+								)
+							) {
+								// Add the taxonomies to all social media accounts.
+								$social_media_account_data['taxonomy_filter'] = $selected_taxonomies;
+
+								// If excluded is checked, we also add it to post format.
+								$social_media_account_data['exclude_taxonomies'] = $exclude_taxonomies;
+
+							}
+
+							// inform that the update took place.
+							$update_took_place = true;
+						}
+					}
+				}
+
+				if ( true === $update_took_place ) {
+					// Create the option so that the migrate code will not run again.
+					add_option( 'rop_data_migrated_tax', 'yes', null, 'no' );
+					// Update the plugin data containing the changes.
+					update_option( 'rop_data', $option );
+				}
+			}
+		}
 	}
 
 	/**

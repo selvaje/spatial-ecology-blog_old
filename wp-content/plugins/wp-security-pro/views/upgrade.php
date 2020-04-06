@@ -667,7 +667,7 @@ echo '<form class="plan_redirect" id="wpns_loginform"
             
             ';
 
-$iscustomervalid=MoWpnsUtility::icr();
+$iscustomervalid=mo_MoWpnsUtility::icr();
 echo
     '
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

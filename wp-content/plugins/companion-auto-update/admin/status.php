@@ -1,5 +1,6 @@
 <?php
 
+	// Update the database
 	if( isset( $_GET['run'] ) && $_GET['run'] == 'db_update' ) {
 		cau_manual_update();
 		echo '<div id="message" class="updated"><p><b>'.__( 'Database update completed' ).'</b></p></div>';
@@ -273,6 +274,7 @@ if( checkAutomaticUpdaterDisabled() ) { ?>
 				</td>
 				<td class="cau_plugin_issue_fixit">
 					<form method="POST">
+						<?php wp_nonce_field( 'cau_fixit' ); ?>
 						<button type="submit" name="fixit" class="button button-primary"><?php _e( 'Fix it', 'companion-auto-update' ); ?></button>
 						<a href="<?php echo cau_url( 'support' ); ?>" class="button"><?php _e( 'Contact for support', 'companion-auto-update' ); ?></a>
 					</form>
@@ -318,6 +320,7 @@ if( checkCronjobsDisabled() ) { ?>
 
 // Remove the line
 if( isset( $_POST['fixit'] ) ) {
+	check_admin_referer( 'cau_fixit' );
 	cau_removeErrorLine();
 	echo "<div id='message' class='updated'><p><strong>".__( 'Error fixed', 'companion-auto-update' )."</strong></p></div>";
 }
@@ -344,10 +347,12 @@ function cau_removeErrorLine() {
 
 	// Lines to check and replace
 	$revLine 		= "define('AUTOMATIC_UPDATER_DISABLED', false);"; // We could just remove the line, but replacing it will be safer
-	$oldLine 		= array( "define('AUTOMATIC_UPDATER_DISABLED', true);", "define('AUTOMATIC_UPDATER_DISABLED', minor);","define('automatic_updater_disabled', true);", "define('automatic_updater_disabled', minor);" );
+	$posibleLines 	= array( "define( 'AUTOMATIC_UPDATER_DISABLED', true );", "define( 'AUTOMATIC_UPDATER_DISABLED', minor );" ); // The two base options
+	foreach ( $posibleLines as $value ) array_push( $posibleLines, strtolower( $value ) ); // Support lowercase variants
+	foreach ( $posibleLines as $value ) array_push( $posibleLines, str_replace( ' ', '', $value ) ); // For variants without spaces
 
 	// Check for each string if it exists
-	foreach ( $oldLine as $key => $string ) {
+	foreach ( $posibleLines as $key => $string ) {
 
 		if( strpos( file_get_contents( $conFile ), $string ) !== false) {
 	        $contents = file_get_contents( $conFile );
@@ -425,4 +430,34 @@ if( cau_incompatiblePlugins() ) { ?>
 
 	</table>
 
+	<table class="autoupdate cau_status_list widefat striped cau_status_warnings">
+
+		<thead>
+			<tr>
+				<th><strong><?php _e( 'Advanced info', 'companion-auto-update' ); ?></strong> &dash; <?php _e( 'For when you need our help fixing an issue.', 'companion-auto-update' ); ?></th>
+			</tr>
+		</thead>
+		<tbody id="the-list">
+			<tr>
+				<td>
+					<div class='button button-primary toggle_advanced_button'>Toggle</div>
+				
+					<div class='toggle_advanced_content' style='display: none;'>
+						<?php 
+						global $wpdb;
+						$autoupdates 	= $wpdb->prefix."auto_updates"; 
+						$cau_configs 	= $wpdb->get_results( "SELECT * FROM $autoupdates" ); 
+
+						echo "<pre>";
+						print_r( $cau_configs );
+						echo "</pre>";
+						?>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
 </div>
+
+<script>jQuery( '.toggle_advanced_button' ).click( function() { jQuery( '.toggle_advanced_content' ).toggle(); });</script>

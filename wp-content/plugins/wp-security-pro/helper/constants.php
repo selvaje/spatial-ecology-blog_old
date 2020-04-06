@@ -1,6 +1,6 @@
 <?php
 	
-	class MoWpnsConstants
+	class mo_MoWpnsConstants
 	{
 		const SUCCESS 					= "success";
 		const FAILED 					= "failed";
@@ -45,13 +45,13 @@
 
 		function define_global()
 		{
-			global $wpnsDbQueries,$moWpnsUtility,$dirName;
-			$wpnsDbQueries	 	= new MoWpnsDB();
-			$moWpnsUtility  = new MoWpnsUtility();
-			$dirName 		= dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
+			global $mo_wpnsDbQueries,$mo_MoWpnsUtility,$mo_dirName;
+			$mo_wpnsDbQueries	 	= new mo_MoWpnsDB();
+			$mo_MoWpnsUtility  = new mo_MoWpnsUtility();
+			$mo_dirName 		= dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
 		}
 		
 	}
-	new MoWpnsConstants;
+	new mo_MoWpnsConstants;
 
 ?>

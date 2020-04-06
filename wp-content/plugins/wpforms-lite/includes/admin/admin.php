@@ -91,7 +91,7 @@ function wpforms_admin_scripts() {
 		'choicesjs',
 		WPFORMS_PLUGIN_URL . 'assets/js/choices.min.js',
 		array(),
-		'2.8.10',
+		'9.0.1',
 		false
 	);
 
@@ -388,7 +388,7 @@ function wpforms_check_php_version() {
 		) .
 		'<br><br><em>' .
 		wp_kses(
-			__( '<strong>Please Note:</strong> Support for PHP 5.3 to 5.5 will be discontinued in 2019. After this, if no further action is taken, WPForms functionality will be disabled.', 'wpforms-lite' ),
+			__( '<strong>Please Note:</strong> Support for PHP 5.5 will be discontinued in 2020. After this, if no further action is taken, WPForms functionality will be disabled.', 'wpforms-lite' ),
 			array(
 				'strong' => array(),
 				'em'     => array(),
@@ -404,13 +404,27 @@ add_action( 'admin_init', 'wpforms_check_php_version' );
  *
  * @since 1.4.4
  *
+ * @param string $type Either "pro" or "elite". Default is "pro".
+ *
  * @return string
  */
-function wpforms_get_upgrade_modal_text() {
+function wpforms_get_upgrade_modal_text( $type = 'pro' ) {
+
+	switch ( $type ) {
+		case 'elite':
+			$level = 'WPForms Elite';
+			break;
+		case 'pro':
+		default:
+			$level = 'WPForms Pro';
+	}
 
 	return
 		'<p>' .
-		esc_html__( 'Thanks for your interest in WPForms Pro!', 'wpforms-lite' ) . '<br>' .
+		sprintf( /* translators: %s - license level, WPForms Pro or WPForms Elite. */
+			esc_html__( 'Thanks for your interest in %s!', 'wpforms-lite' ),
+			$level
+		) . '<br>' .
 		sprintf(
 			wp_kses(
 				/* translators: %s - WPForms.com contact page URL. */
@@ -427,19 +441,21 @@ function wpforms_get_upgrade_modal_text() {
 		) .
 		'</p>' .
 		'<p>' .
-		wp_kses(
-			__( 'After purchasing a license,<br>just <strong>enter your license key on the WPForms Settings page</strong>.<br>This will let your site automatically upgrade to WPForms Pro!', 'wpforms-lite' ),
-			array(
-				'strong' => array(),
-				'br'     => array(),
-			)
+		sprintf(
+			wp_kses( /* translators: %s - license level, WPForms Pro or WPForms Elite. */
+				__( 'After purchasing a license,<br>just <strong>enter your license key on the WPForms Settings page</strong>.<br>This will let your site automatically upgrade to %s!', 'wpforms-lite' ),
+				[
+					'strong' => [],
+					'br'     => [],
+				]
+			),
+			$level
 		) . '<br>' .
 		esc_html__( '(Don\'t worry, all your forms and settings will be preserved.)', 'wpforms-lite' ) .
 		'</p>' .
 		'<p>' .
 		sprintf(
-			wp_kses(
-				/* translators: %s - WPForms.com upgrade from Lite to paid docs page URL. */
+			wp_kses( /* translators: %s - WPForms.com upgrade from Lite to paid docs page URL. */
 				__( 'Check out <a href="%s" target="_blank" rel="noopener noreferrer">our documentation</a> for step-by-step instructions.', 'wpforms-lite' ),
 				array(
 					'a' => array(
@@ -465,7 +481,7 @@ function wpforms_get_upgrade_modal_text() {
  */
 function wpforms_admin_hide_wp_version( $text ) {
 
-	// Bail if we're not on a WPForms screen or page.
+	// Reset text if we're not on a WPForms screen or page.
 	if ( wpforms_is_admin_page() ) {
 		return '';
 	}

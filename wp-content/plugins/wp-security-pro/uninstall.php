@@ -76,7 +76,7 @@
  	delete_option( 'mo_wpns_scan_files_with_repo');
 
 
- 	delete_option('mo_wpns_dbversion');
+ 	delete_option('mo_wpns_pro_dbversion');
 	
 	delete_option('mo2f_cron_hours');
  	delete_option('mo2f_enable_cron_backup');

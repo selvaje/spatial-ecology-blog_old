@@ -1,6 +1,6 @@
 <?php
 	
-	global $moWpnsUtility, $dirName;
+	global $mo_MoWpnsUtility, $mo_dirName;
 
 
 	if(current_user_can( 'manage_options' ) && isset($_POST['option']))
@@ -8,11 +8,11 @@
 		switch($_POST['option'])
 		{
 			case "mo_wpns_enable_fake_domain_blocking":
-				wpns_handle_domain_blocking($_POST);						break;
+				mo_wpns_handle_domain_blocking($_POST);						break;
 			case "mo_wpns_advanced_user_verification":
-				wpns_handle_advanced_user_verification($_POST);				break;
+				mo_wpns_handle_advanced_user_verification($_POST);				break;
 			case "mo_wpns_social_integration":
-				wpns_handle_enable_social_login($_POST);					break;
+				mo_wpns_handle_enable_social_login($_POST);					break;
 			
 		}
 	}
@@ -25,7 +25,7 @@
 
 	if($user_verify)
 	{
-		$moOTPPlugin = new OTPPlugin();
+		$moOTPPlugin = new mo_OTPPlugin();
 		$status 	 = $moOTPPlugin->getstatus();
 		switch ($status) 
 		{
@@ -53,7 +53,7 @@
 
 	if($social_login)
 	{
-		$moSocialLogin = new SocialPlugin();
+		$moSocialLogin = new mo_SocialPlugin();
 		$status		   = $moSocialLogin->getstatus();
 		switch ($status) 
 		{
@@ -77,7 +77,7 @@
 		}
 	}
 
-	include $dirName . 'views'.DIRECTORY_SEPARATOR.'registration-security.php';
+	include $mo_dirName . 'views'.DIRECTORY_SEPARATOR.'registration-security.php';
 
 
 
@@ -85,20 +85,20 @@
 	/* REGISTRATION SECURITY RELATED FUNCTIONS*/
 
 	//Function to handle enabling and disabling domain blocking
-	function wpns_handle_domain_blocking($postvalue)
+	function mo_wpns_handle_domain_blocking($postvalue)
 	{
 		$enable_fake_emails = isset($postvalue['mo_wpns_enable_fake_domain_blocking']) ? true : false;
 		update_option( 'mo_wpns_enable_fake_domain_blocking', $enable_fake_emails);
 
 		if($enable_fake_emails)
-			do_action('wpns_show_message',MoWpnsMessages::showMessage('DOMAIN_BLOCKING_ENABLED'),'SUCCESS');
+			do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('DOMAIN_BLOCKING_ENABLED'),'SUCCESS');
 		else
-			do_action('wpns_show_message',MoWpnsMessages::showMessage('DOMAIN_BLOCKING_DISABLED'),'ERROR');
+			do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('DOMAIN_BLOCKING_DISABLED'),'ERROR');
 	}
 
 
 	//Function to enable and disable User Verification for the Default Registration Page
-	function wpns_handle_advanced_user_verification($postvalue)
+	function mo_wpns_handle_advanced_user_verification($postvalue)
 	{
 		$enable_advanced_user_verification = isset($postvalue['mo_wpns_enable_advanced_user_verification']) ? true : false;
 		update_option( 'mo_wpns_enable_advanced_user_verification',  $enable_advanced_user_verification);
@@ -106,24 +106,24 @@
 		if($enable_advanced_user_verification)
 		{
 			update_option('mo_customer_validation_wp_default_enable',1);
-			do_action('wpns_show_message',MoWpnsMessages::showMessage('ENABLE_ADVANCED_USER_VERIFY'),'SUCCESS');
+			do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('ENABLE_ADVANCED_USER_VERIFY'),'SUCCESS');
 		}
 		else
 		{
 			update_option('mo_customer_validation_wp_default_enable',0);
-			do_action('wpns_show_message',MoWpnsMessages::showMessage('DISABLE_ADVANCED_USER_VERIFY'),'ERROR');
+			do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('DISABLE_ADVANCED_USER_VERIFY'),'ERROR');
 		}
 	}
 
 
 	//Function to enable and disable Social Login
-	function wpns_handle_enable_social_login($postvalue)
+	function mo_wpns_handle_enable_social_login($postvalue)
 	{
 		$social_login = isset($postvalue['mo_wpns_enable_social_integration']) ? true : false;
 		update_option( 'mo_wpns_enable_social_integration',  $social_login);
 
 		if($social_login)
-			do_action('wpns_show_message',MoWpnsMessages::showMessage('ENABLE_SOCIAL_LOGIN'),'SUCCESS');
+			do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('ENABLE_SOCIAL_LOGIN'),'SUCCESS');
 		else
-			do_action('wpns_show_message',MoWpnsMessages::showMessage('DISABLE_SOCIAL_LOGIN'),'ERROR');
+			do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('DISABLE_SOCIAL_LOGIN'),'ERROR');
 	}

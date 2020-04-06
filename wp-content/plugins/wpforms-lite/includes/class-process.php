@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Process and validate form entries.
  *
@@ -120,7 +121,7 @@ class WPForms_Process {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $entry $_POST object.
+	 * @param array $entry Form submission raw data ($_POST).
 	 */
 	public function process( $entry ) {
 
@@ -338,7 +339,7 @@ class WPForms_Process {
 		// Success - add entry to database.
 		$this->entry_id = $this->entry_save( $this->fields, $entry, $this->form_data['id'], $this->form_data );
 
-		// Success - send email notification.
+		// Fire the logic to send notification emails.
 		$this->entry_email( $this->fields, $entry, $this->form_data, $this->entry_id, 'entry' );
 
 		// Pass completed and formatted fields in POST.
@@ -370,8 +371,9 @@ class WPForms_Process {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $hash
-	 * @return mixed false for invalid or form id
+	 * @param string $hash Base64-encoded hash of form and entry IDs.
+	 *
+	 * @return array|false False for invalid or form id.
 	 */
 	public function validate_return_hash( $hash = '' ) {
 
@@ -399,12 +401,12 @@ class WPForms_Process {
 	}
 
 	/**
-	 * Redirects user to a page or URL specified in the form confirmation settings.
+	 * Redirect user to a page or URL specified in the form confirmation settings.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param array  $form_data Form data and settings.
-	 * @param string $hash
+	 * @param string $hash      Base64-encoded hash of form and entry IDs.
 	 */
 	public function entry_confirmation_redirect( $form_data = array(), $hash = '' ) {
 
@@ -513,17 +515,23 @@ class WPForms_Process {
 	/**
 	 * Get confirmation message.
 	 *
+	 * @since 1.5.3
+	 *
 	 * @param array $form_data Form data and settings.
 	 * @param array $fields    Sanitized field data.
 	 * @param int   $entry_id  Entry id.
+	 *
 	 * @return string Confirmation message.
 	 */
 	public function get_confirmation_message( $form_data, $fields, $entry_id ) {
+
 		if ( empty( $this->confirmation_message ) ) {
 			return '';
 		}
+
 		$confirmation_message = apply_filters( 'wpforms_process_smart_tags', $this->confirmation_message, $form_data, $fields, $entry_id );
 		$confirmation_message = apply_filters( 'wpforms_frontend_confirmation_message', wpautop( $confirmation_message ), $form_data, $fields, $entry_id );
+
 		return $confirmation_message;
 	}
 
@@ -561,7 +569,7 @@ class WPForms_Process {
 	}
 
 	/**
-	 * Sends entry email notifications.
+	 * Send entry email notifications.
 	 *
 	 * @since 1.0.0
 	 *
@@ -593,7 +601,7 @@ class WPForms_Process {
 
 		$fields = apply_filters( 'wpforms_entry_email_data', $fields, $entry, $form_data );
 
-		// Backwards compatibility for notifications before v1.2.3.
+		// Backwards compatibility for notifications before v1.4.3.
 		if ( empty( $form_data['settings']['notifications'] ) ) {
 			$notifications[1] = array(
 				'email'          => $form_data['settings']['notification_email'],
@@ -657,7 +665,7 @@ class WPForms_Process {
 	}
 
 	/**
-	 * Saves entry to database.
+	 * Save entry to database.
 	 *
 	 * @since 1.0.0
 	 *

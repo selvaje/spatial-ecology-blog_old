@@ -2,7 +2,7 @@
 
 // Get selected filter type
 if( isset( $_GET['filter'] ) ) {
-	$filter = $_GET['filter'];
+	$filter = sanitize_key( $_GET['filter'] );
 } else {
 	$filter = 'plugins';
 }
@@ -34,6 +34,12 @@ switch ( $filter ) {
 </ul>
 
 <div style='clear: both;'></div>
+
+<?php if( $filter == 'themes' ) { ?>
+	<div id="message" class="cau">
+		We've had to (temporarily) disable the theme filter because it was causing issues on some installations. We'll try to get it working again in a future update.
+	</div>
+<?php } ?>
 
 <p><?php echo sprintf( esc_html__( 'Prevent certain %s from updating automatically. %s that you select here will be skipped by Companion Auto Update and will require manual updating.', 'companion-auto-update' ), strtolower( $filter_name ), $filter_name ); ?></p>
 

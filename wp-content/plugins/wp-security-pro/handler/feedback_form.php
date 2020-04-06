@@ -1,5 +1,5 @@
 <?php
-class FeedbackHandler
+class mo_FeedbackHandler
 {
     function __construct()
     {
@@ -9,13 +9,13 @@ class FeedbackHandler
     function mo_wpns_feedback_actions()
     {
 
-        global $moWpnsUtility, $dirName;
+        global $mo_MoWpnsUtility, $mo_dirName;
 
         if (current_user_can('manage_options') && isset($_POST['option'])) {
             switch ($_REQUEST['option']) {
-                case "mo_wpns_skip_feedback":
+                case "mo_skip_feedback_wpns":
                   $this->wpns_handle_skip_feedback($_POST);						break;
-                case "mo_wpns_feedback":
+                case "mo_feedback_wpns":
                   $this->wpns_handle_feedback($_POST);				            break;
 
             }
@@ -23,7 +23,7 @@ class FeedbackHandler
     }
 
     function wpns_handle_skip_feedback($postdata){
-        do_action('wpns_show_message',MoWpnsMessages::showMessage('FEEDBACK'),'CUSTOM_MESSAGE');
+        do_action('mo_wpns_show_message',mo_MoWpnsMessages::showMessage('FEEDBACK'),'CUSTOM_MESSAGE');
         deactivate_plugins( dirname(dirname(__FILE__ ))."\\mo-wpns.php");
     }
 
@@ -63,30 +63,30 @@ class FeedbackHandler
                 $email = $user->user_email;
         }
         $phone = get_option('mo_wpns_admin_phone');
-        $feedback_reasons = new MocURL();
-        global $moWpnsUtility;
+        $feedback_reasons = new mo_MocURL();
+        global $mo_MoWpnsUtility;
         if (!is_null($feedback_reasons)) {
-            if (!$moWpnsUtility->is_curl_installed()) {
+            if (!$mo_MoWpnsUtility->is_curl_installed()) {
                 deactivate_plugins(dirname(dirname(__FILE__ ))."\\mo-wpns.php");
                 wp_redirect('plugins.php');
             } else {
                 $submited = json_decode($feedback_reasons->send_email_alert($email, $phone, $message), true);
                 if (json_last_error() == JSON_ERROR_NONE) {
                     if (is_array($submited) && array_key_exists('status', $submited) && $submited['status'] == 'ERROR') {
-                        do_action('wpns_show_message',$submited['message'],'ERROR');
+                        do_action('mo_wpns_show_message',$submited['message'],'ERROR');
 
                     } else {
                         if ($submited == false) {
-                            do_action('wpns_show_message','Error while submitting the query.','ERROR');
+                            do_action('mo_wpns_show_message','Error while submitting the query.','ERROR');
                         }
                     }
                 }
 
                 deactivate_plugins(dirname(dirname(__FILE__ ))."\\mo-wpns.php");
-                do_action('wpns_show_message','Thank you for the feedback.','SUCCESS');
+                do_action('mo_wpns_show_message','Thank you for the feedback.','SUCCESS');
 
             }
         }
     }
 
-}new FeedbackHandler();
+}new mo_FeedbackHandler();
