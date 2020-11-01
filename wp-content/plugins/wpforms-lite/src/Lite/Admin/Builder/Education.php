@@ -30,6 +30,8 @@ class Education {
 			add_action( 'wp_ajax_wpforms_dyk_dismiss', array( $this, 'dyk_ajax_dismiss' ) );
 
 			add_action( 'wp_ajax_wpforms_update_field_recaptcha', array( $this, 'recaptcha_field_callback' ) );
+
+			add_action( 'wpforms_field_options_after_advanced-options', array( $this, 'field_conditional_logic' ), 10, 2 );
 		}
 
 		// Only proceed for the form builder.
@@ -84,7 +86,7 @@ class Education {
 				'</p>',
 				'doc'     => '<a href="https://wpforms.com/docs/upgrade-wpforms-lite-paid-license/?utm_source=WordPress&amp;utm_medium=link&amp;utm_campaign=liteplugin&amp;utm_content=upgrade-pro" target="_blank" rel="noopener noreferrer" class="already-purchased">' . esc_html__( 'Already purchased?', 'wpforms-lite' ) . '</a>',
 				'button'  => esc_html__( 'Upgrade to PRO', 'wpforms-lite' ),
-				'url'     => esc_url( wpforms_admin_upgrade_link( 'builder-modal', 'upgrade-pro' ) ),
+				'url'     => wpforms_admin_upgrade_link( 'builder-modal', 'upgrade-pro' ),
 				'modal'   => wpforms_get_upgrade_modal_text( 'pro' ),
 			],
 			'elite' => [
@@ -101,7 +103,7 @@ class Education {
 				'</p>',
 				'doc'     => '<a href="https://wpforms.com/docs/upgrade-wpforms-lite-paid-license/?utm_source=WordPress&amp;utm_medium=link&amp;utm_campaign=liteplugin&amp;utm_content=upgrade-elite" target="_blank" rel="noopener noreferrer" class="already-purchased">' . esc_html__( 'Already purchased?', 'wpforms-lite' ) . '</a>',
 				'button'  => esc_html__( 'Upgrade to Elite', 'wpforms-lite' ),
-				'url'     => esc_url( wpforms_admin_upgrade_link( 'builder-modal', 'upgrade-elite' ) ),
+				'url'     => wpforms_admin_upgrade_link( 'builder-modal', 'upgrade-elite' ),
 				'modal'   => wpforms_get_upgrade_modal_text( 'elite' ),
 			],
 		];
@@ -357,7 +359,7 @@ class Education {
 	}
 
 	/**
-	 * Displays conditional logic settings section for fields inside the form builder.
+	 * Display conditional logic settings section for fields inside the form builder.
 	 *
 	 * @since 1.5.5
 	 *
@@ -392,7 +394,7 @@ class Education {
 	 */
 	public function settings( $form, $slug ) {
 
-		if ( 'settings' !== $slug ) {
+		if ( empty( $form ) || 'settings' !== $slug ) {
 			return;
 		}
 
@@ -439,12 +441,19 @@ class Education {
 				'plugin_slug' => 'wpforms-post-submissions',
 				'license'     => 'pro',
 			),
+			array(
+				'name'        => esc_html__( 'Webhooks', 'wpforms-lite' ),
+				'slug'        => 'webhooks',
+				'plugin'      => 'wpforms-webhooks/wpforms-webhooks.php',
+				'plugin_slug' => 'wpforms-webhooks',
+				'license'     => 'elite',
+			),
 		);
 
 		foreach ( $settings as $setting ) {
 
 			/* translators: %s - addon name. */
-			$modal_name = sprintf( esc_html__( '%s addon', 'wpforms' ), $setting['name'] );
+			$modal_name = sprintf( esc_html__( '%s addon', 'wpforms-lite' ), $setting['name'] );
 			printf(
 				'<a href="#" class="wpforms-panel-sidebar-section wpforms-panel-sidebar-section-%s upgrade-modal" data-name="%s" data-license="%s">',
 				esc_attr( $setting['slug'] ),
@@ -490,6 +499,12 @@ class Education {
 				'slug'    => 'stripe',
 				'img'     => 'addon-icon-stripe.png',
 				'license' => 'pro',
+			),
+			array(
+				'name'    => esc_html__( 'Authorize.Net', 'wpforms-lite' ),
+				'slug'    => 'authorize_net',
+				'img'     => 'addon-icon-authorize-net.png',
+				'license' => 'elite',
 			),
 		);
 
@@ -698,10 +713,10 @@ class Education {
 		}
 
 		$translations = array(
-			'upgrade_to_pro' => __( 'Upgrade to Pro.', 'wpforms' ),
-			'dismiss_title'  => __( 'Dismiss this message.', 'wpforms' ),
-			'did_you_know'   => __( 'Did You Know?', 'wpforms' ),
-			'learn_more'     => __( 'Learn More', 'wpforms' ),
+			'upgrade_to_pro' => __( 'Upgrade to Pro.', 'wpforms-lite' ),
+			'dismiss_title'  => __( 'Dismiss this message.', 'wpforms-lite' ),
+			'did_you_know'   => __( 'Did You Know?', 'wpforms-lite' ),
+			'learn_more'     => __( 'Learn More', 'wpforms-lite' ),
 		);
 
 		$learn_more = ( ! empty( $settings['more'] ) ) ? '<a href="' . esc_url( $settings['more'] ) . '" class="learn-more">' . esc_html( $translations['learn_more'] ) . '</a>' : '';

@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Companion Auto Update - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-09-21 12:16:05+0000\n"
+"PO-Revision-Date: 2019-04-04 20:42:56+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11,277 +11,247 @@ msgstr ""
 "Language: en_GB\n"
 "Project-Id-Version: Plugins - Companion Auto Update - Stable (latest release)\n"
 
-#. Author of the plugin/theme
+#: admin/dashboard.php:467
+msgid "Developer?"
+msgstr "Developer?"
+
+#: admin/status.php:259 admin/status.php:268
+msgid "Critical Error"
+msgstr "Critical Error"
+
+#: admin/dashboard.php:455
+msgid "Frequently Asked Questions"
+msgstr "Frequently Asked Questions"
+
+#: admin/status.php:279 admin/status.php:312
+msgid "Contact for support"
+msgstr "Contact for support"
+
+#: admin/status.php:262 admin/status.php:298 admin/status.php:380
+#: admin/status.php:392
+msgid "How to fix"
+msgstr "How to fix"
+
+#: admin/status.php:372
+msgid "You're using one or more plugins that <i>might</i> cause issues."
+msgstr "You're using one or more plugins that <i>might</i> cause issues."
+
+#: admin/status.php:371
+msgid "Possible plugin issues"
+msgstr "Possible plugin issues"
+
+#: admin/dashboard.php:323 admin/dashboard.php:361 admin/dashboard.php:398
+msgid "At what time should the updater run? Only works when set to <u>daily</u>."
+msgstr "At what time should the updater run? Only works when set to <u>daily</u>."
+
+#: cau_functions.php:568
+msgid "Last updated on"
+msgstr "Last updated on"
+
+#: admin/status.php:378 admin/pluginlist.php:99 cau_functions.php:565
+msgid "Name"
+msgstr "Name"
+
+#: companion-auto-update.php:201 admin/status.php:151 admin/pluginlist.php:100
+msgid "Status"
+msgstr "Status"
+
+#: cau_functions.php:601
+msgid "Theme"
+msgstr "Theme"
+
+#: cau_functions.php:567
+msgid "Type"
+msgstr "Type"
+
+#: companion-auto-update.php:200 companion-auto-update.php:241 admin/log.php:1
+msgid "Update log"
+msgstr "Update log"
+
+#: companion-auto-update.php:251 admin/log.php:12
+msgid "View full changelog"
+msgstr "View full change log"
+
+#: companion-auto-update.php:248
+msgid "Below are the last 7 updates ran on this site. Includes plugins and themes, both automatically updated and manually updated."
+msgstr "Below are the last seven updates ran on this site. Includes plugins and themes, both automatically updated and manually updated."
+
+#: admin/dashboard.php:323 admin/dashboard.php:361 admin/dashboard.php:398
+#: admin/dashboard.php:435
+msgid "Time notation: 24H"
+msgstr "Time notation: 24hr"
+
+#. Author of the plugin
 msgid "Papin Schipper"
 msgstr "Papin Schipper"
 
-#: companion-auto-update.php:154
+#: companion-auto-update.php:286 admin/dashboard.php:490
 msgid "Donate to help development"
 msgstr "Donate to help development"
 
-#: companion-auto-update.php:153
-msgid "Help us translate"
-msgstr "Help us translate"
-
-#: companion-auto-update.php:152
+#: admin/dashboard.php:155 admin/dashboard.php:461
 msgid "Give feedback"
 msgstr "Give feedback"
 
-#: companion-auto-update.php:280
-msgid "By default wordpress sends an email when a core update happend. Uncheck this box to disable these emails."
-msgstr "By default, WordPress sends an email when a core update happened. Uncheck this box to disable these emails."
+#: companion-auto-update.php:285 admin/dashboard.php:155
+#: admin/dashboard.php:463
+msgid "Help us translate"
+msgstr "Help us translate"
 
-#: companion-auto-update.php:411
-msgid "How often should notifications be send? (Default daily)"
-msgstr "How often should notifications be sent? (Default daily)"
+#: admin/dashboard.php:279
+msgid "By default WordPress sends an email when a core update has occurred. Uncheck this box to disable these emails."
+msgstr "By default WordPress sends an e-mail when a core update has occurred. Uncheck this box to disable these e-mails."
 
-#: companion-auto-update.php:397
+#: admin/dashboard.php:368
 msgid "Core update interval"
 msgstr "Core update interval"
 
-#: companion-auto-update.php:385
-msgid "Theme update interval"
-msgstr "Theme update interval"
-
-#: companion-auto-update.php:379 companion-auto-update.php:391
-#: companion-auto-update.php:403 companion-auto-update.php:420
-msgid "Daily"
-msgstr "Daily"
-
-#: companion-auto-update.php:378 companion-auto-update.php:390
-#: companion-auto-update.php:402 companion-auto-update.php:419
-msgid "Twice Daily"
-msgstr "Twice Daily"
-
-#: companion-auto-update.php:377 companion-auto-update.php:389
-#: companion-auto-update.php:401 companion-auto-update.php:418
-msgid "Hourly"
-msgstr "Hourly"
-
-#: companion-auto-update.php:373
+#: admin/dashboard.php:293
 msgid "Plugin update interval"
 msgstr "Plugin update interval"
 
-#: companion-auto-update.php:370
-msgid "How often should the auto updater kick in? (Default twice daily)"
-msgstr "How often should the auto-updater kick in? (Default twice daily)"
+#: admin/dashboard.php:331
+msgid "Theme update interval"
+msgstr "Theme update interval"
 
-#: companion-auto-update.php:369
-msgid "Updating"
-msgstr "Updating"
-
-#: companion-auto-update.php:365
-msgid "Changing these settings may affect your sites perfomance."
-msgstr "Changing these settings may affect your site's performance."
-
-#: companion-auto-update.php:365
+#: admin/status.php:239 admin/status.php:295 admin/status.php:304
 msgid "Warning"
 msgstr "Warning"
 
-#: companion-auto-update.php:356
-msgid "Changes were saved. Reload the page to see the changes made."
-msgstr "Changes were saved. Reload the page to see the changes made."
-
-#: companion-auto-update.php:161
-msgid "Scheduling"
-msgstr "Scheduling"
-
-#. Author URI of the plugin/theme
+#. Author URI of the plugin
 msgid "http://codeermeneer.nl/"
 msgstr "http://codeermeneer.nl/"
 
-#. Plugin URI of the plugin/theme
+#. Plugin URI of the plugin
 msgid "http://codeermeneer.nl/portfolio/companion-auto-update/"
 msgstr "http://codeermeneer.nl/portfolio/companion-auto-update/"
 
-#: companion-auto-update.php:511
-msgid "Auto-updating: enabled"
-msgstr "Auto-updating: enabled"
-
-#: companion-auto-update.php:505
-msgid "Auto-updating: disabled"
-msgstr "Auto-updating: disabled"
-
-#: companion-auto-update.php:479
+#: admin/pluginlist.php:101
 msgid "Description"
 msgstr "Description"
 
-#: companion-auto-update.php:478
+#: cau_functions.php:599
 msgid "Plugin"
 msgstr "Plugin"
 
-#: companion-auto-update.php:471 companion-auto-update.php:548
+#: admin/pluginlist.php:92 admin/pluginlist.php:181
 msgid "Reset list"
 msgstr "Reset list"
 
-#: companion-auto-update.php:427 companion-auto-update.php:470
-#: companion-auto-update.php:547
-msgid "Save changes"
-msgstr "Save changes"
-
-#: companion-auto-update.php:462
-msgid "The no-update-list has been reset, all plugins will be auto-updated from now on"
-msgstr "The no-update-list has been reset, all plugins will be auto-updated from now on"
-
-#: companion-auto-update.php:456
-msgid "%1$s plugins have been added to the no-update-list"
-msgstr "%1$s plugins have been added to the no-update-list"
-
-#: companion-auto-update.php:456 companion-auto-update.php:462
+#: admin/pluginlist.php:73 admin/pluginlist.php:83
 msgid "Succes"
 msgstr "Success"
 
-#: companion-auto-update.php:443
-msgid "You have <strong>disabled</strong> auto updating, these settings do not work unless you <strong>enable</strong> it"
-msgstr "You have <strong>disabled</strong> auto updating, these settings do not work unless you <strong>enable</strong> it"
-
-#: companion-auto-update.php:443
-msgid "Auto updating disabled"
-msgstr "Auto updating disabled"
-
-#: companion-auto-update.php:435
-msgid "Here you can select plugins that you do not wish to automatically update"
-msgstr "Here you can select plugins that you do not wish to automatically update"
-
-#: companion-auto-update.php:276
+#: admin/dashboard.php:271 admin/status.php:214
 msgid "Core notifications"
 msgstr "Core notifications"
 
-#: companion-auto-update.php:239
+#: admin/dashboard.php:208
 msgid "Auto update translation files?"
 msgstr "Auto update translation files?"
 
-#: companion-auto-update.php:160
-msgid "Filter plugins"
-msgstr "Filter plugins"
-
-#: companion-auto-update.php:159
+#: companion-auto-update.php:198
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: companion-auto-update.php:271
+#: admin/dashboard.php:243
 msgid "Send me emails when something has been updated."
 msgstr "Send me emails when something has been updated."
 
-#: companion-auto-update.php:267
-msgid "Successful update"
-msgstr "Successful update "
-
-#: companion-auto-update.php:258
-msgid "Update available"
-msgstr "Update available "
-
-#: companion-auto-update.php:249
-msgid "Email notifications are send once a day, you can choose what notifications to send below."
-msgstr "Email notifications are sent once a day, you can choose what notifications to send below."
-
-#: companion-auto-update.php:248 companion-auto-update.php:410
-#: companion-auto-update.php:414
+#: admin/dashboard.php:221 admin/dashboard.php:405 admin/status.php:208
 msgid "Email Notifications"
 msgstr "Email Notifications"
 
-#: companion-auto-update.php:171
-msgid "It seems like something went wrong while updating the database, please re-activate this plugin"
-msgstr "It seems like something went wrong while updating the database, please re-activate this plugin"
-
-#: companion-auto-update.php:171
-msgid "Database Update"
-msgstr "Database Update"
-
-#: companion-auto-update-check-updates.php:138
+#: cau_emails.php:287
 msgid "One or more plugins have been updated."
 msgstr "One or more plugins have been updated."
 
-#: companion-auto-update-check-updates.php:133
-msgid "to version:"
-msgstr "to version:"
+#: admin/dashboard.php:239
+msgid "Successful update"
+msgstr "Successful update "
 
-#: companion-auto-update-check-updates.php:99
-msgid "We have updated one or more %1$s on your WordPress site at %2$s, be sure to check if everything still works properly. The following %1$s have been updated: %3$s"
-msgstr "We have updated one or more %1$s on your WordPress site at %2$s, be sure to check if everything still works properly. The following %1$s have been updated: %3$s"
+#: admin/dashboard.php:230
+msgid "Update available"
+msgstr "Update available "
 
-#: companion-auto-update-check-updates.php:85
-#: companion-auto-update-check-updates.php:139
-msgid "plugins"
-msgstr "plugins"
-
-#: companion-auto-update-check-updates.php:84
-msgid "plugin"
-msgstr "plugin"
-
-#: companion-auto-update-check-updates.php:83
-msgid "Plugin update available."
-msgstr "Plugin update available."
-
-#: companion-auto-update-check-updates.php:55
-msgid "themes"
-msgstr "themes"
-
-#: companion-auto-update-check-updates.php:54
-msgid "theme"
-msgstr "theme"
-
-#: companion-auto-update-check-updates.php:53
+#: cau_emails.php:90
 msgid "Theme update available."
 msgstr "Theme update available."
 
-#: companion-auto-update-check-updates.php:31
-msgid "There are one or more %1$s updates available on your WordPress site at: %2$s, but you have disabled auto-updating for %3$s. Login to your dashboard to manually update your %3$s."
-msgstr "There are one or more %1$s updates available on your WordPress site at: %2$s, but you have disabled auto-updating for %3$s. Log in to your dashboard to manually update your %3$s."
+#: cau_emails.php:91
+msgid "theme"
+msgstr "theme"
 
-#: companion-auto-update.php:168
-msgid "Companion Auto Update was not able to set the event for sending you emails, please re-activate the plugin in order to set the event"
-msgstr "Companion Auto Update was not able to set the event for sending you emails, please re-activate the plugin in order to set the event"
+#: cau_emails.php:92 cau_emails.php:306
+msgid "themes"
+msgstr "themes"
 
-#: companion-auto-update.php:292
-msgid "Seperate email addresses using commas."
-msgstr "Separate email addresses using commas."
+#: cau_emails.php:125
+msgid "Plugin update available."
+msgstr "Plugin update available."
 
-#: companion-auto-update.php:288
-msgid "To"
-msgstr "To"
+#: cau_emails.php:126
+msgid "plugin"
+msgstr "plugin"
 
-#: companion-auto-update.php:285
-msgid "Email address"
-msgstr "Email address"
+#: cau_emails.php:127 cau_emails.php:288
+msgid "plugins"
+msgstr "plugins"
 
-#: companion-auto-update.php:262
-msgid "Send me emails when an update is available."
-msgstr "Send me emails when an update is available."
-
-#: companion-auto-update.php:235
-msgid "Auto update major core updates?"
-msgstr "Auto update major core updates?"
-
-#: companion-auto-update.php:230
-msgid "Auto update minor core updates?"
-msgstr "Auto update minor core updates?"
-
-#: companion-auto-update.php:225
-msgid "Auto update themes?"
-msgstr "Auto update themes?"
-
-#: companion-auto-update.php:221
+#: admin/dashboard.php:192
 msgid "Auto update plugins?"
 msgstr "Auto update plugins?"
 
-#: companion-auto-update.php:570
+#: admin/dashboard.php:196
+msgid "Auto update themes?"
+msgstr "Auto update themes?"
+
+#: admin/dashboard.php:200
+msgid "Auto update minor core updates?"
+msgstr "Auto update minor core updates?"
+
+#: admin/dashboard.php:204
+msgid "Auto update major core updates?"
+msgstr "Auto update major core updates?"
+
+#: admin/dashboard.php:234
+msgid "Send me emails when an update is available."
+msgstr "Send me emails when an update is available."
+
+#: admin/dashboard.php:251 cau_functions.php:566
+msgid "To"
+msgstr "To"
+
+#: admin/dashboard.php:3
+msgid "Companion Auto Update was not able to set the event for sending you emails, please re-activate the plugin in order to set the event"
+msgstr "Companion Auto Update was not able to set the event for sending you emails, please re-activate the plugin in order to set the event"
+
+#: admin/dashboard.php:255
+msgid "Seperate email addresses using commas."
+msgstr "Separate email addresses using commas."
+
+#: admin/dashboard.php:248
+msgid "Email Address"
+msgstr "E-mail address"
+
+#: companion-auto-update.php:253 companion-auto-update.php:284
 msgid "Settings"
 msgstr "Settings"
 
-#: companion-auto-update.php:199
-msgid "Settings saved"
-msgstr "Settings saved"
-
-#: companion-auto-update.php:127 companion-auto-update.php:150
-#: companion-auto-update.php:208
+#: companion-auto-update.php:178 admin/dashboard.php:181
+#: admin/pluginlist.php:162
 msgid "Auto Updater"
 msgstr "Auto Updater"
 
-#. Description of the plugin/theme
-msgid "This plugin auto updates all plugins, all themes and the wordpress core."
-msgstr "This plugin auto updates all plugins, all themes and the wordpress core."
+#: admin/dashboard.php:139
+msgid "Settings saved."
+msgstr "Settings saved."
 
-#. Plugin Name of the plugin/theme
+#. Plugin Name of the plugin
+#: companion-auto-update.php:187
 msgid "Companion Auto Update"
 msgstr "Companion Auto Update"
+
+#. Description of the plugin
+msgid "This plugin auto updates all plugins, all themes and the wordpress core."
+msgstr "This plugin auto updates all plugins, all themes and the wordpress core."

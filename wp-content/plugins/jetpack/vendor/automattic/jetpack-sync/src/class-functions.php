@@ -379,6 +379,29 @@ class Functions {
 	}
 
 	/**
+	 * Return main site WordPress.com site ID.
+	 *
+	 * @return string
+	 */
+	public static function main_network_site_wpcom_id() {
+		/**
+		 * Return the current site WPCOM ID for single site installs
+		 */
+		if ( ! is_multisite() ) {
+			return \Jetpack_Options::get_option( 'id' );
+		}
+
+		/**
+		 * Return the main network site WPCOM ID for multi-site installs
+		 */
+		$current_network = get_network();
+		switch_to_blog( $current_network->blog_id );
+		$wpcom_blog_id = \Jetpack_Options::get_option( 'id' );
+		restore_current_blog();
+		return $wpcom_blog_id;
+	}
+
+	/**
 	 * Return URL with a normalized protocol.
 	 *
 	 * @param callable $callable Function to retrieve URL option.
@@ -601,5 +624,25 @@ class Functions {
 			return $paused_plugins->get_all();
 		}
 		return false;
+	}
+
+	/**
+	 * Return the theme's supported features.
+	 * Used for syncing the supported feature that we care about.
+	 *
+	 * @return array List of features that the theme supports.
+	 */
+	public static function get_theme_support() {
+		global $_wp_theme_features;
+
+		$theme_support = array();
+		foreach ( Defaults::$default_theme_support_whitelist as $theme_feature ) {
+			$has_support = current_theme_supports( $theme_feature );
+			if ( $has_support ) {
+				$theme_support[ $theme_feature ] = $_wp_theme_features[ $theme_feature ];
+			}
+		}
+
+		return $theme_support;
 	}
 }

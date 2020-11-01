@@ -39,8 +39,9 @@ if (!isset($sendingDiagnosticEmail)) {
 					</div>
 					<div id="sendByEmailDiv" class="wf-add-bottom">
 						<span class="wf-nowrap">
-							<input class="wf-btn wf-btn-primary" type="submit" id="sendByEmail" value="Send Report by Email"/>
-							<input class="wf-btn wf-btn-default" type="button" id="expandAllDiagnostics" value="Expand All Diagnostics"/>
+							<input class="wf-btn wf-btn-primary wf-btn-sm" type="submit" id="exportDiagnostics" value="Export"/>
+							<input class="wf-btn wf-btn-primary wf-btn-sm" type="submit" id="sendByEmail" value="Send Report by Email"/>
+							<input class="wf-btn wf-btn-default wf-btn-sm" type="button" id="expandAllDiagnostics" value="Expand All Diagnostics"/>
 						</span>
 					</div>
 				</div>
@@ -630,7 +631,19 @@ if (!isset($sendingDiagnosticEmail)) {
 											$missingTables[] = $t;
 										}
 									}
-									
+
+									foreach (
+										array(
+											\WordfenceLS\Controller_DB::TABLE_2FA_SECRETS,
+											\WordfenceLS\Controller_DB::TABLE_SETTINGS,
+										) as $t) {
+										$table = \WordfenceLS\Controller_DB::network_table($t);
+										if (!in_array($table, $existingTables)) {
+											$hasAll = false;
+											$missingTables[] = $t;
+										}
+									}
+
 									if ($hasAll): ?>
 									<div class="wf-result-success"><?php _e('All Tables Exist', 'wordfence'); ?></div>
 									<?php else: ?>
@@ -841,6 +854,12 @@ if (!isset($sendingDiagnosticEmail)) {
 								<?php _e('Send a test activity report email:', 'wordfence'); ?> <a href="<?php echo wfSupportController::esc_supportURL(wfSupportController::ITEM_DIAGNOSTICS_TEST_ACTIVITY_REPORT); ?>" target="_blank" rel="noopener noreferrer" class="wfhelp wf-inline-help"></a>
 								<input type="email" id="email_summary_email_address_debug" value="" size="20" maxlength="255" class="wfConfigElem"/>
 								<input class="wf-btn wf-btn-default wf-btn-sm" type="button" value="<?php esc_attr_e('Send Test Activity Report', 'wordfence'); ?>" onclick="WFAD.ajax('wordfence_email_summary_email_address_debug', {email: jQuery('#email_summary_email_address_debug').val()});"/>
+							</span>
+						</li>
+						<li>
+							<span>
+								<?php _e('Clear all Wordfence Central connection data', 'wordfence'); ?> <a href="<?php echo wfSupportController::esc_supportURL(wfSupportController::ITEM_DIAGNOSTICS_REMOVE_CENTRAL_DATA); ?>" target="_blank" rel="noopener noreferrer" class="wfhelp wf-inline-help"></a>
+								<input class="wf-btn wf-btn-default wf-btn-sm" type="button" value="<?php esc_attr_e('Clear Connection Data', 'wordfence'); ?>" onclick="WFAD.ajax('wordfence_wfcentral_disconnect', {}, function() { WFAD.colorboxModal((self.isSmallScreen ? '300px' : '400px'), 'Successfully romved data', 'All associated Wordfence Central data has been removed from the database.'); });"/>
 							</span>
 						</li>
 					</ul>

@@ -1053,6 +1053,8 @@ class _W3_MinifyHelpers {
 		$url = Minify_Core::minified_url( $minify_filename );
 		$url = Util_Environment::url_to_maybe_https( $url );
 
+		$url = apply_filters( 'w3tc_minify_url_for_files', $url, $files, $type );
+
 		return $url;
 	}
 
@@ -1106,19 +1108,22 @@ class _W3_MinifyHelpers {
 				$script .= "<script>w3tc_load_js('" .
 					$url . "');</script>";
 
-			} else if ( $embed_type == 'nb-async' ) {
-					$script = '<script async src="' .
-						str_replace( '&', '&amp;', $url ) . '"></script>';
-				} else if ( $embed_type == 'nb-defer' ) {
-					$script = '<script defer src="' .
-						str_replace( '&', '&amp;', $url ) . '"></script>';
-				} else if ( $embed_type == 'extsrc' ) {
-					$script = '<script extsrc="' .
-						str_replace( '&', '&amp;', $url ) . '"></script>';
-				} else if ( $embed_type == 'asyncsrc' ) {
-					$script = '<script asyncsrc="' .
-						str_replace( '&', '&amp;', $url ) . '"></script>';
-				}
+			} elseif ( $embed_type == 'nb-async' ) {
+				$script = '<script async src="' .
+					str_replace( '&', '&amp;', $url ) . '"></script>';
+			} elseif ( $embed_type == 'nb-defer' ) {
+				$script = '<script defer src="' .
+					str_replace( '&', '&amp;', $url ) . '"></script>';
+			} elseif ( $embed_type == 'extsrc' ) {
+				$script = '<script extsrc="' .
+					str_replace( '&', '&amp;', $url ) . '"></script>';
+			} elseif ( $embed_type == 'asyncsrc' ) {
+				$script = '<script asyncsrc="' .
+					str_replace( '&', '&amp;', $url ) . '"></script>';
+			} else {
+				$script = '<script src="' .
+					str_replace( '&', '&amp;', $url ) . '"></script>';
+			}
 		}
 
 		return $script . "\r\n";

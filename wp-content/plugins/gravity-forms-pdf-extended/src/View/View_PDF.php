@@ -2,27 +2,20 @@
 
 namespace GFPDF\View;
 
+use Exception;
+use GF_Field;
+use GFPDF\Helper\Fields\Field_Products;
+use GFPDF\Helper\Helper_Abstract_Form;
 use GFPDF\Helper\Helper_Abstract_Model;
+use GFPDF\Helper\Helper_Abstract_Options;
 use GFPDF\Helper\Helper_Abstract_View;
+use GFPDF\Helper\Helper_Data;
 use GFPDF\Helper\Helper_Field_Container;
 use GFPDF\Helper\Helper_Field_Container_Void;
-use GFPDF\Helper\Helper_Abstract_Form;
-use GFPDF\Helper\Helper_PDF;
-use GFPDF\Helper\Helper_Abstract_Options;
-use GFPDF\Helper\Helper_Data;
 use GFPDF\Helper\Helper_Misc;
+use GFPDF\Helper\Helper_PDF;
 use GFPDF\Helper\Helper_Templates;
-
 use Psr\Log\LoggerInterface;
-
-use GFPDF\Helper\Fields\Field_Products;
-
-use GFFormsModel;
-use GFCommon;
-use GF_Field;
-
-use mPDF;
-use Exception;
 
 /**
  * @package     Gravity PDF
@@ -65,7 +58,7 @@ class View_PDF extends Helper_Abstract_View {
 	/**
 	 * Holds our log class
 	 *
-	 * @var \Monolog\Logger|LoggerInterface
+	 * @var LoggerInterface
 	 *
 	 * @since 4.0
 	 */
@@ -111,14 +104,14 @@ class View_PDF extends Helper_Abstract_View {
 	protected $templates;
 
 	/**
-	 * Setup our class by injecting all our dependancies
+	 * Setup our class by injecting all our dependencies
 	 *
 	 * @param array                                          $data_cache An array of data to pass to the view
 	 * @param \GFPDF\Helper\Helper_Form|Helper_Abstract_Form $gform      Our abstracted Gravity Forms helper functions
-	 * @param \Monolog\Logger|LoggerInterface                $log        Our logger class
+	 * @param LoggerInterface                                $log        Our logger class
 	 * @param \GFPDF\Helper\Helper_Abstract_Options          $options    Our options class which allows us to access any settings
 	 * @param \GFPDF\Helper\Helper_Data                      $data       Our plugin data store
-	 * @param \GFPDF\Helper\Helper_Misc                      $misc       Our miscellanious methods
+	 * @param \GFPDF\Helper\Helper_Misc                      $misc       Our miscellaneous methods
 	 * @param \GFPDF\Helper\Helper_Templates                 $templates
 	 *
 	 * @since 4.0
@@ -369,7 +362,9 @@ class View_PDF extends Helper_Abstract_View {
 		$form        = $this->gform->get_form( $entry['form_id'] );
 		$products    = new Field_Products( new GF_Field(), $entry, $this->gform, $this->misc );
 		$page_number = 0;
-		$container   = ( isset( $config['meta']['enable_css_ready_classes'] ) && false === $config['meta']['enable_css_ready_classes'] ) ? new Helper_Field_Container_Void() : new Helper_Field_Container();
+
+		$container = ( isset( $config['meta']['enable_css_ready_classes'] ) && false === $config['meta']['enable_css_ready_classes'] ) ? new Helper_Field_Container_Void() : new Helper_Field_Container();
+		$container = apply_filters( 'gfpdf_field_container_class', $container );
 
 		/* Allow the config to be changed through a filter */
 		$config['meta'] = ( isset( $config['meta'] ) ) ? $config['meta'] : [];

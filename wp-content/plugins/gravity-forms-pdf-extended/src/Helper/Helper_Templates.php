@@ -2,9 +2,8 @@
 
 namespace GFPDF\Helper;
 
-use Psr\Log\LoggerInterface;
-
 use Exception;
+use Psr\Log\LoggerInterface;
 use stdClass;
 
 /**
@@ -30,7 +29,7 @@ class Helper_Templates {
 	/**
 	 * Holds our log class
 	 *
-	 * @var \Monolog\Logger|LoggerInterface
+	 * @var LoggerInterface
 	 *
 	 * @since 4.1
 	 */
@@ -56,9 +55,9 @@ class Helper_Templates {
 	protected $gform;
 
 	/**
-	 * Setup our class by injecting all our dependancies
+	 * Setup our class by injecting all our dependencies
 	 *
-	 * @param \Monolog\Logger|LoggerInterface    $log  Our logger class
+	 * @param LoggerInterface                    $log  Our logger class
 	 * @param \GFPDF\Helper\Helper_Data          $data Our plugin data store
 	 * @param \GFPDF\Helper\Helper_Abstract_Form $gform
 	 *
@@ -154,7 +153,7 @@ class Helper_Templates {
 		$raw_templates[] = glob( $this->data->template_location . '*.php' );
 		$raw_templates[] = $this->get_core_pdf_templates();
 
-		return $raw_templates;
+		return apply_filters( 'gfpdf_unfiltered_template_list', $raw_templates );
 	}
 
 	/**
@@ -291,6 +290,11 @@ class Helper_Templates {
 		$path_to_test = PDF_PLUGIN_DIR . 'src/templates/' . $template_id . '.php';
 		if ( $include_core && is_file( $path_to_test ) ) {
 			return $path_to_test;
+		}
+
+		$fallback_template = apply_filters( 'gfpdf_fallback_template_path_by_id', false, $template_id );
+		if ( is_string( $fallback_template ) ) {
+			return $fallback_template;
 		}
 
 		throw new Exception( sprintf( 'Could not find the template: %s.php', $template_id ) );
@@ -475,19 +479,21 @@ class Helper_Templates {
 	public function get_config_path_by_id( $template_id, $include_core = true ) {
 
 		/* Check if there's a configuration class in the following directories */
-		$test_config_paths = [
+		$config_paths = [
 			$this->data->template_location . 'config/',
 		];
 
 		if ( is_multisite() ) {
-			array_unshift( $test_config_paths, $this->data->multisite_template_location . 'config/' );
+			array_unshift( $config_paths, $this->data->multisite_template_location . 'config/' );
 		}
 
 		if ( $include_core ) {
-			array_push( $test_config_paths, PDF_PLUGIN_DIR . 'src/templates/config/' );
+			array_push( $config_paths, PDF_PLUGIN_DIR . 'src/templates/config/' );
 		}
 
-		foreach ( $test_config_paths as $path ) {
+		$config_paths = apply_filters( 'gfpdf_template_config_paths', $config_paths );
+
+		foreach ( $config_paths as $path ) {
 			$file = $path . $template_id . '.php';
 
 			if ( is_file( $file ) ) {
@@ -643,21 +649,23 @@ class Helper_Templates {
 	public function get_template_image( $template, $type = 'url', $include_core = true ) {
 
 		/* Check if there's an image in the following directories */
-		$test_image_paths = [
+		$image_paths = [
 			$this->data->template_location_url . 'images/' => $this->data->template_location . 'images/',
 		];
 
 		if ( is_multisite() ) {
-			$test_image_paths = [ $this->data->multisite_template_location_url . 'images/' => $this->data->multisite_template_location . 'images/' ] + $test_image_paths;
+			$image_paths = [ $this->data->multisite_template_location_url . 'images/' => $this->data->multisite_template_location . 'images/' ] + $image_paths;
 		}
 
 		if ( $include_core ) {
-			$test_image_paths[ PDF_PLUGIN_URL . 'src/templates/images/' ] = PDF_PLUGIN_DIR . 'src/templates/images/';
+			$image_paths[ PDF_PLUGIN_URL . 'src/templates/images/' ] = PDF_PLUGIN_DIR . 'src/templates/images/';
 		}
+
+		$image_paths = apply_filters( 'gfpdf_template_image_paths', $image_paths );
 
 		/* Check if our image exists in one of our directories and return the URL */
 		$template .= '.png';
-		foreach ( $test_image_paths as $url => $path ) {
+		foreach ( $image_paths as $url => $path ) {
 			if ( is_file( $path . $template ) ) {
 				return ( $type === 'url' ) ? $url . $template : $path . $template;
 			}

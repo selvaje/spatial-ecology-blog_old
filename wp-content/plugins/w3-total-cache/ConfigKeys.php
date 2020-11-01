@@ -173,6 +173,18 @@ $keys = array(
 		'type' => 'boolean',
 		'default' => true
 	),
+	'lazyload.googlemaps.google_maps_easy' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
+	'lazyload.googlemaps.wp_google_maps' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
+	'lazyload.googlemaps.wp_google_map_plugin' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
 	'lazyload.exclude' => array(
 		'type' => 'array',
 		'default' => array(
@@ -223,7 +235,7 @@ $keys = array(
 	),
 	'objectcache.enabled_for_wp_admin' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false,
 	),
 	'objectcache.fallback_transients' => array(
 		'type' => 'boolean',
@@ -820,7 +832,8 @@ $keys = array(
 		'type' => 'array',
 		'default' => array(
 			'google_ad_',
-			'RSPEAK_'
+			'RSPEAK_',
+			'mfunc'
 		)
 	),
 	'minify.css.combine' => array(
@@ -1690,6 +1703,18 @@ $keys = array(
 		'type' => 'string',
 		'default' => 'auto'
 	),
+	'cdnfsd.transparentcdn.client_id' => array(
+		'type' => 'string',
+		'default' => ''
+	),
+	'cdnfsd.transparentcdn.client_secret' => array(
+		'type' => 'string',
+		'default' => ''
+	),
+	'cdnfsd.transparentcdn.company_id' => array(
+		'type' => 'string',
+		'default' => ''
+	),
 
 	'varnish.configuration_overloaded' => array(
 		'type' => 'boolean',
@@ -2405,7 +2430,10 @@ $keys = array(
 		'default' => '',
 		'master_only' => true
 	),
-
+	'jquerymigrate.disabled' => array(
+		'type' => 'boolean',
+		'default' => false,
+	),
 
 	// extensions keys:
 	//

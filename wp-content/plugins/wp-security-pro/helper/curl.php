@@ -165,13 +165,25 @@ class mo_MocURL
         $customerKey = mo_MoWpnsConstants::DEFAULT_CUSTOMER_KEY;
         $apiKey 	 = mo_MoWpnsConstants::DEFAULT_API_KEY;
         $fromEmail			= 'no-reply@xecurify.com';
-        $subject            = "Feedback: WordPress WP Security Pro Plugin";
+        $feedback_option = sanitize_text_field($_POST['option']);
+        if ($feedback_option == 'mo_skip_feedback_wpns') 
+        {
+        	$subject            = "Deactivate [Feedback Skipped]: WordPress WP Security Pro Plugin";
+        }
+        elseif ($feedback_option == 'mo_feedback_wpns') 
+        {
+        	$subject            = "Feedback: WordPress WP Security Pro Plugin - ". $email;;
+        }
+        else
+        {
+        	$subject            = "Feedback: WordPress WP Security Pro Plugin - ". $email;;
+        }
 
         global $user;
         $user         = wp_get_current_user();
 
 
-        $query        = '[WordPress WP Security Pro Plugin: ]: ' . $message;
+        $query        = '[WordPress WP Security Pro Plugin: -V '.MOWPNS_VERSION.' ]: ' . $message;
 
 
         $content='<div >Hello, <br><br>First Name :'.$user->user_firstname.'<br><br>Last  Name :'.$user->user_lastname.'   <br><br>Company :<a href="'.$_SERVER['SERVER_NAME'].'" target="_blank" >'.$_SERVER['SERVER_NAME'].'</a><br><br>Phone Number :'.$phone.'<br><br>Email :<a href="mailto:'.$email.'" target="_blank">'.$email.'</a><br><br>Query :'.$query.'</div>';

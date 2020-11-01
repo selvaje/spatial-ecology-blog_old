@@ -4,10 +4,11 @@
 	    Plugin URI: http://miniorange.com
 	    Description: Security against Login, Registrations, brute force attacks by tracking IP and Blacklisting IP's.
 	    Author: miniorange
-	    Version: 4.0.9
+	    Version: 4.1.0
 	    Author URI: http://miniorange.com
     */
-	
+
+	define( 'MOWPNS_VERSION', '4.1.0' );
 	class WPSecurityPro{
 
 		function __construct()

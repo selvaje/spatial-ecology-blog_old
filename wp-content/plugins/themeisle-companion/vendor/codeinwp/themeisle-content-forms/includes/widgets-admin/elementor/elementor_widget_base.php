@@ -24,6 +24,8 @@ use ThemeIsle\ContentForms\Form_Manager;
  */
 abstract class Elementor_Widget_Base extends Widget_Base {
 
+	protected $field_types = array();
+
 	/**
 	 * All the widgets that extends this class have the same category.
 	 *
@@ -55,6 +57,13 @@ abstract class Elementor_Widget_Base extends Widget_Base {
 	 * Register the controls for each Elementor Widget.
 	 */
 	protected function _register_controls() {
+		$this->field_types = array(
+			'text'     => __( 'Text', 'textdomain' ),
+			'password' => __( 'Password', 'textdomain' ),
+			'email'    => __( 'Email', 'textdomain' ),
+			'textarea' => __( 'Textarea', 'textdomain' ),
+		);
+
 		$this->register_form_fields();
 		$this->register_settings_controls();
 		$this->register_style_controls();
@@ -81,16 +90,13 @@ abstract class Elementor_Widget_Base extends Widget_Base {
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'required',
 				'default'      => '',
+				'condition'    => array(
+					'type!' => 'hidden',
+				),
 			)
 		);
 
-		$field_types = array(
-			'text'     => __( 'Text', 'textdomain' ),
-			'password' => __( 'Password', 'textdomain' ),
-			'email'    => __( 'Email', 'textdomain' ),
-			'textarea' => __( 'Textarea', 'textdomain' ),
-		);
-
+		$field_types = $this->get_specific_field_types();
 		$repeater->add_control(
 			'type',
 			array(
@@ -112,9 +118,9 @@ abstract class Elementor_Widget_Base extends Widget_Base {
 		$repeater->add_responsive_control(
 			'field_width',
 			array(
-				'label'   => __( 'Field Width', 'textdomain' ),
-				'type'    => Controls_Manager::SELECT,
-				'options' => array(
+				'label'     => __( 'Field Width', 'textdomain' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => array(
 					'100' => '100%',
 					'75'  => '75%',
 					'66'  => '66%',
@@ -122,7 +128,10 @@ abstract class Elementor_Widget_Base extends Widget_Base {
 					'33'  => '33%',
 					'25'  => '25%',
 				),
-				'default' => '100',
+				'default'   => '100',
+				'condition' => array(
+					'type!' => 'hidden',
+				),
 			)
 		);
 
@@ -138,11 +147,15 @@ abstract class Elementor_Widget_Base extends Widget_Base {
 		$repeater->add_control(
 			'placeholder',
 			array(
-				'label'   => __( 'Placeholder', 'textdomain' ),
-				'type'    => Controls_Manager::TEXT,
-				'default' => '',
+				'label'     => __( 'Placeholder', 'textdomain' ),
+				'type'      => Controls_Manager::TEXT,
+				'default'   => '',
+				'condition' => array(
+					'type!' => array( 'hidden', 'checkbox' ),
+				),
 			)
 		);
+
 		$this->add_repeater_specific_fields( $repeater );
 
 		$default_fields = $this->get_default_config();
@@ -1155,6 +1168,19 @@ abstract class Elementor_Widget_Base extends Widget_Base {
 			case 'password':
 				echo '<input type="password" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_name ) . '" ' . $required . ' ' . $disabled . '>';
 				break;
+			case 'hidden':
+				$hidden_field_value = $field['hidden_value'];
+				echo '<input type="hidden" value="' . esc_attr( $hidden_field_value ) . '" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_name ) . '" ' . $disabled . '>';
+				break;
+			case 'checkbox':
+				echo '<label class="checkbox-input" for="' . esc_attr( $field_name ) . '" ' . $this->get_render_attribute_string( 'label' . $field_id ) . '>';
+				echo wp_kses_post( $field['label'] );
+				if ( $field['requirement'] === 'required' ) {
+					echo '<span class="required-mark"> *</span>';
+				}
+				echo '<input type="checkbox" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_name ) . '" ' . $required . ' ' . $disabled . '>';
+				echo '</label>';
+				break;
 			default:
 				echo '<input type="text" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_name ) . '" ' . $required . ' ' . $disabled . ' placeholder="' . esc_attr( $placeholder ) . '">';
 				break;
@@ -1221,6 +1247,9 @@ abstract class Elementor_Widget_Base extends Widget_Base {
 	 */
 	private function render_field_label( $field ) {
 
+		if ( $field['type'] === 'hidden' || $field['type'] === 'checkbox' ) {
+			return false;
+		}
 		$settings      = $this->get_settings();
 		$display_label = $settings['hide_label'];
 		$field_id      = $field['_id'];
@@ -1284,4 +1313,11 @@ abstract class Elementor_Widget_Base extends Widget_Base {
 	 * Add widget specific settings controls.
 	 */
 	abstract function add_specific_settings_controls();
+
+	/**
+	 * Get allowed field types.
+	 *
+	 * @return array
+	 */
+	abstract function get_specific_field_types();
 }

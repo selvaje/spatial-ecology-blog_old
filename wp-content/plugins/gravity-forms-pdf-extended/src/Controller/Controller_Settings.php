@@ -48,7 +48,7 @@ class Controller_Settings extends Helper_Abstract_Controller implements Helper_I
 	/**
 	 * Holds our log class
 	 *
-	 * @var \Monolog\Logger|LoggerInterface
+	 * @var LoggerInterface
 	 *
 	 * @since 4.0
 	 */
@@ -85,12 +85,12 @@ class Controller_Settings extends Helper_Abstract_Controller implements Helper_I
 	protected $misc;
 
 	/**
-	 * Setup our class by injecting all our dependancies
+	 * Setup our class by injecting all our dependencies
 	 *
 	 * @param Helper_Abstract_Model|\GFPDF\Model\Model_Settings $model   Our Settings Model the controller will manage
 	 * @param Helper_Abstract_View|\GFPDF\View\View_Settings    $view    Our Settings View the controller will manage
 	 * @param \GFPDF\Helper\Helper_Abstract_Form                $gform   Our abstracted Gravity Forms helper functions
-	 * @param \Monolog\Logger|LoggerInterface                   $log     Our logger class
+	 * @param LoggerInterface                                   $log     Our logger class
 	 * @param \GFPDF\Helper\Helper_Notices                      $notices Our notice class used to queue admin messages and errors
 	 * @param \GFPDF\Helper\Helper_Data                         $data    Our plugin data store
 	 * @param \GFPDF\Helper\Helper_Misc                         $misc    Our miscellaneous class
@@ -199,6 +199,7 @@ class Controller_Settings extends Helper_Abstract_Controller implements Helper_I
 		add_filter( 'gravitypdf_settings_navigation', [ $this, 'disable_tools_on_view_cap' ] );
 
 		/* allow TTF uploads */
+		add_filter( 'mime_types', [ $this, 'allow_font_uploads' ] );
 		add_filter( 'wp_check_filetype_and_ext', [ $this, 'validate_font_uploads' ], 10, 3 );
 
 		/* Register add-ons for licensing page */
@@ -350,9 +351,9 @@ class Controller_Settings extends Helper_Abstract_Controller implements Helper_I
 	 * @since 4.0
 	 */
 	public function allow_font_uploads( $mime_types = [] ) {
-		_deprecated_function( __METHOD__, '5.2.2' );
-
-		$mime_types['ttf'] = 'application/x-font-ttf';
+		if ( $this->gform->has_capability( 'gravityforms_edit_settings' ) ) {
+			$mime_types['ttf'] = 'font/ttf';
+		}
 
 		return $mime_types;
 	}
@@ -387,7 +388,7 @@ class Controller_Settings extends Helper_Abstract_Controller implements Helper_I
 			if ( strlen( $ttf->familyName ) > 0 ) {
 				return [
 					'ext'             => 'ttf',
-					'type'            => 'application/x-font-ttf',
+					'type'            => 'font/ttf',
 					'proper_filename' => false,
 				];
 			}

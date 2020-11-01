@@ -2,7 +2,7 @@
 Contributors: themeisle, codeinwp, rodicaelena, baicusandrei, hardeepasrani
 Tags: widget, admin, widgets, sharing, sections, themes, stock photos, custom icons, icons, menu icons, stock, templates
 Requires at least: 4.7
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -109,9 +109,117 @@ Activating the Orbit Fox plugin is just like any other plugin. If you've uploade
 
 == Changelog ==
 
+#### [Version 2.10.0](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.19...v2.10.0) (2020-10-09)
+
+- New Custom Fonts module
+
+
+
+
+##### [Version 2.9.19](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.18...v2.9.19) (2020-09-25)
+
+* Fix elementor post grid jQuery dependencies
+
+
+
+
+##### [Version 2.9.18](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.17...v2.9.18) (2020-09-21)
+
+- [Fix] Missing FontAwesome icons when Otter Blocks plugin was active
+
+
+
+
+##### [Version 2.9.17](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.16...v2.9.17) (2020-09-02)
+
+- [Fix] Compatibility with WP 5.5
+- [Fix] Installing recommended plugins not working
+
+
+
+
+##### [Version 2.9.16](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.15...v2.9.16) (2020-08-12)
+
+fix: add permission_callback for analytics module
+
+
+
+
+##### [Version 2.9.15](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.14...v2.9.15) (2020-08-12)
+
+fix: notice showing up in the editor on the new WordPress version for users with WP_DEBUG turned on
+
+
+
+
+##### [Version 2.9.14](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.13...v2.9.14) (2020-08-07)
+
+- Remove affiliate link
+
+
+
+
+##### [Version 2.9.13](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.12...v2.9.13) (2020-08-04)
+
+- Removed Starter Sites library and import process used for the Neve theme
+- [Fix] Menu Icons module not working with WP 5.5
+- [Fix] Empty team member widget appearing on mobile in Hestia theme
+
+
+
+
+##### [Version 2.9.12](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.11...v2.9.12) (2020-07-20)
+
+- New checkbox field in the Contact widget for both Elementor and Beaver Builder
+- [Fix] Newsletter widget not taking into account the double opt-in option from Mailchimp
+
+
+
+
+##### [Version 2.9.11](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.10...v2.9.11) (2020-07-10)
+
+- Starter Sites library and import process from the Neve theme
+
+
+
+
+##### [Version 2.9.10](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.9...v2.9.10) (2020-06-24)
+
+- [Fix] JS error for some modules when the module names are translated
+
+
+
+
+##### [Version 2.9.9](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.8...v2.9.9) (2020-06-05)
+
+New Header/Footer Scripts module
+
+
+
+
+##### [Version 2.9.8](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.7...v2.9.8) (2020-04-28)
+
+- Fixed importing multiple photos and better error handling in the Mystock module
+
+
+
+
+##### [Version 2.9.7](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.6...v2.9.7) (2020-04-22)
+
+- New Hidden field in the contact form widget
+- Fix Mystock Import in the Gutenberg editor
+- Fix overlapping widgets names with Beaver Builder Pro version
+- Fix undefined index notice in Elementor Services widget
+- Upgrade FontAwesome icons to FA5 for Hestia default content
+- Make inline social icons round in Hestia
+- Fix inline social icons not applying on pages in Hestia
+
+
+
+
 ##### [Version 2.9.6](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.5...v2.9.6) (2020-04-06)
 
-* Update compatibility with WordPress 5.4 
+* Update compatibility with WordPress 5.4
 * Sync dependencies
 * Fix selective refresh for Hestia enhacements features
 
@@ -144,7 +252,7 @@ Activating the Orbit Fox plugin is just like any other plugin. If you've uploade
 
 ##### [Version 2.9.2](https://github.com/Codeinwp/themeisle-companion/compare/v2.9.1...v2.9.2) (2020-02-13)
 
-* Fix issue with cookie notices closing behavior. 
+* Fix issue with cookie notices closing behavior.
 * Fix notice when Otter and Orbit Fox were both active.
 
 
@@ -159,62 +267,62 @@ Activating the Orbit Fox plugin is just like any other plugin. If you've uploade
 
 #### [Version 2.9.0](https://github.com/Codeinwp/themeisle-companion/compare/v2.8.14...v2.9.0) (2020-02-03)
 
-* Update dependencies 
+* Update dependencies
 * Remove legacy modules
 
 
 
-= 2.8.14 - 2019-12-02  = 
+= 2.8.14 - 2019-12-02  =
 
 * Fix fatal error with Membership Pro
 * Various bug fixes to forms and Elementor widgets
 
 
-= 2.8.13 - 2019-11-18  = 
+= 2.8.13 - 2019-11-18  =
 
 * Fix dependency issues on content forms module
 
 
-= 2.8.12 - 2019-11-18  = 
+= 2.8.12 - 2019-11-18  =
 
 * sync dependencies
 
 
-= 2.8.11 - 2019-11-18  = 
+= 2.8.11 - 2019-11-18  =
 
 * Various improvements for Beaver and Elementor form widgets.
 * Improvements to the post grid Elementor module.
 * Compatibility with WordPress 5.3
 
 
-= 2.8.10 - 2019-09-13  = 
+= 2.8.10 - 2019-09-13  =
 
 * Development
 
 
-= 2.8.8 - 2019-09-11  = 
+= 2.8.8 - 2019-09-11  =
 
 * Fixes Constant Warning for Beaver Widgets Module
 
 
-= 2.8.7 - 2019-08-13  = 
+= 2.8.7 - 2019-08-13  =
 
 * Fix error notice in menu icons
 
 
-= 2.8.6 - 2019-08-12  = 
+= 2.8.6 - 2019-08-12  =
 
 * Improve script loading performance
 * Fix issue with mystock import
 
 
-= 2.8.5 - 2019-07-26  = 
+= 2.8.5 - 2019-07-26  =
 
 * Update Elementor content forms widgets compatiblity with the latest version.
 * Various fixes for the gutenberg blocks module.
 
 
-= 2.8.4 - 2019-05-23  = 
+= 2.8.4 - 2019-05-23  =
 
 * minor adjustments to the dashboard UI
 * various updates to the Gutenberg blocks available

@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Google Analyticator - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-06-05 11:28:04+0000\n"
+"PO-Revision-Date: 2020-04-10 15:13:06+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11,23 +11,23 @@ msgstr ""
 "Language: en_GB\n"
 "Project-Id-Version: Plugins - Google Analyticator - Stable (latest release)\n"
 
-#. Author URI of the plugin/theme
-msgid "http://www.sumome.com/?src=wp_readme"
-msgstr "http://www.sumome.com/?src=wp_readme"
+#. Author URI of the plugin
+msgid "https://appsumo.com/tools/wordpress/?utm_source=sumo&utm_medium=wp-widget&utm_campaign=google-analyticator"
+msgstr "https://appsumo.com/tools/wordpress/?utm_source=sumo&utm_medium=wp-widget&utm_campaign=google-analyticator"
 
-#. Author of the plugin/theme
+#. Author of the plugin
 msgid "SumoMe"
 msgstr "SumoMe"
 
-#. Description of the plugin/theme
+#. Description of the plugin
 msgid "Adds the necessary JavaScript code to enable <a href=\"http://www.google.com/analytics/\">Google's Analytics</a>. After enabling this plugin you need to authenticate with Google, then select your domain and you're set."
 msgstr "Adds the necessary JavaScript code to enable <a href=\"http://www.google.com/analytics/\">Google's Analytics</a>. After enabling this plugin you need to authenticate with Google, then select your domain and you're set."
 
-#. Plugin URI of the plugin/theme
+#. Plugin URI of the plugin
 msgid "http://www.videousermanuals.com/google-analyticator/?utm_campaign=analyticator&utm_medium=plugin&utm_source=readme-txt"
 msgstr "http://www.videousermanuals.com/google-analyticator/?utm_campaign=analyticator&utm_medium=plugin&utm_source=readme-txt"
 
-#. Plugin Name of the plugin/theme
+#. Plugin Name of the plugin
 msgid "Google Analyticator"
 msgstr "Google Analyticator"
 
@@ -152,7 +152,7 @@ msgstr "Google Analytics Stats"
 msgid "Displays Stat Info From Google Analytics"
 msgstr "Displays Stat Info From Google Analytics"
 
-#: google-analyticator.php:1240
+#: google-analyticator.php:1260
 msgid "Tracking code is hidden, since the settings specify not to track admins. Tracking is occurring for non-admins."
 msgstr "Tracking code is hidden, since the settings specify not to track admins. Tracking is occurring for non-admins."
 
@@ -408,26 +408,26 @@ msgstr "Google Analytics logging is"
 msgid "Basic Settings"
 msgstr "Basic Settings"
 
-#: google-analyticator.php:500
+#: google-analyticator.php:512
 msgid "Google Analytics integration is currently enabled, but you did not enter a UID. Tracking will not occur."
 msgstr "Google Analytics integration is currently enabled, but you did not enter a UID. Tracking will not occur."
 
-#: google-analyticator.php:495
+#: google-analyticator.php:507
 msgid "Google Analytics integration is currently <strong>DISABLED</strong>."
 msgstr "Google Analytics integration is currently <strong>DISABLED</strong>."
 
-#: google-analyticator.php:484 google-analyticator.php:1388
+#: google-analyticator.php:1413
 msgid "Grow your site faster!"
 msgstr "Grow your site faster!"
 
-#: google-analyticator.php:469
+#: google-analyticator.php:485
 msgid "Google Analyticator settings saved."
 msgstr "Google Analyticator settings saved."
 
-#: google-analyticator.php:265
+#: google-analyticator.php:281
 msgid "Reset"
 msgstr "Reset"
 
-#: google-analyticator.php:264
+#: google-analyticator.php:280 google-analyticator.php:1459
 msgid "Settings"
 msgstr "Settings"

@@ -115,14 +115,23 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   text-align: left;
   font-size: 20px;
-  list-style-image: url('../images/icons/list-ico.png');
+  /*list-style-image: url('../images/icons/list-ico.png');*/
 }
+
+  /*list-style-image: url('../images/icons/list-ico.png');*/
+  
+
+
 .features-section .features ul li {
   margin: 25px 0;
-  padding-left: 10px;
+  padding-left: 46px;
+  background: url('../images/icons/list-ico.png') left top no-repeat 
 }
 .features-section .features ul span {
   vertical-align: text-bottom;
+  width: 86%;
+  display: inline-block;
+  line-height: 28px;
 }
 
 .price-section .prices {
@@ -284,7 +293,11 @@ img {
 	
   .features-section .features {
     padding: 25px 0 60px;
-  }	
+  }
+  
+  .features-section .features ul span {
+    width: 100%;
+  }
 	
 	.container {
 		margin: 0 auto;

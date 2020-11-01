@@ -1,9 +1,9 @@
 # WP Product Review Lite #
-**Contributors:** [codeinwp](https://profiles.wordpress.org/codeinwp), [marius2012](https://profiles.wordpress.org/marius2012), [marius_codeinwp](https://profiles.wordpress.org/marius_codeinwp), [hardeepasrani](https://profiles.wordpress.org/hardeepasrani), [themeisle](https://profiles.wordpress.org/themeisle), [Madalin_ThemeIsle](https://profiles.wordpress.org/Madalin_ThemeIsle), [contactashish13](https://profiles.wordpress.org/contactashish13)  
+**Contributors:** [codeinwp](https://profiles.wordpress.org/codeinwp), [marius2012](https://profiles.wordpress.org/marius2012), [marius_codeinwp](https://profiles.wordpress.org/marius_codeinwp), [hardeepasrani](https://profiles.wordpress.org/hardeepasrani), [themeisle](https://profiles.wordpress.org/themeisle), [Madalin_ThemeIsle](https://profiles.wordpress.org/Madalin_ThemeIsle), [rozroz](https://profiles.wordpress.org/rozroz)  
 **Tags:**  review, rating, posts, widget, review blogger, review blogging, affiliate, product reviews,plugin,  google rating, product review, rating, review, star rating, user rating, wp rating, wp review,  google, hreview,rich snippets,seo,snippet  
 **Author URI:** http://themeisle.com  
 **Requires at least:** 3.5  
-**Tested up to:** 5.4  
+**Tested up to:** 5.5  
 **Stable tag:** trunk  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
@@ -11,8 +11,6 @@
 
 Easily turn your basic posts into in-depth reviews with ratings, pros and cons, affiliate links, rich snippets and user reviews.
 ## Description ##
-
-### User Review Enabled
 
 1. This review plugin helps you to interact with your users with improved comments, you can expose your reviews in a easier to read way and will help you generate money by adding a buy now button in your post. Rich snippets are also supported.
 
@@ -24,7 +22,7 @@ Easily turn your basic posts into in-depth reviews with ratings, pros and cons, 
 
 1. For updates follow https://twitter.com/themeisle.
 
-If you wanna learn more about the <a href="http://www.codeinwp.com/blog/fastest-wordpress-hosting/" rel="nofollow">fastest WordPress hosting</a> or which <a href="http://www.codeinwp.com/blog/15-best-wordpress-review-themes/" rel="nofollow">review themes</a> are playing nice with WP Product review, checkout our blog.
+If you wanna learn more about the <a href="https://www.codeinwp.com/blog/fastest-wordpress-hosting/" rel="nofollow">fastest WordPress hosting</a> or which <a href="https://www.codeinwp.com/blog/best-wordpress-review-themes/" rel="nofollow">review themes</a> are playing nice with WP Product review, checkout our blog.
 
 
 **WP Product Review provides following features**
@@ -36,7 +34,52 @@ If you wanna learn more about the <a href="http://www.codeinwp.com/blog/fastest-
 - Add specific user review options to wordpress comments
 - Add rich snippet ( schema ) to your posts
 
+**Please note that WP Product Review PRO has been retired and is no longer available**
+
 ## Changelog ##
+### 3.7.11 - 2020-08-21  ###
+
+* [Fix] Compatibility with WP 5.5
+* [Fix] Compatibility with AMP for WP plugin
+
+
+
+### 3.7.10 - 2020-06-24  ###
+
+* [Fix] Load schema.org just for PHP 7.0 and above
+* [Fix] Take into account the rating scale option for schema.org
+* [Fix] Dequeue jquery-ui-slider when not used
+
+
+### 3.7.9 - 2020-06-15  ###
+
+* [Fix] Schema.org in both the new and classic editor
+* [Fix] Do not display reviews in content outside the loop
+
+
+### 3.7.8 - 2020-05-22  ###
+
+* [Fix] Sanitize values
+
+
+### 3.7.7 - 2020-05-21  ###
+
+* [Fix] Security vulnerability
+
+
+### 3.7.6 - 2020-05-14  ###
+
+* - [Fix] Security vulnerability
+
+
+### 3.7.5 - 2020-05-08  ###
+
+* [Fix] Comments area layout in the TwentyTwenty theme
+* [Fix] Pros and Cons texts not translatable with Polylang
+* [Fix] Image missing link in the Top Products Widget
+* [Fix] Bulk activation of plugin aborts activation of subsequent plugins
+
+
 ### 3.7.4 - 2020-03-31  ###
 
 * Tested up to WordPress 5.4
@@ -206,16 +249,16 @@ If you wanna learn more about the <a href="http://www.codeinwp.com/blog/fastest-
 ### 3.2.0 - 2017-11-06  ###
 
 * Adds support for custom post-type  and taxonomies in widgets.
-* Adds control for time-frame in top reviews widget. 
-* Improves responsiveness and removes dependency of pie-chart.js 
+* Adds control for time-frame in top reviews widget.
+* Improves responsiveness and removes dependency of pie-chart.js
 * Improves notifications when Disqus and Jetpack comments are used.
 
 
 ### 3.1.0 - 2017-09-22  ###
 
-* Fix for some edge cases when the review box was gone. 
+* Fix for some edge cases when the review box was gone.
 * Improvements assets loading, removed redundant files.
-* Improvements perfomance of review query. 
+* Improvements perfomance of review query.
 * Various bug fixes reported by clients.
 
 
@@ -279,7 +322,7 @@ If you wanna learn more about the <a href="http://www.codeinwp.com/blog/fastest-
 * Fix for duplicate title for widgets list.
 * Fix for link of the review in the widgets.
 * Fix for click link behavior on review picture.
-* Fix widget titles default values. 
+* Fix widget titles default values.
 * Fix review rating when comments influence is on.
 * Improved security.
 
@@ -304,7 +347,7 @@ If you wanna learn more about the <a href="http://www.codeinwp.com/blog/fastest-
 
 ### 3.0.0 - 2017-08-23  ###
 
-* Major code refactor ( Please test before update ) 
+* Major code refactor ( Please test before update )
 * Added JSON-LD support
 * Improved compatibility with themes
 
@@ -565,6 +608,7 @@ Alternatively you can also follow the following steps to install the WP Product 
 
 
 
+
 ### How to activate user reviews ###
 
 By default user reviews are disabled since not all the themes are compatible with this option due to different designs for the comment box. You can easily activate them from General Settings
@@ -594,178 +638,181 @@ https://themeisle.com/contact
 [http://docs.themeisle.com/article/578-prevent-users-from-posting-multiple-review-on-a-single-post-in-wp-product-review](http://docs.themeisle.com/article/578-prevent-users-from-posting-multiple-review-on-a-single-post-in-wp-product-review)
 
 ### WP Product Review Documentation ###
- [http://docs.themeisle.com/article/173-wp-product-review-documentation](http://docs.themeisle.com/article/173-wp-product-review-documentation) 
+ [http://docs.themeisle.com/article/173-wp-product-review-documentation](http://docs.themeisle.com/article/173-wp-product-review-documentation)
 
- = WP Product Review Shortcode Documentation = 
- [http://docs.themeisle.com/article/449-wp-product-review-shortcode-documentation](http://docs.themeisle.com/article/449-wp-product-review-shortcode-documentation) 
+ = WP Product Review Shortcode Documentation =
+ [http://docs.themeisle.com/article/449-wp-product-review-shortcode-documentation](http://docs.themeisle.com/article/449-wp-product-review-shortcode-documentation)
 
- = WP Product Review Comparison Table Documentation = 
- [http://docs.themeisle.com/article/424-wp-product-review-comparison-table-documentation](http://docs.themeisle.com/article/424-wp-product-review-comparison-table-documentation) 
+ = WP Product Review Comparison Table Documentation =
+ [http://docs.themeisle.com/article/424-wp-product-review-comparison-table-documentation](http://docs.themeisle.com/article/424-wp-product-review-comparison-table-documentation)
 
- = Enable user reviews in WP Product Review = 
- [http://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-revie](http://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-revie) 
+ = Enable user reviews in WP Product Review =
+ [http://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-revie](http://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-revie)
 
- = How to create a listing grid of reviews in WP Product Review = 
- [http://docs.themeisle.com/article/764-how-to-create-a-listing-grid-of-reviews-in-wp-product-review](http://docs.themeisle.com/article/764-how-to-create-a-listing-grid-of-reviews-in-wp-product-review) 
+ = How to create a listing grid of reviews in WP Product Review =
+ [http://docs.themeisle.com/article/764-how-to-create-a-listing-grid-of-reviews-in-wp-product-review](http://docs.themeisle.com/article/764-how-to-create-a-listing-grid-of-reviews-in-wp-product-review)
 
- = Rich Snippets not showing in search results = 
- [http://docs.themeisle.com/article/756-rich-snippets-not-showing-in-search-results](http://docs.themeisle.com/article/756-rich-snippets-not-showing-in-search-results) 
+ = Rich Snippets not showing in search results =
+ [http://docs.themeisle.com/article/756-rich-snippets-not-showing-in-search-results](http://docs.themeisle.com/article/756-rich-snippets-not-showing-in-search-results)
 
- = How to add a top products widget in WP Product Review = 
- [http://docs.themeisle.com/article/763-how-to-add-a-top-products-widget-in-wp-product-review](http://docs.themeisle.com/article/763-how-to-add-a-top-products-widget-in-wp-product-review) 
+ = How to add a top products widget in WP Product Review =
+ [http://docs.themeisle.com/article/763-how-to-add-a-top-products-widget-in-wp-product-review](http://docs.themeisle.com/article/763-how-to-add-a-top-products-widget-in-wp-product-review)
 
- = How to remove rich snippets in WP Product Review = 
- [http://docs.themeisle.com/article/755-how-to-remove-rich-snippets-in-wp-product-review](http://docs.themeisle.com/article/755-how-to-remove-rich-snippets-in-wp-product-review) 
+ = How to remove rich snippets in WP Product Review =
+ [http://docs.themeisle.com/article/755-how-to-remove-rich-snippets-in-wp-product-review](http://docs.themeisle.com/article/755-how-to-remove-rich-snippets-in-wp-product-review)
 
- = How to remove Pros/Cons list in WP Product Review = 
- [http://docs.themeisle.com/article/762-how-to-remove-pros-cons-list-in-wp-product-review](http://docs.themeisle.com/article/762-how-to-remove-pros-cons-list-in-wp-product-review) 
+ = How to remove Pros/Cons list in WP Product Review =
+ [http://docs.themeisle.com/article/762-how-to-remove-pros-cons-list-in-wp-product-review](http://docs.themeisle.com/article/762-how-to-remove-pros-cons-list-in-wp-product-review)
 
- = How to change the default rating icon in WP Product Review = 
- [http://docs.themeisle.com/article/757-how-to-change-the-default-rating-icon-in-wp-product-review](http://docs.themeisle.com/article/757-how-to-change-the-default-rating-icon-in-wp-product-review) 
+ = How to change the default rating icon in WP Product Review =
+ [http://docs.themeisle.com/article/757-how-to-change-the-default-rating-icon-in-wp-product-review](http://docs.themeisle.com/article/757-how-to-change-the-default-rating-icon-in-wp-product-review)
 
- = How the visitors rating are influencing the review rating in WP Product Review = 
- [http://docs.themeisle.com/article/760-how-the-visitors-rating-are-influencing-the-review-rating-in-wp-product-review](http://docs.themeisle.com/article/760-how-the-visitors-rating-are-influencing-the-review-rating-in-wp-product-review) 
+ = How the visitors rating are influencing the review rating in WP Product Review =
+ [http://docs.themeisle.com/article/760-how-the-visitors-rating-are-influencing-the-review-rating-in-wp-product-review](http://docs.themeisle.com/article/760-how-the-visitors-rating-are-influencing-the-review-rating-in-wp-product-review)
 
- = How to change the rating colours in WP Product Review = 
- [http://docs.themeisle.com/article/761-how-to-change-the-rating-colours-in-wp-product-review](http://docs.themeisle.com/article/761-how-to-change-the-rating-colours-in-wp-product-review) 
+ = How to change the rating colours in WP Product Review =
+ [http://docs.themeisle.com/article/761-how-to-change-the-rating-colours-in-wp-product-review](http://docs.themeisle.com/article/761-how-to-change-the-rating-colours-in-wp-product-review)
 
- = How to increase number of review options, pros or cons in WP Product Review = 
- [http://docs.themeisle.com/article/758-how-to-increase-number-of-review-options-pros-or-cons-in-wp-product-review](http://docs.themeisle.com/article/758-how-to-increase-number-of-review-options-pros-or-cons-in-wp-product-review) 
+ = How to increase number of review options, pros or cons in WP Product Review =
+ [http://docs.themeisle.com/article/758-how-to-increase-number-of-review-options-pros-or-cons-in-wp-product-review](http://docs.themeisle.com/article/758-how-to-increase-number-of-review-options-pros-or-cons-in-wp-product-review)
 
- = What actions and filters are available in WP Product Review = 
- [http://docs.themeisle.com/article/770-what-actions-and-filters-are-available-in-wp-product-review](http://docs.themeisle.com/article/770-what-actions-and-filters-are-available-in-wp-product-review) 
+ = What actions and filters are available in WP Product Review =
+ [http://docs.themeisle.com/article/770-what-actions-and-filters-are-available-in-wp-product-review](http://docs.themeisle.com/article/770-what-actions-and-filters-are-available-in-wp-product-review)
 
- = WP Product Review Documentation = 
- [https://docs.themeisle.com/article/173-wp-product-review-documentation](https://docs.themeisle.com/article/173-wp-product-review-documentation) 
+ = WP Product Review Documentation =
+ [https://docs.themeisle.com/article/173-wp-product-review-documentation](https://docs.themeisle.com/article/173-wp-product-review-documentation)
 
- = WP Product Review Shortcode Documentation = 
- [https://docs.themeisle.com/article/449-wp-product-review-shortcode-documentation](https://docs.themeisle.com/article/449-wp-product-review-shortcode-documentation) 
+ = WP Product Review Shortcode Documentation =
+ [https://docs.themeisle.com/article/449-wp-product-review-shortcode-documentation](https://docs.themeisle.com/article/449-wp-product-review-shortcode-documentation)
 
- = How to change dynamically the image size for review = 
- [https://docs.themeisle.com/article/135-how-to-change-dynamically-the-image-size-for-review](https://docs.themeisle.com/article/135-how-to-change-dynamically-the-image-size-for-review) 
+ = How to change dynamically the image size for review =
+ [https://docs.themeisle.com/article/135-how-to-change-dynamically-the-image-size-for-review](https://docs.themeisle.com/article/135-how-to-change-dynamically-the-image-size-for-review)
 
- = How to change dynamically the pros/cons heading text = 
- [https://docs.themeisle.com/article/133-how-to-change-dynamically-the-proscons-heading-text](https://docs.themeisle.com/article/133-how-to-change-dynamically-the-proscons-heading-text) 
+ = How to change dynamically the pros/cons heading text =
+ [https://docs.themeisle.com/article/133-how-to-change-dynamically-the-proscons-heading-text](https://docs.themeisle.com/article/133-how-to-change-dynamically-the-proscons-heading-text)
 
- = WP Product Review Comparison Table Documentation = 
- [https://docs.themeisle.com/article/424-wp-product-review-comparison-table-documentation](https://docs.themeisle.com/article/424-wp-product-review-comparison-table-documentation) 
+ = WP Product Review Comparison Table Documentation =
+ [https://docs.themeisle.com/article/424-wp-product-review-comparison-table-documentation](https://docs.themeisle.com/article/424-wp-product-review-comparison-table-documentation)
 
- = How to change dynamically the option name format = 
- [https://docs.themeisle.com/article/132-how-to-change-dynamically-the-option-name-format](https://docs.themeisle.com/article/132-how-to-change-dynamically-the-option-name-format) 
+ = How to change dynamically the option name format =
+ [https://docs.themeisle.com/article/132-how-to-change-dynamically-the-option-name-format](https://docs.themeisle.com/article/132-how-to-change-dynamically-the-option-name-format)
 
- = How to make Comment Review option work in any theme = 
- [https://docs.themeisle.com/article/54-how-to-make-comment-review-option-work-in-any-theme](https://docs.themeisle.com/article/54-how-to-make-comment-review-option-work-in-any-theme) 
+ = How to make Comment Review option work in any theme =
+ [https://docs.themeisle.com/article/54-how-to-make-comment-review-option-work-in-any-theme](https://docs.themeisle.com/article/54-how-to-make-comment-review-option-work-in-any-theme)
 
- = Prevent users from posting multiple review on a single post in WP Product Review = 
- [https://docs.themeisle.com/article/578-prevent-users-from-posting-multiple-review-on-a-single-post-in-wp-product-review](https://docs.themeisle.com/article/578-prevent-users-from-posting-multiple-review-on-a-single-post-in-wp-product-review) 
+ = Prevent users from posting multiple review on a single post in WP Product Review =
+ [https://docs.themeisle.com/article/578-prevent-users-from-posting-multiple-review-on-a-single-post-in-wp-product-review](https://docs.themeisle.com/article/578-prevent-users-from-posting-multiple-review-on-a-single-post-in-wp-product-review)
 
- = How to create a listing grid of reviews in WP Product Review = 
- [https://docs.themeisle.com/article/764-how-to-create-a-listing-grid-of-reviews-in-wp-product-review](https://docs.themeisle.com/article/764-how-to-create-a-listing-grid-of-reviews-in-wp-product-review) 
+ = How to create a listing grid of reviews in WP Product Review =
+ [https://docs.themeisle.com/article/764-how-to-create-a-listing-grid-of-reviews-in-wp-product-review](https://docs.themeisle.com/article/764-how-to-create-a-listing-grid-of-reviews-in-wp-product-review)
 
- = Enable user reviews in WP Product Review = 
- [https://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-review](https://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-review) 
+ = Enable user reviews in WP Product Review =
+ [https://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-review](https://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-review)
 
- = Rich Snippets not showing in search results = 
- [https://docs.themeisle.com/article/756-rich-snippets-not-showing-in-search-results](https://docs.themeisle.com/article/756-rich-snippets-not-showing-in-search-results) 
+ = Rich Snippets not showing in search results =
+ [https://docs.themeisle.com/article/756-rich-snippets-not-showing-in-search-results](https://docs.themeisle.com/article/756-rich-snippets-not-showing-in-search-results)
 
- = What actions and filters are available in WP Product Review = 
- [https://docs.themeisle.com/article/770-what-actions-and-filters-are-available-in-wp-product-review](https://docs.themeisle.com/article/770-what-actions-and-filters-are-available-in-wp-product-review) 
+ = What actions and filters are available in WP Product Review =
+ [https://docs.themeisle.com/article/770-what-actions-and-filters-are-available-in-wp-product-review](https://docs.themeisle.com/article/770-what-actions-and-filters-are-available-in-wp-product-review)
 
- = How to add a top products widget in WP Product Review = 
- [https://docs.themeisle.com/article/763-how-to-add-a-top-products-widget-in-wp-product-review](https://docs.themeisle.com/article/763-how-to-add-a-top-products-widget-in-wp-product-review) 
+ = How to add a top products widget in WP Product Review =
+ [https://docs.themeisle.com/article/763-how-to-add-a-top-products-widget-in-wp-product-review](https://docs.themeisle.com/article/763-how-to-add-a-top-products-widget-in-wp-product-review)
 
- = How to change the default rating icon in WP Product Review = 
- [https://docs.themeisle.com/article/757-how-to-change-the-default-rating-icon-in-wp-product-review](https://docs.themeisle.com/article/757-how-to-change-the-default-rating-icon-in-wp-product-review) 
+ = How to change the default rating icon in WP Product Review =
+ [https://docs.themeisle.com/article/757-how-to-change-the-default-rating-icon-in-wp-product-review](https://docs.themeisle.com/article/757-how-to-change-the-default-rating-icon-in-wp-product-review)
 
- = How to remove Pros/Cons list in WP Product Review = 
- [https://docs.themeisle.com/article/762-how-to-remove-proscons-list-in-wp-product-review](https://docs.themeisle.com/article/762-how-to-remove-proscons-list-in-wp-product-review) 
+ = How to remove Pros/Cons list in WP Product Review =
+ [https://docs.themeisle.com/article/762-how-to-remove-proscons-list-in-wp-product-review](https://docs.themeisle.com/article/762-how-to-remove-proscons-list-in-wp-product-review)
 
- = How to increase number of review options, pros or cons in WP Product Review = 
- [https://docs.themeisle.com/article/758-how-to-increase-number-of-review-options-pros-or-cons-in-wp-product-review](https://docs.themeisle.com/article/758-how-to-increase-number-of-review-options-pros-or-cons-in-wp-product-review) 
+ = How to increase number of review options, pros or cons in WP Product Review =
+ [https://docs.themeisle.com/article/758-how-to-increase-number-of-review-options-pros-or-cons-in-wp-product-review](https://docs.themeisle.com/article/758-how-to-increase-number-of-review-options-pros-or-cons-in-wp-product-review)
 
- = How to change the rating colours in WP Product Review = 
- [https://docs.themeisle.com/article/761-how-to-change-the-rating-colours-in-wp-product-review](https://docs.themeisle.com/article/761-how-to-change-the-rating-colours-in-wp-product-review) 
+ = How to change the rating colours in WP Product Review =
+ [https://docs.themeisle.com/article/761-how-to-change-the-rating-colours-in-wp-product-review](https://docs.themeisle.com/article/761-how-to-change-the-rating-colours-in-wp-product-review)
 
- = How to remove rich snippets in WP Product Review = 
- [https://docs.themeisle.com/article/755-how-to-remove-rich-snippets-in-wp-product-review](https://docs.themeisle.com/article/755-how-to-remove-rich-snippets-in-wp-product-review) 
+ = How to remove rich snippets in WP Product Review =
+ [https://docs.themeisle.com/article/755-how-to-remove-rich-snippets-in-wp-product-review](https://docs.themeisle.com/article/755-how-to-remove-rich-snippets-in-wp-product-review)
 
- = How the visitors rating are influencing the review rating in WP Product Review = 
- [https://docs.themeisle.com/article/760-how-the-visitors-rating-are-influencing-the-review-rating-in-wp-product-review](https://docs.themeisle.com/article/760-how-the-visitors-rating-are-influencing-the-review-rating-in-wp-product-review) 
+ = How the visitors rating are influencing the review rating in WP Product Review =
+ [https://docs.themeisle.com/article/760-how-the-visitors-rating-are-influencing-the-review-rating-in-wp-product-review](https://docs.themeisle.com/article/760-how-the-visitors-rating-are-influencing-the-review-rating-in-wp-product-review)
 
- = WP Product Review how to change dynamically the image size for review = 
- [https://docs.themeisle.com/article/135-wp-product-review-how-to-change-dynamically-the-image-size-for-review](https://docs.themeisle.com/article/135-wp-product-review-how-to-change-dynamically-the-image-size-for-review) 
+ = WP Product Review how to change dynamically the image size for review =
+ [https://docs.themeisle.com/article/135-wp-product-review-how-to-change-dynamically-the-image-size-for-review](https://docs.themeisle.com/article/135-wp-product-review-how-to-change-dynamically-the-image-size-for-review)
 
- = WP Product Review how to change dynamically the option name format = 
- [https://docs.themeisle.com/article/132-wp-product-review-how-to-change-dynamically-the-option-name-format](https://docs.themeisle.com/article/132-wp-product-review-how-to-change-dynamically-the-option-name-format) 
+ = WP Product Review how to change dynamically the option name format =
+ [https://docs.themeisle.com/article/132-wp-product-review-how-to-change-dynamically-the-option-name-format](https://docs.themeisle.com/article/132-wp-product-review-how-to-change-dynamically-the-option-name-format)
 
- = How to have a whole number ratings in WP Product Review = 
- [https://docs.themeisle.com/article/849-how-to-have-a-whole-number-ratings-in-wp-product-review](https://docs.themeisle.com/article/849-how-to-have-a-whole-number-ratings-in-wp-product-review) 
+ = How to have a whole number ratings in WP Product Review =
+ [https://docs.themeisle.com/article/849-how-to-have-a-whole-number-ratings-in-wp-product-review](https://docs.themeisle.com/article/849-how-to-have-a-whole-number-ratings-in-wp-product-review)
 
- = How to enable review post types = 
- [https://docs.themeisle.com/article/858-how-to-enable-review-post-types](https://docs.themeisle.com/article/858-how-to-enable-review-post-types) 
+ = How to enable review post types =
+ [https://docs.themeisle.com/article/858-how-to-enable-review-post-types](https://docs.themeisle.com/article/858-how-to-enable-review-post-types)
 
- = How users can leave review comments without rating = 
- [https://docs.themeisle.com/article/862-how-users-can-leave-review-comments-without-rating](https://docs.themeisle.com/article/862-how-users-can-leave-review-comments-without-rating) 
+ = How users can leave review comments without rating =
+ [https://docs.themeisle.com/article/862-how-users-can-leave-review-comments-without-rating](https://docs.themeisle.com/article/862-how-users-can-leave-review-comments-without-rating)
 
- = How to force description into comparison table = 
- [https://docs.themeisle.com/article/859-how-to-force-description-into-comparision-table](https://docs.themeisle.com/article/859-how-to-force-description-into-comparision-table) 
+ = How to force description into comparison table =
+ [https://docs.themeisle.com/article/859-how-to-force-description-into-comparision-table](https://docs.themeisle.com/article/859-how-to-force-description-into-comparision-table)
 
- = How the before/after/manual review box placement works = 
- [https://docs.themeisle.com/article/865-how-the-beforeaftermanual-review-box-placement-works](https://docs.themeisle.com/article/865-how-the-beforeaftermanual-review-box-placement-works) 
+ = How the before/after/manual review box placement works =
+ [https://docs.themeisle.com/article/865-how-the-beforeaftermanual-review-box-placement-works](https://docs.themeisle.com/article/865-how-the-beforeaftermanual-review-box-placement-works)
 
- = How to dynamically change the name of the review = 
- [https://docs.themeisle.com/article/874-how-to-dynamically-change-the-name-of-the-review](https://docs.themeisle.com/article/874-how-to-dynamically-change-the-name-of-the-review) 
+ = How to dynamically change the name of the review =
+ [https://docs.themeisle.com/article/874-how-to-dynamically-change-the-name-of-the-review](https://docs.themeisle.com/article/874-how-to-dynamically-change-the-name-of-the-review)
 
- = How to change the status of the review = 
- [https://docs.themeisle.com/article/905-how-to-change-the-status-of-the-review](https://docs.themeisle.com/article/905-how-to-change-the-status-of-the-review) 
+ = How to change the status of the review =
+ [https://docs.themeisle.com/article/905-how-to-change-the-status-of-the-review](https://docs.themeisle.com/article/905-how-to-change-the-status-of-the-review)
 
- = How to disable the review for particular posts = 
- [https://docs.themeisle.com/article/904-how-to-disable-the-review-for-particular-posts](https://docs.themeisle.com/article/904-how-to-disable-the-review-for-particular-posts) 
+ = How to disable the review for particular posts =
+ [https://docs.themeisle.com/article/904-how-to-disable-the-review-for-particular-posts](https://docs.themeisle.com/article/904-how-to-disable-the-review-for-particular-posts)
 
- = How to manually change the rating of a review = 
- [https://docs.themeisle.com/article/903-how-to-manually-change-the-rating-of-a-review](https://docs.themeisle.com/article/903-how-to-manually-change-the-rating-of-a-review) 
+ = How to manually change the rating of a review =
+ [https://docs.themeisle.com/article/903-how-to-manually-change-the-rating-of-a-review](https://docs.themeisle.com/article/903-how-to-manually-change-the-rating-of-a-review)
 
- = How to dynamically change the price of the review for particular posts = 
- [https://docs.themeisle.com/article/906-how-to-dynamically-change-the-price-of-the-review-for-particular-posts](https://docs.themeisle.com/article/906-how-to-dynamically-change-the-price-of-the-review-for-particular-posts) 
+ = How to dynamically change the price of the review for particular posts =
+ [https://docs.themeisle.com/article/906-how-to-dynamically-change-the-price-of-the-review-for-particular-posts](https://docs.themeisle.com/article/906-how-to-dynamically-change-the-price-of-the-review-for-particular-posts)
 
- = Amazon Integration Documentation = 
- [https://docs.themeisle.com/article/448-amazon-integration-documentation](https://docs.themeisle.com/article/448-amazon-integration-documentation) 
+ = Amazon Integration Documentation =
+ [https://docs.themeisle.com/article/448-amazon-integration-documentation](https://docs.themeisle.com/article/448-amazon-integration-documentation)
 
- = In WPPR, how do I,. = 
- [https://docs.themeisle.com/article/969-in-wppr-how-do-i](https://docs.themeisle.com/article/969-in-wppr-how-do-i) 
+ = In WPPR, how do I,. =
+ [https://docs.themeisle.com/article/969-in-wppr-how-do-i](https://docs.themeisle.com/article/969-in-wppr-how-do-i)
 
- = How to display product title and image both in review comparison table = 
- [https://docs.themeisle.com/article/981-how-to-display-product-title-and-image-both-in-review-comparison-table](https://docs.themeisle.com/article/981-how-to-display-product-title-and-image-both-in-review-comparison-table) 
+ = How to display product title and image both in review comparison table =
+ [https://docs.themeisle.com/article/981-how-to-display-product-title-and-image-both-in-review-comparison-table](https://docs.themeisle.com/article/981-how-to-display-product-title-and-image-both-in-review-comparison-table)
 
- = How To Use WP Product Review Shortcodes = 
- [https://docs.themeisle.com/article/449-how-to-use-wp-product-review-shortcodes](https://docs.themeisle.com/article/449-how-to-use-wp-product-review-shortcodes) 
+ = How To Use WP Product Review Shortcodes =
+ [https://docs.themeisle.com/article/449-how-to-use-wp-product-review-shortcodes](https://docs.themeisle.com/article/449-how-to-use-wp-product-review-shortcodes)
 
- = How the before/after/manual review box placement option works = 
- [https://docs.themeisle.com/article/865-how-the-beforeaftermanual-review-box-placement-option-works](https://docs.themeisle.com/article/865-how-the-beforeaftermanual-review-box-placement-option-works) 
+ = How the before/after/manual review box placement option works =
+ [https://docs.themeisle.com/article/865-how-the-beforeaftermanual-review-box-placement-option-works](https://docs.themeisle.com/article/865-how-the-beforeaftermanual-review-box-placement-option-works)
 
- = How to display both the product title and image in the review comparison table = 
- [https://docs.themeisle.com/article/981-how-to-display-both-the-product-title-and-image-in-the-review-comparison-table](https://docs.themeisle.com/article/981-how-to-display-both-the-product-title-and-image-in-the-review-comparison-table) 
+ = How to display both the product title and image in the review comparison table =
+ [https://docs.themeisle.com/article/981-how-to-display-both-the-product-title-and-image-in-the-review-comparison-table](https://docs.themeisle.com/article/981-how-to-display-both-the-product-title-and-image-in-the-review-comparison-table)
 
- = How to change the widget image size in WP Product Review = 
- [https://docs.themeisle.com/article/1056-how-to-change-the-widget-image-size-in-wp-product-review](https://docs.themeisle.com/article/1056-how-to-change-the-widget-image-size-in-wp-product-review) 
+ = How to change the widget image size in WP Product Review =
+ [https://docs.themeisle.com/article/1056-how-to-change-the-widget-image-size-in-wp-product-review](https://docs.themeisle.com/article/1056-how-to-change-the-widget-image-size-in-wp-product-review)
 
- = How to make Comment Review option work in any theme = 
- [https://docs.themeisle.com/article/54-why-comment-review-option-is-not-working-with-my-theme](https://docs.themeisle.com/article/54-why-comment-review-option-is-not-working-with-my-theme) 
+ = How to make Comment Review option work in any theme =
+ [https://docs.themeisle.com/article/54-why-comment-review-option-is-not-working-with-my-theme](https://docs.themeisle.com/article/54-why-comment-review-option-is-not-working-with-my-theme)
 
- = Enable user reviews in WP Product Review = 
- [https://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-revie](https://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-revie) 
+ = Enable user reviews in WP Product Review =
+ [https://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-revie](https://docs.themeisle.com/article/759-enable-user-reviews-in-wp-product-revie)
 
- = How to remove Pros/Cons list in WP Product Review = 
- [https://docs.themeisle.com/article/762-how-to-remove-pros-cons-list-in-wp-product-review](https://docs.themeisle.com/article/762-how-to-remove-pros-cons-list-in-wp-product-review) 
+ = How to remove Pros/Cons list in WP Product Review =
+ [https://docs.themeisle.com/article/762-how-to-remove-pros-cons-list-in-wp-product-review](https://docs.themeisle.com/article/762-how-to-remove-pros-cons-list-in-wp-product-review)
 
- = How the before/after/manual review box placement option works = 
- [https://docs.themeisle.com/article/865-how-the-before-after-manual-review-box-placement-works](https://docs.themeisle.com/article/865-how-the-before-after-manual-review-box-placement-works) 
+ = How the before/after/manual review box placement option works =
+ [https://docs.themeisle.com/article/865-how-the-before-after-manual-review-box-placement-works](https://docs.themeisle.com/article/865-how-the-before-after-manual-review-box-placement-works)
 
- = How to display both the product title and image in the review comparison table = 
- [https://docs.themeisle.com/article/981-how-to-display-product-title-and-image-both-in-review-table](https://docs.themeisle.com/article/981-how-to-display-product-title-and-image-both-in-review-table) 
+ = How to display both the product title and image in the review comparison table =
+ [https://docs.themeisle.com/article/981-how-to-display-product-title-and-image-both-in-review-table](https://docs.themeisle.com/article/981-how-to-display-product-title-and-image-both-in-review-table)
 
- = Add specific "Service" types for schema.org in WP Product Review = 
- [https://docs.themeisle.com/article/1071-add-specific-service-types-for-schema-org](https://docs.themeisle.com/article/1071-add-specific-service-types-for-schema-org) 
+ = Add specific "Service" types for schema.org in WP Product Review =
+ [https://docs.themeisle.com/article/1071-add-specific-service-types-for-schema-org](https://docs.themeisle.com/article/1071-add-specific-service-types-for-schema-org)
+
+ = How to install the PRO version of WP Product Review =
+ [https://docs.themeisle.com/article/785-install-and-use-the-pro-version-of-wp-product-review](https://docs.themeisle.com/article/785-install-and-use-the-pro-version-of-wp-product-review)
 
  == Upgrade Notice ==
 

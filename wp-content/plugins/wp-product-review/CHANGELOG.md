@@ -1,4 +1,39 @@
 
+ ### v3.7.11 - 2020-08-21 
+ **Changes:** 
+ * [Fix] Compatibility with WP 5.5
+* [Fix] Compatibility with AMP for WP plugin
+ 
+ ### v3.7.10 - 2020-06-24 
+ **Changes:** 
+ * [Fix] Load schema.org just for PHP 7.0 and above
+* [Fix] Take into account the rating scale option for schema.org
+* [Fix] Dequeue jquery-ui-slider when not used
+ 
+ ### v3.7.9 - 2020-06-15 
+ **Changes:** 
+ * [Fix] Schema.org in both the new and classic editor
+* [Fix] Do not display reviews in content outside the loop
+ 
+ ### v3.7.8 - 2020-05-22 
+ **Changes:** 
+ * [Fix] Sanitize values
+ 
+ ### v3.7.7 - 2020-05-21 
+ **Changes:** 
+ * [Fix] Security vulnerability
+ 
+ ### v3.7.6 - 2020-05-14 
+ **Changes:** 
+ * - [Fix] Security vulnerability
+ 
+ ### v3.7.5 - 2020-05-08 
+ **Changes:** 
+ * [Fix] Comments area layout in the TwentyTwenty theme
+* [Fix] Pros and Cons texts not translatable with Polylang
+* [Fix] Image missing link in the Top Products Widget  
+* [Fix] Bulk activation of plugin aborts activation of subsequent plugins
+ 
  ### v3.7.4 - 2020-03-31 
  **Changes:** 
  * Tested up to WordPress 5.4

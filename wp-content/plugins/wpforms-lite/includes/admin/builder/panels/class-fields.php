@@ -48,7 +48,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 	}
 
 	/**
-	 * Outputs the Field panel sidebar.
+	 * Output the Field panel sidebar.
 	 *
 	 * @since 1.0.0
 	 */
@@ -88,7 +88,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 	}
 
 	/**
-	 * Outputs the Field panel primary content.
+	 * Output the Field panel primary content.
 	 *
 	 * @since 1.0.0
 	 */
@@ -119,8 +119,15 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 			<div class="wpforms-preview">
 
 				<div class="wpforms-title-desc">
-					<h2 class="wpforms-form-name"><?php echo esc_html( $this->form->post_title ); ?></h2>
-					<span class="wpforms-form-desc"><?php echo wp_kses( $this->form->post_excerpt, wpforms_builder_preview_get_allowed_tags() ); ?></span>
+					<div class="wpforms-title-desc-inner">
+						<h2 class="wpforms-form-name"><?php echo esc_html( $this->form->post_title ); ?></h2>
+						<span class="wpforms-form-desc"><?php echo wp_kses( $this->form->post_excerpt, wpforms_builder_preview_get_allowed_tags() ); ?></span>
+					</div>
+				</div>
+
+				<div class="wpforms-no-fields-holder wpforms-hidden">
+					<?php $this->no_fields_options(); ?>
+					<?php $this->no_fields_preview(); ?>
 				</div>
 
 				<div class="wpforms-field-wrap">
@@ -142,8 +149,9 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 				</div>
 
 				<?php
-				$submit = ! empty( $this->form_data['settings']['submit_text'] ) ? $this->form_data['settings']['submit_text'] : esc_html__( 'Submit', 'wpforms-lite' );
-				printf( '<p class="wpforms-field-submit"><input type="submit" value="%s" class="wpforms-field-submit-button"></p>', esc_attr( $submit ) );
+				$submit       = ! empty( $this->form_data['settings']['submit_text'] ) ? $this->form_data['settings']['submit_text'] : esc_html__( 'Submit', 'wpforms-lite' );
+				$submit_style = empty( $this->form_data['fields'] ) ? 'display: none;' : '';
+				printf( '<p class="wpforms-field-submit" style="%1$s"><input type="submit" value="%2$s" class="wpforms-field-submit-button"></p>', esc_attr( $submit_style ), esc_attr( $submit ) );
 				?>
 
 				<?php wpforms_debug_data( $this->form_data ); ?>
@@ -232,7 +240,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 
 		// Check to make sure the form actually has fields created already.
 		if ( empty( $this->form_data['fields'] ) ) {
-			printf( '<p class="no-fields">%s</p>', esc_html__( 'You don\'t have any fields yet.', 'wpforms-lite' ) );
+			$this->no_fields_options();
 
 			return;
 		}
@@ -243,7 +251,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 
 			$class = apply_filters( 'wpforms_builder_field_option_class', '', $field );
 
-			printf( '<div class="wpforms-field-option wpforms-field-option-%s %s" id="wpforms-field-option-%d" data-field-id="%d">', esc_attr( $field['type'] ), $class, $field['id'], $field['id'] );
+			printf( '<div class="wpforms-field-option wpforms-field-option-%s %s" id="wpforms-field-option-%d" data-field-id="%d">', sanitize_html_class( $field['type'] ), wpforms_sanitize_classes( $class ), (int) $field['id'], (int) $field['id'] );
 
 			printf( '<input type="hidden" name="fields[%d][id]" value="%d" class="wpforms-field-option-hidden-id">', $field['id'], $field['id'] );
 
@@ -264,7 +272,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 
 		// Check to make sure the form actually has fields created already.
 		if ( empty( $this->form_data['fields'] ) ) {
-			printf( '<p class="no-fields-preview">%s</p>', esc_html__( 'You don\'t have any fields yet. Add some!', 'wpforms-lite' ) );
+			$this->no_fields_preview();
 
 			return;
 		}
@@ -301,6 +309,36 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 	}
 
 	/**
+	 * No fields options markup.
+	 *
+	 * @since 1.6.0
+	 */
+	public function no_fields_options() {
+
+		printf(
+			'<p class="no-fields">%s</p>',
+			esc_html__( 'You don\'t have any fields yet.', 'wpforms-lite' )
+		);
+	}
+
+	/**
+	 * No fields preview placeholder markup.
+	 *
+	 * @since 1.6.0
+	 */
+	public function no_fields_preview() {
+
+		printf(
+			'<div class="no-fields-preview">
+				<h4>%1$s</h4>
+				<p>%2$s</p>
+			</div>',
+			esc_html__( 'You don\'t have any fields yet. Add some!', 'wpforms-lite' ),
+			esc_html__( 'Take your pick from our wide variety of fields and start building out your form!', 'wpforms-lite' )
+		);
+	}
+
+	/**
 	 * Sort Add Field buttons by order provided.
 	 *
 	 * @since 1.0.0
@@ -321,6 +359,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 	 */
 	public function field_preview_templates() {
 
+		// phpcs:disable WordPress.WP.I18n
 		// Checkbox, Radio, and Payment Multiple/Checkbox field choices.
 		?>
 		<script type="text/html" id="tmpl-wpforms-field-preview-checkbox-radio-payment-multiple">
@@ -342,7 +381,9 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 						<# } else { #>
 							<input class="wpforms-screen-reader-element" type="{{ data.type }}" disabled<# if ( 1 === data.settings.choices[choiceID].default ) { print( ' checked' ); } #>>
 						<# } #>
-						<span class="wpforms-image-choices-label">{{{ data.settings.choices[choiceID].label }}}</span>
+						<span class="wpforms-image-choices-label">
+							{{ WPFormsBuilder.fieldChoiceLabel( data, choiceID ) }}
+						</span>
 					</label>
 				</li>
 				<# }) #>
@@ -351,13 +392,15 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 			<ul class="primary-input">
 				<# _.each( data.order, function( choiceID, key ) {  #>
 				<li>
-					<input type="{{ data.type }}" disabled<# if ( 1 === data.settings.choices[choiceID].default ) { print( ' checked' ); } #>>{{{ wpf.sanitizeHTML( data.settings.choices[choiceID].label ) }}}
+					<input type="{{ data.type }}" disabled<# if ( 1 === data.settings.choices[choiceID].default ) { print( ' checked' ); } #>>
+					{{ WPFormsBuilder.fieldChoiceLabel( data, choiceID ) }}
 				</li>
 				<# }) #>
 			</ul>
 			<# } #>
 		</script>
 		<?php
+		// phpcs:enable
 	}
 
 }

@@ -9,6 +9,8 @@ function cau_check_updates_mail() {
 	}
 
 	if( cau_get_db_value( 'sendupdate' ) == 'on' && cau_get_db_value( 'plugins' ) == 'on' ) cau_plugin_updated(); // Check for updated plugins
+
+	if( cau_get_db_value( 'sendoutdated' ) == 'on' ) cau_list_outdated_software(); // Check for oudated plugins
 }
 
 // Ge the emailadresses it should be send to
@@ -29,24 +31,94 @@ function cau_set_email() {
 	return $emailArray;
 
 }
+// Mail format
+function cau_is_html() {
+
+	// Check if cau_get_db_value() function exists.
+	if ( !function_exists( 'cau_get_db_value' ) ) require_once( plugin_dir_path( __FILE__ ) . 'cau_function.php' );
+
+	// Check if html
+	if( cau_get_db_value( 'html_or_text' ) == 'html' ) {
+		$html = true;
+	} else {
+		$html = false;
+	}
+
+}
 
 // Set the content for the emails about pending updates
-function cau_pending_message( $single, $plural ) {
+function cau_outdated_message( $single, $plural, $list ) {
 
-	return sprintf( esc_html__( 'There are one or more %1$s updates waiting on your WordPress site at %2$s but we noticed that you disabled auto-updating for %3$s. 
+	// WP version 
+	$wpversion = get_bloginfo( 'version' );
 
-Leaving your site outdated is a security risk so please consider manually updating them via your dashboard.', 'companion-auto-update' ), $single, get_site_url(), $plural );
+	// Base text
+	$text = sprintf( esc_html__( "You have %s on your WordPress site at %s that have not been tested with the latest 3 major releases of WordPress.", "companion-auto-update" ), $plural, get_site_url() );
+	$text .= "\n";
+	$text .= "\n";
+
+	// The list
+	if( !empty( $list ) ) {
+
+		$text .= sprintf( esc_html__( "The following %s have not been tested with WordPress %s:", "companion-auto-update" ), $plural, $wpversion );
+		$text .= "\n";
+		$text .= "\n";
+
+		foreach ( $list as $plugin => $version ) {
+			$text .= "- ".sprintf( esc_html__( "%s tested up to: %s", "companion-auto-update" ), $plugin, $version )."\n";
+		}
+
+	}
+
+	return $text;
+
+}
+
+// Set the content for the emails about pending updates
+function cau_pending_message( $single, $plural, $list ) {
+
+	// What markup to use
+	if( cau_is_html() ) $break = '<br />';
+	else $break = "\n";
+
+	// Base text
+	$text = sprintf( esc_html__( 'You have pending %1$s updates on your WordPress site at %2$s.', 'companion-auto-update' ), $single, get_site_url() );
+	$text .= $break;
+
+	if( !empty( $list ) ) {
+		
+		$text .= $break;
+		$text .= sprintf( esc_html__( 'The following %1$s have new versions available.', 'companion-auto-update' ), $plural );
+		$text .= $break;
+
+		if( cau_is_html() ) $text .= "<ol>";
+		foreach ( $list as $key => $value ) {
+			if( cau_is_html() ) {
+				$text .= "<li>$value</li>";
+			} else {
+				$text .= "-$value\n";
+			}
+		}
+		if( cau_is_html() ) $text .= "</ol>";
+		
+		$text .= $break;
+	}
+
+	$text .= __( 'Leaving your site outdated is a security risk so please consider manually updating them.', 'companion-auto-update' );
+	$text .= $break;
+
+	// End
+	$text .= sprintf( esc_html__( 'Head over to %1$s and check the ones you want to update.', 'companion-auto-update' ), get_admin_url().'update-core.php' );
+
+	return $text;
 
 }
 
 // Set the content for the emails about recent updates
 function cau_updated_message( $type, $updatedList ) {
 
-	// Check if cau_get_db_value() function exists.
-	if ( !function_exists( 'cau_get_db_value' ) ) require_once( plugin_dir_path( __FILE__ ) . 'cau_function.php' );
-
 	// What markup to use
-	if( cau_get_db_value( 'html_or_text' ) == 'html' ) $break = '<br />';
+	if( cau_is_html() ) $break = '<br />';
 	else $break = "\n";
 
 	// The message
@@ -71,6 +143,28 @@ For more info on what is new visit your dashboard and check the changelog.', 'co
 
 }
 
+// Checks if plugins are out of date
+function cau_list_outdated_software() {
+
+	// Check if cau_get_db_value() function exists.
+	if ( !function_exists( 'cau_get_db_value' ) ) require_once( plugin_dir_path( __FILE__ ) . 'cau_function.php' );
+
+	// Set up mail
+	$subject 		= '['.get_bloginfo( 'name' ).'] ' . __( 'You have outdated plugins on your site.', 'companion-auto-update' );
+	$type 			= __( 'plugin', 'companion-auto-update' );
+	$type_plural	= __( 'plugins', 'companion-auto-update' );
+	$message 		= cau_outdated_message( $type, $type_plural, cau_list_outdated() );
+
+	// Send to all addresses
+	foreach ( cau_set_email() as $key => $value ) {
+		foreach ( $value as $k => $v ) {
+			wp_mail( $v, $subject, $message );
+		}
+		break;
+	}
+
+}
+
 // Checks if theme updates are available
 function cau_list_theme_updates() {
 
@@ -84,13 +178,18 @@ function cau_list_theme_updates() {
 
 			require_once ABSPATH . '/wp-admin/includes/update.php';
 			$themes = get_theme_updates();
+			$list 	= array();
 
 			if ( !empty( $themes ) ) {
+				
+				foreach ( $themes as $stylesheet => $theme ) {
+					array_push( $list, $theme->get( 'Name' ) );
+				}
 
-				$subject 		= '[' . get_bloginfo( 'name' ) . '] ' . __('Theme update available.', 'companion-auto-update');
+				$subject 		= '[' . get_bloginfo( 'name' ) . '] ' . __( 'Theme update available.', 'companion-auto-update' );
 				$type 			= __('theme', 'companion-auto-update');
 				$type_plural	= __('themes', 'companion-auto-update');
-				$message 		= cau_pending_message( $type, $type_plural );
+				$message 		= cau_pending_message( $type, $type_plural, $list );
 				
 				foreach ( cau_set_email() as $key => $value) {
 					foreach ($value as $k => $v) {
@@ -122,10 +221,17 @@ function cau_list_plugin_updates() {
 
 			if ( !empty( $plugins ) ) {
 
-				$subject 		= '[' . get_bloginfo( 'name' ) . '] ' . __('Plugin update available.', 'companion-auto-update');
-				$type 			= __('plugin', 'companion-auto-update');
-				$type_plural	= __('plugins', 'companion-auto-update');
-				$message 		= cau_pending_message( $type, $type_plural );
+				$list = array();
+				foreach ( (array) $plugins as $plugin_file => $plugin_data ) {
+					$plugin_data 	= (object) _get_plugin_data_markup_translate( $plugin_file, (array) $plugin_data, false, true );
+					$name 			= $plugin_data->Name;
+					array_push( $list, $name );
+				}
+
+				$subject 		= '[' . get_bloginfo( 'name' ) . '] ' . __( 'Plugin update available.', 'companion-auto-update' );
+				$type 			= __( 'plugin', 'companion-auto-update' );
+				$type_plural	= __( 'plugins', 'companion-auto-update' );
+				$message 		= cau_pending_message( $type, $type_plural, $list );
 
 				foreach ( cau_set_email() as $key => $value) {
 					foreach ($value as $k => $v) {
@@ -146,13 +252,18 @@ function cau_plugin_updated() {
 	// Check if cau_get_db_value() function exists.
 	if ( !function_exists( 'cau_get_db_value' ) ) require_once( plugin_dir_path( __FILE__ ) . 'cau_function.php' );
 
+	// Set the correct timezone for emails
+	date_default_timezone_set( cau_get_proper_timezone() );
+
 	// Create arrays
 	$pluginNames 	= array();
 	$pluginDates 	= array();
 	$pluginVersion 	= array();
 	$pluginSlug  	= array();
+	$pluginTimes 	= array();
 	$themeNames 	= array();
 	$themeDates 	= array();
+	$themeTimes		= array();
 
 	// Where to look for plugins
 	$plugdir    	= plugin_dir_path( __DIR__ );
@@ -181,13 +292,21 @@ function cau_plugin_updated() {
 		// Get last update date
 		$fileDate 	= date ( 'YmdHi', filemtime( $fullPath ) );
 
-		if( $schedule_mail == 'hourly' ) {
-			$lastday = date( 'YmdHi', strtotime( '-1 hour' ) );
-		} elseif( $schedule_mail == 'twicedaily' ) {
-			$lastday = date( 'YmdHi', strtotime( '-12 hours' ) );
-		} elseif( $schedule_mail == 'daily' ) {
-			$lastday = date( 'YmdHi', strtotime( '-1 day' ) );
+		switch ( $schedule_mail ) {
+			case 'hourly':
+				$lastday = date( 'YmdHi', strtotime( '-1 hour', time() ) );
+				break;
+			case 'twicedaily':
+				$lastday = date( 'YmdHi', strtotime( '-12 hours', time() ) );
+				break;
+			default:
+				$lastday = date( 'YmdHi', strtotime( '-1 day', time() ) );
+				break;
 		}
+
+		$dateFormat = get_option( 'date_format' );
+		$timestamp 	= date_i18n( $dateFormat, filemtime( $fullPath ) );
+		$timestamp .= ' &dash; '.date( 'H:i', filemtime( $fullPath ) );
 
 		if( $fileDate >= $lastday ) {
 
@@ -203,6 +322,7 @@ function cau_plugin_updated() {
 
 			array_push( $pluginDates, $fileDate );
 			array_push( $pluginSlug, $actualSlug );
+			array_push( $pluginTimes, $timestamp );
 		}
 
 	}
@@ -219,21 +339,22 @@ function cau_plugin_updated() {
 		$fileDate 	= date ( 'YmdHi', filemtime( $fullPath ) );
 
 		if( $schedule_mail == 'hourly' ) {
-			$lastday = date( 'YmdHi', strtotime( '-1 hour' ) );
+			$lastday = date( 'YmdHi', strtotime( '-1 hour', time() ) );
 		} elseif( $schedule_mail == 'twicedaily' ) {
-			$lastday = date( 'YmdHi', strtotime( '-12 hours' ) );
+			$lastday = date( 'YmdHi', strtotime( '-12 hours', time() ) );
 		} elseif( $schedule_mail == 'daily' ) {
-			$lastday = date( 'YmdHi', strtotime( '-1 day' ) );
+			$lastday = date( 'YmdHi', strtotime( '-1 day', time() ) );
 		}
+
+		$dateFormat = get_option( 'date_format' );
+		$timestamp 	= date_i18n( $dateFormat, filemtime( $fullPath ) );
+		$timestamp .= ' &dash; '.date( 'H:i', filemtime( $fullPath ) );
 
 		if( $fileDate >= $lastday ) {
-
-			// Get theme name
 			array_push( $themeNames, $path_parts['filename'] );
 			array_push( $themeDates, $fileDate );
-			
+			array_push( $themeTimes, $timestamp );
 		}
-
 
 	}
 	
@@ -248,22 +369,40 @@ function cau_plugin_updated() {
 	}
 
 	foreach ( $pluginDates as $key => $value ) {
+		
 		if( cau_get_db_value( 'html_or_text' ) == 'html' ) {
-			$updatedListP .= "<li><strong>".$pluginNames[$key]." </strong><br />
-			to version ".$pluginVersion[$key]." <a href='https://wordpress.org/plugins/".$pluginSlug[$key]."/#developers'>".__( "Release notes", "companion-auto-update" )."</a></li>";
+
+			$more_info = '';
+			if( cau_get_db_value( 'advanced_info_emails' ) == 'on' ) $more_info = "<br /><span style='opacity: 0.5;'>".__( "Time of update", "companion-auto-update" ).": ".$pluginTimes[$key]."</span>"; 
+
+			$updatedListP .= "<li>
+				<strong>".$pluginNames[$key]." </strong><br />
+				".__( "to version", "companion-auto-update" )." ".$pluginVersion[$key]." <a href='https://wordpress.org/plugins/".$pluginSlug[$key]."/#developers'>".__( "Release notes", "companion-auto-update" )."</a>
+				".$more_info."
+			</li>";
+
 		} else {
-			$updatedListP .= "- ".$pluginNames[$key]." to version ".$pluginVersion[$key]."\n";
-			$updatedListP .= "  Release notes: https://wordpress.org/plugins/".$pluginSlug[$key]."/#developers\n";
+
+			$updatedListP .= "- ".$pluginNames[$key]." ".__( "to version", "companion-auto-update" )." ".$pluginVersion[$key]."\n";
+			$updatedListP .= "  ".__( "Release notes", "companion-auto-update" ).": https://wordpress.org/plugins/".$pluginSlug[$key]."/#developers\n";
+
 		}
+
 		$totalNumP++;
 	}
 
 	foreach ( $themeNames as $key => $value ) {
+
 		if( cau_get_db_value( 'html_or_text' ) == 'html' ) {
-			$updatedListT .= "<li>".$themeNames[$key]."</li>";
+
+			$more_info = '';
+			if( cau_get_db_value( 'advanced_info_emails' ) == 'on' ) $more_info = "<br /><span style='opacity: 0.5;'>".__( "Time of update", "companion-auto-update" ).": ".$themeTimes[$key]."</span>"; 
+			$updatedListT .= "<li><strong>".$themeNames[$key]."</strong>".$more_info."</li>";
+
 		} else {
 			$updatedListT .= "- ".$themeNames[$key]."\n";
 		}
+
 		$totalNumT++;
 	}
 

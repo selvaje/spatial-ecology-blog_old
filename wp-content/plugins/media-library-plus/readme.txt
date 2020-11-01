@@ -2,8 +2,8 @@
 Contributors: maxfoundry, AlanP57
 Tags: WordPress media library folders, media library folders, organize media library
 Requires at least: 4.0
-Tested up to: 5.4
-Stable tag: 5.1.9
+Tested up to: 5.5.1
+Stable tag: 6.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,7 +137,7 @@ Users who report this issue can usually fix it by running the Media Library Fold
 
 = Folders and images added to the site by FTP are not showing up in Media Library Folders =
 
-Media Library Folders does not work like the file manager on you computer. It only display images and folders that have been added to the Media Library database. To display new folders that have not been added through the Media Library Folders you can click the Check for new folders option in the  Media Library Folders submenu in the Wordpress Dashboard. If you allow Wordpress to store images by year and month folders, then you should click the option once each month to add these auto-generated folders.
+Media Library Folders does not work like the file manager on your computer. It only display images and folders that have been added to the Media Library database. To display new folders that have not been added through the Media Library Folders you can click the Check for new folders option in the  Media Library Folders submenu in the Wordpress Dashboard. If you allow Wordpress to store images by year and month folders, then you should click the option once each month to add these auto-generated folders.
 
 To add images that were upload to the site via the cPanel or by FTP, navigate to the folder containing the images in  Media Library Folders and click the Sync button. This will scan the folder looking images not currently found in the Media Library for that folder. The Sync function only scans the current folder. If there are subfolders, you will need to individually sync them.
 
@@ -184,6 +184,32 @@ Users can upload multiple files by using drag and drop. When the Add Files butto
 Because most images and files in the media library have corresponding links embedded in site’s posts and pages, Media Library Folders does not allow folders to be rename or moved in order to prevent breaking these links. Rather, to rename or move a folder, one needs to create a new folder and move the files from the old folder to the new. During the move process, Media Library Folders will scan the sites standard posts and pages for any links matching the old address of the images or files and update them to the new address.
 
 == Changelog ==
+= 6.0.3 =
+* Added request for feature suggestions
+
+= 6.0.2 =
+* Added code to load the jquery-migrate plugin which is not loaded by Wordpress 5.5 
+
+= 6.0.0 =
+* Tested with WordPress 5.5.0
+* Modified image thumbnails HTML
+
+= 5.2.4 =
+* Fixed issue with moving or copying scaled images.
+* Fixed issue with exif_read_data()
+
+= 5.2.2 =
+* Fixed issue with media library search
+* Fixed issue with moving scales images
+
+= 5.2.1 =
+* Added code to read exif data for jpeg files
+
+= 5.2.0 =
+* Fixed issue with searching for folders with a null ID
+* Added code to prevent the adding of invalid files when syncing
+* Added test for destination folder when uploading a file
+
 = 5.1.9 =
 * Fixed issue with adding duplicate images when syncing scaled images 
 * Added noscript warning

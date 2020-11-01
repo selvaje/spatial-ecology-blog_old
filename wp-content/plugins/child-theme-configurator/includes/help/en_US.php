@@ -215,11 +215,10 @@ The plugin only loads the bulk of the code in the admin when you are using the t
 </ul>
 <!-- END tab -->
 <!-- BEGIN sidebar -->
-<h4>Our plugins will not nag you for donations...</h4>
-<p style="font-size:smaller">...but we LOVE referrals.</p><a href="http://wordpress.org/support/view/plugin-reviews/child-theme-configurator?rate=5#postform">Give Us 5 Stars</a>
-<p style="font-size:smaller">If you would like to support the production of useful tutorials and continued improvement of our software, please consider <a target="blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8QE5YJ8WE96AJ">making a donation</a>.</p>
-<h4>Introducing CTC Pro</h4>
-<a href="<?php echo CHLD_THM_CFG_DOCS_URL; ?>/child-theme-configurator-pro/" title="Learn more about CTC Pro"><img src="<?php echo CHLD_THM_CFG_URL . 'css/pro-banner.jpg'; ?>" width="150" height="48" /></a>
+<h4>We LOVE referrals!</h4><a href="http://wordpress.org/support/view/plugin-reviews/child-theme-configurator?rate=5#postform">Give Us 5 Stars</a>
+<p style="font-size:smaller">If you would like to support the production of useful tutorials and continued improvement of our software, please consider <a target="blank" rel="noreferrer noopener" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8QE5YJ8WE96AJ">making a donation</a>.</p>
+<h4>Upgrade to CTC Pro</h4>
+<a href="https://www.lilaeamedia.com/product/child-theme-configurator-pro/" title="Learn more about CTC Pro"><img src="<?php echo CHLD_THM_CFG_URL . 'css/pro-banner.jpg'; ?>" width="150" height="48" /></a>
 <p style="font-size:smaller">Designed by WordPress developers who use it every day, CTC Pro adds plugin stylesheets and other features to make design work quicker and easier. This is a free upgrade for users that purchased the Plugins Extension. <a href="<?php echo CHLD_THM_CFG_DOCS_URL; ?>/child-theme-configurator-pro/" title="Child Theme Configurator Pro">Learn more</a></p>
 <h4 id="ctc_help_sidebar">Links</h4>
 <ul>

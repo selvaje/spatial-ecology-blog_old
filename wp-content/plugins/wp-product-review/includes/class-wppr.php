@@ -67,7 +67,7 @@ class WPPR {
 	 */
 	public function __construct() {
 		$this->plugin_name = 'wppr';
-		$this->version     = '3.7.4';
+		$this->version     = '3.7.11';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -136,11 +136,12 @@ class WPPR {
 		$this->loader->add_action( 'wp_ajax_get_taxonomies', $plugin_admin, 'get_taxonomies' );
 		$this->loader->add_action( 'wp_ajax_get_categories', $plugin_admin, 'get_categories' );
 		$this->loader->add_action( 'wp_ajax_reset_comment_ratings', $plugin_admin, 'reset_comment_ratings' );
+		$this->loader->add_action( 'wp_ajax_get_schema_fields', $plugin_admin, 'get_schema_fields' );
 		$this->loader->add_action( 'load-edit.php', $plugin_admin, 'get_additional_fields' );
 		$this->loader->add_action( 'wppr_settings_section_upsell', $plugin_admin, 'settings_section_upsell', 10, 1 );
 		$this->loader->add_action( 'after_setup_theme', $plugin_admin, 'add_image_size' );
 		$this->loader->add_action( 'wp_ajax_get_categories', $plugin_admin, 'get_categories' );
-		$this->loader->add_action( 'activated_plugin', $plugin_admin, 'on_activation', 10, 1 );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'on_activation', 10, 1 );
 
 		$plugin_editor = new WPPR_Editor( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_editor, 'set_editor' );

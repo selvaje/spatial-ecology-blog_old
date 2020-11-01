@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Themes - Zerif Lite package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2018-10-15 01:19:43+0000\n"
+"PO-Revision-Date: 2020-04-13 12:14:12+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11,17 +11,57 @@ msgstr ""
 "Language: en_GB\n"
 "Project-Id-Version: Themes - Zerif Lite\n"
 
-#. #-#-#-#-#  zerif-lite.pot (Zerif Lite 1.8.5.47)  #-#-#-#-#
-#. Description of the plugin/theme
+#. Description of the theme
 #: functions.php:209
 msgid "Zerif LITE is a free one page WordPress theme. It's perfect for web agency business,corporate business,personal and parallax business portfolio, photography sites and freelancer.Is built on BootStrap with parallax support, is responsive, clean, modern, flat and minimal. Zerif Lite is ecommerce (WooCommerce) Compatible, WPML, RTL, Retina-Ready, SEO Friendly and with parallax, full screen image is one of the best business themes."
 msgstr "Zerif LITE is a free one page WordPress theme. It's perfect for web agency business, corporate business, personal and parallax business, portfolio, photography sites and freelancers. Its built on BootStrap with parallax support, is responsive, clean, modern, flat and minimal. Zerif Lite is ecommerce (WooCommerce) Compatible, WPML, RTL, Retina-Ready, SEO Friendly and with parallax, full screen image is one of the best business themes."
 
-#. #-#-#-#-#  zerif-lite.pot (Zerif Lite 1.8.5.47)  #-#-#-#-#
-#. Theme Name of the plugin/theme
+#. Theme Name of the theme
 #: inc/class/class-customizer-theme-info-control/class-customizer-theme-info-root.php:83
 msgid "Zerif Lite"
 msgstr "Zerif Lite"
+
+#: ti-about-page/class-ti-about-page.php:166
+msgid "See Neve theme"
+msgstr "See Neve theme"
+
+#. translators: %s - theme name
+#: ti-about-page/class-ti-about-page.php:164
+msgid "We strongly encourage you to switch to %1$s. Also, we've made sure you can easily migrate your old content into a template similar to %2$s."
+msgstr "We strongly encourage you to switch to %1$s. Also, we've made sure you can easily migrate your old content into a template similar to %2$s."
+
+#. translators: %s - theme name
+#: ti-about-page/class-ti-about-page.php:162
+msgid "We're saying %s in favor of our more powerful Neve free WordPress theme. This means that there will not be any new features added although we will continue to update the theme for major security issues."
+msgstr "We're saying %s in favour of our more powerful Neve free WordPress theme. This means that there will not be any new features added, although we will continue to update the theme for major security issues."
+
+#. translators: %s - theme name
+#: ti-about-page/class-ti-about-page.php:160
+msgid "%s is no longer maintained"
+msgstr "%s is no longer maintained"
+
+#. translators: %s - theme name
+#: ti-about-page/class-ti-about-page.php:154
+msgid "With Neve you get a super fast, multi-purpose theme, fully AMP optimized and responsive, that works perfectly with Gutenberg and the most popular page builders like Elementor, Beaver Builder, and many more."
+msgstr "With Neve you get a super fast, multi-purpose theme, fully AMP optimised and responsive, that works perfectly with Gutenberg and the most popular page builders like Elementor, Beaver Builder, and many more."
+
+#. translators: %s - theme name
+#: ti-about-page/class-ti-about-page.php:153
+msgid "We've made it easy for you to try the new Neve theme and import your existing content into a template similar to %s with just a few clicks."
+msgstr "We've made it easy for you to try the new Neve theme and import your existing content into a template similar to %s with just a few clicks."
+
+#. translators: %s - theme name
+#: ti-about-page/class-ti-about-page.php:136
+msgid "%s is no longer maintained. Switch to Neve today and get more powerful features (for free)."
+msgstr "%s is no longer maintained. Switch to Neve today and get more powerful features (for free)."
+
+#: ti-about-page/class-ti-about-page.php:151
+msgid "Switch to Neve today"
+msgstr "Switch to Neve today"
+
+#: ti-about-page/class-ti-about-page.php:133
+msgid "Your theme is no longer maintained. A New, Modern WordPress Theme is Here!"
+msgstr "Your theme is no longer maintained. A new, modern WordPress theme is here!"
 
 #: inc/customizer.php:2496
 msgid "Or add the shortcode of your choice here."
@@ -31,31 +71,12 @@ msgstr "Or add the shortcode of your choice here."
 msgid "Contact Form Shortcode"
 msgstr "Contact Form Shortcode"
 
-#. translators: Install Neve link
-#: functions.php:2204
-msgid "our newest theme"
-msgstr "our newest theme"
-
-#. translators: Install Neve link and Zerif renaming article link
-#: functions.php:2199
-msgid "Zerif changes its name and will no longer be maintained. But don't worry about that. Check out %1$s, fully compatible with Zerif Lite. It's free and it's superb. You will love it! %2$s about the Zerif renaming and our next plans."
-msgstr "Zerif changes its name and will no longer be maintained. But don't worry about that. Check out %1$s, fully compatible with Zerif Lite. It's free and it's superb. You will love it! %2$s about the Zerif renaming and our next plans."
-
-#: functions.php:2146
-msgid "best 2018 free theme"
-msgstr "best 2018 free theme"
-
-#. translators: Install Hestia link
-#: functions.php:2142
-msgid "Check out our %s, fully compatible with your current Zerif Lite theme. You will love it!"
-msgstr "Check out our %s, fully compatible with your current Zerif Lite theme. You will love it!"
-
 #: inc/customizer.php:1878
 msgid "Clients area title"
 msgstr "Clients area title"
 
 #. Translators: %s: widget title
-#: functions.php:1020
+#: functions.php:934
 msgid "Go to %s"
 msgstr "Go to %s"
 
@@ -72,7 +93,7 @@ msgstr "You can replace the homepage slider with any plugin you like, just copy 
 msgid "Slider shortcode"
 msgstr "Slider shortcode"
 
-#: ti-about-page/class-ti-about-page.php:1071
+#: ti-about-page/class-ti-about-page.php:1081
 #: ti-customizer-notify/class-ti-customizer-notify.php:174
 msgid "Activating"
 msgstr "Activating"
@@ -85,8 +106,8 @@ msgstr "Install and Activate"
 msgid "Recommended plugins"
 msgstr "Recommended plugins"
 
-#: inc/admin/welcome-screen/sections/getting-started.php:30
 #: inc/admin/welcome-screen/welcome-screen.php:230
+#: inc/admin/welcome-screen/sections/getting-started.php:30
 msgid "Getting started"
 msgstr "Getting started"
 
@@ -123,7 +144,7 @@ msgstr "Zerif supports a custom frontpage"
 msgid "Change this text in BottomButton Ribbon"
 msgstr "Change this text in the BottomButton Ribbon"
 
-#: inc/customizer.php:2259 sections/ribbon_with_right_button.php:16
+#: sections/ribbon_with_right_button.php:16 inc/customizer.php:2259
 msgid "Change this text in RightButton Ribbon"
 msgstr "Change this text in the RightButton Ribbon"
 
@@ -133,18 +154,17 @@ msgstr "Change this text in the RightButton Ribbon"
 msgid "You need to install the %s plugin to be able to add Team members, Testimonials, Our Focus and Clients widgets."
 msgstr "You need to install the %s plugin to be able to add Team members, Testimonials, Our Focus and Clients widgets."
 
-#: footer.php:35 inc/customizer.php:2850
+#: inc/customizer.php:2850 footer.php:35
 msgid "youremail@site.com"
 msgstr "youremail@site.com"
 
 #. translators: Pirate Forms plugin install link
 #. translators: PirateForms plugin
-#. translators: Pirate Forms plugin install link
-#: content-frontpage.php:107 inc/customizer.php:2467 template-frontpage.php:109
+#: content-frontpage.php:107 template-frontpage.php:109 inc/customizer.php:2467
 msgid "You need to install %s to create a contact form."
 msgstr "You need to install %s to create a contact form."
 
-#: footer.php:43 inc/customizer.php:2912
+#: inc/customizer.php:2912 footer.php:43
 msgid "0 332 548 954"
 msgstr "0161 548 9549"
 
@@ -238,42 +258,34 @@ msgstr "One thought on &ldquo;%s&rdquo;"
 msgid "Welcome to %s! - Version "
 msgstr "Welcome to %s! - Version "
 
+#. translators: Older posts arrow
 #. translators: Older post arrow
-#. translators: Older posts arrow
-#. translators: Older posts arrow
-#. translators: Older posts arrow
 #. translators: Older posts navigation arrow
-#. translators: Older posts navigation arrow
-#. translators: Older posts navigation arrow
-#. translators: Older posts navigation arrow
-#: archive-download.php:60 archive.php:61 front-page.php:88 home.php:67
-#: index.php:50 search.php:49 template-blog-large.php:66 template-blog.php:63
+#: archive.php:61 archive-download.php:60 template-blog.php:63
+#: front-page.php:88 template-blog-large.php:66 home.php:67 search.php:49
+#: index.php:50
 msgid "%s Older posts"
 msgstr "%s Older posts"
 
+#. translators: Newer posts arrow
 #. translators: Newer post arrow
-#. translators: Newer posts arrow
-#. translators: Newer posts arrow
-#. translators: Newer posts arrow
 #. translators: Newer posts navigation arrow
-#. translators: Newer posts navigation arrow
-#. translators: Newer posts navigation arrow
-#. translators: Newer posts navigation arrow
-#: archive-download.php:58 archive.php:59 front-page.php:86 home.php:65
-#: index.php:48 search.php:47 template-blog-large.php:64 template-blog.php:61
+#: archive.php:59 archive-download.php:58 template-blog.php:61
+#: front-page.php:86 template-blog-large.php:64 home.php:65 search.php:47
+#: index.php:48
 msgid "Newer posts %s"
 msgstr "Newer posts %s"
 
-#. Template Name of the plugin/theme
+#. Template Name of the theme
 msgid "Frontpage"
 msgstr "Frontpage"
 
-#. translators: Our team section
-#. translators: Our team section in customizer
 #. translators: Testimonials section
 #. translators: Testimonials section link in customizer
-#: sections/our_team.php:36 sections/our_team.php:39
+#. translators: Our team section
+#. translators: Our team section in customizer
 #: sections/testimonials.php:48 sections/testimonials.php:51
+#: sections/our_team.php:36 sections/our_team.php:39
 msgid "Add widgets in this area by going to the %s"
 msgstr "Add widgets in this area by going to the %s"
 
@@ -309,9 +321,9 @@ msgstr "If you are using other scripts like Cyrillic or Greek , you need to chec
 msgid "Zerif Lite main font is Montserrat, which only supports the Latin script."
 msgstr "Zerif Lite main font is Montserrat, which only supports the Latin script."
 
-#: inc/customizer.php:1585 inc/customizer.php:1661 inc/customizer.php:1737
-#: inc/customizer.php:1813 sections/about_us.php:64 sections/about_us.php:71
-#: sections/about_us.php:78 sections/about_us.php:85
+#: sections/about_us.php:64 sections/about_us.php:71 sections/about_us.php:78
+#: sections/about_us.php:85 inc/customizer.php:1585 inc/customizer.php:1661
+#: inc/customizer.php:1737 inc/customizer.php:1813
 msgid "Edit skill"
 msgstr "Edit skill"
 
@@ -327,8 +339,8 @@ msgstr "Edit skill"
 msgid "Change this subtitle in %s"
 msgstr "Change this subtitle in %s"
 
-#: inc/customizer.php:1078 inc/customizer.php:1128 sections/big_title.php:48
-#: sections/big_title.php:60
+#: sections/big_title.php:48 sections/big_title.php:60 inc/customizer.php:1078
+#: inc/customizer.php:1128
 msgid "Customize this button"
 msgstr "Customise this button"
 
@@ -350,7 +362,7 @@ msgstr "It adds a background video and a background slider."
 msgid "Recommended Actions"
 msgstr "Recommended Actions"
 
-#: functions.php:1047
+#: functions.php:961
 msgid "Go to"
 msgstr "Go to"
 
@@ -358,11 +370,11 @@ msgstr "Go to"
 msgid "Read more about "
 msgstr "Read more about "
 
-#. translators: About us section
 #. translators: About use section in customizer
 #. translators: BottomButton Ribbon in customizer
-#: inc/customizer.php:1536 sections/about_us.php:53
-#: sections/ribbon_with_bottom_button.php:17
+#. translators: About us section
+#: sections/about_us.php:53 sections/ribbon_with_bottom_button.php:17
+#: inc/customizer.php:1536
 msgid "Change this text in %s"
 msgstr "Change this text in %s"
 
@@ -409,7 +421,7 @@ msgstr "There are one or more required or recommended plugins to install, update
 msgid "Updating Plugin: %s"
 msgstr "Updating Plugin: %s"
 
-#. Template Name of the plugin/theme
+#. Template Name of the theme
 msgid "Full width with no title template"
 msgstr "Full width with no title template"
 
@@ -470,7 +482,7 @@ msgstr "About"
 msgid "Footer Content"
 msgstr "Footer Content"
 
-#: footer.php:202 inc/customizer.php:676 inc/customizer.php:2717
+#: inc/customizer.php:676 inc/customizer.php:2717 footer.php:202
 msgid "Instagram link"
 msgstr "Instagram link"
 
@@ -499,9 +511,8 @@ msgstr "A plugin to share about your old posts on Twitter, Facebook, LinkedIn to
 msgid "Revive Old Post"
 msgstr "Revive Old Post"
 
-#. translators: Zerif renaming article link
-#: functions.php:2210 inc/admin/welcome-screen/sections/getting-started.php:130
 #: sections/latest_news.php:97 sections/latest_news.php:137
+#: inc/admin/welcome-screen/sections/getting-started.php:130
 msgid "Read more"
 msgstr "Read more"
 
@@ -604,6 +615,7 @@ msgstr "Child themes"
 msgid "Actions required"
 msgstr "Actions required"
 
+#. translators: Welcome page link
 #: inc/admin/welcome-screen/welcome-screen.php:76
 msgid "Get started with Zerif Lite"
 msgstr "Get started with Zerif Lite"
@@ -622,8 +634,8 @@ msgstr "Rate our theme on %1$sWordPress.org%2$s. We'd really appreciate it!"
 msgid "Are you enjoying Zerif Lite?"
 msgstr "Are you enjoying Zerif Lite?"
 
-#: inc/admin/welcome-screen/sections/getting-started.php:60
 #: inc/admin/welcome-screen/sections/github.php:32
+#: inc/admin/welcome-screen/sections/getting-started.php:60
 msgid "Translate Zerif Lite"
 msgstr "Translate Zerif Lite"
 
@@ -850,8 +862,8 @@ msgstr "Packages/Subscribe sections"
 msgid "You will benefit of our full support for any issues you have with the theme."
 msgstr "You will benefit from our full support for any issues you have with the theme."
 
-#: functions.php:220 functions.php:380
-#: inc/admin/welcome-screen/sections/free_pro.php:103 inc/customizer.php:129
+#: functions.php:220 functions.php:380 inc/customizer.php:129
+#: inc/admin/welcome-screen/sections/free_pro.php:103
 msgid "Support"
 msgstr "Support"
 
@@ -875,9 +887,9 @@ msgstr "Sections order"
 msgid "Showcase your best projects in the portfolio section."
 msgstr "Showcase your best projects in the portfolio section."
 
-#: functions.php:362 inc/admin/welcome-screen/sections/free_pro.php:79
+#: functions.php:362
 #: inc/class/class-customizer-theme-info-control/class-customizer-theme-info-root.php:99
-#: inc/customizer.php:124
+#: inc/customizer.php:124 inc/admin/welcome-screen/sections/free_pro.php:79
 msgid "Portfolio"
 msgstr "Portfolio"
 
@@ -885,9 +897,9 @@ msgstr "Portfolio"
 msgid "Embed your current location to your website by using a Google map."
 msgstr "Embed your current location to your website by using a Google map."
 
-#: functions.php:356 inc/admin/welcome-screen/sections/free_pro.php:71
+#: functions.php:356
 #: inc/class/class-customizer-theme-info-control/class-customizer-theme-info-root.php:103
-#: inc/customizer.php:128
+#: inc/customizer.php:128 inc/admin/welcome-screen/sections/free_pro.php:71
 msgid "Google map section"
 msgstr "Google map section"
 
@@ -911,8 +923,8 @@ msgstr "Background Image"
 msgid "Big title, Our focus, About us, Our team, Testimonials, Ribbons, Latest news, Contat us"
 msgstr "Big title, Our focus, About us, Our team, Testimonials, Ribbons, Latest news, Contact us"
 
-#: functions.php:338 inc/admin/welcome-screen/sections/free_pro.php:47
-#: inc/customizer.php:959
+#: functions.php:338 inc/customizer.php:959
+#: inc/admin/welcome-screen/sections/free_pro.php:47
 msgid "Frontpage sections"
 msgstr "Front page sections"
 
@@ -936,8 +948,8 @@ msgstr "Mobile friendly"
 msgid "Smooth, catchy and easy scrolling experience."
 msgstr "Smooth, catchy and easy scrolling experience."
 
-#: functions.php:320 inc/admin/welcome-screen/sections/free_pro.php:23
-#: inc/customizer.php:1197
+#: functions.php:320 inc/customizer.php:1197
+#: inc/admin/welcome-screen/sections/free_pro.php:23
 msgid "Parallax effect"
 msgstr "Parallax effect"
 
@@ -1014,8 +1026,8 @@ msgstr "Below you will find a selection of Zerif Lite child themes that will tot
 msgid "Get a whole new look for your site"
 msgstr "Get a whole new look for your site"
 
-#: inc/admin/welcome-screen/sections/actions-required.php:86
 #: inc/admin/welcome-screen/welcome-screen.php:118
+#: inc/admin/welcome-screen/sections/actions-required.php:86
 msgid "Hooray! There are no required actions for you right now."
 msgstr "Hooray! There are no required actions for you right now."
 
@@ -1027,43 +1039,43 @@ msgstr "Keep up with Zerif Lite's latest news"
 msgid "Skip to content"
 msgstr "Skip to content"
 
-#: functions.php:1787
+#: functions.php:1701
 msgid "Open links in new window?"
 msgstr "Open links in new window?"
 
-#: functions.php:1537
+#: functions.php:1451
 msgid "Zerif - Team member widget"
 msgstr "Zerif - Team member widget"
 
-#: functions.php:1426 functions.php:1433
+#: functions.php:1340 functions.php:1347
 msgid "Client"
 msgstr "Client"
 
-#: functions.php:1392
+#: functions.php:1306
 msgid "Zerif - Clients widget"
 msgstr "Zerif - Clients widget"
 
-#: functions.php:1186
+#: functions.php:1100
 msgid "Zerif - Testimonial widget"
 msgstr "Zerif - Testimonial widget"
 
-#: functions.php:1152 functions.php:1357 functions.php:1503 functions.php:1815
+#: functions.php:1066 functions.php:1271 functions.php:1417 functions.php:1729
 msgid "Uploaded image"
 msgstr "Uploaded image"
 
-#: functions.php:982
+#: functions.php:896
 msgid "Zerif - Our focus widget"
 msgstr "Zerif - Our focus widget"
 
-#: functions.php:947
+#: functions.php:861
 msgid "Our team section widgets"
 msgstr "Our team section widgets"
 
-#: functions.php:943
+#: functions.php:857
 msgid "Testimonials section widgets"
 msgstr "Testimonials section widgets"
 
-#: functions.php:939
+#: functions.php:853
 msgid "Our focus section widgets"
 msgstr "Our focus section widgets"
 
@@ -1216,13 +1228,26 @@ msgid_plural "Begin updating plugins"
 msgstr[0] "Begin updating plugin"
 msgstr[1] "Begin updating plugins"
 
-#. Template Name of the plugin/theme
+#. translators: 1: plugin name(s).
+#: class-tgm-plugin-activation.php:350
+msgid "There is an update available for: %1$s."
+msgid_plural "There are updates available for the following plugins: %1$s."
+msgstr[0] "There is an update available for: %1$s."
+msgstr[1] "There are updates available for the following plugins: %1$s."
+
+#. Template Name of the theme
 msgid "Full Width Page"
 msgstr "Full Width Page"
 
 #: front-page.php:37 home.php:12 inc/customizer.php:881
 msgid "Blog"
 msgstr "Blog"
+
+#. Author of the theme
+#. Translators: %s: ThemeIsle link
+#: footer.php:215
+msgid "ThemeIsle"
+msgstr "ThemeIsle"
 
 #: sidebar.php:40
 msgid "Meta"
@@ -1250,12 +1275,12 @@ msgstr "Search Results for: %s"
 msgid "<span class=\"posted-on\">Posted on %1$s</span><span class=\"byline\"> by %2$s</span>"
 msgstr "<span class=\"posted-on\">Posted on %1$s</span><span class=\"byline\"> by %2$s</span>"
 
-#: inc/template-tags.php:39 single.php:30
+#: single.php:30 inc/template-tags.php:39
 msgctxt "Next post link"
 msgid "%title <span class=\"meta-nav\">&rarr;</span>"
 msgstr "%title <span class=\"meta-nav\">&rarr;</span>"
 
-#: inc/template-tags.php:37 single.php:31
+#: single.php:31 inc/template-tags.php:37
 msgctxt "Previous post link"
 msgid "<span class=\"meta-nav\">&larr;</span> %title"
 msgstr "<span class=\"meta-nav\">&larr;</span> %title"
@@ -1265,11 +1290,11 @@ msgid "Post navigation"
 msgstr "Post navigation"
 
 #: inc/class/class-customizer-theme-info-control/class-customizer-theme-info-root.php:106
+#: inc/customizer.php:100 inc/customizer.php:132 inc/customizer.php:160
+#: inc/customizer.php:185
 #: inc/customizer-info/class/class-zerif-customize-upsell.php:71
 #: inc/customizer-info/class/class-zerif-customize-upsell.php:83
 #: inc/customizer-info/class/class-zerif-customize-upsell.php:95
-#: inc/customizer.php:100 inc/customizer.php:132 inc/customizer.php:160
-#: inc/customizer.php:185
 msgid "View PRO version"
 msgstr "View PRO version"
 
@@ -1310,9 +1335,9 @@ msgstr "Contact us section subtitle"
 msgid "Contact us section title"
 msgstr "Contact us section title"
 
-#: content-frontpage.php:94 inc/customizer.php:2189 inc/customizer.php:2260
-#: inc/customizer.php:2446 sections/ribbon_with_bottom_button.php:18
-#: sections/ribbon_with_right_button.php:17 template-frontpage.php:96
+#: content-frontpage.php:94 sections/ribbon_with_right_button.php:17
+#: sections/ribbon_with_bottom_button.php:18 template-frontpage.php:96
+#: inc/customizer.php:2189 inc/customizer.php:2260 inc/customizer.php:2446
 msgid "Get in touch"
 msgstr "Get in touch"
 
@@ -1336,7 +1361,8 @@ msgstr "Button link"
 msgid "Button label"
 msgstr "Button label"
 
-#: inc/customizer.php:2174 sections/ribbon_with_bottom_button.php:17
+#. translators: BottomButton Ribbon in customizer
+#: sections/ribbon_with_bottom_button.php:17 inc/customizer.php:2174
 msgid "BottomButton Ribbon"
 msgstr "BottomButton Ribbon"
 
@@ -1500,6 +1526,8 @@ msgstr "Red button label"
 msgid "Hide big title section?"
 msgstr "Hide big title section?"
 
+#. translators: Big title section
+#. translators: Customizer link for Big title section
 #: inc/customizer.php:977 inc/customizer.php:990 inc/customizer.php:1041
 #: inc/template-tags.php:433
 msgid "Big title section"
@@ -1549,6 +1577,10 @@ msgstr "General Options"
 msgid "Toggle navigation"
 msgstr "Toggle navigation"
 
+#. translators: ZblackBeard install link
+#. translators: Zifer Child install link
+#. translators: ResponsiveBoat child theme
+#. translators: Zerius install link
 #: inc/admin/welcome-screen/sections/child-themes.php:38
 #: inc/admin/welcome-screen/sections/child-themes.php:65
 #: inc/admin/welcome-screen/sections/child-themes.php:92
@@ -1557,87 +1589,82 @@ msgstr "Toggle navigation"
 msgid "Live Preview"
 msgstr "Live Preview"
 
-#: footer.php:190 functions.php:1666 functions.php:1775 inc/customizer.php:649
-#: inc/customizer.php:2663
+#: functions.php:1580 functions.php:1689 inc/customizer.php:649
+#: inc/customizer.php:2663 footer.php:190
 msgid "Linkedin link"
 msgstr "LinkedIn link"
 
-#: footer.php:198 functions.php:1655 functions.php:1767 inc/customizer.php:667
+#: functions.php:1569 functions.php:1681 inc/customizer.php:667 footer.php:198
 msgid "Dribble link"
 msgstr "Dribbble link"
 
-#: footer.php:194 functions.php:1644 functions.php:1759 inc/customizer.php:658
-#: inc/customizer.php:2681
+#: functions.php:1558 functions.php:1673 inc/customizer.php:658
+#: inc/customizer.php:2681 footer.php:194
 msgid "Behance link"
 msgstr "Behance link"
 
-#: footer.php:186 functions.php:1633 functions.php:1751 inc/customizer.php:640
-#: inc/customizer.php:2646
+#: functions.php:1547 functions.php:1665 inc/customizer.php:640
+#: inc/customizer.php:2646 footer.php:186
 msgid "Twitter link"
 msgstr "Twitter link"
 
-#: footer.php:182 functions.php:1620 functions.php:1743 inc/customizer.php:631
-#: inc/customizer.php:2628
+#: functions.php:1534 functions.php:1657 inc/customizer.php:631
+#: inc/customizer.php:2628 footer.php:182
 msgid "Facebook link"
 msgstr "Facebook link"
 
-#: functions.php:1735
+#: functions.php:1649
 msgid "Description"
 msgstr "Description"
 
-#: functions.php:1727
+#: functions.php:1641
 msgid "Position"
 msgstr "Position"
 
-#: functions.php:1719
+#: functions.php:1633
 msgid "Name"
 msgstr "Name"
 
-#: functions.php:1317
+#: functions.php:1231
 msgid "Author details"
 msgstr "Author details"
 
-#: functions.php:1309
+#: functions.php:1223
 msgid "Author link"
 msgstr "Author link"
 
-#: functions.php:1301
+#: functions.php:1215
 msgid "Author"
 msgstr "Author"
 
-#: functions.php:1160 functions.php:1365 functions.php:1511 functions.php:1823
+#: functions.php:1074 functions.php:1279 functions.php:1425 functions.php:1737
 msgid "Upload Image"
 msgstr "Upload Image"
 
-#: functions.php:1128 functions.php:1333 functions.php:1477 functions.php:1791
+#: functions.php:1042 functions.php:1247 functions.php:1391 functions.php:1705
 msgid "Image"
 msgstr "Image"
 
-#: functions.php:1120 functions.php:1469
+#: functions.php:1034 functions.php:1383
 msgid "Link"
 msgstr "Link"
 
-#: functions.php:1112 functions.php:1325 inc/customizer.php:1564
+#: functions.php:1026 functions.php:1239 inc/customizer.php:1564
 #: inc/customizer.php:2207 inc/customizer.php:2287
 msgid "Text"
 msgstr "Text"
 
-#: functions.php:1104 inc/customizer.php:890 inc/customizer.php:1058
+#: functions.php:1018 inc/customizer.php:890 inc/customizer.php:1058
 #: inc/customizer.php:1332 inc/customizer.php:1463 inc/customizer.php:1895
 #: inc/customizer.php:1974 inc/customizer.php:2101
 msgid "Title"
 msgstr "Title"
 
-#: functions.php:904
+#: functions.php:818
 msgid "Default title"
 msgstr "Default title"
 
-#. translators: Name of plugins installed and activated successfully
-#: functions.php:866
-msgid "All plugins installed and activated successfully. %s"
-msgstr "All plugins installed and activated successfully. %s"
-
-#: class-tgm-plugin-activation.php:331 functions.php:844
+#: class-tgm-plugin-activation.php:331
 msgid "Something went wrong with the plugin API."
 msgstr "Something went wrong with the plugin API."
 
@@ -1656,22 +1683,31 @@ msgctxt "Lato font: on or off"
 msgid "on"
 msgstr "on"
 
-#: inc/customizer.php:1987 inc/customizer.php:2018 inc/template-tags.php:317
-#: sections/our_team.php:36 sections/our_team.php:39
+#. translators: Our team section
+#. translators: Our team section in customizer
+#: sections/our_team.php:36 sections/our_team.php:39 inc/customizer.php:1987
+#: inc/customizer.php:2018 inc/template-tags.php:317
 msgid "Our team section"
 msgstr "Our team section"
 
-#: functions.php:600 inc/customizer.php:1393 inc/customizer.php:1406
-#: inc/customizer.php:1476 inc/customizer.php:1536 inc/template-tags.php:479
-#: sections/about_us.php:53
+#. translators: About use section in customizer
+#. translators: About us section
+#. translators: About us section in customizer
+#: functions.php:600 sections/about_us.php:53 inc/customizer.php:1393
+#: inc/customizer.php:1406 inc/customizer.php:1476 inc/customizer.php:1536
+#: inc/template-tags.php:479
 msgid "About us section"
 msgstr "About us section"
 
-#: inc/customizer.php:2032 inc/customizer.php:2133 sections/testimonials.php:48
-#: sections/testimonials.php:51
+#. translators: Testimonials section
+#. translators: Testimonials section link in customizer
+#: sections/testimonials.php:48 sections/testimonials.php:51
+#: inc/customizer.php:2032 inc/customizer.php:2133
 msgid "Testimonials section"
 msgstr "Testimonials section"
 
+#. translators: Our focus section
+#. translators: Our focus section in customizer
 #: inc/customizer.php:1272 inc/customizer.php:1345 inc/customizer.php:1375
 #: inc/template-tags.php:276
 msgid "Our focus section"
@@ -1681,11 +1717,11 @@ msgstr "Our focus section"
 msgid "Sidebar"
 msgstr "Sidebar"
 
-#: functions.php:79 functions.php:1962
+#: functions.php:79 functions.php:1876
 msgid "Primary Menu"
 msgstr "Primary Menu"
 
-#: footer.php:27 inc/customizer.php:2788
+#: inc/customizer.php:2788 footer.php:27
 msgid "Company address"
 msgstr "Company address"
 
@@ -1726,8 +1762,8 @@ msgstr "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>.
 msgid "Nothing Found"
 msgstr "Nothing Found"
 
-#: content-large.php:154 content-page-no-title.php:33 content-page.php:43
-#: content-single.php:85 content.php:125
+#: content-large.php:154 content.php:125 content-page-no-title.php:33
+#: content-page.php:43 content-single.php:85
 msgid "Edit"
 msgstr "Edit"
 
@@ -1755,13 +1791,13 @@ msgid "Posted in %1$s"
 msgstr "Posted in %1$s"
 
 #. translators: used between list items, there is a space after the comma
-#: content-large.php:114 content-large.php:132 content-single.php:43
-#: content-single.php:47 content.php:88 content.php:103
+#: content-large.php:114 content-large.php:132 content.php:88 content.php:103
+#: content-single.php:43 content-single.php:47
 msgid ", "
 msgstr ", "
 
-#: content-large.php:82 content-page-no-title.php:24 content-page.php:34
-#: content-single.php:29 content.php:75
+#: content-large.php:82 content.php:75 content-page-no-title.php:24
+#: content-page.php:34 content-single.php:29
 msgid "Pages:"
 msgstr "Pages:"
 
@@ -1826,10 +1862,12 @@ msgstr "Installing and Activating Plugin %1$s (%2$d/%3$d)"
 msgid "All installations and activations have been completed."
 msgstr "All installations and activations have been completed."
 
+#. translators: 1: plugin name.
 #: class-tgm-plugin-activation.php:3524 class-tgm-plugin-activation.php:3532
 msgid "Hide Details"
 msgstr "Hide Details"
 
+#. translators: 1: plugin name.
 #: class-tgm-plugin-activation.php:3524 class-tgm-plugin-activation.php:3532
 msgid "Show Details"
 msgstr "Show Details"
@@ -1871,8 +1909,8 @@ msgstr "Source"
 msgid "Plugin"
 msgstr "Plugin"
 
-#: class-tgm-plugin-activation.php:2739 functions.php:410 functions.php:442
-#: functions.php:495
+#: functions.php:410 functions.php:442 functions.php:495
+#: class-tgm-plugin-activation.php:2739
 msgid "Activate"
 msgstr "Activate"
 
@@ -1922,97 +1960,75 @@ msgstr "All plugins installed and activated successfully. %1$s"
 
 #: class-tgm-plugin-activation.php:386 class-tgm-plugin-activation.php:2965
 msgid "The following plugin was activated successfully:"
-msgstr "The following plugin was activated successfully:"
+msgid_plural "The following plugins were activated successfully:"
+msgstr[0] "The following plugin was activated successfully:"
+msgstr[1] ""
 
 #: class-tgm-plugin-activation.php:385 class-tgm-plugin-activation.php:3172
-#: functions.php:864
 msgid "Plugin activated successfully."
 msgstr "Plugin activated successfully."
 
-#: class-tgm-plugin-activation.php:383 functions.php:863
+#: class-tgm-plugin-activation.php:383
 msgid "Return to Required Plugins Installer"
 msgstr "Return to Required Plugins Installer"
 
-#: class-tgm-plugin-activation.php:378 functions.php:862
+#: class-tgm-plugin-activation.php:378
 msgid "Begin activating plugin"
 msgid_plural "Begin activating plugins"
 msgstr[0] "Begin activating plugin"
 msgstr[1] "Begin activating plugins"
 
-#. translators: 1: plugin name(s).
-#: class-tgm-plugin-activation.php:368 functions.php:861
+#: class-tgm-plugin-activation.php:368
 msgid "Begin installing plugin"
 msgid_plural "Begin installing plugins"
 msgstr[0] "Begin installing plugin"
 msgstr[1] "Begin installing plugins"
 
-#. translators: Nme of plugin that can't be updated
-#: functions.php:860
-msgid "Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated."
-msgid_plural "Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated."
-msgstr[0] "Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated."
-msgstr[1] "Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated."
-
-#. translators: Name of plugin that needs to be updated
-#: functions.php:858
+#. translators: 1: plugin name(s).
+#: class-tgm-plugin-activation.php:344
 msgid "The following plugin needs to be updated to its latest version to ensure maximum compatibility with this theme: %1$s."
 msgid_plural "The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s."
 msgstr[0] "The following plugin needs to be updated to its latest version to ensure maximum compatibility with this theme: %1$s."
 msgstr[1] "The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s."
 
-#. translators: Name of plguin that can't be activated
-#: functions.php:856
-msgid "Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated."
-msgid_plural "Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated."
-msgstr[0] "Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated."
-msgstr[1] "Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated."
-
-#. translators: Name of recommended plugin that is not active
-#: functions.php:854
+#. translators: 1: plugin name(s).
+#: class-tgm-plugin-activation.php:362
 msgid "The following recommended plugin is currently inactive: %1$s."
 msgid_plural "The following recommended plugins are currently inactive: %1$s."
 msgstr[0] "The following recommended plugin is currently inactive: %1$s."
 msgstr[1] "The following recommended plugins are currently inactive: %1$s."
 
-#. translators: Name of required plugin that is not active
-#: functions.php:852
+#. translators: 1: plugin name(s).
+#: class-tgm-plugin-activation.php:356
 msgid "The following required plugin is currently inactive: %1$s."
 msgid_plural "The following required plugins are currently inactive: %1$s."
 msgstr[0] "The following required plugin is currently inactive: %1$s."
 msgstr[1] "The following required plugins are currently inactive: %1$s."
 
-#. translators: Name of required plugin
-#: functions.php:850
-msgid "Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed."
-msgid_plural "Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed."
-msgstr[0] "Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed."
-msgstr[1] "Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed."
-
-#. translators: Name of recommended plugin
-#: functions.php:848
+#. translators: 1: plugin name(s).
+#: class-tgm-plugin-activation.php:338
 msgid "This theme recommends the following plugin: %1$s."
 msgid_plural "This theme recommends the following plugins: %1$s."
 msgstr[0] "This theme recommends the following plugin: %1$s."
 msgstr[1] "This theme recommends the following plugins: %1$s."
 
-#. translators: Name of required plugin
-#: functions.php:846
+#. translators: 1: plugin name(s).
+#: class-tgm-plugin-activation.php:332
 msgid "This theme requires the following plugin: %1$s."
 msgid_plural "This theme requires the following plugins: %1$s."
 msgstr[0] "This theme requires the following plugin: %1$s."
 msgstr[1] "This theme requires the following plugins: %1$s."
 
 #. translators: %s: plugin name.
-#. translators: name of installing plugin
-#: class-tgm-plugin-activation.php:328 functions.php:843
+#: class-tgm-plugin-activation.php:328
 msgid "Installing Plugin: %s"
 msgstr "Installing Plugin: %s"
 
-#: class-tgm-plugin-activation.php:326 functions.php:841
+#: class-tgm-plugin-activation.php:326
 msgid "Install Plugins"
 msgstr "Install Plugins"
 
-#: class-tgm-plugin-activation.php:325 functions.php:840
+#: class-tgm-plugin-activation.php:325
 msgid "Install Required Plugins"
 msgstr "Install Required Plugins"
 
@@ -2028,16 +2044,10 @@ msgstr "It looks like nothing was found at this location. Maybe try one of the l
 msgid "Oops! That page can&rsquo;t be found."
 msgstr "Oops! That page can&rsquo;t be found."
 
-#. Author URI of the plugin/theme
+#. Author URI of the theme
 msgid "https://themeisle.com"
 msgstr "https://themeisle.com"
 
-#. #-#-#-#-#  zerif-lite.pot (Zerif Lite 1.8.5.47)  #-#-#-#-#
-#. Author of the plugin/theme
-#: footer.php:215
-msgid "ThemeIsle"
-msgstr "ThemeIsle"
-
-#. Theme URI of the plugin/theme
+#. Theme URI of the theme
 msgid "https://themeisle.com/themes/zerif-lite/"
 msgstr "https://themeisle.com/themes/zerif-lite/"

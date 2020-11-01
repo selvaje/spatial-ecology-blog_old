@@ -140,9 +140,18 @@ var sowbForms = window.sowbForms || {};
 										$$f = $$;
 									}
 
-									// Call the function on the wrapper we've selected
-									$$f[thisHandler[i][0]].apply($$f, typeof thisHandler[i][2] !== 'undefined' ? thisHandler[i][2] : []);
-									
+									var animated = false;
+									// Prevent animations from happening on load.
+									if ( $$f.prop( 'style' ).length && ( thisHandler[i][0] == 'show'|| thisHandler[i][0] == 'hide' ) ) {
+										$$f.fadeToggle( 'fast' );
+										animated = true;
+									}
+
+									if ( ! animated ) {
+										// Call the function on the wrapper we've selected
+										$$f[ thisHandler[i][0] ].apply( $$f, typeof thisHandler[i][2] !== 'undefined' ? thisHandler[i][2] : [] );
+									}
+
 									if ( $$f.is( '.siteorigin-widget-field:visible' ) ) {
 										if ( $$f.is( '.siteorigin-widget-field-type-section' ) ) {
 											var $fields = $$f.find( '> .siteorigin-widget-section > .siteorigin-widget-field' );
@@ -733,15 +742,30 @@ var sowbForms = window.sowbForms || {};
 				var $parentRepeater = $el.closest('.siteorigin-widget-field-repeater');
 				var itemTop = $el.find('> .siteorigin-widget-field-repeater-item-top');
 				var itemLabel = $parentRepeater.data('item-label');
-				if (itemLabel && itemLabel.selector) {
+				var defaultLabel = $el.parents('.siteorigin-widget-field-repeater').data('item-name');
+				if ( itemLabel && ( itemLabel.hasOwnProperty( 'selector' ) || itemLabel.hasOwnProperty( 'selectorArray' ) ) ) {
 					var updateLabel = function () {
-						var functionName = ( itemLabel.hasOwnProperty('valueMethod') && itemLabel.valueMethod ) ? itemLabel.valueMethod : 'val';
-						var txt = $el.find(itemLabel.selector)[functionName]();
+						var functionName, txt, selectorRow;
+						if ( itemLabel.hasOwnProperty( 'selectorArray' ) ) {
+							for ( var i = 0 ; i < itemLabel.selectorArray.length ; i++ ) {
+								selectorRow = itemLabel.selectorArray[ i ];
+								functionName = ( selectorRow.hasOwnProperty( 'valueMethod' ) && selectorRow.valueMethod ) ? selectorRow.valueMethod : 'val';
+								txt = $el.find( selectorRow.selector )[ functionName ]();
+								if ( txt ) {
+									break;
+								}
+							}
+						} else {
+							functionName = ( itemLabel.hasOwnProperty( 'valueMethod' ) && itemLabel.valueMethod ) ? itemLabel.valueMethod : 'val';
+							txt = $el.find( itemLabel.selector )[ functionName ]();
+						}
 						if (txt) {
 							if (txt.length > 80) {
 								txt = txt.substr(0, 79) + '...';
 							}
 							itemTop.find('h4').text(txt);
+						} else {
+							itemTop.find('h4').text(defaultLabel);
 						}
 					};
 					updateLabel();

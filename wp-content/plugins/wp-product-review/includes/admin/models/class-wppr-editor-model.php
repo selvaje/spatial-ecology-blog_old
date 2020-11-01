@@ -193,12 +193,12 @@ class WPPR_Editor_Model extends WPPR_Model_Abstract {
 			$price          = isset( $data['wppr-editor-price'] ) ? sanitize_text_field( $data['wppr-editor-price'] ) : 0;
 			$options_names  = isset( $data['wppr-editor-options-name'] ) ? $data['wppr-editor-options-name'] : array();
 			$options_values = isset( $data['wppr-editor-options-value'] ) ? $data['wppr-editor-options-value'] : array();
-			$pros           = isset( $data['wppr-editor-pros'] ) ? $data['wppr-editor-pros'] : array();
-			$cons           = isset( $data['wppr-editor-cons'] ) ? $data['wppr-editor-cons'] : array();
+			$pros           = isset( $data['wppr-editor-pros'] ) && is_array( $data['wppr-editor-pros'] ) ? array_map( 'sanitize_text_field', $data['wppr-editor-pros'] ) : array();
+			$cons           = isset( $data['wppr-editor-cons'] ) && is_array( $data['wppr-editor-cons'] ) ? array_map( 'sanitize_text_field', $data['wppr-editor-cons'] ) : array();
 			$options        = array();
 			foreach ( $options_names as $k => $op_name ) {
 				if ( ! empty( $op_name ) ) {
-					$options[ $k ] = array(
+					$options[ sanitize_text_field( $k ) ] = array(
 						'name'  => sanitize_text_field( $op_name ),
 						'value' => sanitize_text_field( isset( $options_values[ $k ] ) ? ( empty( $options_values[ $k ] ) ? 0 : $options_values[ $k ] ) : 0 ),
 					);
@@ -280,11 +280,12 @@ class WPPR_Editor_Model extends WPPR_Model_Abstract {
 			),
 			'js'  => array(
 				'editor' => array(
-					'path'     => WPPR_URL . '/assets/js/admin-review.js',
+					'path'     => WPPR_URL . '/assets/js/admin-editor.js',
 					'required' => array( 'jquery' ),
 					'vars'     => array(
 						'image_title'  => __( 'Add a product image to the review', 'wp-product-review' ),
 						'image_button' => __( 'Attach the image', 'wp-product-review' ),
+						'nonce'     => wp_create_nonce( WPPR_SLUG ),
 					),
 				),
 			),

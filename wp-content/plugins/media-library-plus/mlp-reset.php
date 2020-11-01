@@ -5,7 +5,7 @@ Plugin URI: http://maxgalleria.com
 Description: Plugin for reseting WordPress Media Library Folders
 Author: Max Foundry
 Author URI: http://maxfoundry.com
-Version: 5.1.9
+Version: 6.0.3
 Copyright 2015-2020 Max Foundry, LLC (http://maxfoundry.com)
 Text Domain: mlp-reset
 */
@@ -75,8 +75,27 @@ function clean_database() {
   
 }
 
+function mlfr_table_exist($table) {
+
+  global $wpdb;
+
+  $sql = "SHOW TABLES LIKE '{$table}'";
+  
+  $rows = $wpdb->get_results($sql);
+  
+  if($rows) 
+    return true;
+  else
+    return false;
+}
+
 function mlpr_show_attachments () {
   global $wpdb;
+  
+  if(!mlfr_table_exist($wpdb->prefix . 'mgmlp_folders')) {
+    echo __("<p>The mgmlp_folders table does not exists. Please activate Media Library Folders to create the table.</p>",'mlp-reset'); 
+    return;
+  }
   
   $sql = "select count(*) from {$wpdb->prefix}posts where post_type = 'attachment' ";
   
@@ -127,6 +146,11 @@ ORDER by folder_id";
 
 function mlpr_show_folders() {
   global $wpdb;
+  
+  if(!mlfr_table_exist($wpdb->prefix . 'mgmlp_folders')) {
+    echo __("<p>The mgmlp_folders table does not exists. Please activate Media Library Folders to create the table.</p>",'mlp-reset'); 
+    return;
+  }  
 	
   $sql = "select count(*) from {$wpdb->prefix}posts where post_type = 'mgmlp_media_folder' ";
   

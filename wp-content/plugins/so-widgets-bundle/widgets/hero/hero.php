@@ -172,6 +172,12 @@ class SiteOrigin_Widget_Hero_Widget extends SiteOrigin_Widget_Base_Slider {
 						'default' => 'default',
 					),
 
+					'vertically_align' => array(
+						'type' => 'checkbox',
+						'label' => __( 'Vertically center align slide contents', 'so-widgets-bundle' ),
+						'description' => __( 'For perfect centering, consider setting the Extra top padding setting to 0 when enabling this setting.', 'so-widgets-bundle' ),
+					),
+
 					'padding' => array(
 						'type' => 'measurement',
 						'label' => __('Top and bottom padding', 'so-widgets-bundle'),
@@ -349,15 +355,18 @@ class SiteOrigin_Widget_Hero_Widget extends SiteOrigin_Widget_Base_Slider {
 	 * @return string
 	 */
 	function process_content( $content, $frame ) {
-		ob_start();
-		foreach( $frame['buttons'] as $button ) {
-			$this->sub_widget('SiteOrigin_Widget_Button_Widget', array(), $button['button']);
-		}
-		$button_code = ob_get_clean();
 
-		// Add in the button code
-		$san_content = wp_kses_post($content);
-		$content = preg_replace('/(?:<(?:p|h\d|em|strong|li|blockquote) *([^>]*)> *)?\[ *buttons *\](:? *<\/(?:p|h\d|em|strong|li|blockquote)>)?/i', '<div class="sow-hero-buttons" $1>' . $button_code . '</div>', $san_content );
+		$content = wp_kses_post($content);
+		if ( strpos( $content, '[buttons]' ) !== false ) {
+			ob_start();
+			foreach( $frame['buttons'] as $button ) {
+				$this->sub_widget('SiteOrigin_Widget_Button_Widget', array(), $button['button']);
+			}
+			$button_code = ob_get_clean();
+
+			// Add in the button code
+			$content = preg_replace('/(?:<(?:p|h\d|em|strong|li|blockquote) *([^>]*)> *)?\[ *buttons *\](:? *<\/(?:p|h\d|em|strong|li|blockquote)>)?/i', '<div class="sow-hero-buttons" $1>' . $button_code . '</div>', $content );
+		}
 		
 		// Process normal shortcodes
 		$content = do_shortcode( shortcode_unautop( $content ) );
@@ -400,6 +409,8 @@ class SiteOrigin_Widget_Hero_Widget extends SiteOrigin_Widget_Base_Slider {
 		foreach ( $meas_options as $key => $val ) {
 			$less[ $key ] = $this->add_default_measurement_unit( $val );
 		}
+
+		$less['vertically_align'] = empty( $instance['design']['vertically_align'] ) ? 'false' : 'true';
 
 		$less['heading_shadow'] = intval( $instance['design']['heading_shadow'] );
 		$less['heading_color'] = $instance['design']['heading_color'];

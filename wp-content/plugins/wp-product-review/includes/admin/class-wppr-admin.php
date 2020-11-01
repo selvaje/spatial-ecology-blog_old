@@ -88,8 +88,7 @@ class WPPR_Admin {
 			case 'post.php':
 				// fall through.
 			case 'post-new.php':
-				$wp_scripts = wp_scripts();
-				wp_enqueue_style( $this->plugin_name . '-jquery-ui', sprintf( '//ajax.googleapis.com/ajax/libs/jqueryui/%s/themes/smoothness/jquery-ui.css', $wp_scripts->registered['jquery-ui-core']->ver ), array(), $this->version );
+				wp_enqueue_style( $this->plugin_name . '-jquery-ui', WPPR_URL . '/assets/css/jquery-ui.css', array(), $this->version );
 				break;
 		}
 	}
@@ -245,13 +244,13 @@ class WPPR_Admin {
 		}
 
 		foreach ( $data as $option ) {
-			$model->wppr_set_option( $option['name'], $option['value'] );
+			$model->wppr_set_option( sanitize_text_field( $option['name'] ), sanitize_text_field( $option['value'] ) );
 		}
 
 		// delete the transients for AMP.
 		$templates = apply_filters( 'wppr_review_templates', array( 'default', 'style1', 'style2' ) );
 		foreach ( $templates as $template ) {
-			delete_transient( '_wppr_amp_css_' . str_replace( '.', '_', $this->version ) . '_' . $template );
+			delete_transient( '_wppr_amp_css_' . str_replace( '.', '_', $this->version ) . '_' . sanitize_text_field( $template ) );
 		}
 		die();
 	}
@@ -266,7 +265,7 @@ class WPPR_Admin {
 		check_ajax_referer( WPPR_SLUG, 'nonce' );
 
 		if ( isset( $_POST['type'] ) ) {
-			echo wp_send_json_success( array( 'categories' => self::get_taxonomy_and_terms_for_post_type( $_POST['type'] ) ) );
+			echo wp_send_json_success( array( 'categories' => self::get_taxonomy_and_terms_for_post_type( sanitize_text_field( $_POST['type'] ) ) ) );
 		}
 		wp_die();
 	}
@@ -281,7 +280,7 @@ class WPPR_Admin {
 		check_ajax_referer( WPPR_SLUG, 'nonce' );
 
 		if ( isset( $_POST['type'] ) ) {
-			echo wp_send_json_success( array( 'categories' => self::get_category_for_post_type( $_POST['type'] ) ) );
+			echo wp_send_json_success( array( 'categories' => self::get_category_for_post_type( sanitize_text_field( $_POST['type'] ) ) ) );
 		}
 		wp_die();
 	}
@@ -466,7 +465,7 @@ class WPPR_Admin {
 		switch ( $column ) {
 			case 'wppr_review':
 				$model = new WPPR_Review_Model( $id );
-				echo $model->get_rating();
+				echo esc_html( $model->get_rating() );
 				break;
 		}
 	}
@@ -543,7 +542,7 @@ class WPPR_Admin {
 		switch ( $column ) {
 			case 'wppr_price':
 				$model = new WPPR_Review_Model( $id );
-				echo $model->get_price();
+				echo esc_html( $model->get_price() );
 				break;
 			case 'wppr_rating':
 				$model = new WPPR_Review_Model( $id );
@@ -613,16 +612,31 @@ class WPPR_Admin {
 	 *
 	 * @access  public
 	 */
-	public function on_activation( $plugin ) {
+	public function on_activation() {
 		if ( defined( 'TI_UNIT_TESTING' ) ) {
 			return;
 		}
 
-		if ( $plugin === WPPR_BASENAME ) {
-			wp_redirect( admin_url( 'admin.php?page=wppr-support&tab=help#shortcode' ) );
-			exit();
+		if ( get_option( 'wppr-activated' ) ) {
+			delete_option( 'wppr-activated' );
+			if ( ! headers_sent() ) {
+				wp_redirect( admin_url( 'admin.php?page=wppr-support&tab=help#shortcode' ) );
+				exit();
+			}
 		}
 	}
 
+	/**
+	 * Method called from AJAX request to get the specified schema's fields.
+	 *
+	 * @since   ?
+	 * @access  public
+	 */
+	public function get_schema_fields() {
+		check_ajax_referer( WPPR_SLUG, 'nonce' );
+
+		$type  = $_GET['type'];
+		wp_send_json_success( array( 'fields' => WPPR_Schema_Model::get_fields_for_type( $type ), 'url' => WPPR_Schema_Model::get_schema_url( $type ) ) );
+	}
 
 }

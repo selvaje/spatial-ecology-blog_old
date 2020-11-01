@@ -1,3 +1,70 @@
+##### [Version 1.5.7](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.6...v1.5.7) (2020-09-14)
+
+- Add Lottie Animations Block.
+- Add Progress Bar Block.
+- Prevent old custom CSS from being cached.
+- Fix Slider in Section's Vertical Alignment on AMP.
+- Consensual Tracking Data.
+
+##### [Version 1.5.6](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.5...v1.5.6) (2020-08-12)
+
+- Fix Button Group Block borders
+- Fix Plugin Card failing with additional attributes
+- Fix permission callback missing in REST API Route
+
+##### [Version 1.5.5](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.4...v1.5.5) (2020-08-12)
+
+- Fix Button Group Block borders
+- Fix Plugin Card failing with additional attributes
+- Fix permission callback missing in REST API Route
+
+##### [Version 1.5.4](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.3...v1.5.4) (2020-08-03)
+
+- Button Group Improvements
+- Fixed Caption field missing from Slider Block
+- Image management in Slider & Gallery Block
+- Fix issue with CSS inline loading twice
+- Fix Posts Block offset bug
+- Remove default font size from Posts Block
+
+##### [Version 1.5.3](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.2...v1.5.3) (2020-06-22)
+
+- Store images locally when importing templates
+- The improved template import mechanism
+- Fix CSS file is not enqueued for posts outside the main loop
+- Drop support for WordPress 5.3
+- Add backward compatibility to Template Library import
+- Fix category filter in Posts Section
+- Add new Block Templates
+
+##### [Version 1.5.2](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.1...v1.5.2) (2020-05-26)
+
+- Use WP File System in Template Import
+- Fix CSS Regeneration
+- Add TinyMCE in Map Marker
+- Use ServerSideLoader in Author & Sharing Blocks
+- Fix Posts Block for Gutenberg 8.0
+- Display template name in Template Library
+- Add AMP Support to Slider Block
+- Remove Section Outline
+- Add AMP Support to Google Maps Block
+- Fix Horizontal/Vertical Alignment
+- Add Template Preview in Template Library
+- Fix issue with Color resetting in Button Group & Section
+- Fix Font Awesome not loading on Index Pages
+- Add two new templates
+- Fix SVG issue in Slider & Section Block
+
+##### [Version 1.5.1](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.5.0...v1.5.1) (2020-04-10)
+
+- Remove Icons from Range Controls
+- Add ColorIndicator to Color Controls
+- Move Vertical Alignment to Toolbar
+- Fix Button Hover Color not saving
+- Fix Responsive Controls not working
+- Regenerate CSS file if it doesn't exist
+- Reduce FontAwesome Size
+
 #### [Version 1.5.0](https://github.com/Codeinwp/gutenberg-blocks/compare/v1.4.2...v1.5.0) (2020-03-30)
 
 - Improve Responsiveness Control

@@ -173,7 +173,7 @@ msgstr ""
 
 #: ../includes/mlf_support.php:61
 msgid ""
-"Media Library Folders does not work like the file manager on you computer. "
+"Media Library Folders does not work like the file manager on your computer. "
 "It only display images and folders that have been added to the Media Library "
 "database. To display new folders that have not been added through the Media "
 "Library Folders you can click the Check for new folders option in the  Media "

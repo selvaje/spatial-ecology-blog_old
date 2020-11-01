@@ -15,9 +15,9 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 $settings     = get_option( 'rop_data' );
-$housekeeping = $settings['general_settings']['housekeeping'];
+$housekeeping = ! empty( $settings['general_settings']['housekeeping'] ) ? $settings['general_settings']['housekeeping'] : '';
 
-if ( isset( $housekeeping ) && $housekeeping ) {
+if ( ! empty( $housekeeping ) ) {
 
 	$option_keys = array(
 		// Sharing
@@ -27,6 +27,7 @@ if ( isset( $housekeeping ) && $housekeeping ) {
 		'rop-settings',
 		'rop_opt_cat_filter',
 		'rop_current_network_oauth',
+		'rop_last_post_shared',
 		// Shortners
 		'rop_shortners_bitly',
 		'rop_shortners_rvivly',
@@ -57,7 +58,9 @@ if ( isset( $housekeeping ) && $housekeeping ) {
 		'rop_first_install_version',
 		'rop_linkedin_refresh_token_notice',
 		'rop_buffer_via_rs_app',
+		'rop_tumblr_via_rs_app',
 		'rop_data_migrated_tax',
+		'rop_changed_shortener',
 		/**
 		 * Related functions
 		 *
@@ -87,6 +90,7 @@ if ( isset( $housekeeping ) && $housekeeping ) {
 	delete_metadata( 'user', 0, 'rop-buffer-addon-notice-dismissed', '', true );
 	delete_metadata( 'user', 0, 'rop-wp-cron-notice-dismissed', '', true );
 	delete_metadata( 'user', 0, 'rop-cron-event-status-notice-dismissed', '', true );
+	delete_metadata( 'user', 0, 'rop-shortener-changed-notice-dismissed', '', true );
 
 	global $wpdb;
 	$post_meta = $wpdb->prefix . 'postmeta';

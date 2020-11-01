@@ -14,9 +14,8 @@ class mo_FeedbackHandler
         if (current_user_can('manage_options') && isset($_POST['option'])) {
             switch ($_REQUEST['option']) {
                 case "mo_skip_feedback_wpns":
-                  $this->wpns_handle_skip_feedback($_POST);						break;
                 case "mo_feedback_wpns":
-                  $this->wpns_handle_feedback($_POST);				            break;
+                  $this->wpns_handle_feedback($_POST);				        break;
 
             }
         }
@@ -33,8 +32,7 @@ class mo_FeedbackHandler
         $user = wp_get_current_user();
 
         $message = 'Plugin Deactivated';
-
-        $deactivate_reason_message = array_key_exists('wpns_query_feedback', $_POST) ? htmlspecialchars($_POST['wpns_query_feedback']) : false;
+        $deactivate_reason_message = array_key_exists('query_feedback_wpns', $_POST) ? htmlspecialchars($_POST['query_feedback_wpns']) : false;
 
 
         $reply_required = '';

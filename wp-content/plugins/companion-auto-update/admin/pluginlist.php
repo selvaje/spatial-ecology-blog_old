@@ -83,6 +83,7 @@ if( isset( $_POST['reset'] ) ) {
 	echo '<div id="message" class="updated"><p><b>'.__( 'Succes', 'companion-auto-update' ).' &ndash;</b> '.sprintf( esc_html__( 'The no-update-list has been reset, all %s will be auto-updated from now on', 'companion-auto-update' ), strtolower( $filter_name ) ).'.</p></div>';
 }
 
+
 ?>
 
 <form method="POST">

@@ -20,6 +20,20 @@ class Base_CSS {
 	protected $library_prefix = 'themeisle-blocks';
 
 	/**
+	 * Rest route namespace.
+	 *
+	 * @var string
+	 */
+	public $namespace = 'themeisle-gutenberg-blocks/';
+
+	/**
+	 * Rest route version.
+	 *
+	 * @var string
+	 */
+	public $version = 'v1';
+
+	/**
 	 * The namespace under which the block classees are saved.
 	 *
 	 * @var string
@@ -56,7 +70,9 @@ class Base_CSS {
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Columns_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Advanced_Heading_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_Group_CSS',
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Button_CSS',
 			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Font_Awesome_Icons_CSS',
+			'\ThemeIsle\GutenbergBlocks\CSS\Blocks\Progress_Bar_CSS',
 		);
 	}
 

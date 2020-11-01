@@ -2,17 +2,17 @@
 
 namespace GFPDF\Helper;
 
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\NullHandler;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use Monolog\Processor\IntrospectionProcessor;
-use Monolog\Processor\MemoryPeakUsageProcessor;
-
 use DateTimeZone;
 use Exception;
-use GFLogging;
 use GFFormsModel;
+use GFLogging;
+use GFPDF\Vendor\Monolog\Formatter\LineFormatter;
+use GFPDF\Vendor\Monolog\Handler\NullHandler;
+use GFPDF\Vendor\Monolog\Handler\StreamHandler;
+use GFPDF\Vendor\Monolog\Logger;
+use GFPDF\Vendor\Monolog\Processor\IntrospectionProcessor;
+use GFPDF\Vendor\Monolog\Processor\MemoryPeakUsageProcessor;
+use Psr\Log\LoggerInterface;
 
 /**
  * @package     Gravity PDF
@@ -47,7 +47,7 @@ class Helper_Logger {
 	/**
 	 * Holds our log class
 	 *
-	 * @var \Monolog\Logger
+	 * @var LoggerInterface
 	 *
 	 * @since 4.2
 	 */
@@ -185,7 +185,7 @@ class Helper_Logger {
 				$monolog_level = ( $log_level === 4 ) ? Logger::ERROR : Logger::DEBUG;
 
 				/* Setup our stream and change the format to more-suit Gravity Forms */
-				$formatter = new LineFormatter( "%datetime% - %level_name% --> %message% %context% %extra%\n" );
+				$formatter = new LineFormatter( "%datetime% - %level_name% --> %message%\n|--> %context%\n|--> %extra%\n", 'Y-m-d H:i:s (P)' );
 				$stream    = new StreamHandler( $log_filename, $monolog_level );
 				$stream->setFormatter( $formatter );
 

@@ -23,7 +23,7 @@ class WPForms_Builder_Panel_Settings extends WPForms_Builder_Panel {
 	}
 
 	/**
-	 * Outputs the Settings panel sidebar.
+	 * Output the Settings panel sidebar.
 	 *
 	 * @since 1.0.0
 	 */
@@ -46,7 +46,7 @@ class WPForms_Builder_Panel_Settings extends WPForms_Builder_Panel {
 	}
 
 	/**
-	 * Outputs the Settings panel primary content.
+	 * Output the Settings panel primary content.
 	 *
 	 * @since 1.0.0
 	 */
@@ -135,16 +135,27 @@ class WPForms_Builder_Panel_Settings extends WPForms_Builder_Panel {
 					'tooltip' => esc_html__( 'Enter CSS class names for the form submit button. Multiple names should be separated with spaces.', 'wpforms-lite' ),
 				)
 			);
+			if ( ! empty( $this->form_data['settings']['honeypot'] ) ) {
+				wpforms_panel_field(
+					'checkbox',
+					'settings',
+					'honeypot',
+					$this->form_data,
+					esc_html__( 'Enable anti-spam honeypot', 'wpforms-lite' )
+				);
+			}
 			wpforms_panel_field(
 				'checkbox',
 				'settings',
-				'honeypot',
+				'antispam',
 				$this->form_data,
-				esc_html__( 'Enable anti-spam honeypot', 'wpforms-lite' )
+				esc_html__( 'Enable anti-spam protection', 'wpforms-lite' )
 			);
+
 			$recaptcha_key    = wpforms_setting( 'recaptcha-site-key' );
 			$recaptcha_secret = wpforms_setting( 'recaptcha-secret-key' );
 			$recaptcha_type   = wpforms_setting( 'recaptcha-type', 'v2' );
+
 			if ( ! empty( $recaptcha_key ) && ! empty( $recaptcha_secret ) ) {
 				switch ( $recaptcha_type ) {
 					case 'v2':
