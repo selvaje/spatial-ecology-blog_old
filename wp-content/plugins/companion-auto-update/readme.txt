@@ -3,9 +3,9 @@ Contributors: Papin, qweb
 Donate link: https://www.paypal.me/dakel/10/
 Tags: auto, automatic, background, update, updates, updating, automatic updates, automatic background updates, easy update, wordpress update, theme update, plugin update, up-to-date, security, update latest version, update core, update wp, update wp core, major updates, minor updates, update to new version, update core, update plugin, update plugins, update plugins automatically, update theme, plugin, theme, advance, control, mail, notifations, enable
 Requires at least: 3.6.0
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.1
-Stable tag: 3.7.1
+Stable tag: 3.7.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,9 @@ So obviously, some of you wondered what the difference would be between the defa
 4. Keep track of updates with the update log
 
 == Changelog ==
+
+= 3.7.1.1 (November 2, 2020) =
+* Fix: Type in wp_next_scheduled
 
 = 3.7.1 (October 30, 2020) =
 * Fix: PHP Warning: strtotime() expects parameter 2 to be integer, string given

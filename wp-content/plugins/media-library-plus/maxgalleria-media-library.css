@@ -8,6 +8,7 @@ ul.mg-media-list li {
   height: 177px;
   list-style: outside none none;
   margin-right: 13px;
+  margin-bottom: 13px;
   max-width: 134px;
   overflow: hidden;
 }
@@ -115,7 +116,8 @@ div#wp-media-grid.wrap div.media-plus-toolbar,
 .media-attachment img,
 a.tb-media-attachment img,
 a.media-attachment img {
-  height: 135px;
+  /*height: 135px;*/
+  height: auto; 
   width: 135px;    
 }
 

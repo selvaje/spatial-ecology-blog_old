@@ -199,9 +199,15 @@ function cau_run_custom_hooks_p() {
 			$lastday = date( 'YmdHi', strtotime( '-12 hours', time() ) );
 		} elseif( $updateSched == 'daily' ) {
 			$lastday = date( 'YmdHi', strtotime( '-1 day', time() ) );
+		} elseif( $updateSched == 'weekly' ) {
+			$lastday = date( 'YmdHi', strtotime( '-1 week', time() ) );
+		} elseif( $updateSched == 'monthly' ) {
+			$lastday = date( 'YmdHi', strtotime( '-1 month', time() ) );
+		} else {
+			$lastday = date( 'YmdHi', strtotime( '-1 month', time() ) );
 		}
 
-		$update_time 	= wp_next_schedule( 'wp_update_plugins' );
+		$update_time 	= wp_next_scheduled( 'wp_update_plugins' );
 		$range_start 	= date( 'Hi', strtotime( '-30 minutes', $update_time ) );
 		$range_end 		= date( 'Hi', strtotime( '+30 minutes', $update_time ) );
 
@@ -258,6 +264,12 @@ function cau_run_custom_hooks_t() {
 			$lastday = date( 'YmdHi', strtotime( '-12 hours', time() ) );
 		} elseif( $updateSched == 'daily' ) {
 			$lastday = date( 'YmdHi', strtotime( '-1 day', time() ) );
+		} elseif( $updateSched == 'weekly' ) {
+			$lastday = date( 'YmdHi', strtotime( '-1 week', time() ) );
+		} elseif( $updateSched == 'monthly' ) {
+			$lastday = date( 'YmdHi', strtotime( '-1 month', time() ) );
+		} else {
+			$lastday = date( 'YmdHi', strtotime( '-1 month', time() ) );
 		}
 
 		$update_time 	= wp_next_scheduled( 'wp_update_themes' );
@@ -311,17 +323,23 @@ function cau_run_custom_hooks_c() {
 		$lastday = date( 'YmdHi', strtotime( '-12 hours', time() ) );
 	} elseif( $updateSched == 'daily' ) {
 		$lastday = date( 'YmdHi', strtotime( '-1 day', time() ) );
+	} elseif( $updateSched == 'weekly' ) {
+		$lastday = date( 'YmdHi', strtotime( '-1 week', time() ) );
+	} elseif( $updateSched == 'monthly' ) {
+		$lastday = date( 'YmdHi', strtotime( '-1 month', time() ) );
+	} else {
+		$lastday = date( 'YmdHi', strtotime( '-1 month', time() ) );
 	}
 
 	// Check manual or automatic
-	$update_time 	= wp_next_schedule( 'wp_version_check' );
+	$update_time 	= wp_next_scheduled( 'wp_version_check' );
 	$range_start 	= date( 'Hi', strtotime( '-30 minutes', $update_time ) );
 	$range_end 		= date( 'Hi', strtotime( '+30 minutes', $update_time ) );
 
 	if( $fileDate >= $lastday ) {
 
 		// Update info
-		if( $fileTime > $range_start && $fileTime < $range_end ) {
+		if( $fileDate > $range_start && $fileDate < $range_end ) {
 			$status = __( 'Automatic', 'companion-auto-update' );
 		} else {
 			$status = __( 'Manual', 'companion-auto-update' );
@@ -375,12 +393,8 @@ function checkAutomaticUpdaterDisabled() {
 // Check if cronjobs are disabled
 function checkCronjobsDisabled() {
 
-	if ( defined( 'disable_wp_cron' ) OR defined( 'DISABLE_WP_CRON' ) ) {
-		if( constant( 'disable_wp_cron' ) == 'true' OR constant( 'DISABLE_WP_CRON' ) == 'true' ) {
-			return true;
-		} else {
-			return false;
-		}
+	if ( defined('DISABLE_WP_CRON') && DISABLE_WP_CRON ) {
+		return true;
 	} else {
 		return false;
 	}
@@ -767,7 +781,7 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 	if( $core ) {
 
 		$coreFile 		= ABSPATH.'wp-includes/version.php';
-		$updateSched 	= wp_get_schedule( 'wp_version_check' );
+		$updateSched 	= wp_next_scheduled( 'wp_version_check' );
 
 		if( file_exists( $coreFile ) ) {
 
@@ -784,7 +798,7 @@ function cau_fetch_log( $limit, $format = 'simple' ) {
 			$date_tod 		= date ( 'ydm' );
 			$fileDay 		= date ( 'ydm', filemtime( $coreFile ) );
 			$fileTime 		= date ( 'Hi', filemtime( $coreFile ) );
-			$update_time 	= wp_next_schedule( 'wp_version_check' );
+			$update_time 	= wp_next_scheduled( 'wp_version_check' );
 			$range_start 	= date( 'Hi', strtotime( '-30 minutes', $update_time ) );
 			$range_end 		= date( 'Hi', strtotime( '+30 minutes', $update_time ) );
 

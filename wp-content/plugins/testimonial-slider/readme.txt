@@ -1,10 +1,10 @@
-﻿=== Testimonial Slider ===
+=== Testimonial Slider ===
 Contributors: slidervilla, tejaswini, DavidAnderson
 Tags: testimonial, slider, slideshow, feedback, content slider, responsive, widget, content, jquery, gallery, custom post type, sidebar, wpmu
 Donate link: https://david.dw-perspective.org.uk/donate
 Requires at least: 4.2
-Tested up to: 4.9
-Stable tag: 1.3.0
+Tested up to: 5.6
+Stable tag: 1.3.1
 License: GPLv2 or later
 
 Display your happy customers' Testimonials in a neat Responsive Slider 
@@ -100,9 +100,13 @@ Visit the plugin page (http://slidervilla.com/testimonial-slider/) for recent FA
 
 == Upgrade Notice ==
 
-1.3.0 : Under new maintainership, to try to keep the plugin working. Includes security fixes to issues which had caused it to be closed.
+1.3.1 : Some graphical elements (rarely used) were missing
 
 == Changelog ==
+
+= 1.3.1 - (2020/Nov/06) =
+
+* FIX: Some graphical elements (rarely used) were missing
 
 = 1.3.0 (2018/Oct/18) =
 

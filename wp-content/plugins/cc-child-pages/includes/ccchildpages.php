@@ -15,7 +15,7 @@ class ccchildpages
 	const plugin_name = 'CC Child Pages';
 
 	// Plugin version
-	const plugin_version = '1.38';
+	const plugin_version = '1.39';
 
 	// ID Count
 	protected static $cc_id_counter;

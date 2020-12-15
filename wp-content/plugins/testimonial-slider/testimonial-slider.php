@@ -2,7 +2,7 @@
 Plugin Name: Testimonial Slider
 Plugin URI: https://wordpress.org/plugins/testimonial-slider/
 Description: Use Testimonial Slider to show the awesome testimonials you have received in a beautiful horizontal slider format.
-Version: 1.3.0
+Version: 1.3.1
 Author: DavidAnderson
 Text Domain: testimonial-slider
 Author URI: https://wordpress.org/plugins/testimonial-slider/
@@ -34,7 +34,7 @@ if (!defined('ABSPATH')) die('No direct access.');
 define('TESTIMONIAL_SLIDER_TABLE','testimonial_slider'); //Slider TABLE NAME
 define('TESTIMONIAL_SLIDER_META','testimonial_slider_meta'); //Meta TABLE NAME
 define('TESTIMONIAL_SLIDER_POST_META','testimonial_slider_postmeta'); //Meta TABLE NAME
-define("TESTIMONIAL_SLIDER_VER", '1.3.0'); //Current Version of Testimonial Slider
+define("TESTIMONIAL_SLIDER_VER", '1.3.1'); //Current Version of Testimonial Slider
 
 global $testimonial_slider, $default_testimonial_slider_settings, $testimonial_db_version;
 $testimonial_db_version='1.2.4'; //current version of testimonial slider database

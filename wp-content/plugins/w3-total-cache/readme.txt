@@ -2,8 +2,8 @@
 Contributors: boldgrid, fredericktownes, maxicusc, gidomanders, bwmarkle, harryjackson1221, joemoto
 Tags: seo, cache, optimize, pagespeed, performance, caching, compression, maxcdn, nginx, varnish, redis, new relic, aws, amazon web services, s3, cloudfront, rackspace, cloudflare, azure, apache
 Requires at least: 3.2
-Tested up to: 5.5
-Stable tag: 0.15.1
+Tested up to: 5.6
+Stable tag: 0.15.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -274,6 +274,14 @@ It's quite difficult to recall all of the innovators that have shared their thou
 Please reach out to all of these people and support their projects if you're so inclined.
 
 == Changelog ==
+
+= 0.15.2 =
+* Fix: Minify: Do not remove quotes around meta tags
+* Fix: Minify: Removal of spaces in calc function was breaking CSS
+* Fix: Browser Cache: Query string was not added to prevent caching after setting changes
+* Fix: Avoid warning when sending an empty URL for purging
+* Update: Added a filter for minified JavaScript content
+* Update: Minify: Added options for minify only got both JS and CSS in auto mode
 
 = 0.15.1 =
 * Fix: Fixed Memcached flush logic

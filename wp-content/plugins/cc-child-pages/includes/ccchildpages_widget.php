@@ -190,11 +190,26 @@ $args = array(
 
 		$instance['exclude'] = strip_tags( $new_instance['exclude'] );
 
-		$instance['showall'] = $new_instance['showall'];
+		if (isset($new_instance['showall'])) {
+			$instance['showall'] = $new_instance['showall'];
+		}
+		else {
+			$instance['showall'] = 'off';
+		}
 
-		$instance['showtitle'] = $new_instance['showtitle'];
+		if (isset($new_instance['showtitle'])) {
+			$instance['showtitle'] = $new_instance['showtitle'];
+		}
+		else {
+			$instance['showtitle'] = 'off';
+		}
 
-		$instance['siblings'] = $new_instance['siblings'];
+		if ($new_instance['siblings']) {
+			$instance['siblings'] = $new_instance['siblings'];
+		}
+		else {
+			$instance['siblings'] = 'off';
+		}
 
 		return $instance;
 	}

@@ -150,7 +150,7 @@
 					author: 'Tim Lomas',
 					authorurl: 'http://caterhamcomputing.net',
 					infourl: 'http://ccchildpages.ccplugins.co.uk',
-					version: "1.38"
+					version: "1.39"
 				};
 			}
 		});

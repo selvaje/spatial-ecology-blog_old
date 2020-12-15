@@ -129,6 +129,7 @@
 
 WordPress Version:      <?php echo get_bloginfo('version') . "\n"; ?>
 PHP Version:            <?php echo PHP_VERSION . "\n"; ?>
+PHP OS:                 <?php echo PHP_OS . "\n"; ?>
 MySQL Version:          <?php 
 														global $wpdb;
 														$mysql_version = $wpdb->db_version();
@@ -139,12 +140,15 @@ Web Server:             <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
 
 WordPress URL:          <?php echo get_bloginfo('wpurl') . "\n"; ?>
 Home URL:               <?php echo get_bloginfo('url') . "\n"; ?>
-WP-contents folder:     <?php echo WP_CONTENT_DIR . "\n";  ?>
+WP-contents folder:     <?php echo WP_CONTENT_DIR . "\n\n";  ?>
 <?php 
   $upload_dir = wp_upload_dir();    
-  $upload_dir1 = $upload_dir['basedir'];
 ?>
-Uploads folder:         <?php echo $upload_dir1 . "\n";  ?>
+Uploads Path:           <?php echo $upload_dir['path'] . "\n"; ?>
+Uploads URL:            <?php echo $upload_dir['url'] . "\n"; ?>
+Uploads Sub Directory:  <?php echo $upload_dir['subdir'] . "\n"; ?>
+Uploads Base Directory: <?php echo $upload_dir['basedir'] . "\n"; ?>
+Uploads Base URL:       <?php echo $upload_dir['baseurl'] . "\n"; ?>
 
 PHP cURL Support:       <?php echo (function_exists('curl_init')) ? 'Yes' . "\n" : 'No' . "\n"; ?>
 PHP GD Support:         <?php echo (function_exists('gd_info')) ? 'Yes' . "\n" : 'No' . "\n"; ?>

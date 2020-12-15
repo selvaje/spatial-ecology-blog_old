@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the Plugins - TablePress - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-04-30 09:33:38+0000\n"
+"PO-Revision-Date: 2020-08-12 11:12:37+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/2.4.0-alpha\n"
+"X-Generator: GlotPress/3.0.0-alpha.2\n"
 "Language: en_GB\n"
 "Project-Id-Version: Plugins - TablePress - Stable (latest release)\n"
 
@@ -17,7 +17,7 @@ msgstr "This field can only contain letters, numbers, spaces, hyphens (-), under
 
 #: views/view-list.php:92 views/view-list.php:93 views/view-about.php:216
 #: views/view-about.php:217
-msgctxt "WP Security Audit Log"
+msgctxt "WP Activity Log"
 msgid "This release of TablePress is supported by %s, the most comprehensive WordPress activity logs plugin."
 msgstr "This release of TablePress is supported by %s, the most comprehensive WordPress activity logs plugin."
 
@@ -25,11 +25,11 @@ msgstr "This release of TablePress is supported by %s, the most comprehensive Wo
 msgid "TablePress needs you!"
 msgstr "TablePress needs you!"
 
-#: views/view-list.php:188 views/view-edit.php:675 views/view-about.php:91
+#: views/view-list.php:188 views/view-edit.php:677 views/view-about.php:91
 msgid "To insert a table into a post or page, copy its Shortcode %s and paste it into a &#8220;Shortcode&#8221; block at the desired place in the block editor."
 msgstr "To insert a table into a post or page, copy its Shortcode %s and paste it into a &#8220;Shortcode&#8221; block at the desired place in the block editor."
 
-#: views/view-edit.php:674
+#: views/view-edit.php:676
 msgid "To edit the content or modify the structure of this table, use the input fields and buttons below."
 msgstr "To edit the content or modify the structure of this table, use the input fields and buttons below."
 
@@ -72,12 +72,12 @@ msgstr "Bulk action selectors for rows"
 msgid "Row Number"
 msgstr "Row Number"
 
-#: views/view-list.php:188 views/view-edit.php:675 views/view-about.php:90
+#: views/view-list.php:188 views/view-edit.php:677 views/view-about.php:90
 #: views/view-about.php:91
 msgid "Shortcode text for editor"
 msgstr "Shortcode text for editor"
 
-#: views/view-edit.php:644
+#: views/view-edit.php:646
 msgid "The following error was registered: %s."
 msgstr "The following error was registered: %s."
 
@@ -100,22 +100,6 @@ msgstr "the translators in the <a href=\"%s\">Plugin Directory</a>,"
 #: views/view-about.php:210
 msgid "Allan Jardine for <a href=\"%s\">DataTables</a>,"
 msgstr "Allan Jardine for <a href=\"%s\">DataTables</a>,"
-
-#. Author URI of the plugin
-msgid "https://tobias.baethge.com/"
-msgstr "https://tobias.baethge.com/"
-
-#. Author of the plugin
-msgid "Tobias Bäthge"
-msgstr "Tobias Bäthge"
-
-#. Description of the plugin
-msgid "Embed beautiful and feature-rich tables into your posts and pages, without having to write code."
-msgstr "Embed beautiful and feature-rich tables into your posts and pages, without having to write code."
-
-#. Plugin URI of the plugin
-msgid "https://tablepress.org/"
-msgstr "https://tablepress.org/"
 
 #: views/view-options_custom_css.php:141
 msgid "Proceed without saving &#8220;Custom CSS&#8221; to a file"
@@ -727,31 +711,31 @@ msgstr "This is a list of all available tables."
 msgid "List of Tables"
 msgstr "List of Tables"
 
-#: views/view-edit.php:687
+#: views/view-edit.php:689
 msgid "Did you know? You can drag and drop rows and columns via the row number and the column title. And the arrows next to the column title can be used for sorting."
 msgstr "Did you know? You can drag and drop rows and columns via the row number and the column title. Plus, the arrows next to the column title can be used for sorting."
 
-#: views/view-edit.php:686
+#: views/view-edit.php:688
 msgid "TablePress Feature: Moving rows and columns"
 msgstr "TablePress Feature: Moving rows and columns"
 
-#: views/view-edit.php:656
+#: views/view-edit.php:658
 msgid "Back to the List of Tables"
 msgstr "Back to the List of Tables"
 
-#: views/view-edit.php:651
+#: views/view-edit.php:653
 msgid "Please see the <a href=\"%s\">TablePress FAQ page</a> for further instructions."
 msgstr "Please see the <a href=\"%s\">TablePress FAQ page</a> for further instructions."
 
-#: views/view-edit.php:649
+#: views/view-edit.php:651
 msgid "Because of this error, the table can not be edited at this time, to prevent possible further data loss."
 msgstr "Because of this error, the table cannot be edited at this time, to prevent possible further data loss."
 
-#: views/view-edit.php:642
+#: views/view-edit.php:644
 msgid "The internal data of table &#8220;%1$s&#8221; (ID %2$s) is corrupted."
 msgstr "The internal data of table &#8220;%1$s&#8221; (ID %2$s) is corrupted."
 
-#: views/view-edit.php:639
+#: views/view-edit.php:640
 msgid "Attention: Unfortunately, an error occurred."
 msgstr "Attention: Unfortunately, an error occurred."
 

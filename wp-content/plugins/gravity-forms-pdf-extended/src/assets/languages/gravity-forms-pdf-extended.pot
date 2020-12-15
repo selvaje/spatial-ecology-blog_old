@@ -21,6 +21,34 @@ msgstr ""
 msgid "The option key %s already exists. Use GPDFAPI::update_plugin_option instead"
 msgstr ""
 
+#: api.php:441
+msgid "Make sure to pass in a valid Gravity Forms Entry ID"
+msgstr ""
+
+#: api.php:448
+msgid "Could not located the PDF Settings. Ensure you pass in a valid PDF ID."
+msgstr ""
+
+#: api.php:579
+msgid "Font name is not valid. Alphanumeric characters and spaces only."
+msgstr ""
+
+#: api.php:583
+msgid "A font with the same name already exists."
+msgstr ""
+
+#: api.php:616
+msgid "Font not installed."
+msgstr ""
+
+#: api.php:621
+msgid "There was a problem deleting the font files."
+msgstr ""
+
+#: api.php:630
+msgid "There was a problem deleting the font from the database."
+msgstr ""
+
 #: pdf.php:173
 msgid "WordPress Version %1$s is required. %2$sGet more info%3$s."
 msgstr ""
@@ -1529,19 +1557,19 @@ msgstr ""
 msgid "Not accepted"
 msgstr ""
 
-#: src/Helper/Licensing/EDD_SL_Plugin_Updater.php:278
+#: src/Helper/Licensing/EDD_SL_Plugin_Updater.php:266
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s."
 msgstr ""
 
-#: src/Helper/Licensing/EDD_SL_Plugin_Updater.php:286
+#: src/Helper/Licensing/EDD_SL_Plugin_Updater.php:274
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s."
 msgstr ""
 
-#: src/Helper/Licensing/EDD_SL_Plugin_Updater.php:534
+#: src/Helper/Licensing/EDD_SL_Plugin_Updater.php:522
 msgid "You do not have permission to install plugin updates"
 msgstr ""
 
-#: src/Helper/Licensing/EDD_SL_Plugin_Updater.php:534
+#: src/Helper/Licensing/EDD_SL_Plugin_Updater.php:522
 msgid "Error"
 msgstr ""
 

@@ -2,8 +2,8 @@
 Contributors: maxfoundry, AlanP57
 Tags: WordPress media library folders, media library folders, organize media library
 Requires at least: 4.0
-Tested up to: 5.5.1
-Stable tag: 6.0.3
+Tested up to: 5.5.6
+Stable tag: 6.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -184,6 +184,18 @@ Users can upload multiple files by using drag and drop. When the Add Files butto
 Because most images and files in the media library have corresponding links embedded in site’s posts and pages, Media Library Folders does not allow folders to be rename or moved in order to prevent breaking these links. Rather, to rename or move a folder, one needs to create a new folder and move the files from the old folder to the new. During the move process, Media Library Folders will scan the sites standard posts and pages for any links matching the old address of the images or files and update them to the new address.
 
 == Changelog ==
+= 6.0.6 =
+* Added function call to ensure jQuery is loaded
+
+= 6.0.5 =
+* Added PHP_OS and upload directory information to the System Information display
+* Added code to fix slashes when getting the absolute path when on a Windows server
+* Added a blank index.php file for security
+
+= 6.0.4 =
+* Added code to prevent hiding or deleting the uploads folder
+* Added code to handle the mgmlp_ajax is not defined issue that occurs on some multisite installions 
+
 = 6.0.3 =
 * Added request for feature suggestions
 

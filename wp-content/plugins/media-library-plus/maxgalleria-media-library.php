@@ -3,7 +3,7 @@
 Plugin Name: Media Library Folders for WordPress
 Plugin URI: http://maxgalleria.com
 Description: Gives you the ability to adds folders and move files in the WordPress Media Library.
-Version: 6.0.3
+Version: 6.0.6
 Author: Max Foundry
 Author URI: http://maxfoundry.com
 
@@ -40,6 +40,7 @@ class MaxGalleriaMediaLib {
         
     $this->uploads_folder_name = get_option(MAXGALLERIA_MEDIA_LIBRARY_UPLOAD_FOLDER_NAME, "uploads");      
     $this->uploads_folder_name_length = strlen($this->uploads_folder_name);
+    $this->uploads_folder_ID = get_option(MAXGALLERIA_MEDIA_LIBRARY_UPLOAD_FOLDER_ID, 0);
         
     //convert theme mods into an array
     $theme_mods = get_theme_mods();
@@ -51,7 +52,7 @@ class MaxGalleriaMediaLib {
 
 	public function set_global_constants() {	
 		define('MAXGALLERIA_MEDIA_LIBRARY_VERSION_KEY', 'maxgalleria_media_library_version');
-		define('MAXGALLERIA_MEDIA_LIBRARY_VERSION_NUM', '6.0.3');
+		define('MAXGALLERIA_MEDIA_LIBRARY_VERSION_NUM', '6.0.6');
 		define('MAXGALLERIA_MEDIA_LIBRARY_IGNORE_NOTICE', 'maxgalleria_media_library_ignore_notice');
 		define('MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_NAME', trim(dirname(plugin_basename(__FILE__)), '/'));
 		define('MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_NAME);
@@ -59,7 +60,8 @@ class MaxGalleriaMediaLib {
     define("MAXGALLERIA_MEDIA_LIBRARY_NONCE", "mgmlp_nonce");
     define("MAXGALLERIA_MEDIA_LIBRARY_POST_TYPE", "mgmlp_media_folder");
     define("MAXGALLERIA_MEDIA_LIBRARY_UPLOAD_FOLDER_NAME", "mgmlp_upload_folder_name");
-    define("MAXGALLERIA_MEDIA_LIBRARY_UPLOAD_FOLDER_ID", "mgmlp_upload_folder_id");
+    if(!defined("MAXGALLERIA_MEDIA_LIBRARY_UPLOAD_FOLDER_ID"))
+      define("MAXGALLERIA_MEDIA_LIBRARY_UPLOAD_FOLDER_ID", "mgmlp_upload_folder_id");
 		if(!defined('MAXGALLERIA_MEDIA_LIBRARY_FOLDER_TABLE'))
       define("MAXGALLERIA_MEDIA_LIBRARY_FOLDER_TABLE", "mgmlp_folders");
     define("MAXGALLERIA_MEDIA_LIBRARY_SORT_ORDER", "mgmlp_sort_order");
@@ -225,6 +227,7 @@ class MaxGalleriaMediaLib {
 				 $_REQUEST['page'] === 'image-seo') {
         wp_enqueue_style('maxgalleria-media-library', MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_URL . '/maxgalleria-media-library.css');
 				
+				wp_enqueue_script('jquery');
 				wp_register_script('jquery-ui', MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_URL . '/js/jquery-ui-1.11.4.custom/jquery-ui.min.js', array('jquery'));
 				wp_enqueue_script('jquery-ui');
 				wp_enqueue_script('jquery-ui-progressbar');
@@ -234,7 +237,9 @@ class MaxGalleriaMediaLib {
 				 $_REQUEST['page'] === 'search-library') {
 		
 				wp_enqueue_style('jstree-style', MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_URL . '/js/jstree/themes/default/style.min.css');    		
-
+        
+				wp_enqueue_script('jquery');
+        
 				wp_register_script('jquery-ui', MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_URL . '/js/jquery-ui-1.11.4.custom/jquery-ui.min.js', array('jquery'));
 				wp_enqueue_script('jquery-ui');
 
@@ -254,14 +259,14 @@ class MaxGalleriaMediaLib {
     global $pagenow, $current_screen;
     $mlf_page = false;
     
-    //error_log("pag " . $_REQUEST['page']);
+    //error_log("page " . $_REQUEST['page']);
     if(isset($_REQUEST['page'])) {
       if($_REQUEST['page'] == 'media-library-folders')
         $mlf_page = true;
     }
     
-    if($this->current_user_can_upload) {
-		
+	  if($this->current_user_can_upload || defined('MLFP_SKIP_UPLOAD_STATUS_CHECK') ) {
+	
 //      if (isset( $current_screen ) && 
 //          $current_screen->base != 'all-import_page_pmxi-admin-import' && 
 //          $current_screen->base != 'all-import_page_pmxi-admin-manage' &&
@@ -882,9 +887,15 @@ ORDER by ID";
   private function folder_exist($folder_path) {
     
     global $wpdb;    
+    
+    //error_log("base url " . $this->upload_dir['baseurl']);
+    //error_log(" base_url_length " . $this->base_url_length);
+    //error_log("folder_path $folder_path");
 		
 		$relative_path = substr($folder_path, $this->base_url_length);
 		$relative_path = ltrim($relative_path, '/');
+    
+    //error_log("relative_path $relative_path");
 						    
 //		$sql = "select post_id
 //from {$wpdb->prefix}postmeta 
@@ -2515,6 +2526,10 @@ AND meta_key = '_wp_attached_file'";
 		
     //$file_path = str_replace( $this->upload_dir['baseurl'], $this->upload_dir['basedir'], $url ); 
     $file_path = str_replace( $baseurl, $this->upload_dir['basedir'], $url ); 
+    // fix the slashes
+    if(strpos($this->upload_dir['basedir'], '\\') !== false)
+      $file_path = str_replace('/', '\\', $file_path);
+    
 		
 		//$this->write_log("url $url");
 		//$this->write_log("baseurl "  . $this->upload_dir['baseurl']);
@@ -2631,6 +2646,14 @@ AND meta_key = '_wp_attached_file'";
 		
 		            
     foreach( $delete_ids as $delete_id) {
+      
+      // prevent uploads folder from being deleted
+      if(intval($delete_id) == intval($this->uploads_folder_ID)) {
+				$message = __('The uploads folder cannot be deleted.','maxgalleria-media-library');
+				$data = array ('message' =>$message, 'refresh' => false );
+        echo json_encode($data);
+        die();
+      }
 			
 			if(is_numeric($delete_id)) {
 
@@ -3324,6 +3347,7 @@ AND pm.meta_key = '_wp_attached_file'", $file_id);
 			
 			//not sure if this is still needed
 			//$this->mlp_remove_slashes();
+      error_log("upload_path $upload_path");
       
       if(!$noecho)
         echo __('Scaning for new folders in ','maxgalleria-media-library') . " $upload_path<br>";      
@@ -4753,6 +4777,12 @@ order by meta_id";
       $folder_id = trim(stripslashes(strip_tags($_POST['folder_id'])));
     else
       $folder_id = "";
+
+    // prevent hiding of the uploads folder and sub folders  
+    if(intval($folder_id) == intval($this->uploads_folder_ID)) {
+      echo __('The uploads folder cannot be hidden.','maxgalleria-media-library');
+      die();
+    }
 			
 		if($folder_id !== '') {
 			
@@ -5504,7 +5534,7 @@ AND meta_key = '_wp_attached_file'";
                   if ( class_exists( 'FLCustomizer' ) && method_exists( 'FLCustomizer', 'clear_all_css_cache' ) ) {
                     FLCustomizer::clear_all_css_cache();
                   }
-                  
+
                   
                 }
                                                
@@ -5762,6 +5792,7 @@ AND meta_key = '_wp_attached_file'";
             foreach ($info_value as $data_key => &$data_value) {
               if(!is_array($data_value)) {
                 if($data_key == 'photo_src' || $data_key == 'text') {
+                  //error_log("meta key found $data_key, replacing $data_value");
                   $save = true;
                   $data_value = str_replace($replace_image_location, $replace_destination_url, $data_value);
                 }
@@ -5769,6 +5800,7 @@ AND meta_key = '_wp_attached_file'";
                 foreach ($data_value as $next_key => &$next_value) {
                   if(!is_array($next_value)) {
                     if($next_key == 'url') {
+                      //error_log("url found $next_value");
                       $save = true;
                       $next_value = str_replace($replace_image_location, $replace_destination_url, $next_value);
                     }                  
@@ -5778,6 +5810,7 @@ AND meta_key = '_wp_attached_file'";
                         foreach ($sizes_value as $final_key => &$final_value) {
                           if(!is_array($final_value)) {
                             if($final_key == 'url') {
+                              //error_log("url final_key found $final_value");
                               $save = true;
                               $final_value = str_replace($replace_image_location, $replace_destination_url, $final_value);
                             }                            

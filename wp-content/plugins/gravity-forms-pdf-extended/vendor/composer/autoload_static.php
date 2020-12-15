@@ -115,12 +115,17 @@ class ComposerStaticInitGravityPDFPlugin
         ),
     );
 
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitGravityPDFPlugin::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitGravityPDFPlugin::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitGravityPDFPlugin::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitGravityPDFPlugin::$classMap;
 
         }, null, ClassLoader::class);
     }

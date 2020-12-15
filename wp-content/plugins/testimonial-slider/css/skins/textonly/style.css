@@ -120,8 +120,8 @@
 /*Navigation Arrows*/
 .testimonial_slider__textonly .testimonial_nav_arrow_wrap{ /*display:none;*/ }
 .testimonial_slider__textonly .testimonial_nav_arrow_wrap a{position:absolute;bottom:0;width:16px;height:20px;display: block; outline: none;}
-.testimonial_slider__textonly a.testimonial_prev{left:0;background: transparent url(../images/prev.png) no-repeat 0 0;}
-.testimonial_slider__textonly a.testimonial_next{right:0;background: transparent url(../images/next.png) no-repeat 0 0;}
+.testimonial_slider__textonly a.testimonial_prev{left:0;background: transparent url(../default/buttons/default/prev.png) no-repeat 0 0;}
+.testimonial_slider__textonly a.testimonial_next{right:0;background: transparent url(../default/buttons/default/next.png) no-repeat 0 0;}
 .testimonial_slider__textonly .testimonial_nav_arrow_wrap span{display:none;}
 
 .testimonial_slider__textonly .sldr_clearlt{display:block;visibility:hidden;clear:left;height:0;content:".";}
